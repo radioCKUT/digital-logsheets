@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
 --
--- Host: 0.0.0.0    Database: logsheets
+-- Host: 0.0.0.0    Database: c9
 -- ------------------------------------------------------
 -- Server version	5.5.41-0ubuntu0.14.04.1
 
@@ -35,7 +35,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (11,'all spoken word'),(12,'general music'),(13,'jazz, classical &amp; traditional music'),(14,'musical productions'),(15,'ads, promos');
+INSERT INTO `category` VALUES (1,'all spoken word'),(2,'general music'),(3,'jazz, classical &amp; traditional music'),(4,'musical productions'),(5,'ads, promos');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +128,7 @@ CREATE TABLE `program` (
   `genres` int(11) DEFAULT NULL,
   `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,6 +137,7 @@ CREATE TABLE `program` (
 
 LOCK TABLES `program` WRITE;
 /*!40000 ALTER TABLE `program` DISABLE KEYS */;
+INSERT INTO `program` VALUES (1,'lo signal',NULL,NULL);
 /*!40000 ALTER TABLE `program` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-01 15:24:41
+-- Dump completed on 2015-05-04  3:03:24
