@@ -1,0 +1,155 @@
+Steps
+- submit segment - DONE
+- set up typing in name and artist on submit playlist page
+- submit playlist 
+- submit categories - 
+- remove categories
+- submit genre
+- remove genre
+- submit episode
+- submit programmer
+- submit program
+- list episodes in db in descending order
+- show all episodes from a program
+- show all episodes from a programmer
+- show all episodes between dates
+- show all episodes for a segment
+- show segments listed by popularity [have a count on the segment?]
+- generate top 10,30 charts etc by genre, between dates
+- show number of plays/heavy-light play indicator
+
+
+- ask about when prepared statements are needed or not
+
+- create segments or find existing segments and get ids
+- create playlist id
+- submit segments to playlist_segments using playlist id
+
+- get all episodes [order by start date]
+- get playlist by specific id number
+- get program by specific id number
+- user account administration - (later with Drupal)
+- create new program
+- create new episode
+- create new playlist
+
+Drupal process
+- login with Drupal ID - goes to volunteers section
+- click logsheets tab
+- fill out logsheet and submit
+- can view old logsheets by clicking a link
+- admins have create power
+
+To Do
+- copy and paste the instructions to be able to recreate db quickly
+- implement prerecorded by logic of using the same playlist id for a different episode
+- automatically destroy records after a certain time period?
+- make an id for programmers
+	- programmers have to ‘login’
+	- theres a primary programmer, then secondary programmers
+	- programmers can be added by selecting programmers from the database
+	- first iteration, just have ‘primary programmer’
+- how to deal with merging, duplicate data?
+- need to deal with the playlist table…somethings not quite right here
+	- need a connecting table to link 
+- in episode genres, what’s the primary key? Different episodes may use the same combination of genres
+- should genre id be auto_increment or not
+	- genre is the categories of show pages? THIS ONE, YES AUTO_INCREMENT
+	- or genre is categorized by NCRA category? FOR MUSIC ONLY
+- validate submit segment form data using javascript
+- need to check if segment already exists before inserting segments into database
+- generate segments array to be able to submit to database
+	- should be developed in cooperation with the dynamic form fields (JS?)
+- what happens when all the playlist IDs have been used? Delete old records? How to handle error?
+- need to erase playlist ID once user has submitted
+- use a better approach to making a playlist ID
+	- find the next available ID instead of continually generating new ones and checking if unique
+- need to redesign tables 
+	- playlist just stores unique playlist ID and associated playlist_segments ID
+	- playlist_segments uses multiple ids to associate with segment ids
+	- set id and segment as foreign keys in playlist_segments
+	- REDO PLAYLIST_SEGMENTS
+- currently, inserting segments assumes the name, author make the segment unique
+	- what about albums with the same name tracks and lengths, like Untitled?
+	- what about collaborations, with artists listed differently?
+	- detect same name track, artist in same playlist when counting?
+
+Future Additions
+- - - - - - - -
+- integrate into Drupal
+- integrate with digital library so that iTunes playlists can be imported to the application
+- 
+
+
+Page development
+- - - - - - - -
+- use smarty to make templates when doing this page
+- use bootstrap and make it responsive
+- real nice, soft indigo etc - use color scheme in animate curtains bookmark as guide
+	- shadows, nice touches
+
+Application Layout
+- - - - - - - -
+Logsheet
+- normal interface for non-admins
+- allow selection of a pre-recorded episode by fetching playlist number for a certain show (drop down menu)
+- be able to login…Go to admin section
+
+Home
+- shows a list of episodes as they are submitted to the website
+	- order by the episode start and end time and date, not the time they are submitted
+	- sorted like this:
+	  Start time, End time, program name, programmers, genre
+	- can click on:
+		program name 	-> program’s page listing all episodes by start time (descending or ascending)
+		programmers	-> show a list of all episodes a programmer has done by start time
+		genre		-> list of shows by start time of the genre
+Search in upper right hand corner - jQuery animation down to show advanced search function (full bar on top)
+Edit Page
+
+- allow music director
+	- add and delete categories
+	- add and delete programs - destroy from db too if deleted
+	- add and delete genres
+
+
+Installing and distributing to other stations
+- - - - - - - -
+- host it on a server where all stations can go to use the log sheet application
+- restrict access by the IP addresses of station computers?
+	- allow login access from all IPs
+- link to the station’s website so users only navigate to and from station websites
+- integrate with Drupal, but also upload to the cloud server
+
+Options:
+- all expenses paid and I will come set-up your server, logsheets, website, etc
+- over cloud, I will set-up via a cloud server
+- via Drupal, install with a plug-in for free
+
+notes
+- - - - - - - -
+if a program is active, that means its currently on the grid
+
+show all columns and tables
+- - - - - - - -
+select table_name, column_name, data_type from information_schema.columns where table_schema = 'logsheets' order by table_name,ordinal_position;
+
+Database description:
+- - - - - - - -
+segment
+id, name, length, album, category
+
+episode
+id, playlist, programmer, start_time, end_time
+
+playlist
+id, segment
+
+program
+id, name, genre
+
+category
+id, name
+
+genre
+id, name
