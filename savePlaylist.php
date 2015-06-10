@@ -2,18 +2,16 @@
     include("devTools.php");
     require("dbFunctions.php");
     
-    //hold all data submitted from the form
-    //this allows fields to be easily added
-    //new fields must also be added in the formatSegments loop
-    $segmentData = array(
-        "names"=>$_POST['name'],
-        "authors"=>$_POST['author'],
-        "categories"=>$_POST['category'],
+    //array to hold all the fields taken from the form
+    $fields = array(
+        "name",
+        "author",
+        "category"
     );
     
     //format dat so segments can be referenced by name
     //each key is a segment, referenced by the segment's name
-    $playlist = formatSegments($segmentData);
+    $playlist = formatSegments($fields);
     
     printArray($playlist);
     
@@ -80,26 +78,34 @@
         } //end foreach loop
     } //end associateSegmentWithPlaylist()
     
-    function formatSegments($playlist) {
-        //array user to store segments submitted from the playlist
+    function formatSegments($fields) {
+        //store all segments in a single array
         $segments = array();
         
-        //go through each segment and store data in the $segments array
-        //each segment is indexed in $segments by using the name as the key
-        for($segIndex=0;$segIndex<count($playlist["names"]);$segIndex++) {
+        //for each submitted segment, store associated data in $segments
+        //use name of segment as key value
+        for($row=0; $row<count($_POST["name"]); $row++) {
             
-            //create an array for all the segment's data
-            $segment = array(
-                "name"=>$playlist["names"][$segIndex],
-                "author"=>$playlist["authors"][$segIndex],
-                "category"=>$playlist["categories"][$segIndex],
-            );
+            //create a new segment
+            $segment = array();
             
-            //store each segment in the segments array, indexed by name
-            $segments[$segment["name"]]=$segment;
+            //get data associated with the segment for each field in submission form
+            for($field=0;$field<count($fields);$field++) {
+                
+                //get the name of the current field
+                $fieldName = $fields[$field];
+                
+                //store the field data associated with this row and field
+                $segment[$fieldName] = $_POST[$fieldName][$row];
+            }
+            
+            //store segment in $segments array using the segment's name as the key
+            $segmentName = $segment["name"];
+            $segments[$segmentName] = $segment;
         }
         
         //return the formatted array of segments
         return $segments;
+        
     } //end formatSegments()
 ?>
