@@ -125,31 +125,29 @@
             
             if($segmentID!=NULL) {
                 //associate the segment with the playlist
+                try {
+                    //insert into playlist_segments table
+                    $insertPlistSegsSQL = "INSERT INTO playlist_segments(playlist, segment) 
+                                            VALUES (:playlist, :segment)";
+                    $insertPlistSegs = $db->prepare($insertPlistSegsSQL);
+                        
+                    //bind the IDs for playlist and the segment 
+                    $insertPlistSegs->execute(array(
+                        "playlist" => $playlistID,
+                        "segment" => $segmentID
+                    ));
+                    
+                    echo "success";
+                    
+                } catch(PDOException $error) {
+                    echo "Segments could not be associated with playlist: " . $error->getMessage();
+                }
             } else {
                 //failed to create segment in database
             echo "Error: failed to create segment in database";
             }
         } //end foreach loop
     } //end associateSegmentWithPlaylist()
-    
-    function assocSegmentWithPlaylist($db, $playlist_id, $segment_id) {
-        try {
-            //prepare statement using bound variables
-            $stmt = $db->prepare(
-                "INSERT INTO playlist_segments (playlist, segment) 
-                VALUES (:playlist, :segment)"
-            ); 
-            
-            //execute statement and fill in variables
-            $stmt->execute(array(
-                "playlist" => $playlist_id,
-                "segment" => $segment_id
-            ));
-            
-        } catch(PDOException $error) {
-            echo "Segments could not be associated with playlist: " . $error->getMessage();
-        } //end try/catch statment
-    } //end assocSegmentsWithPlaylist
     
     function formatSegments($fields) {
         //store all segments in a single array
