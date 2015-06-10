@@ -33,6 +33,7 @@
             associateSegmentsWithPlaylist($db, $segments, $playlistID, $fields);
         } else {
             //failed to create playlist
+            echo "Error: failed to create playlist in database";
         }
     }
     
@@ -62,8 +63,25 @@
     //create a new segment in the database
     //return the id number, or null if operation fails
     function createSegment($db,$segment, $fields) {
-        $sql = "INSERT INTO segment(" . printFields($fields) . ")
-                VALUES (" . printFields($fields,":") . ")";
+        
+        //insert segment into the database and get its auto incremented ID
+        try {
+            //generate dynamic SQL string for inserting segments into database
+            $insertSegmentSQL = "INSERT INTO segment(" . printFields($fields) . 
+                                ") VALUES (" . printFields($fields,":") . ")";
+                    
+            //associate fields provided in SQL statement with keys in $segment
+            $insertSegment = $db->prepare($insertSegmentSQL);
+            $insertSegment->execute($segment);
+            
+            //return the segment_id to associate it with playlist
+            $segmentID = $db->lastInsertId();
+
+        } catch(PDOException $error) {
+            $segmentID = NULL;
+        }
+        
+        return $segmentID;
         
     } //end createSegment()
     
@@ -99,35 +117,6 @@
         
     } //end printFields
     
-    function createSegment2($db, $segment) {
-        
-        //return null if insert operation fails
-        $segmentID = NULL;
-        
-        try {
-            //prepare statement using bound variables
-            $stmt = $db->prepare(
-                "INSERT INTO segment (name, author, category) 
-                VALUES (:name, :author, :category)"
-            ); 
-            
-            //execute statement and fill in variables
-            $stmt->execute(array(
-                "name" => $segment["name"],
-                "author" => $segment["author"],
-                "category" => $segment["category"]
-            ));
-            
-            //return the segment_id to associate it with playlist
-            $segment_id = $db->lastInsertId();
-            
-        } catch(PDOException $error) {
-            echo "Couldn't create segments: " . $error->getMessage();
-        } //end try/catch statment
-        
-        return $segment_id;
-    } //end createSegment2() function]
-    
     //associate each segment with playlist
     function associateSegmentsWithPlaylist($db, $segments, $playlistID, $fields) {
         foreach($segments as $segment) {
@@ -138,9 +127,29 @@
                 //associate the segment with the playlist
             } else {
                 //failed to create segment in database
+            echo "Error: failed to create segment in database";
             }
         } //end foreach loop
     } //end associateSegmentWithPlaylist()
+    
+    function assocSegmentWithPlaylist($db, $playlist_id, $segment_id) {
+        try {
+            //prepare statement using bound variables
+            $stmt = $db->prepare(
+                "INSERT INTO playlist_segments (playlist, segment) 
+                VALUES (:playlist, :segment)"
+            ); 
+            
+            //execute statement and fill in variables
+            $stmt->execute(array(
+                "playlist" => $playlist_id,
+                "segment" => $segment_id
+            ));
+            
+        } catch(PDOException $error) {
+            echo "Segments could not be associated with playlist: " . $error->getMessage();
+        } //end try/catch statment
+    } //end assocSegmentsWithPlaylist
     
     function formatSegments($fields) {
         //store all segments in a single array
