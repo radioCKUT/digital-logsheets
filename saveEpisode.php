@@ -3,7 +3,7 @@
     require("dbFunctions.php");
     
     //array to hold all the fields taken from the form
-    $fields = array(
+    $segmentFields = array(
         "name",
         "author",
         "category",
@@ -15,23 +15,78 @@
         "request"
     );
     
+    //fields used to store the episode data in database
+    $episodeFields = array( 
+        "playlist", 
+        "program", 
+        "programmer", 
+        "start_time", 
+        "end_time"
+    );
+    
     
     //format data so segments can be referenced by name
     //each key is a segment, referenced by the segment's name
-    $segments = formatSegments($fields);
+    $segments = formatSegments($segmentFields);
     
-    printArray($segments);
     $db = connectToDatabase();
     
     //return the id of the new playlist
-    $playlistID = savePlaylistInDatabase($db, $segments, $fields);
+    $playlistID = savePlaylistInDatabase($db, $segments, $segmentFields);
+    
+    if(is_null(saveEpisodeInDatabase($db, $playlistID, $episodeFields))) {
+        echo "Error: Episode not saved."; 
+    } else {
+        echo "Episode saved."; 
+    }
     
     //close database connection
     $db = NULL;
     
-    
-    function saveEpisodeInDatabase($db, $playlistID) {
+    //id, playlist, program, programmer, start_time, end_time
+    function saveEpisodeInDatabase($db, $playlistID, $fields) {
         
+        //store episode data in a single array
+        //used to bind variables
+        $episodeData = array($playlistID);
+        foreach($fields as $i=>$field) {
+        
+            //the first index was just saved as the playlist ID, so skip
+            if($i<1) {
+                continue;
+            }
+            
+            //push data for each field to the end of the array
+            array_push($episodeData, $_POST[$field]);
+        }
+        
+        //do database operation
+        $episodeID = createEpisode($db,$fields, $episodeData);
+        return $episodeID;
+    }
+        
+    function createEpisode($db, $fields, $episodeData) {
+        //insert segment into the database and get its auto incremented ID
+        try {
+            //generate dynamic SQL string for inserting segments into database
+            $insertEpisodeSQL = "INSERT INTO episode(" . printFields($fields) . 
+                                ") VALUES (" . printFields($fields,":") . ")";
+            
+            printArray($episodeData);
+            
+            //execute the mysql command with the bound variables
+            $insertEpisode = $db->prepare($insertEpisodeSQL);
+            $insertEpisode->execute($episodeData);
+            
+            //return the segment_id to associate it with playlist
+            $episodeID = $db->lastInsertId();
+
+        } catch(PDOException $error) {
+            echo $error;
+            $episodeID = NULL;
+        }
+        
+        return $episodeID;   
     }
     
     function savePlaylistInDatabase($db, $segments, $fields) {
@@ -47,6 +102,8 @@
             //failed to create playlist
             echo "Error: failed to create playlist in database";
         }
+        
+        return $playlistID;
     }
     
     //create a new playlist in the database
