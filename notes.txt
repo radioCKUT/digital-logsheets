@@ -1,7 +1,84 @@
+
+
+
+1. New episode
+	- user fills initial form info
+	- create playlist
+	- create episode
+	- associate playlist with episode
+2. New Logsheet
+	- user fills in info about a segment
+	- user clicks add button to add new segment
+		- segments is added to database
+		- segment is associated with playlist
+		- new form field appears
+	- user clicks remove button
+		- segment is removed from database
+		- segment is disassociated with playlist
+		- form field is subtracted
+	- user submits logsheet
+3. Finalize
+	- User reviews logsheet
+	- user clicks remove button
+		- segment is removed from database
+		- segment is disassociated with playlist
+		- display is updated
+	- user clicks submits
+	- logsheet history page is shown
+
+current to-do:
+- add remove row for new-playlist.php
+- make new-playlist.php page submit to database
+- get the index to properly display episodes
+
+
+- consolodate functions and code. Lots of functions do the same thing!
+
+- segments, playlists, episodes, should be objects
+
+- transaction processing
+
+- logsheets should open up where they left off if you exit them - cookie
+- submitting a logsheet destroys the cookie
+- when you hover over a row you get the pluss button
+
+- next step is to create a program
+	- create a new page that lists all existing program
+	- have a form for user to create new program in database
+
+- Add time picker
+- Add time started, duration
+- validate form
+- Format checkbox text
+- Put green new show button up top
+- Put initial information in modal? No...
+- 
+
+
+Task:
+- accept input from submit_playlist.php
+- add to database as current segments
+- add to database as a playlist
+- print out the previous playlist
+
+- validate submission form - name is a neccessary field!
+- newly created rows should have empty fields
+
+To add a new field:
+- check if it already exists in database. If not, add it to the database.
+- add it to the fields array
+
+To remove a field:
+- remove it from the fields array
+
+- need to test dynamic fields!!!!
+
+- add dynamic form field for programmers?
+
 Steps
 - submit segment - DONE
 - set up typing in name and artist on submit playlist page
-- submit playlist 
+- submit playlist - DONE
 - submit categories - 
 - remove categories
 - submit genre
@@ -17,7 +94,6 @@ Steps
 - show segments listed by popularity [have a count on the segment?]
 - generate top 10,30 charts etc by genre, between dates
 - show number of plays/heavy-light play indicator
-
 
 - ask about when prepared statements are needed or not
 
@@ -73,6 +149,12 @@ To Do
 	- what about albums with the same name tracks and lengths, like Untitled?
 	- what about collaborations, with artists listed differently?
 	- detect same name track, artist in same playlist when counting?
+- when a track is located in the database, ask user which one found is the right one, or if theirs is unique (make a new entry)
+- validate form data to make sure proper information is filled out
+- force datetimepicker to use 30 minute intervals only
+- allow datetimepicker to choose dates in the future
+$db should be an object
+- add live twitter feed connected to ckutonair to tweet segments as they're entered
 
 Future Additions
 - - - - - - - -
