@@ -5,6 +5,9 @@
         
         public function __construct($db, $active_fields, $field_data, $table_name) {
             try {
+                //assign a list of available fields depending on the type of object
+                $this->assignAvailableFields($table_name);
+                
                 //verify that the fields provided by the user are available
                 if(!$this->verifyFields($active_fields, $field_data)) {
                     //there are a different number of data elements than fields
@@ -32,6 +35,37 @@
                 $this->active_fields,
                 $field_data
             );
+        }
+        
+        //$available_fields can be set as active or inactive by the user
+        private function assignAvailableFields($table_name) {
+            switch($table_name) {
+                case "segment":
+                    $available_fields = array(
+                        "name",
+                        "author",
+                        "category",
+                        "album",
+                        "length",
+                        "can_con",
+                        "new_release",
+                        "french_vocal_music",
+                        "request"
+                    );
+                    break;
+                    
+                case "episode":
+                    $available_fields = array(
+                        "playlist",
+                        "program",
+                        "programmer",
+                        "start_time",
+                        "end_time"
+                    );
+                    break;
+            }
+            
+            $this->available_fields = $available_fields;
         }
         
         private function assignData($data) {

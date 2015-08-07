@@ -79,7 +79,7 @@
     );    
     
     //associate the playlist, programmer and program with a specific episode
-    $episode = new Episode($db, $episode_fields, $episode_data);
+    $episode = Episode::create($db, $episode_fields, $episode_data);
     
     //close database connection
     $db = NULL;

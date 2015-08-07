@@ -1,17 +1,13 @@
 <?php
     class Episode extends LogsheetComponent {
-        public function __construct($db, $active_fields, $field_data) {
-            $table_name = "episode";
+        protected $playlist, $program, $programmer, $start_time, $end_time;
+        
+        public static function create($db, $active_fields, $field_data) {
+            return new LogsheetComponent($db, $active_fields, $field_data, "episode");
+        }
+        
+        public static function retrieve($db) {
             
-            $this->available_fields = array(
-                "playlist",
-                "program",
-                "programmer",
-                "start_time",
-                "end_time"
-            );
-            
-            parent::__construct($db, $active_fields, $field_data, $table_name);
         }
     }
 ?>

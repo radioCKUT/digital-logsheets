@@ -8,9 +8,14 @@
     //get all episodes from database
     $db = connectToDatabase();
     
-    //getEpisode();
+    getEpisodes($db);
     
     $db = NULL;
+    
+    // display it
+    echo $smarty->fetch('index.tpl');
+    
+    /*
     
         $episode_date = "";
         $episode_time = "";
@@ -23,26 +28,21 @@
     //display on front page
     $episodes = array($episode_dates, $episode_times, $program_names, $segments);
     
-    // display it
-    echo $smarty->fetch('index.tpl');
-    
     $fields = array("program", "playlist", "programmer", "start_time", "end_time");
     
-    function getEpisode($db, $fields, $table_name) {
-        $sql = "SELECT " . formatFields($fields) . " FROM " . $table_name;
-        $data = array();
-        
+    */
+    
+    function getEpisodes($db) {
+        $sql = "SELECT id, playlist, program, programmer, start_time, end_time
+                    FROM episode";
         try {
             $stmt = $db->prepare($sql);
             $stmt->execute();
-            while($row = $stmt->fetch()) {
-                $data[$row["id"]] = $row["name"];
+            while($episode_data = $stmt->fetch()) {
+                
             }
-            
         } catch(PDOException $error) {
             echo "Query failed: " . $error->getMessage();
         } //end try/catch statment
-        
-        return $data;
     }
 ?>
