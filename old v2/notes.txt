@@ -1,4 +1,6 @@
-
+- modify assign available fields so that the available fields can later be modified by the user
+	- this will require a database table modification as well
+- need to convert segment, playlist, programmer to same design pattern as episode
 
 
 1. New episode

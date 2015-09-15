@@ -1,27 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> </title>
+        <title>
+            Page Title
+        </title>
+        <link rel="stylesheet" href="css/style.css">
     </head>
-    <link rel="stylesheet" href="css/style.css">
     <body>
-        <a href="new-logsheet.php">New logsheet</a>
-        
-        <hr>
-        
-        <h1>20 July 2015</h1>
-        <h2>[0:00 - 1:00] Lo Signal</h2>
-        <table>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Album</th>
-            </tr>
-            <tr>
-                <th>Elder Drum</th>
-                <th>Deadbeat</th>
-                <th>Primordia</th>
-            </tr>
-        </table>
+        {foreach $episodes as $episode}
+            <h2>{$episode.start_date}</h2>
+            <h3>[{$episode.start_time} - {$episode.end_time}] {episode.program_name}</h3>
+            <table>
+                
+            </table>
+        {/foreach}
     </body>
 </html>
+    
