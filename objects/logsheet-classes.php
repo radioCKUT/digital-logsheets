@@ -5,4 +5,5 @@
     require_once("Program.php");
     require_once("Playlist.php");
     require_once("Programmer.php");
+    require_once("Segment.php");
 ?>

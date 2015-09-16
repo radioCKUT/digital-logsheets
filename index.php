@@ -20,11 +20,20 @@
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }
-    
-    
         
     foreach($episodes as $episode) {
         echo $episode->getProgramName() . "<br />";
+        $segments = $episode->getPlaylist();
+        
+        foreach($segments as $segment) {
+            echo $segment->getName();
+            echo " | ";
+            echo $segment->getAlbum();
+            echo " | ";
+            echo $segment->getAuthor();
+            echo "<br />";
+            echo "<br />";
+        }
     }
     
     // display it

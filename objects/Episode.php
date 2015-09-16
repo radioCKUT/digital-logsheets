@@ -51,5 +51,12 @@
                 echo $error;
             }
         }
+        
+        //returns an array of segment objects
+        public function getPlaylist() {
+            return $this->playlist->getSegments();
+        }
+        
+        
     }
 ?>
