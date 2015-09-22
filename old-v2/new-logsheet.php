@@ -1,5 +1,5 @@
 <?php
-    include("smarty/libs/Smarty.class.php");
+    include("../smarty/libs/Smarty.class.php");
     include("function-definitions.php");
     
     // create object

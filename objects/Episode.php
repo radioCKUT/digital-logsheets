@@ -57,6 +57,34 @@
             return $this->playlist->getSegments();
         }
         
+        public function getStartDate() {
+            try {
+                if($this->checkForId()) {
+                    return $this->start_time;
+                }
+            } catch (Exception $error) {
+                echo $error;
+            }
+        }
         
+        public function getStartTime() {
+            try {
+                if($this->checkForId()) {
+                    return $this->start_time;
+                }
+            } catch (Exception $error) {
+                echo $error;
+            }
+        }
+        
+        public function getEndTime() {
+            try {
+                if($this->checkForId()) {
+                    return $this->end_time;
+                }
+            } catch (Exception $error) {
+                echo $error;
+            }
+        }
     }
 ?>

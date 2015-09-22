@@ -2,7 +2,7 @@
     //---------------------
     //----INCLUDE FILES----
     //---------------------
-    include("database.php");
+    include("../database.php");
     include("functions.php");
     include("objects/logsheet-classes.php");
     
@@ -84,6 +84,6 @@
     //close database connection
     $db = NULL;
     
-    header("Location: index.php");
+    header("Location: ../index.php");
     die();
 ?>

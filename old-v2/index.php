@@ -1,5 +1,5 @@
 <?php
-    include('smarty/libs/Smarty.class.php');
+    include('../smarty/libs/Smarty.class.php');
     require("function-definitions.php");
     
     // create object
@@ -7,8 +7,6 @@
     
     //get all episodes from database
     $db = connectToDatabase();
-    
-    getEpisodes($db);
     
     $db = NULL;
     

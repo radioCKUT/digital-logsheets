@@ -8,10 +8,7 @@
 
     //open database connection
     $db = connectToDatabase();
-    $prgm = new Program($db);
-    $prgm->setId("1");
-    echo $prgm->getName();
-        
+    
     //close database connection
     $db = NULL;
 ?>

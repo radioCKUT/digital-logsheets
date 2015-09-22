@@ -13,29 +13,42 @@
         //open database connection
         $db = connectToDatabase();
         $archive = new Archive($db);
-        $episodes = $archive->getArchive();
+        $episodes_archive = $archive->getArchive();
+        
+        $episodes = array();
+    
+        foreach($episodes_archive as $episode) {
+            $playlist = array();
+            $segments = $episode->getPlaylist();
+            
+            //create the playlist for each episode
+            foreach($segments as $segment) {
+                $playlist[$segment->getId()] = array(
+                    "name"=>$segment->getName(),
+                    "album"=>$segment->getAlbum(),
+                    "author"=>$segment->getAuthor()
+                );
+            }
+            
+            //create an array to store each episode's data
+            $episodes[$episode->getId()] = array(
+                "program_name"=>$episode->getProgramName(),
+                "start_date"=>$episode->getStartDate(),
+                "start_time"=>$episode->getStartTime(),
+                "end_time"=>$episode->getEndTime(),
+                "playlist"=> $playlist
+            );
+        }
         
         //close database connection
         $db = NULL;
+        
+        $smarty->assign("episodes", $episodes);
+    
+        // display it
+        echo $smarty->fetch('index.tpl');
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }
-        
-    foreach($episodes as $episode) {
-        echo $episode->getProgramName() . "<br />";
-        $segments = $episode->getPlaylist();
-        
-        foreach($segments as $segment) {
-            echo $segment->getName();
-            echo " | ";
-            echo $segment->getAlbum();
-            echo " | ";
-            echo $segment->getAuthor();
-            echo "<br />";
-            echo "<br />";
-        }
-    }
-    
-    // display it
-    //echo $smarty->fetch('index.tpl');
+
 ?>

@@ -30,36 +30,4 @@
 		//return null PDO object if successful conection is not made
 		return NULL;
     }
-	
-	//if an argument is given, prepend fields with the string provided
-    function formatFields($fields, $character = "") {
-        $fieldsString = "";
-        
-        //prepend first field with the character provided
-        if($character !== "") {   
-            $fieldsString = $character;
-        }
-        
-        foreach($fields as $i=>$field) {
-            //dont prepend with a comma, space or $character if first in the list
-            if($i<1) {
-                $fieldsString = $fieldsString . $field;
-                continue;
-            } else {   
-                //prepend the field with comma and space characters
-                $fieldsString = $fieldsString . ", ";
-                
-                //prepend field with the optional character, if provided
-                if($character !== "") {
-                     $fieldsString = $fieldsString . $character;
-                }
-
-                //append the field
-                $fieldsString = $fieldsString . $field;
-            }
-        }//end foreach
-        
-        return $fieldsString;
-        
-    } //end printFields
 ?>

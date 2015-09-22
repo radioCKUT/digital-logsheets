@@ -4,7 +4,7 @@
         <title> </title>
         
         <!-- Script for adding form fields -->
-        <script src="js/dynamic_form.js"></script>
+        <script src="../js/dynamic_form.js"></script>
     </head>
     <body>
         <form id="logsheet" action="test.php" method="post">

@@ -1,19 +1,19 @@
-<?php /* Smarty version 3.1.22-dev/21, created on 2015-09-22 19:45:21
-         compiled from "/home/ubuntu/workspace/new-logsheet.tpl" */ ?>
+<?php /* Smarty version 3.1.22-dev/21, created on 2015-09-16 03:10:54
+         compiled from "/home/ubuntu/workspace/old-v2/new-logsheet.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:18305276715601afd1af3968_24301819%%*/
+/*%%SmartyHeaderCode:58144126855f8ddbe591028_75989963%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '120a7bf0d64f87a07306e88ecf32b326bb280f45' => 
+    '480e22041be55659723b092861d56b57ed9ba189' => 
     array (
-      0 => '/home/ubuntu/workspace/new-logsheet.tpl',
-      1 => 1442951116,
+      0 => '/home/ubuntu/workspace/old-v2/new-logsheet.tpl',
+      1 => 1442373049,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '18305276715601afd1af3968_24301819',
+  'nocache_hash' => '58144126855f8ddbe591028_75989963',
   'variables' => 
   array (
     'programs' => 0,
@@ -21,15 +21,15 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.22-dev/21',
-  'unifunc' => 'content_5601afd1b09178_77142024',
+  'unifunc' => 'content_55f8ddbe5a2302_83132852',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5601afd1b09178_77142024')) {
-function content_5601afd1b09178_77142024 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_55f8ddbe5a2302_83132852')) {
+function content_55f8ddbe5a2302_83132852 ($_smarty_tpl) {
 if (!is_callable('smarty_function_html_options')) require_once '/home/ubuntu/workspace/smarty/libs/plugins/function.html_options.php';
 ?>
 <?php
-$_smarty_tpl->properties['nocache_hash'] = '18305276715601afd1af3968_24301819';
+$_smarty_tpl->properties['nocache_hash'] = '58144126855f8ddbe591028_75989963';
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,11 +38,11 @@ $_smarty_tpl->properties['nocache_hash'] = '18305276715601afd1af3968_24301819';
         
         <!-- Script for adding form fields -->
         <?php echo '<script'; ?>
- src="js/dynamic_form.js"><?php echo '</script'; ?>
+ src="../js/dynamic_form.js"><?php echo '</script'; ?>
 >
     </head>
     <body>
-        <form id="logsheet" action="save-logsheet.php" method="post">
+        <form id="logsheet" action="test.php" method="post">
             <div>
                 First Name: <input type="text" name="first_name"><br />
                 Last Name: <input type="text" name="last_name"><br />
