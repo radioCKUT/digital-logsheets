@@ -14,10 +14,11 @@
                 if($this->checkForId()) {
                     //find all the segments for a given playlist
                     $sql = "SELECT segment FROM playlist_segments 
-                                WHERE playlist=" . $this->id;
+                                WHERE playlist=:id";
                         
                     //get a list of all the segment ids for the current Playlist
                     $stmt = $this->db->prepare($sql);
+                    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
                     $stmt->execute();
                     $segment_ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     

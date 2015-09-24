@@ -25,10 +25,11 @@
                 if($this->checkForId()) {
                     //set all the attributes for a Program at once
                     $sql = "SELECT " . $attributes_list . " FROM " . $table_name .
-                            " WHERE id=" . $this->id;
+                            " WHERE id=:id";
                     
                     //fetch the tuple and assign each attribute to the object
                     $stmt = $this->db->prepare($sql);
+                    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
                     $stmt->execute();
                     $attrs_from_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     
