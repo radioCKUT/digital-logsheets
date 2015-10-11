@@ -3,16 +3,13 @@
     //TODO: Error checking...
 
     class Episode extends LogsheetComponent {
-        private $program, $programmer, $playlist;
-        
-        private $start_time, $end_time;
-        
+
         public function __construct($db) {
             parent::__construct($db);
         }
         
         //TODO: need to verify that the correct fields are given
-        public function setAttributes($fields) {
+        public function setEpisodeAttributes($fields) {
             //save data for episode object
             $this->setId($fields["id"]);
             $this->setProgram($fields["program"]);
@@ -22,30 +19,30 @@
         }
         
         public function setProgram($program_id) {
-            $this->program = new Program($this->db);
-            $this->program->setId($program_id);
+            $this->attributes["program"] = new Program($this->db);
+            $this->attributes["program"]->setId($program_id);
         }
         
         //TODO: verify a program has been created
         public function setPlaylist($playlist_id) {
-            $this->playlist = new Playlist($this->db);
-            $this->playlist->setId($playlist_id);
+            $this->attributes["playlist"] = new Playlist($this->db);
+            $this->attributes["playlist"]->setId($playlist_id);
         }
         
         public function setProgrammer($programmer_id) {
-            $this->programmer = new Programmer($this->db);
-            $this->programmer->setId($programmer_id);
+            $this->attributes["programmer"] = new Programmer($this->db);
+            $this->attributes["programmer"]->setId($programmer_id);
         }
         
         public function setDateTime($start_time,$end_time) {
-            $this->start_time = $start_time;
-            $this->end_time = $end_time;
+            $this->attributes["start_time"] = $start_time;
+            $this->attributes["end_time"] = $end_time;
         }
         
         public function getProgramName() {
             try {
                 if($this->checkForId()) {
-                    return $this->program->getName();
+                    return $this->attributes["program"]->getName();
                 }
             } catch (Exception $error) {
                 echo $error;
@@ -54,13 +51,13 @@
         
         //returns an array of segment objects
         public function getPlaylist() {
-            return $this->playlist->getSegments();
+            return $this->attributes["playlist"]->getSegments();
         }
         
         public function getStartDate() {
             try {
                 if($this->checkForId()) {
-                    return $this->start_time;
+                    return $this->attributes["start_time"];
                 }
             } catch (Exception $error) {
                 echo $error;
@@ -70,7 +67,7 @@
         public function getStartTime() {
             try {
                 if($this->checkForId()) {
-                    return $this->start_time;
+                    return $this->attributes["start_time"];
                 }
             } catch (Exception $error) {
                 echo $error;
@@ -80,7 +77,7 @@
         public function getEndTime() {
             try {
                 if($this->checkForId()) {
-                    return $this->end_time;
+                    return $this->attributes["end_time"];
                 }
             } catch (Exception $error) {
                 echo $error;

@@ -3,8 +3,12 @@
         protected $db;
         protected $id;
         
+        //TODO: change to protected after testing
+        public $attributes;
+        
         public function __construct($db) {
             $this->db = $db;
+            $this->attributes = array();
         }
         
         //put error checking here to make sure id is an integer
@@ -14,12 +18,12 @@
         
         //this method requires that all Objects that correspond to a table
         //  must have the same name! table is all in lowercase
-        protected function setAttributes($attributes) {
+        protected function setAttributes($attributesToAssign) {
             //get the table name from the Class name
             $table_name = strtolower(get_class($this));
             
             //make the attributes a comma separated list
-            $attributes_list = implode (", ", $attributes);
+            $attributes_list = implode (", ", $attributesToAssign);
             
             try {
                 if($this->checkForId()) {
@@ -37,8 +41,8 @@
                         foreach($attrs_from_db as $attr_from_db) {
                             //assign each attribute to the corresponding value
                             //  retrieved from the database
-                            foreach($attributes as $attribute) {
-                                $this->$attribute = $attr_from_db[$attribute];
+                            foreach($attributesToAssign as $attribute) {
+                                $this->attributes[$attribute] = $attr_from_db[$attribute];
                             }
                             
                         } //end foreach

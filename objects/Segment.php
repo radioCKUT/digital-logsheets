@@ -1,7 +1,5 @@
 <?php
     class Segment extends LogsheetComponent{
-        protected $name, $album, $author;
-        
         public function __construct($db) {
             parent::__construct($db);
         }
@@ -14,15 +12,15 @@
         }
         
         public function getName() {
-            return $this->name;
+            return $this->attributes["name"];
         }
         
         public function getAlbum() {
-            return $this->album;
+            return $this->attributes["album"];
         }
         
         public function getAuthor() {
-            return $this->author;
+            return $this->attributes["author"];
         }
         
     }

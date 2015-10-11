@@ -14,7 +14,7 @@
         $db = connectToDatabase();
         $archive = new Archive($db);
         $episodes_archive = $archive->getArchive();
-        
+
         $episodes = array();
     
         foreach($episodes_archive as $episode) {
