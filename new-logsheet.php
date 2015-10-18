@@ -2,7 +2,7 @@
     //----INCLUDE FILES----
     include("smarty/libs/Smarty.class.php");
     include("dev-mode.php");
-    include("database.php");
+    include_once("database.php");
     require_once("objects/logsheet-classes.php");
     
     // create object
