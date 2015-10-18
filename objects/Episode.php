@@ -10,6 +10,7 @@
         
         //TODO: need to verify that the correct fields are given
         public function setEpisodeAttributes($fields) {
+            $this->setAttributes(array_keys($fields));
             //save data for episode object
             $this->setId($fields["id"]);
             $this->setProgram($fields["program"]);

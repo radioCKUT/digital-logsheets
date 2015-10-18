@@ -45,7 +45,6 @@
                             );
                             
                     $episode->setId($episode_row["id"]);
-                    $episode->setAttributes(array_keys($episode_attributes));
                     $episode->setEpisodeAttributes($episode_attributes);
                     
                     //each episode is stored in $episodes and reference by artist
