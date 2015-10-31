@@ -2,13 +2,23 @@
     
     function connectToDatabase() {
         //server settings
-        $servername = getenv('IP');
-        $port = "3306";
+        $servername = "localhost";
+        $port = "8889";
          
         //database settings
         $database = "c9";
-        $username = getenv('C9_USER');
-        $password = "";
+        $username = "root";
+        $password = "root";
+
+		//cloud9 server settings
+		/*//server settings
+		$servername = getenv('IP');
+		$port = "3306";
+
+		//database settings
+		$database = "c9";
+		$username = getenv('C9_USER');
+		$password = "";*/
         
         //Attempt to connect to database, throw an error if connection fails
 		try {
