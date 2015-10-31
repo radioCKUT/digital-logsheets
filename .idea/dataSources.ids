@@ -67,7 +67,7 @@
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="album" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="author" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="length" sqlType="TIME" precision="8" scale="0" nullable="true" jdbcType="92"/>
+      <column name="duration" sqlType="TIME" precision="8" scale="0" nullable="true" jdbcType="92"/>
       <column name="time" sqlType="TIME" precision="8" scale="0" nullable="true" jdbcType="92"/>
       <column name="category" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="can_con" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>

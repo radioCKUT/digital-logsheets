@@ -22,14 +22,14 @@
             
             <div>
                 Time: <input type="datetime-local" name="segment_time[]">
-                Duration: <input type="time" name="duration[]">
+                Duration: <input type="time" name="segment_duration[]">
                 Name: <input type="text" name="name[]">
                 Author: <input type="text" name="author[]">
                 Category: {html_options name="category[]" options=$categories}
-                CanCon: <input type="checkbox" name="cancon[]">
-                New Release: <input type="checkbox" name="new_release[]">
-                French Vocal Music: <input type="checkbox" name="french_vocal[]">
-                Request: <input type="checkbox" name="request[]">
+                CanCon: <input type="checkbox" name="can_con[]" value="can_con">
+                New Release: <input type="checkbox" name="new_release[]" value="new_release">
+                French Vocal Music: <input type="checkbox" name="french_vocal_music[]" value="french_vocal_music">
+                Request: <input type="checkbox" name="request[]" value="request">
                 <a href="#" onClick="cloneRow(event)">add</a>
                 <a href="#" onClick="removeRow(event)">remove</a>
                 <br>
