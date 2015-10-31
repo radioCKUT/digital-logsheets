@@ -52,7 +52,7 @@ function createPlaylist($db) {
 
 function createSegment($db, $name, $author, $category) {
     //TODO: should we be adding duplicate segments? Or should there only be one segment of the same name and author
-    //TODO: account for song, author being spelt sligtly differently
+    //TODO: account for song, author being spelt slightly differently
     $newSegmentQuery = "INSERT INTO segment (name,author,category) VALUES (:name,:author,:category)";
     $newSegmentStmt = $db->prepare($newSegmentQuery);
     

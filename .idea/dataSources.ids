@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - c9@localhost" uuid="f1b40ce6-e39c-44d1-8d70-40e105854c79">
+    <database-info product="MySQL" version="5.5.42" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.34 ( Revision: jess.balint@oracle.com-20141014163213-wqbwpf1ok2kvo1om )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
+    <schema name="" catalog="c9"/>
+    <table name="category" schema="" catalog="c9" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="segment_ibfk_1" table="segment" schema="" catalog="c9" columns="category"/>
+    </table>
+    <table name="episode" schema="" catalog="c9" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="playlist" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="program" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="programmer" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="start_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="end_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="pre_recorded" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="pre_recorded_date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="episode_ibfk_2" columns="program" ref-table="program" ref-schema="" ref-catalog="c9" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="episode_ibfk_3" columns="programmer" ref-table="programmer" ref-schema="" ref-catalog="c9" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="genre" schema="" catalog="c9" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="program_genres_ibfk_1" table="program_genres" schema="" catalog="c9" columns="genre"/>
+    </table>
+    <table name="playlist" schema="" catalog="c9" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="playlist_segments" schema="" catalog="c9" type="TABLE">
+      <column name="playlist" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="segment" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <foreign-key name="playlist_segments_ibfk_2" columns="segment" ref-table="segment" ref-schema="" ref-catalog="c9" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="id" unique="false" columns="playlist"/>
+    </table>
+    <table name="program" schema="" catalog="c9" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="genres" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="active" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="episode_ibfk_2" table="episode" schema="" catalog="c9" columns="program"/>
+    </table>
+    <table name="program_genres" schema="" catalog="c9" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="genre" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <foreign-key name="program_genres_ibfk_1" columns="genre" ref-table="genre" ref-schema="" ref-catalog="c9" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="programmer" schema="" catalog="c9" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="last_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="first_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="episode_ibfk_3" table="episode" schema="" catalog="c9" columns="programmer"/>
+    </table>
+    <table name="segment" schema="" catalog="c9" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="album" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="author" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="length" sqlType="TIME" precision="8" scale="0" nullable="true" jdbcType="92"/>
+      <column name="time" sqlType="TIME" precision="8" scale="0" nullable="true" jdbcType="92"/>
+      <column name="category" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="can_con" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="new_release" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="french_vocal_music" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="request" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="segment_ibfk_1" columns="category" ref-table="category" ref-schema="" ref-catalog="c9" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="playlist_segments_ibfk_2" table="playlist_segments" schema="" catalog="c9" columns="segment"/>
+    </table>
+  </data-source>
+</component>
