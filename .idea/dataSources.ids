@@ -20,8 +20,8 @@
       <column name="programmer" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="start_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <column name="end_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
-      <column name="pre_recorded" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
-      <column name="pre_recorded_date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="prerecord" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="prerecord_date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="episode_ibfk_2" columns="program" ref-table="program" ref-schema="" ref-catalog="c9" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="episode_ibfk_3" columns="programmer" ref-table="programmer" ref-schema="" ref-catalog="c9" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>

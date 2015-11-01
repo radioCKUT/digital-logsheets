@@ -4,7 +4,10 @@ include_once('database.php');
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
 $programId = $_POST['program'];
+
 $prerecord = $_POST['prerecord']; //TODO: table with prerecord column
+$prerecord_date = $_POST['prerecord_date'];
+
 $start_time = $_POST['start_time'];
 $end_time = $_POST['end_time'];
 $comment = $_POST['comment']; //TODO: table with comment column
@@ -35,7 +38,7 @@ try {
         addSegmentToPlaylist($db, $playlistId, $segmentId);
     }
     
-    createEpisode($db, $playlistId, $programId, $programmerId, $start_time, $end_time);
+    createEpisode($db, $playlistId, $programId, $programmerId, $start_time, $end_time, isset($prerecord), $prerecord_date);
     
     print "Entry added! \n";
     include('new-logsheet.php');
@@ -103,17 +106,23 @@ function getIdOfLastEntry($db) {
     return $db->lastInsertId();
 }
 
-function createEpisode($db, $playlistId, $programId, $programmerId, $start_time, $end_time) {
-    $newEpisodeQuery = "INSERT INTO episode (playlist, program, programmer, start_time, end_time) 
-        VALUES (:playlist,:program,:programmer,:start_time,:end_time)";
+function createEpisode($db, $playlistId, $programId, $programmerId, $start_time, $end_time, $is_prerecord, $prerecord_date) {
+    $is_prerecord_string = $is_prerecord ? "TRUE" : "FALSE";
+
+    $newEpisodeQuery = "INSERT INTO episode (playlist,program,programmer,start_time,end_time,prerecord,prerecord_date)
+        VALUES (:playlist,:program,:programmer,:start_time,:end_time," . $is_prerecord_string . ",:prerecord_date)";
     $newEpisodeStmt = $db->prepare($newEpisodeQuery);
+    
+    $newEpisodeStmt->bindParam(":prerecord_date", $prerecord_date, PDO::PARAM_STR);
 
     $newEpisodeStmt->bindParam(":playlist", $playlistId, PDO::PARAM_INT);
     $newEpisodeStmt->bindParam(":program", $programId, PDO::PARAM_INT);
     $newEpisodeStmt->bindParam(":programmer", $programmerId, PDO::PARAM_INT);
 
-    $newEpisodeStmt->bindParam(":start_time", $start_time);
-    $newEpisodeStmt->bindParam(":end_time", $end_time);
+    $newEpisodeStmt->bindParam(":start_time", $start_time, PDO::PARAM_STR);
+    $newEpisodeStmt->bindParam(":end_time", $end_time, PDO::PARAM_STR);
+
+
 
     $newEpisodeStmt->execute();
 }
