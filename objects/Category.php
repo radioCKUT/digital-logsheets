@@ -1,7 +1,6 @@
 <?php
     class Category extends LogsheetComponent{
-        protected $name;
-        
+
         public function __construct($db) {
             parent::__construct($db);
         }
@@ -14,7 +13,7 @@
         }
         
         public function getName() {
-            return $this->name;
+            return $this->attributes["name"];
         }
     }
 ?>

@@ -11,7 +11,7 @@
             $this->attributes = array();
         }
         
-        //put error checking here to make sure id is an integer
+        //TODO put error checking here to make sure id is an integer
         public function setId($component_id) {
             $this->id = $component_id;
         }
@@ -22,8 +22,8 @@
             //get the table name from the Class name
             $table_name = strtolower(get_class($this));
             
-            //make the attributes a comma separated list
-            $attributes_list = implode (", ", $attributesToAssign);
+            //make the attributes a comma-separated list
+            $attributes_list = implode (",", $attributesToAssign);
             
             try {
                 if($this->checkForId()) {
