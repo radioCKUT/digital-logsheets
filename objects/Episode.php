@@ -11,7 +11,7 @@
         public function setId($component_id) {
             parent::setId($component_id);
 
-            $this->setAttributes(array("id", "program", "playlist", "programmer", "start_time", "end_time"));
+            $this->setAttributes(array("program", "playlist", "programmer", "start_time", "end_time"));
 
             $this->setProgram($this->attributes["program"]);
             $this->setPlaylist($this->attributes["playlist"]);
