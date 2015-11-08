@@ -20,8 +20,7 @@
         //used to retrieve a history of all episodes for display
         private function createArchive() {
             //prepare and execute the SQL statement
-            $sql = "SELECT id, playlist, program, programmer, start_time, end_time
-                    FROM episode";
+            $sql = "SELECT id FROM episode";
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
             
@@ -33,19 +32,8 @@
                 foreach($result as $episode_row) {
                     //create a new episode object
                     $episode = new Episode($this->db);
-                    
-                    //save data for episode object
-                    $episode_attributes = array(
-                                "id"=>$episode_row["id"],
-                                "playlist"=>$episode_row["playlist"],
-                                "program"=>$episode_row["program"],
-                                "programmer"=>$episode_row["programmer"],
-                                "start_time"=>$episode_row["start_time"],
-                                "end_time"=>$episode_row["end_time"]
-                            );
-                            
+
                     $episode->setId($episode_row["id"]);
-                    $episode->setEpisodeAttributes($episode_attributes);
                     
                     //each episode is stored in $episodes and reference by artist
                     $this->episodes[$episode->getId()] = $episode;

@@ -7,16 +7,16 @@
         public function __construct($db) {
             parent::__construct($db);
         }
-        
-        //TODO: need to verify that the correct fields are given
-        public function setEpisodeAttributes($fields) {
-            $this->setAttributes(array_keys($fields));
-            //save data for episode object
-            $this->setId($fields["id"]);
-            $this->setProgram($fields["program"]);
-            $this->setPlaylist($fields["playlist"]);
-            $this->setProgrammer($fields["programmer"]);
-            $this->setDateTime($fields["start_time"], $fields["end_time"]);
+
+        public function setId($component_id) {
+            parent::setId($component_id);
+
+            $this->setAttributes(array("id", "program", "playlist", "programmer", "start_time", "end_time"));
+
+            $this->setProgram($this->attributes["program"]);
+            $this->setPlaylist($this->attributes["playlist"]);
+            $this->setProgrammer($this->attributes["programmer"]);
+            $this->setDateTime($this->attributes["start_time"], $this->attributes["end_time"]);
         }
         
         public function setProgram($program_id) {
@@ -56,13 +56,7 @@
         }
         
         public function getStartDate() {
-            try {
-                if($this->checkForId()) {
-                    return $this->attributes["start_time"];
-                }
-            } catch (Exception $error) {
-                echo $error;
-            }
+            return $this->getStartTime();
         }
         
         public function getStartTime() {
