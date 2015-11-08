@@ -52,13 +52,16 @@ The listener-facing interface is currently outside the scope of this project. A 
 
 ####Future Requirements
 
-- Quick way for programming directors to verify paper log information
+- Quick way for programming directors to verify log submissions
+- If ad ID numbers are stored in a database, link these to digital-logsheet submissions
 
 ##Questions
 
+- Could theme/interview section on paper logsheet be replaced by the more general "episode notes" section?
+- Is it safe to assume that all category 4 entries are ID?
 - Safe to measure duration of each segment by the differences between segment start times?
 - Should programmers be able to revise logsheets they have already submitted?
 - How should logsheet submission be protected?
 - Is keeping statistics per programmer important? Should each individual programmer have their own ID to be used on each logsheet? Or can programmer entry be just a single line that won't need to be retrieved later?
 - For music segments, is it imperative that all song description fields (i.e., artist, album, song) be filled? Some programmers only opt to fill one of the three fields.
-- Is the ability to see how many times a given song played over the course of all programs important? If so, (artist/album/song) fields likely shouldn't be entirely free-form (e.g., a 'suggestion list' similar to Google) to avoid miscalculating statistics
+- Is the ability to see how many times a given song played over the course of all programs important? If so, (artist/album/song) fields likely shouldn't be entirely free-form (e.g., a 'suggestion list' similar to what a search engine might provide) to avoid miscalculating statistics
