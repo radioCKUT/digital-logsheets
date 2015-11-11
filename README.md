@@ -6,22 +6,22 @@ A web-based application for tracking the playback of audio segments on a communi
 
 ###Purpose
 
-This application aims to serve the following CKUT 90.3FM stakeholders by allowing:
+This application aims to serve the following CKUT 90.3FM stakeholders in the following ways:
 
-1. Programmers to more conveniently report what they play
-2. Programming directors to more quickly track and monitor airplay statistics
-3. Listeners to access what was played on-air at any time
+1. Programmers: More convenient reporting of program content as required by station policy
+2. Station directors: Quicker tracking and monitoring of airplay statistics
+3. Listeners: Find out what content was played during a specific time on-air
 
-It will strive to be a complete replacement of the current paper logsheet system.
+This application will strive to be a complete replacement of the current paper logsheet system.
 
 ###Requirements
 
-These requirements are divided up by the stakeholders who would be using them most. Separate interfaces would likely need to be created for each of these sections, but all features (if applicable) should read from and write to the same database.
+These requirements are divided up by the stakeholders they would most affect. Separate interfaces would likely need to be created for each of these sections, but all features (if applicable) should read from and write to the same database.
 
 ####Programmers
-Achieve a balance of browser compatibility (i.e., older browsers may be used) and technology accessibility.
+Achieve a balance of browser compatibility and accessibility in terms of ability to use the digital-logsheets tool.
 
-Allow programmers to enter the following data about their programs:
+Allow programmers to enter the following data about their programs into an online form:
 
 - Basic metadata (program, air date/time, pre-record date, notes)
 - For each individual audio segment: start time, station-defined category, CanCon, New Rel, French Vocal, Request
@@ -32,7 +32,7 @@ Each individual audio segment should also have the following information attache
 - (2 general music, 3 jazz, classical & traditional music) artist, album, song (all can be written free-form)
 - (5 ads, promos) station-defined ad number
 
-Programmers' logsheet entry in progress should not be lost if something goes wrong (e.g. loss of connection, accidentally pressing back button)
+Information input into a logsheet entry in progress should not be lost if something goes wrong (e.g. loss of connection, accidentally pressing back button, etc.)
 
 ####Progamming Directors
 
@@ -52,7 +52,7 @@ The listener-facing interface is currently outside the scope of this project. A 
 
 ####Future Requirements
 
-- Quick way for programming directors to verify log submissions
+- Quick way for programming directors to check for small human errors in a digital logsheet submission
 - If ad ID numbers are stored in a database, link these to digital-logsheet submissions
 
 ##Questions
@@ -61,7 +61,7 @@ The listener-facing interface is currently outside the scope of this project. A 
 - Is it safe to assume that all category 4 entries are ID?
 - Safe to measure duration of each segment by the differences between segment start times?
 - Should programmers be able to revise logsheets they have already submitted?
-- How should logsheet submission be protected?
+- How should logsheet submission be protected? For security purposes, logsheet form should not be totally accessible to the public, but per-user password login may make digital logsheet adoption more difficult.
 - Is keeping statistics per programmer important? Should each individual programmer have their own ID to be used on each logsheet? Or can programmer entry be just a single line that won't need to be retrieved later?
-- For music segments, is it imperative that all song description fields (i.e., artist, album, song) be filled? Some programmers only opt to fill one of the three fields.
+- For music segments, is it imperative that all song description fields (i.e., artist, album, song) be filled? Some programmers do not fill in all three fields.
 - Is the ability to see how many times a given song played over the course of all programs important? If so, (artist/album/song) fields likely shouldn't be entirely free-form (e.g., a 'suggestion list' similar to what a search engine might provide) to avoid miscalculating statistics
