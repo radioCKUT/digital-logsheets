@@ -34,7 +34,7 @@ Each individual audio segment should also have the following information attache
 
 Information input into a logsheet entry in progress should not be lost if something goes wrong (e.g. loss of connection, accidentally pressing back button, etc.)
 
-####Progamming Directors
+####Station Directors
 
 Ability to edit already submitted logsheets
 
