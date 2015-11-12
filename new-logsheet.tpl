@@ -29,7 +29,6 @@
                 CanCon: <input type="checkbox" name="can_con[]" value="can_con">
                 New Release: <input type="checkbox" name="new_release[]" value="new_release">
                 French Vocal Music: <input type="checkbox" name="french_vocal_music[]" value="french_vocal_music">
-                Request: <input type="checkbox" name="request[]" value="request">
                 <a href="#" onClick="cloneRow(event)">add</a>
                 <a href="#" onClick="removeRow(event)">remove</a>
                 <br>

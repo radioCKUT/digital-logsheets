@@ -21,7 +21,6 @@ $categories = $_POST['category'];
 $can_con = $_POST['can_con'];
 $new_release = $_POST['new_release'];
 $french_vocal_music = $_POST['french_vocal_music'];
-$request = $_POST['request'];
 
 try {
     $db = connectToDatabase();
@@ -33,7 +32,7 @@ try {
     
     for ($i = 0; $i < $segmentCount; $i++) {
         $segmentId = createSegment($db, $segment_times[$i], $segment_durations[$i], $names[$i], $authors[$i],
-            $categories[$i], isset($can_con[$i]), isset($new_release[$i]), isset($french_vocal_music[$i]), isset($request[$i]));
+            $categories[$i], isset($can_con[$i]), isset($new_release[$i]), isset($french_vocal_music[$i]));
 
         addSegmentToPlaylist($db, $playlistId, $segmentId);
     }
@@ -62,11 +61,11 @@ function createPlaylist($db) {
     return getIdOfLastEntry($db);
 }
 
-function createSegment($db, $time, $duration, $name, $author, $category, $is_can_con, $is_new_release, $is_french_vocal_music, $is_request) {
+function createSegment($db, $time, $duration, $name, $author, $category, $is_can_con, $is_new_release, $is_french_vocal_music) {
     //TODO: should we be adding duplicate segments? Or should there only be one segment of the same name and author
     //TODO: account for song, author being spelt slightly differently
-    $newSegmentQuery = "INSERT INTO segment (time,duration,name,author,category,can_con,new_release,french_vocal_music,request)
-      VALUES (:time,:duration,:name,:author,:category,:can_con,:new_release,:french_vocal_music,:request)";
+    $newSegmentQuery = "INSERT INTO segment (time,duration,name,author,category,can_con,new_release,french_vocal_music)
+      VALUES (:time,:duration,:name,:author,:category,:can_con,:new_release,:french_vocal_music)";
     $newSegmentStmt = $db->prepare($newSegmentQuery);
 
     $newSegmentStmt->bindParam(":time", $time, PDO::PARAM_STR);
@@ -82,8 +81,6 @@ function createSegment($db, $time, $duration, $name, $author, $category, $is_can
     $newSegmentStmt->bindParam(":can_con", $is_can_con ? $trueChar : $falseChar, PDO::PARAM_STR);
     $newSegmentStmt->bindParam(":new_release", $is_new_release ? $trueChar : $falseChar, PDO::PARAM_STR);
     $newSegmentStmt->bindParam(":french_vocal_music", $is_french_vocal_music ? $trueChar : $falseChar, PDO::PARAM_STR);
-    $newSegmentStmt->bindParam(":request", $is_request ? $trueChar : $falseChar, PDO::PARAM_STR);
-
 
     $newSegmentStmt->execute();
     
