@@ -196,14 +196,11 @@
       <column id="56" parent="10" name="french_vocal_music">
         <data-type>char(1)</data-type>
       </column>
-      <column id="57" parent="10" name="request">
-        <data-type>char(1)</data-type>
-      </column>
-      <key id="58" parent="10" name="PRIMARY">
+      <key id="57" parent="10" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="59" parent="10" name="segment_ibfk_1">
+      <foreign-key id="58" parent="10" name="segment_ibfk_1">
         <columns>category</columns>
         <ref-key>category.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>

@@ -9,7 +9,7 @@
             
             //set all the attributes for the object as soon as the id has been set
             $this->setAttributes(array("category","name","album","author","start_time","ad_number",
-                "station_id", "can_con", "new_release", "french_vocal_music", "request"));
+                "station_id", "can_con", "new_release", "french_vocal_music"));
         }
 
         public function getCategory() {
@@ -38,10 +38,6 @@
 
         public function isNewRelease() {
             return !($this->attributes["new_release"] == 0);
-        }
-
-        public function isRequest() {
-            return !($this->attributes["request"] == 0);
         }
 
         public function getStartTime() {
