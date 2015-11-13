@@ -61,14 +61,14 @@ function createPlaylist($db) {
     return getIdOfLastEntry($db);
 }
 
-function createSegment($db, $time, $duration, $name, $author, $category, $is_can_con, $is_new_release, $is_french_vocal_music) {
+function createSegment($db, $start_time, $duration, $name, $author, $category, $is_can_con, $is_new_release, $is_french_vocal_music) {
     //TODO: should we be adding duplicate segments? Or should there only be one segment of the same name and author
     //TODO: account for song, author being spelt slightly differently
-    $newSegmentQuery = "INSERT INTO segment (time,duration,name,author,category,can_con,new_release,french_vocal_music)
-      VALUES (:time,:duration,:name,:author,:category,:can_con,:new_release,:french_vocal_music)";
+    $newSegmentQuery = "INSERT INTO segment (start_time,duration,name,author,category,can_con,new_release,french_vocal_music)
+      VALUES (:start_time,:duration,:name,:author,:category,:can_con,:new_release,:french_vocal_music)";
     $newSegmentStmt = $db->prepare($newSegmentQuery);
 
-    $newSegmentStmt->bindParam(":time", $time, PDO::PARAM_STR);
+    $newSegmentStmt->bindParam(":start_time", $start_time, PDO::PARAM_STR);
     $newSegmentStmt->bindParam(":duration", $duration, PDO::PARAM_STR);
 
     $newSegmentStmt->bindParam(":name", $name, PDO::PARAM_STR);
