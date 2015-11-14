@@ -28,15 +28,26 @@ try {
     $programmerId = createProgrammer($db, $first_name, $last_name);
     $playlistId = createPlaylist($db);
     
-    $segmentNameCount = count($names);
+    $segmentCount = count($segment_times);
+    print "segment count: " . $segmentCount . " ";
+    $segments = array();
 
-    sort($segment_times, $names, $authors, $categories, $can_con, $new_release, $french_vocal_music);
+    for ($i = 0; $i < $segmentCount; $i++) {
+        $segments[$i] = array('start_time' => $segment_times[$i], 'name' => $names[$i], 'author' => $authors[$i], 'category' => $categories[$i],
+            'can_con' => isset($can_con[$i]), 'new_release' => isset($new_release[$i]), 'french_vocal_music' => isset($french_vocal_music[$i]));
+    }
 
-    $segment_durations = computeSegmentDurations($segment_times, $end_time);
+    usort($segments, function ($a, $b) {
+        return strtotime($a['start_time']) > strtotime($b['start_time']);
+    });
 
-    for ($i = 0; $i < $segmentNameCount; $i++) {
-        $segmentId = createSegment($db, $segment_times[$i], $segment_durations[$i], $names[$i], $authors[$i],
-            $categories[$i], isset($can_con[$i]), isset($new_release[$i]), isset($french_vocal_music[$i]));
+    //array_multisort($segment_times, $names, $authors, $categories, $can_con, $new_release, $french_vocal_music);
+
+    $segments = computeSegmentDurations($segments, $end_time);
+
+    for ($i = 0; $i < $segmentCount; $i++) {
+        $segmentId = createSegment($db, $segments[$i]['start_time'], $segments[$i]['duration'], $segments[$i]['name'], $segments[$i]['author'],
+            $segments[$i]['category'], $segments[$i]['can_con'], $segments[$i]['new_release'], $segments[$i]['french_vocal_music']);
 
         addSegmentToPlaylist($db, $playlistId, $segmentId);
     }
@@ -50,21 +61,20 @@ try {
     echo 'ERROR: ' . $e->getMessage();
 }
 
-function computeSegmentDurations($segment_times, $end_time) {
-    $segmentStartTimeCount = count($segment_times);
-    $segment_durations = array();
+function computeSegmentDurations($segments, $end_time) {
+    $segmentStartTimeCount = count($segments);
 
     for ($i = 0; $i < $segmentStartTimeCount; $i++) {
         if ($i < ($segmentStartTimeCount - 1)) {
-            $duration = date_diff(new DateTime($segment_times[$i+1]), new DateTime($segment_times[$i]));/*stringToStandardTime($segment_times[$i+1]) - stringToStandardTime($segment_times[$i]);*/
+            $duration = date_diff(new DateTime($segments[$i+1]['start_time']), new DateTime($segments[$i]['start_time']));
         } else {
-            $duration = date_diff(new DateTime($end_time), new DateTime($segment_times[$i]));
+            $duration = date_diff(new DateTime($end_time), new DateTime($segments[$i]['start_time']));
         }
 
-        $segment_durations[$i] = $duration->format('%H:%i:%s');
+        $segments[$i]['duration'] = $duration->format('%H:%i:%s');
     }
 
-    return $segment_durations;
+    return $segments;
 }
 
 function createProgrammer($db, $first_name, $last_name) {
@@ -99,9 +109,11 @@ function createSegment($db, $start_time, $duration, $name, $author, $category, $
     $trueChar = 'o';
     $falseChar = null;
 
-    $newSegmentStmt->bindParam(":can_con", $is_can_con ? $trueChar : $falseChar, PDO::PARAM_STR);
-    $newSegmentStmt->bindParam(":new_release", $is_new_release ? $trueChar : $falseChar, PDO::PARAM_STR);
-    $newSegmentStmt->bindParam(":french_vocal_music", $is_french_vocal_music ? $trueChar : $falseChar, PDO::PARAM_STR);
+    print "can con: " . ($is_can_con ? $trueChar : $falseChar);
+
+    $newSegmentStmt->bindParam(":can_con", ($is_can_con ? $trueChar : $falseChar), PDO::PARAM_STR);
+    $newSegmentStmt->bindParam(":new_release", ($is_new_release ? $trueChar : $falseChar), PDO::PARAM_STR);
+    $newSegmentStmt->bindParam(":french_vocal_music", ($is_french_vocal_music ? $trueChar : $falseChar), PDO::PARAM_STR);
 
     $newSegmentStmt->execute();
     
