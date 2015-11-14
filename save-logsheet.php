@@ -28,9 +28,13 @@ try {
     $programmerId = createProgrammer($db, $first_name, $last_name);
     $playlistId = createPlaylist($db);
     
-    $segmentCount = count($names);
-    
-    for ($i = 0; $i < $segmentCount; $i++) {
+    $segmentNameCount = count($names);
+
+    sort($segment_times, $names, $authors, $categories, $can_con, $new_release, $french_vocal_music);
+
+    $segment_durations = computeSegmentDurations($segment_times, $end_time);
+
+    for ($i = 0; $i < $segmentNameCount; $i++) {
         $segmentId = createSegment($db, $segment_times[$i], $segment_durations[$i], $names[$i], $authors[$i],
             $categories[$i], isset($can_con[$i]), isset($new_release[$i]), isset($french_vocal_music[$i]));
 
@@ -44,6 +48,23 @@ try {
     
 } catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
+}
+
+function computeSegmentDurations($segment_times, $end_time) {
+    $segmentStartTimeCount = count($segment_times);
+    $segment_durations = array();
+
+    for ($i = 0; $i < $segmentStartTimeCount; $i++) {
+        if ($i < ($segmentStartTimeCount - 1)) {
+            $duration = date_diff(new DateTime($segment_times[$i+1]), new DateTime($segment_times[$i]));/*stringToStandardTime($segment_times[$i+1]) - stringToStandardTime($segment_times[$i]);*/
+        } else {
+            $duration = date_diff(new DateTime($end_time), new DateTime($segment_times[$i]));
+        }
+
+        $segment_durations[$i] = $duration->format('%H:%i:%s');
+    }
+
+    return $segment_durations;
 }
 
 function createProgrammer($db, $first_name, $last_name) {

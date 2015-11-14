@@ -181,7 +181,7 @@
         <data-type>time</data-type>
       </column>
       <column id="52" parent="10" name="start_time">
-        <data-type>time</data-type>
+        <data-type>datetime</data-type>
       </column>
       <column id="53" parent="10" name="category">
         <mandatory>1</mandatory>
