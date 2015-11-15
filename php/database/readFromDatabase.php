@@ -1,6 +1,6 @@
 <?php
 
-    //begin episode-specific methods
+    //begin episode table-specific methods
     function getEpisodeTableName()
     {
         return "episode";
@@ -12,23 +12,19 @@
             getEpisodeTableName(), "id", $episode_id);
     }
 
-    function getProgramNameFromDatabase($db_connection, $program_id) {
-        return readFirstMatchingEntryFromTable($db_connection, "name", "program", "id", $program_id);
-    }
-
-    function getProgramFromDatabase($db_connection, $episode_id)
+    function getEpisodeProgramFromDatabase($db_connection, $episode_id)
     {
         $program_id = getEpisodeAttributeFromDatabase($db_connection, "program", $episode_id);
         return new Program($db_connection, $program_id);
     }
 
-    function getPlaylistFromDatabase($db_connection, $episode_id)
+    function getEpisodePlaylistFromDatabase($db_connection, $episode_id)
     {
         $playlist_id = getEpisodeAttributeFromDatabase($db_connection, "playlist", $episode_id);
         return new Playlist($db_connection, $playlist_id);
     }
 
-    function getProgrammerFromDatabase($db_connection, $episode_id)
+    function getEpisodeProgrammerFromDatabase($db_connection, $episode_id)
     {
         $programmer_id = getEpisodeAttributeFromDatabase($db_connection, "programmer", $episode_id);
         return new Programmer($db_connection, $programmer_id);
@@ -58,13 +54,13 @@
 
         return $episodes;
     }
-    //end episode-specific methods
+    //end episode table-specific methods
 
 
 
 
 
-    //begin category-specific methods
+    //begin category table-specific methods
     function getCategoryNameFromDatabase($db_connection, $category_id) {
         return readFirstMatchingEntryFromTable($db_connection, "name", "category", "id", $category_id);
     }
@@ -81,13 +77,17 @@
 
         return $categories;
     }
-    //end category-specific methods
+    //end category table-specific methods
 
 
 
 
 
-    //begin program-specific methods
+    //begin program table-specific methods
+    function getProgramNameFromDatabase($db_connection, $program_id) {
+        return readFirstMatchingEntryFromTable($db_connection, "name", "program", "id", $program_id);
+    }
+
     function getAllProgramsFromDatabase($db_connection) {
         $program_ids = readEntireColumnFromTable($db_connection, "id", "program");
 
@@ -99,14 +99,14 @@
 
         return $programs;
     }
-    //end program-specific methods
+    //end program table-specific methods
 
 
 
 
 
 
-    //begin playlist-specific methods
+    //begin playlist table-specific methods
     function getPlaylistSegmentsFromDatabase($db_connection, $playlist_id)
     {
         $segment_ids = readFilteredColumnFromTable($db_connection, "segment", "playlist_segments", "playlist", $playlist_id);
@@ -122,13 +122,13 @@
 
         return $segments;
     }
-    //end playlist-specific methods
+    //end playlist table-specific methods
 
 
 
 
 
-    //begin segment-specific methods
+    //begin segment table-specific methods
     function getSegmentAttributeFromDatabase($db_connection, $attribute_column_name, $segment_id) {
         return readFirstMatchingEntryFromTable($db_connection, $attribute_column_name, "segment", "id", $segment_id);
     }
@@ -144,7 +144,7 @@
     function getSegmentAuthorFromDatabase($db_connection, $segment_id) {
         return getSegmentAttributeFromDatabase($db_connection, "author", $segment_id);
     }
-    //end segment-specific methods
+    //end segment table-specific methods
 
 
 

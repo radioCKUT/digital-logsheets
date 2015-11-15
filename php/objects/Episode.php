@@ -14,9 +14,9 @@
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
-            $this->program = getProgramFromDatabase($db, $component_id);
-            $this->playlist = getPlaylistFromDatabase($db, $component_id);
-            $this->programmer = getProgrammerFromDatabase($db, $component_id);
+            $this->program = getEpisodeProgramFromDatabase($db, $component_id);
+            $this->playlist = getEpisodePlaylistFromDatabase($db, $component_id);
+            $this->programmer = getEpisodeProgrammerFromDatabase($db, $component_id);
 
             $this->episode_start_time = getEpisodeStartTimeFromDatabase($db, $component_id);
             $this->episode_end_time = getEpisodeEndTimeFromDatabase($db, $component_id);
