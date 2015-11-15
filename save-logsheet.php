@@ -1,6 +1,6 @@
 <?php
-include_once('database/connectToDatabase.php');
-include("dev-mode.php");
+include_once('php/database/connectToDatabase.php');
+include("php/dev-mode.php");
 
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];

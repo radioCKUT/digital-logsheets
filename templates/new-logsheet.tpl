@@ -7,7 +7,7 @@
         <script src="js/dynamic_form.js"></script>
     </head>
     <body>
-        <form id="logsheet" action="save-logsheet.php" method="post">
+        <form id="logsheet" action="../save-logsheet.php" method="post">
             <div>
                 First Name: <input type="text" name="first_name"><br />
                 Last Name: <input type="text" name="last_name"><br />

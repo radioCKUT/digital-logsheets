@@ -1,5 +1,5 @@
 <?php
-    include_once("../database/readFromDatabase.php");
+    include_once(__DIR__ . "/../database/readFromDatabase.php");
     class Segment extends LogsheetComponent{
 
 
@@ -9,9 +9,6 @@
 
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
-
-            /*$this->setAttributes(array("category","name","album","author","start_time","ad_number",
-                "station_id", "can_con", "new_release", "french_vocal_music"));*/
 
             $this->name = getSegmentNameFromDatabase($db, $component_id);
             $this->author = getSegmentAuthorFromDatabase($db, $component_id);

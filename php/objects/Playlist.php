@@ -1,5 +1,5 @@
 <?php
-    require_once("../database/readFromDatabase.php");
+    require_once(__DIR__ . "/../database/readFromDatabase.php");
 
     class Playlist extends LogsheetComponent {
         private $segments;

@@ -1,7 +1,7 @@
 <?php
 
     //TODO: Error checking...
-    require_once("../database/readFromDatabase.php");
+    require_once(__DIR__ . "/../database/readFromDatabase.php");
     class Episode extends LogsheetComponent {
 
         private $program;

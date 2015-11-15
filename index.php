@@ -1,9 +1,9 @@
 <?php
     //----INCLUDE FILES----
-    include('../smarty/libs/Smarty.class.php');
-    include("database/connectToDatabase.php");
-    include("dev-mode.php");
-    require_once("objects/logsheet-classes.php");
+    include('smarty/libs/Smarty.class.php');
+    include("php/database/connectToDatabase.php");
+    include("php/dev-mode.php");
+    require_once("php/objects/logsheet-classes.php");
     
     // create object
     $smarty = new Smarty;

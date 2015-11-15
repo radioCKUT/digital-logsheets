@@ -1,5 +1,5 @@
 <?php
-    include_once("../database/readFromDatabase.php");
+    include_once(__DIR__ . "/../database/readFromDatabase.php");
     class Program extends LogsheetComponent{
 
         private $name;
