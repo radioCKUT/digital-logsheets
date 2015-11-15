@@ -1,7 +1,7 @@
 <?php
     //----INCLUDE FILES----
     include('../smarty/libs/Smarty.class.php');
-    include("objects/database/connectToDatabase.php");
+    include("database/connectToDatabase.php");
     include("dev-mode.php");
     require_once("objects/logsheet-classes.php");
     

@@ -1,5 +1,5 @@
 <?php
-    include_once("database/readFromDatabase.php");
+    include_once("../database/readFromDatabase.php");
     class Segment extends LogsheetComponent{
 
 

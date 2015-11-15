@@ -1,5 +1,5 @@
 <?php
-    require_once("database/readFromDatabase.php");
+    require_once("../database/readFromDatabase.php");
     class Archive {
 
         private $db;

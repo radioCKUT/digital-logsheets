@@ -1,5 +1,5 @@
 <?php
-include_once('objects/database/connectToDatabase.php');
+include_once('database/connectToDatabase.php');
 include("dev-mode.php");
 
 $first_name = $_POST['first_name'];

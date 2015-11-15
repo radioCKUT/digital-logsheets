@@ -2,75 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b6adfb0-83d6-4688-a190-aed1499af6ad" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.dir.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.error.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.htaccess" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/.index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/css.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/file.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/folder.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/image.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/office.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/php.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/script.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/sound.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/video.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/word.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/xml.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.images/zip.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.sorttable.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DisplayDirectoryContents/.style.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/6-29-08_023_4276687472887707_pc.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/auth(1).html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/auth.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/auth_topnav-full-line-color-params(1).php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/auth_topnav-full-line-color-params.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/chartbeat.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/feed-icon-14x14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/ga.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/hamburger_mario_3584278097288311_pc.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/highslide-v4.1.13.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/highslide-v4.1.13.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/highslide.config-v4.1.13.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/jquery-1.7.2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/jquery-ui-1.8.22.custom.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/jquery-ui-1.8.22.custom.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/jquery.cookie.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/kenzodb_fav_comp.1426795667.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/pieuvre_3584186656775162_pc.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/playbuttont.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/pledgewidget.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/poo_horse_by_partack1-d56m6mi_4352278391415751_pc.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/s4l_badge.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/spacer.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/star_empty_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/tablescroll-cross.1388996571.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/therm_style.1394238746.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/tumblr_ltolsjqi061qh59n0o5_250_4387269345564822_pc.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/tumblr_ltolsjqi061qh59n0o5_250_4387269345564822_pd.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WFMU-Sample-Episode-Archive_files/whitebeaker_4311759949321382_pc.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dev-mode.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/index.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/new-logsheet.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/new-logsheet.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/Archive.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/Category.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/Episode.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/LogsheetComponent.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/Playlist.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/Program.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/Programmer.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/Segment.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/database/connectToDatabase.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/database/readFromDatabase.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/objects/logsheet-classes.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/save-logsheet.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tester.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/workspace/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/workspace/php.ini" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/php/tester.php" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/php/objects/database/connectToDatabase.php" afterPath="$PROJECT_DIR$/php/database/connectToDatabase.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/php/objects/database/readFromDatabase.php" afterPath="$PROJECT_DIR$/php/database/readFromDatabase.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/index.php" afterPath="$PROJECT_DIR$/php/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/new-logsheet.php" afterPath="$PROJECT_DIR$/php/new-logsheet.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/objects/Archive.php" afterPath="$PROJECT_DIR$/php/objects/Archive.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/objects/Category.php" afterPath="$PROJECT_DIR$/php/objects/Category.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/objects/Episode.php" afterPath="$PROJECT_DIR$/php/objects/Episode.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/objects/LogsheetComponent.php" afterPath="$PROJECT_DIR$/php/objects/LogsheetComponent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/objects/Playlist.php" afterPath="$PROJECT_DIR$/php/objects/Playlist.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/objects/Program.php" afterPath="$PROJECT_DIR$/php/objects/Program.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/objects/Segment.php" afterPath="$PROJECT_DIR$/php/objects/Segment.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/save-logsheet.php" afterPath="$PROJECT_DIR$/php/save-logsheet.php" />
     </list>
     <ignored path="digital-logsheets.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,46 +54,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dev-mode.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/php/dev-mode.php">
+      <file leaf-file-name="LogsheetComponent.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/objects/LogsheetComponent.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="-1.875">
+              <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/php/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.125">
-              <caret line="21" column="48" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="save-logsheet.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/php/save-logsheet.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.5705128">
-              <caret line="93" column="20" selection-start-line="93" selection-start-column="20" selection-end-line="93" selection-end-column="20" />
-              <folding>
-                <marker date="1447616902000" expanded="true" signature="2847:2944" placeholder="INSERT INTO programmer..." />
-                <marker date="1447616902000" expanded="true" signature="3081:3114" placeholder="INSERT INTO playlist..." />
-                <marker date="1447616902000" expanded="true" signature="3538:3742" placeholder="INSERT INTO segment..." />
-                <marker date="1447616902000" expanded="true" signature="4700:4777" placeholder="INSERT INTO playlist_segments..." />
-                <marker date="1447616902000" expanded="true" signature="5465:5674" placeholder="INSERT INTO episode..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="connectToDatabase.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/php/objects/database/connectToDatabase.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.625">
+            <state vertical-scroll-proportion="0.06410257">
               <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
               <folding />
             </state>
@@ -159,17 +78,67 @@
         <entry file="file://$PROJECT_DIR$/php/objects/Category.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.625">
-              <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new-logsheet.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/php/new-logsheet.php">
+      <file leaf-file-name="Archive.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/objects/Archive.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.875">
-              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="28" />
+            <state vertical-scroll-proportion="-0.625">
+              <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Episode.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/objects/Episode.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.625">
+              <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Playlist.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/objects/Playlist.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.25">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Program.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/objects/Program.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.625">
+              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Programmer.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/objects/Programmer.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Segment.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/objects/Segment.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.625">
+              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -203,9 +172,16 @@
         <option value="$PROJECT_DIR$/objects/Program.php" />
         <option value="$PROJECT_DIR$/objects/Segment.php" />
         <option value="$PROJECT_DIR$/objects/database/readFromDatabase.php" />
+        <option value="$PROJECT_DIR$/php/objects/Archive.php" />
+        <option value="$PROJECT_DIR$/php/objects/Category.php" />
+        <option value="$PROJECT_DIR$/php/objects/Episode.php" />
+        <option value="$PROJECT_DIR$/php/objects/Program.php" />
         <option value="$PROJECT_DIR$/php/new-logsheet.php" />
-        <option value="$PROJECT_DIR$/php/index.php" />
         <option value="$PROJECT_DIR$/php/save-logsheet.php" />
+        <option value="$PROJECT_DIR$/php/objects/Segment.php" />
+        <option value="$PROJECT_DIR$/php/objects/LogsheetComponent.php" />
+        <option value="$PROJECT_DIR$/php/objects/Playlist.php" />
+        <option value="$PROJECT_DIR$/php/index.php" />
       </list>
     </option>
   </component>
@@ -219,7 +195,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="106" />
+    <option name="x" value="94" />
     <option name="y" value="23" />
     <option name="width" value="1346" />
     <option name="height" value="843" />
@@ -267,38 +243,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="digital-logsheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="digital-logsheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="php" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="digital-logsheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="digital-logsheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="php" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="objects" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -332,6 +276,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/php" />
       <recent name="$PROJECT_DIR$/objects" />
       <recent name="$PROJECT_DIR$/database" />
     </key>
@@ -396,13 +341,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="106" y="23" width="1346" height="843" extended-state="0" />
+    <frame x="94" y="23" width="1346" height="843" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12630014" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1255572" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18499257" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32816538" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32816538" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294271" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -417,7 +363,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32909784" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3268734" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32816538" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39898348" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
@@ -440,6 +385,60 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/php/dev-mode.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="48" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/save-logsheet.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1447618620000" expanded="true" signature="2839:2936" placeholder="INSERT INTO programmer..." />
+            <marker date="1447618620000" expanded="true" signature="3073:3106" placeholder="INSERT INTO playlist..." />
+            <marker date="1447618620000" expanded="true" signature="3530:3734" placeholder="INSERT INTO segment..." />
+            <marker date="1447618620000" expanded="true" signature="4692:4769" placeholder="INSERT INTO playlist_segments..." />
+            <marker date="1447618620000" expanded="true" signature="5457:5666" placeholder="INSERT INTO episode..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/database/connectToDatabase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/Category.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/new-logsheet.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file:///etc/php.ini">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.123203285">
@@ -504,16 +503,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="106" selection-start-line="25" selection-start-column="106" selection-end-line="25" selection-end-column="106" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/f1b40ce6-e39c-44d1-8d70-40e105854c79/console.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19480519">
@@ -521,25 +510,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/php/index.php">
+    <entry file="file://$PROJECT_DIR$/php/database/connectToDatabase.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.125">
-          <caret line="21" column="48" selection-start-line="21" selection-start-column="48" selection-end-line="21" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php/objects/Category.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625">
-          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php/objects/database/connectToDatabase.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.625">
+        <state vertical-scroll-proportion="-1.25">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
@@ -553,25 +526,132 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/logsheet-classes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/php/new-logsheet.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.875">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="28" />
+        <state vertical-scroll-proportion="-3.75">
+          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/php/save-logsheet.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5705128">
-          <caret line="93" column="20" selection-start-line="93" selection-start-column="20" selection-end-line="93" selection-end-column="20" />
+        <state vertical-scroll-proportion="-0.625">
+          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
           <folding>
-            <marker date="1447616902000" expanded="true" signature="2847:2944" placeholder="INSERT INTO programmer..." />
-            <marker date="1447616902000" expanded="true" signature="3081:3114" placeholder="INSERT INTO playlist..." />
-            <marker date="1447616902000" expanded="true" signature="3538:3742" placeholder="INSERT INTO segment..." />
-            <marker date="1447616902000" expanded="true" signature="4700:4777" placeholder="INSERT INTO playlist_segments..." />
-            <marker date="1447616902000" expanded="true" signature="5465:5674" placeholder="INSERT INTO episode..." />
+            <marker date="1447618620000" expanded="true" signature="2839:2936" placeholder="INSERT INTO programmer..." />
+            <marker date="1447618620000" expanded="true" signature="3073:3106" placeholder="INSERT INTO playlist..." />
+            <marker date="1447618620000" expanded="true" signature="3530:3734" placeholder="INSERT INTO segment..." />
+            <marker date="1447618620000" expanded="true" signature="4692:4769" placeholder="INSERT INTO playlist_segments..." />
+            <marker date="1447618620000" expanded="true" signature="5457:5666" placeholder="INSERT INTO episode..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/database/readFromDatabase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/Archive.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.625">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/Category.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.625">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/Episode.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.625">
+          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/LogsheetComponent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.875">
+          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/Playlist.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.25">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/Program.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.625">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/Programmer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/objects/Segment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.625">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/todo">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8099352">
+          <caret line="25" column="106" selection-start-line="25" selection-start-column="106" selection-end-line="25" selection-end-column="106" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06410257">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -2,7 +2,6 @@
     class LogsheetComponent {
         protected $db;
         protected $id;
-
         
         public function __construct($db, $component_id) {
             $this->db = $db;
