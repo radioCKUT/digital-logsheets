@@ -1,14 +1,17 @@
 <?php
+    include_once("database/readFromDatabase.php");
     class Category extends LogsheetComponent{
+
+        private $name;
 
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
-            $this->setAttributes(array("name"));
+            $this->name = getCategoryNameFromDatabase($db, $component_id);
         }
         
         public function getName() {
-            return $this->attributes["name"];
+            return $this->name;
         }
     }
 ?>

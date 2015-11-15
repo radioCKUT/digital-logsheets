@@ -1,54 +1,34 @@
 <?php
+    include_once("database/readFromDatabase.php");
     class Segment extends LogsheetComponent{
+
+
+        private $name;
+        private $author;
+        private $album;
+
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
-            $this->setAttributes(array("category","name","album","author","start_time","ad_number",
-                "station_id", "can_con", "new_release", "french_vocal_music"));
+            /*$this->setAttributes(array("category","name","album","author","start_time","ad_number",
+                "station_id", "can_con", "new_release", "french_vocal_music"));*/
+
+            $this->name = getSegmentNameFromDatabase($db, $component_id);
+            $this->author = getSegmentAuthorFromDatabase($db, $component_id);
+            $this->album = getSegmentAlbumFromDatabase($db, $component_id);
         }
 
-        public function getCategory() {
-            return $this->attributes["category"];
-        }
-
-        public function getAdNumber() {
-            if ($this->attributes["ad_number"] == null) {
-                return -1;
-            } else {
-                $this->attributes["ad_number"];
-            };
-        }
-
-        public function isStationId() {
-            return !($this->attributes["station_id"] == 0);
-        }
-
-        public function isCanCon() {
-            return !($this->attributes["can_con"] == 0);
-        }
-
-        public function isFrenchVocal() {
-            return !($this->attributes["french_vocal_music"] == 0);
-        }
-
-        public function isNewRelease() {
-            return !($this->attributes["new_release"] == 0);
-        }
-
-        public function getStartTime() {
-            return $this->attributes["start_time"];
-        }
         
         public function getName() {
-            return $this->attributes["name"];
+            return $this->name;
         }
         
         public function getAlbum() {
-            return $this->attributes["album"];
+            return $this->album;
         }
         
         public function getAuthor() {
-            return $this->attributes["author"];
+            return $this->author;
         }
         
     }
