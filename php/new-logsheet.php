@@ -1,6 +1,6 @@
 <?php
     //----INCLUDE FILES----
-    include("smarty/libs/Smarty.class.php");
+    include("../smarty/libs/Smarty.class.php");
     include("dev-mode.php");
     include_once("objects/database/connectToDatabase.php");
     include_once("objects/database/readFromDatabase.php");

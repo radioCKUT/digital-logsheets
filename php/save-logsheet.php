@@ -1,5 +1,6 @@
 <?php
-include_once('connectToDatabase.php');
+include_once('objects/database/connectToDatabase.php');
+include("dev-mode.php");
 
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
@@ -39,8 +40,6 @@ try {
     usort($segments, function ($a, $b) {
         return strtotime($a['start_time']) > strtotime($b['start_time']);
     });
-
-    //array_multisort($segment_times, $names, $authors, $categories, $can_con, $new_release, $french_vocal_music);
 
     $segments = computeSegmentDurations($segments, $end_time);
 
@@ -148,8 +147,6 @@ function createEpisode($db, $playlistId, $programId, $programmerId, $start_time,
 
     $newEpisodeStmt->bindParam(":start_time", $start_time, PDO::PARAM_STR);
     $newEpisodeStmt->bindParam(":end_time", $end_time, PDO::PARAM_STR);
-
-
 
     $newEpisodeStmt->execute();
 }
