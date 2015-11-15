@@ -2,10 +2,6 @@
     class Playlist extends LogsheetComponent {
         private $segments;
         
-        public function __construct($db) {
-            parent::__construct($db);
-        }
-        
         //Function will query the database for all the segment ids that are
         //  associated with the current playlist. For each segment id, a new
         //  Segment object is created, and its id is set (for the object)
@@ -29,18 +25,10 @@
                     //  assigned to this Playlist object.
                     if(count($segment_ids)) {
                         foreach($segment_ids as $segment_id) {
-                            
                             //create a new Segment object
-                            $segments[$segment_id["segment"]] = new Segment($this->db);
-                            
-                            //assign the id number for each segment
-                            //for Segment objects only, this also sets the Segment's
-                            //  attributes like name, album and author
-                            $segments[$segment_id["segment"]]->setId($segment_id["segment"]);
-                            
-                        } //end foreach
-                        
-                    } //end if
+                            $segments[$segment_id["segment"]] = new Segment($this->db, $segment_id["segment"]);
+                        }
+                    }
                     
                     //return an array of all the resulting Segment object
                     $this->segments = $segments;

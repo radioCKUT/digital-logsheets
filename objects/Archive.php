@@ -1,12 +1,13 @@
 <?php
-    class Archive extends LogsheetComponent {
-        
+    class Archive {
+
+        private $db;
         //an array of Episode objects
         private $episodes;
+
         
         public function __construct($db) {
-            parent::__construct($db);
-            
+            $this->db = $db;
             $this->episodes = array();
             $this->createArchive();
         }
@@ -31,9 +32,7 @@
             if(count($result)) {
                 foreach($result as $episode_row) {
                     //create a new episode object
-                    $episode = new Episode($this->db);
-
-                    $episode->setId($episode_row["id"]);
+                    $episode = new Episode($this->db, $episode_row["id"]);
                     
                     //each episode is stored in $episodes and reference by artist
                     $this->episodes[$episode->getId()] = $episode;

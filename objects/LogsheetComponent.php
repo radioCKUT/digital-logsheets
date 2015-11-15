@@ -6,8 +6,9 @@
         //TODO: change to protected after testing
         public $attributes;
         
-        public function __construct($db) {
+        public function __construct($db, $component_id) {
             $this->db = $db;
+            $this->setId($component_id);
             $this->attributes = array();
         }
         
@@ -39,19 +40,34 @@
                     
                     if(count($attrs_from_db)) {
                         foreach($attrs_from_db as $attr_from_db) {
-                            //assign each attribute to the corresponding value
-                            //  retrieved from the database
-                            foreach($attributesToAssign as $attribute) {
-                                $this->attributes[$attribute] = $attr_from_db[$attribute];
-                            }
-                            
-                        } //end foreach
-                    } //end if
-                } //end if
+                            $this->fillAttributeArrayWithDatabaseValues($attributesToAssign, $attr_from_db);
+                        }
+                    }
+                }
             } catch (Exception $error) {
                 echo $error;
             }
-        } //end setAttributes()
+        }
+
+        public function fillAttributeArrayWithDatabaseValues($attributesToAssign, $attr_from_db) {
+
+            foreach($attributesToAssign as $attribute) {
+                switch ($attribute) {
+                    case "program":
+                        $this->attributes[$attribute] = new Program($this->db, $attr_from_db[$attribute]);
+                        break;
+                    case "playlist":
+                        $this->attributes[$attribute] = new Playlist($this->db, $attr_from_db[$attribute]);
+                        break;
+                    case "programmer":
+                        $this->attributes[$attribute] = new Programmer($this->db, $attr_from_db[$attribute]);
+                        break;
+                    default:
+                        $this->attributes[$attribute] = $attr_from_db[$attribute];
+                        break;
+                }
+            }
+        }
         
         public function getId() {
             return $this->id;

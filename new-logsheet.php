@@ -19,16 +19,14 @@
         
         $category_ids = getIds($db, "category");
         foreach($category_ids as $category_id) {
-            $category = new Category($db);
-            
-            $category->setId($category_id);
+            $category = new Category($db, $category_id);
+
             $categories[$category->getId()] = $category->getName();
         }
         
         $program_ids = getIds($db, "program");
         foreach($program_ids as $program_id) {
-            $program = new Program($db);
-            $program->setId($program_id);
+            $program = new Program($db, $program_id);
             $programs[$program->getId()] = $program->getName();
         }
         

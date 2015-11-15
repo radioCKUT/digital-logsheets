@@ -1,13 +1,8 @@
 <?php
     class Segment extends LogsheetComponent{
-        public function __construct($db) {
-            parent::__construct($db);
-        }
-        
-        public function setId($segment_id) {
-            parent::setId($segment_id);
-            
-            //set all the attributes for the object as soon as the id has been set
+        public function __construct($db, $component_id) {
+            parent::__construct($db, $component_id);
+
             $this->setAttributes(array("category","name","album","author","start_time","ad_number",
                 "station_id", "can_con", "new_release", "french_vocal_music"));
         }

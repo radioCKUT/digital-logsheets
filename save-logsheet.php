@@ -29,7 +29,6 @@ try {
     $playlistId = createPlaylist($db);
     
     $segmentCount = count($segment_times);
-    print "segment count: " . $segmentCount . " ";
     $segments = array();
 
     for ($i = 0; $i < $segmentCount; $i++) {
@@ -108,8 +107,6 @@ function createSegment($db, $start_time, $duration, $name, $author, $category, $
 
     $trueChar = 'o';
     $falseChar = null;
-
-    print "can con: " . ($is_can_con ? $trueChar : $falseChar);
 
     $newSegmentStmt->bindParam(":can_con", ($is_can_con ? $trueChar : $falseChar), PDO::PARAM_STR);
     $newSegmentStmt->bindParam(":new_release", ($is_new_release ? $trueChar : $falseChar), PDO::PARAM_STR);
