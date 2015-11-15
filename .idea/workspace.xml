@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b6adfb0-83d6-4688-a190-aed1499af6ad" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/objects/database/readFromDatabase.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/database.php" afterPath="$PROJECT_DIR$/objects/database/connectToDatabase.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new-logsheet.php" afterPath="$PROJECT_DIR$/new-logsheet.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/Archive.php" afterPath="$PROJECT_DIR$/objects/Archive.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/Category.php" afterPath="$PROJECT_DIR$/objects/Category.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/Episode.php" afterPath="$PROJECT_DIR$/objects/Episode.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/LogsheetComponent.php" afterPath="$PROJECT_DIR$/objects/LogsheetComponent.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/Playlist.php" afterPath="$PROJECT_DIR$/objects/Playlist.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/Program.php" afterPath="$PROJECT_DIR$/objects/Program.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/Segment.php" afterPath="$PROJECT_DIR$/objects/Segment.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/save-logsheet.php" afterPath="$PROJECT_DIR$/save-logsheet.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tester.php" afterPath="$PROJECT_DIR$/tester.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects/database/readFromDatabase.php" afterPath="$PROJECT_DIR$/objects/database/readFromDatabase.php" />
     </list>
     <ignored path="digital-logsheets.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,8 +65,8 @@
       <file leaf-file-name="readFromDatabase.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/objects/database/readFromDatabase.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.55128205">
-              <caret line="118" column="5" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
+            <state vertical-scroll-proportion="-0.6666667">
+              <caret line="150" column="0" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -144,16 +132,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="8.0">
-              <caret line="15" column="43" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="Git.Settings">
@@ -195,7 +173,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="120" />
+    <option name="x" value="183" />
     <option name="y" value="23" />
     <option name="width" value="1346" />
     <option name="height" value="843" />
@@ -372,7 +350,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="120" y="23" width="1346" height="843" extended-state="0" />
+    <frame x="183" y="23" width="1346" height="843" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12704308" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -423,14 +401,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/objects/Episode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/objects/Category.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -825,8 +795,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/objects/database/readFromDatabase.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55128205">
-          <caret line="118" column="5" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
+        <state vertical-scroll-proportion="-0.6666667">
+          <caret line="150" column="0" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
           <folding />
         </state>
       </provider>

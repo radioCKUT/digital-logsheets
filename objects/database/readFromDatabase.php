@@ -1,6 +1,6 @@
 <?php
 
-    //episode-specific methods
+    //begin episode-specific methods
     function getEpisodeTableName()
     {
         return "episode";
@@ -48,20 +48,23 @@
         $episode_ids = readEntireColumnFromTable($db_connection, "id", getEpisodeTableName());
 
         $episodes = array();
-        //iterate through each row in the result and store in an array
+
         if(count($episode_ids)) {
             foreach($episode_ids as $episode_row) {
-                //create a new episode object
                 $episode = new Episode($db_connection, $episode_row["id"]);
-
-                //each episode is stored in $episodes and reference by artist
                 $episodes[$episode->getId()] = $episode;
             }
         }
 
         return $episodes;
     }
+    //end episode-specific methods
 
+
+
+
+
+    //begin category-specific methods
     function getCategoryNameFromDatabase($db_connection, $category_id) {
         return readFirstMatchingEntryFromTable($db_connection, "name", "category", "id", $category_id);
     }
@@ -73,12 +76,18 @@
         $categories = array();
         foreach($category_ids as $category_id) {
             $category = new Category($db_connection, $category_id["id"]);
-            $categories[$category_id["id"]] = $category->getName();
+            $categories[$category->getId()] = $category->getName();
         }
 
         return $categories;
     }
+    //end category-specific methods
 
+
+
+
+
+    //begin program-specific methods
     function getAllProgramsFromDatabase($db_connection) {
         $program_ids = readEntireColumnFromTable($db_connection, "id", "program");
 
@@ -90,10 +99,14 @@
 
         return $programs;
     }
+    //end program-specific methods
 
 
 
-    //playlist-specific methods
+
+
+
+    //begin playlist-specific methods
     function getPlaylistSegmentsFromDatabase($db_connection, $playlist_id)
     {
         $segment_ids = readFilteredColumnFromTable($db_connection, "segment", "playlist_segments", "playlist", $playlist_id);
@@ -109,11 +122,13 @@
 
         return $segments;
     }
+    //end playlist-specific methods
 
-    function getSegmentTableName() {
-        return "segment";
-    }
 
+
+
+
+    //begin segment-specific methods
     function getSegmentAttributeFromDatabase($db_connection, $attribute_column_name, $segment_id) {
         return readFirstMatchingEntryFromTable($db_connection, $attribute_column_name, "segment", "id", $segment_id);
     }
@@ -129,9 +144,14 @@
     function getSegmentAuthorFromDatabase($db_connection, $segment_id) {
         return getSegmentAttributeFromDatabase($db_connection, "author", $segment_id);
     }
+    //end segment-specific methods
 
 
 
+
+
+
+    //begin interaction with MySQL database methods
     function getEntireColumnQueryString($column_name, $table_name)
     {
         return "SELECT " . $column_name . " FROM " . $table_name;
@@ -156,7 +176,8 @@
 
     function readFirstMatchingEntryFromTable($db_connection, $column_name, $table_name, $filter_column, $filter_id_number)
     {
-        return readFilteredColumnFromTable($db_connection, $column_name, $table_name, $filter_column, $filter_id_number)[0][$column_name];
+        $all_matching_entries = readFilteredColumnFromTable($db_connection, $column_name, $table_name, $filter_column, $filter_id_number);
+        return $all_matching_entries[0][$column_name];
     }
 
     function readFromDatabaseWithStatement($sql_query_stmt)
@@ -171,5 +192,6 @@
             echo "Read from database failed: " . $error;
         }
     }
+    //end interaction with MySQL database methods
 
 ?>
