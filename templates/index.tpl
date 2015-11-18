@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <a href="new-logsheet.php">New logsheet</a>
+        <a href="../new-logsheet.php">New logsheet</a>
         
         {foreach $episodes as $episode}
             <h2>{$episode.program_name}</h2>

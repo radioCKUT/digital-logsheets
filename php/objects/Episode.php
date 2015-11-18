@@ -1,7 +1,7 @@
 <?php
 
     //TODO: Error checking...
-    require_once(__DIR__ . "/../database/readFromDatabase.php");
+    require_once(__DIR__ . "/../database/manageEpisodeEntries.php");
     class Episode extends LogsheetComponent {
 
         private $program;
@@ -14,12 +14,12 @@
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
-            $this->program = getEpisodeProgramFromDatabase($db, $component_id);
-            $this->playlist = getEpisodePlaylistFromDatabase($db, $component_id);
-            $this->programmer = getEpisodeProgrammerFromDatabase($db, $component_id);
+            $this->program = manageEpisodeEntries::getEpisodeProgramFromDatabase($db, $component_id);
+            $this->playlist = manageEpisodeEntries::getEpisodePlaylistFromDatabase($db, $component_id);
+            $this->programmer = manageEpisodeEntries::getEpisodeProgrammerFromDatabase($db, $component_id);
 
-            $this->episode_start_time = getEpisodeStartTimeFromDatabase($db, $component_id);
-            $this->episode_end_time = getEpisodeEndTimeFromDatabase($db, $component_id);
+            $this->episode_start_time = manageEpisodeEntries::getEpisodeStartTimeFromDatabase($db, $component_id);
+            $this->episode_end_time = manageEpisodeEntries::getEpisodeEndTimeFromDatabase($db, $component_id);
         }
         
         public function getProgramName() {

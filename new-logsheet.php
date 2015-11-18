@@ -3,7 +3,8 @@
     include("smarty/libs/Smarty.class.php");
     include("php/dev-mode.php");
     include_once("php/database/connectToDatabase.php");
-    include_once("php/database/readFromDatabase.php");
+    include_once("php/database/manageCategoryEntries.php");
+    include_once("php/database/manageProgramEntries.php");
     require_once("php/objects/logsheet-classes.php");
     
     // create object
@@ -14,8 +15,8 @@
         //connect to database
         $db = connectToDatabase();
         
-        $categories = getAllCategoriesFromDatabase($db);
-        $programs = getAllProgramsFromDatabase($db);
+        $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
+        $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
         
         //close database connection
         $db = NULL;
