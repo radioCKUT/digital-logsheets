@@ -7,29 +7,6 @@
             return "SELECT " . $column_name . " FROM " . $table_name;
         }
 
-        public static function readEntireColumnFromTable($db_connection, $column_name, $table_name)
-        {
-            $sql_query_string = self::getEntireColumnQueryString($column_name, $table_name);
-            $sql_query_stmt = $db_connection->prepare($sql_query_string);
-
-            return self::readFromDatabaseWithStatement($sql_query_stmt);
-        }
-
-        public static function readFilteredColumnFromTable($db_connection, $column_name, $table_name, $filter_column, $filter_id_number)
-        {
-            $sql_query_string = self::getEntireColumnQueryString($column_name, $table_name) . " WHERE " . $filter_column . "=:id";
-            $sql_query_stmt = $db_connection->prepare($sql_query_string);
-            $sql_query_stmt->bindParam(":id", $filter_id_number, PDO::PARAM_INT);
-
-            return self::readFromDatabaseWithStatement($sql_query_stmt);
-        }
-
-        public static function readFirstMatchingEntryFromTable($db_connection, $column_name, $table_name, $filter_column, $filter_id_number)
-        {
-            $all_matching_entries = self::readFilteredColumnFromTable($db_connection, $column_name, $table_name, $filter_column, $filter_id_number);
-            return $all_matching_entries[0][$column_name];
-        }
-
         private static function readFromDatabaseWithStatement($sql_query_stmt)
         {
             try {
@@ -43,6 +20,37 @@
             }
 
             return null;
+        }
+
+        public static function readEntireColumnFromTable($db_connection, $column_name, $table_name)
+        {
+            $sql_query_string = self::getEntireColumnQueryString($column_name, $table_name);
+            $sql_query_stmt = $db_connection->prepare($sql_query_string);
+
+            return self::readFromDatabaseWithStatement($sql_query_stmt);
+        }
+
+        public static function readFilteredColumnFromTable($db_connection, $column_name, $table_name, $filter_columns, $filter_values)
+        {
+            $sql_query_string = self::getEntireColumnQueryString($column_name, $table_name);
+
+            if (is_array($filter_columns) && is_array($filter_values) && count($filter_columns) != count($filter_values)) {
+                return null;
+            }
+
+            for ($i = 0; $i < count($filter_columns); $i++) {
+                $sql_query_string .= " WHERE " . $filter_columns[$i] . "=" . $filter_values[$i];
+            }
+
+            $sql_query_stmt = $db_connection->prepare($sql_query_string);
+
+            return self::readFromDatabaseWithStatement($sql_query_stmt);
+        }
+
+        public static function readFirstMatchingEntryFromTable($db_connection, $column_name, $table_name, $filter_columns, $filter_values)
+        {
+            $all_matching_entries = self::readFilteredColumnFromTable($db_connection, $column_name, $table_name, $filter_columns, $filter_values);
+            return $all_matching_entries[0][$column_name];
         }
 
     }

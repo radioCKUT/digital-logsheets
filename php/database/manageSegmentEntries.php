@@ -12,7 +12,7 @@
 
         private static function getSegmentAttributeFromDatabase($db_connection, $attribute_column_name, $segment_id) {
             return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, $attribute_column_name,
-                self::$tableName, self::$idColumnName, $segment_id);
+                self::$tableName, array(self::$idColumnName), array($segment_id));
         }
 
         public static function getSegmentNameFromDatabase($db_connection, $segment_id) {

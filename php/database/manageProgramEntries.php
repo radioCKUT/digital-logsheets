@@ -10,7 +10,7 @@
 
         public static function getProgramNameFromDatabase($db_connection, $program_id) {
             return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, self::$nameColumnName,
-                self::$tableName, self::$idColumnName, $program_id);
+                self::$tableName, array(self::$idColumnName), array($program_id));
         }
 
         public static function getAllProgramsFromDatabase($db_connection) {

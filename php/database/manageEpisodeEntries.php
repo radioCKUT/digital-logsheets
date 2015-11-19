@@ -15,7 +15,7 @@
 
         private static function getEpisodeAttributeFromDatabase($db_connection, $attribute_column_name, $episode_id) {
             return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, $attribute_column_name,
-                self::$episodeTableName, self::$idColumnName, $episode_id);
+                self::$episodeTableName, array(self::$idColumnName), array($episode_id));
         }
 
         public static function getEpisodeProgramFromDatabase($db_connection, $episode_id) {

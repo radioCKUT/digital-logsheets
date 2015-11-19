@@ -11,7 +11,7 @@
 
         public static function getCategoryNameFromDatabase($db_connection, $category_id) {
             return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, self::$categoryNameColumnName,
-                manageCategoryEntries::$tableName, manageCategoryEntries::$idColumnName, $category_id);
+                manageCategoryEntries::$tableName, array(manageCategoryEntries::$idColumnName), array($category_id));
         }
 
 
