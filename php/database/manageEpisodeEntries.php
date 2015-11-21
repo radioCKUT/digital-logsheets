@@ -1,6 +1,7 @@
 <?php
 
     include_once("readFromDatabase.php");
+    include_once("writeToDatabase.php");
     class manageEpisodeEntries {
 
         private static $episodeTableName = "episode";
@@ -11,6 +12,9 @@
         private static $programmerColumnName = "programmer";
         private static $startTimeColumnName = "start_time";
         private static $endTimeColumnName = "end_time";
+
+        private static $isPrerecordColumnName = "prerecord";
+        private static $prerecordDateColumnName = "prerecord_date";
 
 
         public static function getEpisodeAttributesFromDatabase($db_connection, $episode_id, $episode_object) {
@@ -37,5 +41,18 @@
             }
 
             return $episodes;
+        }
+
+        public static function saveNewEpisode($db_conn, $playlistId, $programId, $programmerId, $start_time, $end_time, $is_prerecord, $prerecord_date) {
+
+            $column_names = array(self::$playlistColumnName, self::$programColumnName,
+                self::$programmerColumnName, self::$startTimeColumnName, self::$endTimeColumnName,
+                self::$isPrerecordColumnName, self::$prerecordDateColumnName);
+
+            $values = array($playlistId, $programId, $programmerId, $start_time,
+                $end_time, $is_prerecord, $prerecord_date);
+
+
+            writeToDatabase::writeEntryToDatabase($db_conn, self::$episodeTableName, $column_names, $values);
         }
     }
