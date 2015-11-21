@@ -14,14 +14,29 @@
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
-            $this->program = manageEpisodeEntries::getEpisodeProgramFromDatabase($db, $component_id);
-            $this->playlist = manageEpisodeEntries::getEpisodePlaylistFromDatabase($db, $component_id);
-            $this->programmer = manageEpisodeEntries::getEpisodeProgrammerFromDatabase($db, $component_id);
-
-            $this->episode_start_time = manageEpisodeEntries::getEpisodeStartTimeFromDatabase($db, $component_id);
-            $this->episode_end_time = manageEpisodeEntries::getEpisodeEndTimeFromDatabase($db, $component_id);
+            manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $component_id, $this);
         }
-        
+
+        public function setProgram($program) {
+            $this->program = $program;
+        }
+
+        public function setPlaylist($playlist) {
+            $this->playlist = $playlist;
+        }
+
+        public function setProgrammer($programmer) {
+            $this->programmer = $programmer;
+        }
+
+        public function setStartTime($start_time) {
+            $this->episode_start_time = $start_time;
+        }
+
+        public function setEndTime($end_time) {
+            $this->episode_end_time = $end_time;
+        }
+
         public function getProgramName() {
             try {
                 if($this->checkForId()) {

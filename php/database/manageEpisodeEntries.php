@@ -13,32 +13,15 @@
         private static $endTimeColumnName = "end_time";
 
 
-        private static function getEpisodeAttributeFromDatabase($db_connection, $attribute_column_name, $episode_id) {
-            return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, array($attribute_column_name),
-                self::$episodeTableName, array(self::$idColumnName), array($episode_id));
-        }
+        public static function getEpisodeAttributesFromDatabase($db_connection, $episode_id, $episode_object) {
+            $database_results = readFromDatabase::readFilteredColumnFromTable($db_connection, array(self::$programColumnName, self::$playlistColumnName,
+                self::$programmerColumnName, self::$startTimeColumnName, self::$endTimeColumnName), self::$episodeTableName, array(self::$idColumnName), array($episode_id));
 
-        public static function getEpisodeProgramFromDatabase($db_connection, $episode_id) {
-            $program_id = self::getEpisodeAttributeFromDatabase($db_connection, self::$programColumnName, $episode_id);
-            return new Program($db_connection, $program_id);
-        }
-
-        public static function getEpisodePlaylistFromDatabase($db_connection, $episode_id) {
-            $playlist_id = self::getEpisodeAttributeFromDatabase($db_connection, self::$playlistColumnName, $episode_id);
-            return new Playlist($db_connection, $playlist_id);
-        }
-
-        public static function getEpisodeProgrammerFromDatabase($db_connection, $episode_id) {
-            $programmer_id = self::getEpisodeAttributeFromDatabase($db_connection, self::$programmerColumnName, $episode_id);
-            return new Programmer($db_connection, $programmer_id);
-        }
-
-        public static function getEpisodeStartTimeFromDatabase($db_connection, $episode_id) {
-            return self::getEpisodeAttributeFromDatabase($db_connection, self::$startTimeColumnName, $episode_id);
-        }
-
-        public static function getEpisodeEndTimeFromDatabase($db_connection, $episode_id) {
-            return self::getEpisodeAttributeFromDatabase($db_connection, self::$endTimeColumnName, $episode_id);
+            $episode_object->setProgram(new Program($db_connection, $database_results[0][self::$programColumnName]));
+            $episode_object->setPlaylist(new Playlist($db_connection, $database_results[0][self::$playlistColumnName]));
+            $episode_object->setProgrammer(new Programmer($db_connection, $database_results[0][self::$programmerColumnName]));
+            $episode_object->setStartTime($database_results[0][self::$startTimeColumnName]);
+            $episode_object->setEndTime($database_results[0][self::$endTimeColumnName]);
         }
 
         public static function getAllEpisodesFromDatabase($db_connection) {

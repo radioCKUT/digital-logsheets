@@ -15,6 +15,19 @@
             $this->album = manageSegmentEntries::getSegmentAlbumFromDatabase($db, $component_id);
         }
 
+
+        public function setName($name) {
+            $this->name = $name;
+        }
+
+        public function setAlbum($album) {
+            $this->album = $album;
+        }
+
+        public function setAuthor($author) {
+            $this->author = $author;
+        }
+
         
         public function getName() {
             return $this->name;
