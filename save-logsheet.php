@@ -12,8 +12,8 @@ $programId = $_POST['program'];
 $prerecord = $_POST['prerecord']; //TODO: table with prerecord column
 $prerecord_date = $_POST['prerecord_date'];
 
-$start_time = $_POST['start_time'];
-$end_time = $_POST['end_time'];
+$episode_start_time = $_POST['start_time'];
+$episode_end_time = $_POST['end_time'];
 $comment = $_POST['comment']; //TODO: table with comment column
 
 $segment_times = $_POST['segment_time'];
@@ -32,6 +32,29 @@ try {
     $programmerId = 1; //TODO change programmerId once settled how programmers will be stored
     $playlistId = managePlaylistEntries::createNewPlaylist($db);
     
+    $segments = packageSegmentAttributesForSavingAndSorting($segment_times, $names, $authors, $categories,
+        $can_con, $new_release, $french_vocal_music);
+
+    $segments = computeSegmentDurations($segments, $episode_end_time);
+
+    for ($i = 0; $i < count($segments); $i++) {
+        manageSegmentEntries::saveNewSegmentToDatabase($db, $segments[$i]['start_time'], $segments[$i]['duration'], $segments[$i]['name'], $segments[$i]['author'],
+            $segments[$i]['category'], $segments[$i]['can_con'], $segments[$i]['new_release'], $segments[$i]['french_vocal_music'], $playlistId);
+    }
+    
+    manageEpisodeEntries::saveNewEpisode($db, $playlistId, $programId, $programmerId,
+        $episode_start_time, $episode_end_time, isset($prerecord), $prerecord_date);
+    
+    print "Entry added! \n";
+    include('new-logsheet.php');
+    
+} catch(PDOException $e) {
+    echo 'ERROR: ' . $e->getMessage();
+}
+
+function packageSegmentAttributesForSavingAndSorting($segment_times, $names, $authors, $categories, $can_con,
+                                                     $new_release, $french_vocal_music) {
+
     $segmentCount = count($segment_times);
     $segments = array();
 
@@ -44,23 +67,7 @@ try {
         return strtotime($a['start_time']) > strtotime($b['start_time']);
     });
 
-    $segments = computeSegmentDurations($segments, $end_time);
-
-    for ($i = 0; $i < $segmentCount; $i++) {
-        $segmentId = manageSegmentEntries::saveNewSegmentToDatabase($db, $segments[$i]['start_time'], $segments[$i]['duration'], $segments[$i]['name'], $segments[$i]['author'],
-            $segments[$i]['category'], $segments[$i]['can_con'], $segments[$i]['new_release'], $segments[$i]['french_vocal_music']);
-
-        managePlaylistEntries::addSegmentToDatabasePlaylist($db, $playlistId, $segmentId);
-    }
-    
-    manageEpisodeEntries::saveNewEpisode($db, $playlistId, $programId, $programmerId,
-        $start_time, $end_time, isset($prerecord), $prerecord_date);
-    
-    print "Entry added! \n";
-    include('new-logsheet.php');
-    
-} catch(PDOException $e) {
-    echo 'ERROR: ' . $e->getMessage();
+    return $segments;
 }
 
 function computeSegmentDurations($segments, $end_time) {

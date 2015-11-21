@@ -2,6 +2,7 @@
 
     include_once("readFromDatabase.php");
     include_once("writeToDatabase.php");
+    include_once("managePlaylistEntries.php");
     class manageSegmentEntries {
 
         private static $tableName = "segment";
@@ -30,15 +31,18 @@
         }
 
         public static function saveNewSegmentToDatabase($db_conn, $start_time, $duration, $name, $author, $category,
-                                                        $is_can_con, $is_new_release, $is_french_vocal_music) {
+                                                        $is_can_con, $is_new_release, $is_french_vocal_music, $playlistId) {
 
             $column_names = array(self::$startTimeColumnName, self::$durationColumnName, self::$segmentNameColumnName,
                 self::$authorColumnName, self::$categoryColumnName, self::$canConColumnName, self::$newReleaseColumnName, self::$frenchVocalColumnName);
-
             $values = array($start_time, $duration, $name, $author, $category,
                 $is_can_con, $is_new_release, $is_french_vocal_music);
 
-            return writeToDatabase::writeEntryToDatabase($db_conn, self::$tableName, $column_names, $values);
+            $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::$tableName, $column_names, $values);
+
+            managePlaylistEntries::addSegmentToDatabasePlaylist($db_conn, $playlistId, $segmentId);
+
+            return $segmentId;
         }
 
     }
