@@ -10,7 +10,7 @@
 
         public static function getPlaylistSegmentsFromDatabase($db_connection, $playlist_id)
         {
-            $segment_ids = readFromDatabase::readFilteredColumnFromTable($db_connection, self::$segmentColumnName,
+            $segment_ids = readFromDatabase::readFilteredColumnFromTable($db_connection, array(self::$segmentColumnName),
                 self::$tableName, array(self::$playlistColumnName), array($playlist_id));
 
             $segments = array();

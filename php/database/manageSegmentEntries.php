@@ -11,7 +11,7 @@
         private static $authorColumnName = "author";
 
         private static function getSegmentAttributeFromDatabase($db_connection, $attribute_column_name, $segment_id) {
-            return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, $attribute_column_name,
+            return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, array($attribute_column_name),
                 self::$tableName, array(self::$idColumnName), array($segment_id));
         }
 

@@ -188,13 +188,13 @@
         <data-type>int(11)</data-type>
       </column>
       <column id="54" parent="10" name="can_con">
-        <data-type>char(1)</data-type>
+        <data-type>tinyint(1)</data-type>
       </column>
       <column id="55" parent="10" name="new_release">
-        <data-type>char(1)</data-type>
+        <data-type>tinyint(1)</data-type>
       </column>
       <column id="56" parent="10" name="french_vocal_music">
-        <data-type>char(1)</data-type>
+        <data-type>tinyint(1)</data-type>
       </column>
       <key id="57" parent="10" name="PRIMARY">
         <columns>id</columns>

@@ -14,7 +14,7 @@
 
 
         private static function getEpisodeAttributeFromDatabase($db_connection, $attribute_column_name, $episode_id) {
-            return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, $attribute_column_name,
+            return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, array($attribute_column_name),
                 self::$episodeTableName, array(self::$idColumnName), array($episode_id));
         }
 
@@ -42,7 +42,7 @@
         }
 
         public static function getAllEpisodesFromDatabase($db_connection) {
-            $episode_ids = readFromDatabase::readEntireColumnFromTable($db_connection, self::$idColumnName, self::$episodeTableName);
+            $episode_ids = readFromDatabase::readEntireColumnFromTable($db_connection, array(self::$idColumnName), self::$episodeTableName);
 
             $episodes = array();
 

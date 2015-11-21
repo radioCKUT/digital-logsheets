@@ -10,13 +10,13 @@
 
 
         public static function getCategoryNameFromDatabase($db_connection, $category_id) {
-            return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, self::$categoryNameColumnName,
+            return readFromDatabase::readFirstMatchingEntryFromTable($db_connection, array(self::$categoryNameColumnName),
                 manageCategoryEntries::$tableName, array(manageCategoryEntries::$idColumnName), array($category_id));
         }
 
 
         public static function getAllCategoriesFromDatabase($db_connection) {
-            $category_ids = readFromDatabase::readEntireColumnFromTable($db_connection, self::$idColumnName, self::$tableName);
+            $category_ids = readFromDatabase::readEntireColumnFromTable($db_connection, array(self::$idColumnName), self::$tableName);
 
             $categories = array();
             foreach($category_ids as $category_id) {
