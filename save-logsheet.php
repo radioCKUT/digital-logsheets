@@ -9,7 +9,7 @@ $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
 $programId = $_POST['program'];
 
-$prerecord = $_POST['prerecord']; //TODO: table with prerecord column
+$prerecord = $_POST['prerecord'];
 $prerecord_date = $_POST['prerecord_date'];
 
 $episode_start_time = $_POST['start_time'];
@@ -17,7 +17,6 @@ $episode_end_time = $_POST['end_time'];
 $comment = $_POST['comment']; //TODO: table with comment column
 
 $segment_times = $_POST['segment_time'];
-$segment_durations = $_POST['segment_duration'];
 $names = $_POST['name'];
 $authors = $_POST['author'];
 $categories = $_POST['category'];
@@ -26,12 +25,14 @@ $can_con = $_POST['can_con'];
 $new_release = $_POST['new_release'];
 $french_vocal_music = $_POST['french_vocal_music'];
 
+//this script should be only one that knows how the HTML form is structured, so it can convert inputs into entities the manageEntries classes can manage
+
 try {
     $db = connectToDatabase();
-    
+
     $programmerId = 1; //TODO change programmerId once settled how programmers will be stored
     $playlistId = managePlaylistEntries::createNewPlaylist($db);
-    
+
     $segments = packageSegmentAttributesForSavingAndSorting($segment_times, $names, $authors, $categories,
         $can_con, $new_release, $french_vocal_music);
 
@@ -41,13 +42,13 @@ try {
         manageSegmentEntries::saveNewSegmentToDatabase($db, $segments[$i]['start_time'], $segments[$i]['duration'], $segments[$i]['name'], $segments[$i]['author'],
             $segments[$i]['category'], $segments[$i]['can_con'], $segments[$i]['new_release'], $segments[$i]['french_vocal_music'], $playlistId);
     }
-    
+
     manageEpisodeEntries::saveNewEpisode($db, $playlistId, $programId, $programmerId,
         $episode_start_time, $episode_end_time, isset($prerecord), $prerecord_date);
-    
+
     print "Entry added! \n";
     include('new-logsheet.php');
-    
+
 } catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }

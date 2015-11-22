@@ -5,7 +5,7 @@
     include_once("managePlaylistEntries.php");
     class manageSegmentEntries {
 
-        private static $tableName = "segment";
+        private static $segmentTableName = "segment";
 
         private static $idColumnName = "id";
         private static $segmentNameColumnName = "name";
@@ -20,10 +20,9 @@
         private static $newReleaseColumnName = "new_release";
         private static $frenchVocalColumnName = "french_vocal_music";
 
-
-        public static function getSegmentAttributesFromDatabase($db_connection, $segment_id, $segment_object) {
-            $database_result = readFromDatabase::readFilteredColumnFromTable($db_connection, array(self::$segmentNameColumnName,
-                self::$albumColumnName, self::$authorColumnName), self::$tableName, array(self::$idColumnName), array($segment_id));
+        public static function getSegmentAttributesFromDatabase($db_conn, $segment_id, $segment_object) {
+            $database_result = readFromDatabase::readFilteredColumnFromTable($db_conn, array(self::$segmentNameColumnName,
+                self::$albumColumnName, self::$authorColumnName), self::$segmentTableName, array(self::$idColumnName), array($segment_id));
 
             $segment_object->setName($database_result[0][self::$segmentNameColumnName]);
             $segment_object->setAlbum($database_result[0][self::$albumColumnName]);
@@ -32,17 +31,49 @@
 
         public static function saveNewSegmentToDatabase($db_conn, $start_time, $duration, $name, $author, $category,
                                                         $is_can_con, $is_new_release, $is_french_vocal_music, $playlistId) {
+            
+            switch ($category) {
+                case 2:
+                case 3:
+                    $values = self::prepareMusicSegmentEntryValues($start_time, $duration, $name, $author, $category,
+                        $is_can_con, $is_new_release, $is_french_vocal_music);
+                    break;
+
+                case 5:
+                    $values = self::prepareAdSegmentEntryValues($start_time, $duration, $name, 0); //TODO: add ad number
+                    break;
+
+                case 1:
+                case 4:
+                default:
+                    $values = self::prepareOtherSegmentEntryValues($start_time, $duration, $name, $category, false, false); //TODO: add hide from listener, add station ID given
+                    break;
+            }
 
             $column_names = array(self::$startTimeColumnName, self::$durationColumnName, self::$segmentNameColumnName,
                 self::$authorColumnName, self::$categoryColumnName, self::$canConColumnName, self::$newReleaseColumnName, self::$frenchVocalColumnName);
-            $values = array($start_time, $duration, $name, $author, $category,
-                $is_can_con, $is_new_release, $is_french_vocal_music);
 
-            $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::$tableName, $column_names, $values);
+            $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::$segmentTableName, $column_names, $values);
 
             managePlaylistEntries::addSegmentToDatabasePlaylist($db_conn, $playlistId, $segmentId);
 
             return $segmentId;
+        }
+
+        private static function prepareMusicSegmentEntryValues($start_time, $duration, $name, $author, $category,
+                                                               $is_can_con, $is_new_release, $is_french_vocal_music) {
+
+            return array($start_time, $duration, $name, $author, $category,
+                $is_can_con, $is_new_release, $is_french_vocal_music);
+        }
+
+        private static function prepareAdSegmentEntryValues($start_time, $duration, $name, $ad_number) {
+            return array($start_time, $duration, $name, null, 5, false, false, false);
+        }
+
+        private static function prepareOtherSegmentEntryValues($start_time, $duration, $name, $category, $station_id_given, $hide_from_listener) {
+            return array($start_time, $duration, $name, null, $category,
+                false, false, false);
         }
 
     }

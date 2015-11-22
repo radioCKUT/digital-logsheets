@@ -10,8 +10,8 @@
         private static $segmentColumnName = "segment";
         private static $playlistColumnName = "playlist";
 
-        public static function getPlaylistSegmentsFromDatabase($db_connection, $playlist_id) {
-            $segment_ids = readFromDatabase::readFilteredColumnFromTable($db_connection, array(self::$segmentColumnName),
+        public static function getPlaylistSegmentsFromDatabase($db_conn, $playlist_id) {
+            $segment_ids = readFromDatabase::readFilteredColumnFromTable($db_conn, array(self::$segmentColumnName),
                 self::$playlistSegmentsTableName, array(self::$playlistColumnName), array($playlist_id));
 
             $segments = array();
@@ -20,7 +20,7 @@
             if (count($segment_ids)) {
                 foreach ($segment_ids as $segment_id) {
                     $segments[$segment_id[self::$segmentColumnName]] =
-                        new Segment($db_connection, $segment_id[self::$segmentColumnName]);
+                        new Segment($db_conn, $segment_id[self::$segmentColumnName]);
                 }
             }
 

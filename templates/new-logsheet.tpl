@@ -21,6 +21,8 @@
         <script src="js/dynamic_form.js"></script>
     </head>
     <body>
+        <div class="container">
+    <h3>New Logsheet</h3>
         <form id="logsheet" role="form" action="../save-logsheet.php" method="post">
             <div class="form-group">
                 <label for="first_name">First Name:</label>
@@ -53,9 +55,9 @@
             
             <div>
                 Time: <input type="datetime-local" name="segment_time[]">
+                Category: {html_options name="category[]" options=$categories}
                 Name: <input type="text" name="name[]">
                 Author: <input type="text" name="author[]">
-                Category: {html_options name="category[]" options=$categories}
                 CanCon: <input type="checkbox" name="can_con[]" value="can_con">
                 New Release: <input type="checkbox" name="new_release[]" value="new_release">
                 French Vocal Music: <input type="checkbox" name="french_vocal_music[]" value="french_vocal_music">
@@ -66,5 +68,6 @@
             
             <input type="submit" value="Continue">
         </form>
+        </div>
     </body>
 </html>

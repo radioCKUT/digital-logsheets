@@ -29,15 +29,15 @@
             return null;
         }
 
-        public static function readEntireColumnFromTable($db_connection, $column_names, $table_name)
+        public static function readEntireColumnFromTable($db_conn, $column_names, $table_name)
         {
             $sql_query_string = self::getEntireColumnsQueryString($column_names, $table_name);
-            $sql_query_stmt = $db_connection->prepare($sql_query_string);
+            $sql_query_stmt = $db_conn->prepare($sql_query_string);
 
             return self::readFromDatabaseWithStatement($sql_query_stmt);
         }
 
-        public static function readFilteredColumnFromTable($db_connection, $column_names, $table_name, $filter_columns, $filter_values)
+        public static function readFilteredColumnFromTable($db_conn, $column_names, $table_name, $filter_columns, $filter_values)
         {
 
             if (is_array($filter_columns) && is_array($filter_values) && count($filter_columns) != count($filter_values)) {
@@ -50,14 +50,14 @@
                 $sql_query_string .= " WHERE " . $filter_columns[$i] . "=" . $filter_values[$i];
             }
 
-            $sql_query_stmt = $db_connection->prepare($sql_query_string);
+            $sql_query_stmt = $db_conn->prepare($sql_query_string);
 
             return self::readFromDatabaseWithStatement($sql_query_stmt);
         }
 
-        public static function readFirstMatchingEntryFromTable($db_connection, $column_names, $table_name, $filter_columns, $filter_values)
+        public static function readFirstMatchingEntryFromTable($db_conn, $column_names, $table_name, $filter_columns, $filter_values)
         {
-            $all_matching_entries = self::readFilteredColumnFromTable($db_connection, $column_names, $table_name, $filter_columns, $filter_values);
+            $all_matching_entries = self::readFilteredColumnFromTable($db_conn, $column_names, $table_name, $filter_columns, $filter_values);
             return $all_matching_entries[0][$column_names[0]];
         }
 
