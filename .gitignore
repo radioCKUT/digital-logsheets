@@ -4,3 +4,6 @@
 # Past versions that shouldn't be tracked
 /old
 /old-v2
+
+#database credentials that depend on local machine
+php/database/databaseLogin.php

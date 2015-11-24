@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b2df840f-9c26-44ff-92d6-6df0af234a4c" name="Personal Website" url="http://evanvassallo.com">
+        <fileTransfer host="evanvassallo.com" port="21" username="evanvass">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

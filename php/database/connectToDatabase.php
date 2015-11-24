@@ -1,28 +1,10 @@
 <?php
-    
+    require_once("databaseLogin.php");
     function connectToDatabase() {
-        //server settings
-        $servername = "localhost";
-        $port = "8889";
-         
-        //database settings
-        $database = "c9";
-        $username = "root";
-        $password = "root";
 
-		//cloud9 server settings
-		/*//server settings
-		$servername = getenv('IP');
-		$port = "3306";
-
-		//database settings
-		$database = "c9";
-		$username = getenv('C9_USER');
-		$password = "";*/
-        
         //Attempt to connect to database, throw an error if connection fails
 		try {
-			$database = new PDO("mysql:host=$servername;port=$port;dbname=$database",$username,$password);
+			$database = getPDOStatementWithLogin();
 			
 			//set the PDO error mode to exception
     		$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

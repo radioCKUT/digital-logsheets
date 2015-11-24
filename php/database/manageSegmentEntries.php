@@ -31,7 +31,7 @@
 
         public static function saveNewSegmentToDatabase($db_conn, $start_time, $duration, $name, $author, $category,
                                                         $is_can_con, $is_new_release, $is_french_vocal_music, $playlistId) {
-            
+
             switch ($category) {
                 case 2:
                 case 3:

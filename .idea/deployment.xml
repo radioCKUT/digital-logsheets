@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="Test">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="Local">
     <serverData>
-      <paths name="Test">
+      <paths name="Local">
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="Personal Website">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/digital-logsheets" local="$PROJECT_DIR$" web="/digital-logsheets" />
           </mappings>
         </serverdata>
       </paths>
