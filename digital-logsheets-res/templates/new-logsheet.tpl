@@ -17,6 +17,14 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+        <!-- Boostrap JS -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
         <!-- Script for adding form fields -->
         <script src="js/dynamic_form.js"></script>
     </head>
@@ -49,17 +57,29 @@
             <hr>
             <h4>Episode Playlist</h4>
             <h5>Enter the segments in any order; they will be sorted automatically later.</h5>
-            <div class="form-group">
-                Time: <input type="datetime-local" name="segment_time[]">
-                Category: {html_options name="category[]" options=$categories}
-                Name: <input type="text" name="name[]">
-                Author: <input type="text" name="author[]">
-                CanCon: <input type="checkbox" name="can_con[]" value="can_con">
-                New Release: <input type="checkbox" name="new_release[]" value="new_release">
-                French Vocal Music: <input type="checkbox" name="french_vocal_music[]" value="french_vocal_music">
-                <a href="#" onClick="cloneRow(event)">add</a>
-                <a href="#" onClick="removeRow(event)">remove</a>
-                <br>
+
+            <div id="segments">
+                <div class="form-group" id="segment">
+                    <label for="segment_time">Time:</label>
+                    <input type="datetime-local" class="form-control" name="segment_time[]">
+                    <label for="category">Category:</label>
+                    {html_options name="category[]" class="form-control" options=$categories}
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" name="name[]">
+                    <label for="author">Author:</label>
+                    <input type="text" class="form-control" name="author[]">
+                    <label for="album">Album:</label>
+                    <input type="text" class="form-control" name="album[]">
+                    <label class="checkbox-inline" for="can_con">CanCon:</label><input type="checkbox" name="can_con[]" value="">
+
+                    <label class="checkbox-inline" for="new_release">New Release:</label><input type="checkbox" name="new_release[]" value="">
+
+                    <label class="checkbox-inline" for="french_vocal_music"> French Vocal Music:</label><input type="checkbox" name="french_vocal_music[]" value="">
+
+                    <a href="#" onClick="cloneRow(event)">add</a>
+                    <a href="#" onClick="removeRow(event)">remove</a>
+                    <br>
+                </div>
             </div>
             
             <input type="submit" value="Continue">
