@@ -27,6 +27,7 @@
 
         <!-- Script for adding form fields -->
         <script src="js/dynamic_form.js"></script>
+        <script src="js/segment_form.js"></script>
     </head>
     <body>
         <div class="container">
@@ -60,22 +61,22 @@
 
             <div id="segments">
                 <div class="form-group" id="segment">
-                    <label for="segment_time">Time:</label>
-                    <input type="datetime-local" class="form-control" name="segment_time[]">
-                    <label for="category">Category:</label>
+                    {*<label for="segment_time">Time:</label>
+                    <input type="time" class="form-control" name="segment_time[]">*}
+                    {*<label for="category">Category:</label>
                     {html_options name="category[]" class="form-control" options=$categories}
-                    <label for="name">Name:</label>
+                    *}{*<label for="name">Name:</label>
                     <input type="text" class="form-control" name="name[]">
                     <label for="author">Author:</label>
                     <input type="text" class="form-control" name="author[]">
                     <label for="album">Album:</label>
-                    <input type="text" class="form-control" name="album[]">
-                    <label class="checkbox-inline" for="can_con">CanCon:</label><input type="checkbox" name="can_con[]" value="">
+                    <input type="text" class="form-control" name="album[]">*}
+                    {*<label class="checkbox-inline" for="can_con">CanCon:</label><input type="checkbox" name="can_con[]" value="">
 
                     <label class="checkbox-inline" for="new_release">New Release:</label><input type="checkbox" name="new_release[]" value="">
 
                     <label class="checkbox-inline" for="french_vocal_music"> French Vocal Music:</label><input type="checkbox" name="french_vocal_music[]" value="">
-
+*}
                     <a href="#" onClick="cloneRow(event)">add</a>
                     <a href="#" onClick="removeRow(event)">remove</a>
                     <br>
