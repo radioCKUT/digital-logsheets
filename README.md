@@ -7,7 +7,7 @@ A web-based application for tracking the playback of audio segments on a communi
 This application aims to serve the following CKUT 90.3FM stakeholders:
 
 1. Programmers: More convenient reporting of program content as required by station policy
-2. Station directors: Quicker tracking and monitoring of airplay statistics
+2. Station directors: Greater logsheet completeness, more timely logsheet submission, and quicker tracking and monitoring of airplay statistics
 3. Listeners: Find out what content was played during a specific time on-air
 
 It will also reduce paper waste created by the current paper system. In its first iteration, programmers should be able to complete all their logging via the application (i.e. they won't need to log any segments on a paper logsheet any more).
@@ -17,12 +17,12 @@ It will also reduce paper waste created by the current paper system. In its firs
 These requirements are divided up by the stakeholders they would most affect. Separate interfaces would likely need to be created for each of these sections, but all features (if applicable) should read from and write to the same database.
 
 ###Programmers
-Achieve a balance of compatibility with accessibility features.
+Maximize use of webpage accessibility features while remaining compatible with the computer in the Master Control Room.
 
 Allow programmers to enter the following data about their programs into an online form:
 
 - Basic metadata (program, air date/time, pre-record date, notes)
-- One line for the names of each programmer to be input free-form. Programmer names will not be associated with a given id for stats purposes.
+- One line for the names of each programmer to be input free-form. Programmer names will not be associated with a given id for stats purposes at this stage.
 - For each individual audio segment: start time, station-defined category, CanCon, New Rel, French Vocal. Request column on paper logsheet will not be replicated in the application as that column no longer relevant to log. Using the differences between segment start times to calculate segment durations is accpetable.
 
 Each individual audio segment should also have the following information attached, depending on its station-defined category:

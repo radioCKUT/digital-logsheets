@@ -32,27 +32,41 @@
     <body>
         <div class="container">
     <h3>New Logsheet</h3>
-        <form id="logsheet" role="form" action="../php/save-logsheet.php" method="post">
+        <form id="logsheet" role="form" action="../../digital-logsheets-res/php/save-logsheet.php" method="post">
             <h4>Episode Metadata</h4>
             <div class="form-group">
-                <label for="programmers">Programmer(s):</label>
-                <input type="text" name="programmers" id="programmers"><br />
 
+                <div class="form-group">
+                    <label for="programmers">Programmer(s):</label>
+                    <input type="text" name="programmers" id="programmers"><br />
+                </div>
+                <div class="form-group">
                 <label for="program">Program:</label>
                 {html_options name="program" id="program" options=$programs}<br />
-
+                </div>
+                <div class="form-group">
                 <label for="prerecord">Pre-recorded</label>
                 <input type="checkbox" name="prerecord" value="prerecord" id="prerecord">
                 <label for="prerecord_date">Pre-recorded Date:</label>
                 <input type="date" name="prerecord_date" id="prerecord_date"><br />
-
+                </div>
+                <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" name="start_date" id="start_date">
+                </div>
+                <div class="form-group">
                 <label for="start_time">Start Time:</label>
-                <input type="datetime-local" name="start_time" id="start_time"><br />
+                <input type="time" name="start_time" id="start_time">
+                </div>
+                <div class="form-group">
                 <label for="end_time">End Time:</label>
-                <input type="datetime-local" name="end_time" id="end_time"><br />
+                <input type="time" name="end_time" id="end_time">
+                </div>
+                <div class="form-group">
 
                 <label for="notes">Notes:</label>
-                <input type="text" name="notes" id="notes"><br />
+                <textarea class="form-control" name="notes" id="notes"></textarea>
+                </div>
             </div>
             
             <hr>
@@ -60,27 +74,7 @@
             <h5>Enter the segments in any order; they will be sorted automatically later.</h5>
 
             <div id="segments">
-                <div class="form-group" id="segment">
-                    {*<label for="segment_time">Time:</label>
-                    <input type="time" class="form-control" name="segment_time[]">*}
-                    {*<label for="category">Category:</label>
-                    {html_options name="category[]" class="form-control" options=$categories}
-                    *}{*<label for="name">Name:</label>
-                    <input type="text" class="form-control" name="name[]">
-                    <label for="author">Author:</label>
-                    <input type="text" class="form-control" name="author[]">
-                    <label for="album">Album:</label>
-                    <input type="text" class="form-control" name="album[]">*}
-                    {*<label class="checkbox-inline" for="can_con">CanCon:</label><input type="checkbox" name="can_con[]" value="">
-
-                    <label class="checkbox-inline" for="new_release">New Release:</label><input type="checkbox" name="new_release[]" value="">
-
-                    <label class="checkbox-inline" for="french_vocal_music"> French Vocal Music:</label><input type="checkbox" name="french_vocal_music[]" value="">
-*}
-                    <a href="#" onClick="cloneRow(event)">add</a>
-                    <a href="#" onClick="removeRow(event)">remove</a>
-                    <br>
-                </div>
+                {*segment_form.js fills this div programmatically*}
             </div>
             
             <input type="submit" value="Continue">

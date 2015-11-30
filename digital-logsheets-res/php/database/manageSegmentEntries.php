@@ -29,13 +29,13 @@
             $segment_object->setAuthor($database_result[0][self::$authorColumnName]);
         }
 
-        public static function saveNewSegmentToDatabase($db_conn, $start_time, $duration, $name, $author, $category,
+        public static function saveNewSegmentToDatabase($db_conn, $start_time, $duration, $name, $author, $album, $category,
                                                         $is_can_con, $is_new_release, $is_french_vocal_music, $playlistId) {
 
             switch ($category) {
                 case 2:
                 case 3:
-                    $values = self::prepareMusicSegmentEntryValues($start_time, $duration, $name, $author, $category,
+                    $values = self::prepareMusicSegmentEntryValues($start_time, $duration, $name, $author, $album, $category,
                         $is_can_con, $is_new_release, $is_french_vocal_music);
                     break;
 
@@ -51,7 +51,7 @@
             }
 
             $column_names = array(self::$startTimeColumnName, self::$durationColumnName, self::$segmentNameColumnName,
-                self::$authorColumnName, self::$categoryColumnName, self::$canConColumnName, self::$newReleaseColumnName, self::$frenchVocalColumnName);
+                self::$authorColumnName, self::$albumColumnName, self::$categoryColumnName, self::$canConColumnName, self::$newReleaseColumnName, self::$frenchVocalColumnName);
 
             $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::$segmentTableName, $column_names, $values);
 
@@ -60,19 +60,19 @@
             return $segmentId;
         }
 
-        private static function prepareMusicSegmentEntryValues($start_time, $duration, $name, $author, $category,
+        private static function prepareMusicSegmentEntryValues($start_time, $duration, $name, $author, $album, $category,
                                                                $is_can_con, $is_new_release, $is_french_vocal_music) {
 
-            return array($start_time, $duration, $name, $author, $category,
+            return array($start_time, $duration, $name, $author, $album, $category,
                 $is_can_con, $is_new_release, $is_french_vocal_music);
         }
 
         private static function prepareAdSegmentEntryValues($start_time, $duration, $name, $ad_number) {
-            return array($start_time, $duration, $name, null, 5, false, false, false);
+            return array($start_time, $duration, $name, null, null, 5, false, false, false);
         }
 
         private static function prepareOtherSegmentEntryValues($start_time, $duration, $name, $category, $station_id_given, $hide_from_listener) {
-            return array($start_time, $duration, $name, null, $category,
+            return array($start_time, $duration, $name, null, null, $category,
                 false, false, false);
         }
 

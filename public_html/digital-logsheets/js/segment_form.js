@@ -20,20 +20,8 @@ function createNewSegmentForm(segmentCount) {
     addNewReleaseInput(segment, segmentCount);
     addFrenchVocalMusicInput(segment, segmentCount);
 
-    /*var addRowLink = document.createElement("a");
-    addRowLink.href = "#";
-    addRowLink.onclick = cloneRow;
-    var addRowLinkText = document.createTextNode("add");
-    addRowLink.appendChild(addRowLinkText);
-
-    var removeRowLink = document.createElement("a");
-    removeRowLink.href = "#";
-    removeRowLink.onclick = removeRow;
-    var removeRowLinkText = document.createTextNode("remove");
-    removeRowLink.appendChild(removeRowLinkText);
-
-    segment.appendChild(addRowLink);
-    segment.appendChild(removeRowLink);*/
+    var horizontalRule = document.createElement("hr");
+    segment.appendChild(horizontalRule);
 
     var segmentsList = document.getElementById("segments");
     segmentsList.appendChild(segment);
@@ -44,6 +32,10 @@ function getSegmentCountPostfix(segmentCount) {
 }
 
 function addSegmentTimeInput(segment, segmentCount) {
+
+    var segmentTimeDiv = document.createElement("div");
+    segmentTimeDiv.className = "form-group";
+
     var segmentTime = document.createElement("input");
     segmentTime.name = "segment_time" + getSegmentCountPostfix(segmentCount);
     segmentTime.id = segmentTime.name;
@@ -52,23 +44,38 @@ function addSegmentTimeInput(segment, segmentCount) {
 
     var segmentTimeLabel = document.createElement("label");
     segmentTimeLabel.htmlFor = segmentTime.id;
+    segmentTimeLabel.className = "control-label";
     var segmentTimeLabelText = document.createTextNode("Time:");
     segmentTimeLabel.appendChild(segmentTimeLabelText);
 
-    segment.appendChild(segmentTimeLabel);
-    segment.appendChild(segmentTime);
+    segmentTimeDiv.appendChild(segmentTimeLabel);
+    segmentTimeDiv.appendChild(segmentTime);
+
+    segment.appendChild(segmentTimeDiv);
 }
 
 function addCategoryInput(segment, segmentCount) {
+
+    var categoryInputDiv = document.createElement("div");
+    categoryInputDiv.className = "form-group";
+
     var categoryButtonsDiv = document.createElement("div");
     categoryButtonsDiv.className = "btn-group";
+    categoryButtonsDiv.id = "category" + getSegmentCountPostfix(segmentCount);
     categoryButtonsDiv.setAttribute("data-toggle", "buttons");
 
     for (var i = 1; i < 6; i++) {
         addCategoryButton(categoryButtonsDiv, i, segmentCount);
     }
 
-    segment.appendChild(categoryButtonsDiv);
+    var categoryButtonsLabel = document.createElement("label");
+    categoryButtonsLabel.htmlFor = categoryButtonsDiv.id;
+    var categoryButtonsLabelText = document.createTextNode("Category:");
+    categoryButtonsLabel.appendChild(categoryButtonsLabelText);
+
+    categoryInputDiv.appendChild(categoryButtonsLabel);
+    categoryInputDiv.appendChild(categoryButtonsDiv);
+    segment.appendChild(categoryInputDiv);
 }
 
 function addCategoryButton(categoryButtonsDiv, categoryCount, segmentCount) {
@@ -107,6 +114,10 @@ function addAlbumInput(segment, segmentCount) {
 }
 
 function addTextInput(name, segment, segmentCount) {
+
+    var inputDiv = document.createElement("div");
+    inputDiv.className = "form-group";
+
     var input = document.createElement("input");
     input.className = "form-control";
     input.type = "text";
@@ -118,25 +129,28 @@ function addTextInput(name, segment, segmentCount) {
     var inputLabelText = document.createTextNode(name.charAt(0).toUpperCase() + name.slice(1) + ":");
     inputLabel.appendChild(inputLabelText);
 
-    segment.appendChild(inputLabel);
-    segment.appendChild(input);
+    inputDiv.appendChild(inputLabel);
+    inputDiv.appendChild(input);
+
+    segment.appendChild(inputDiv);
 }
 
 
 
 function addCanConInput(segment, segmentCount) {
-    addCheckbox("can_con", segment, segmentCount);
+    addCheckbox("can_con", "CC", segment, segmentCount);
 }
 
 function addNewReleaseInput(segment, segmentCount) {
-    addCheckbox("new_release", segment, segmentCount);
+    addCheckbox("new_release", "NR", segment, segmentCount);
 }
 
 function addFrenchVocalMusicInput(segment, segmentCount) {
-    addCheckbox("french_vocal_music", segment, segmentCount);
+    addCheckbox("french_vocal_music", "FV", segment, segmentCount);
 }
 
-function addCheckbox(name, segment, segmentCount) {
+function addCheckbox(name, label, segment, segmentCount) {
+
     var checkboxLabel = document.createElement("label");
     checkboxLabel.className = "checkbox-inline";
 
@@ -146,7 +160,7 @@ function addCheckbox(name, segment, segmentCount) {
     checkboxInput.id = checkboxInput.name;
     checkboxInput.value = "";
 
-    var checkboxLabelText = document.createTextNode(name.charAt(0).toUpperCase() + name.slice(1) + ":");
+    var checkboxLabelText = document.createTextNode(label);
 
     checkboxLabel.appendChild(checkboxInput);
     checkboxLabel.appendChild(checkboxLabelText);
