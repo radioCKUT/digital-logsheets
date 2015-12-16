@@ -86,7 +86,7 @@ function addCategoryButton(categoryButtonsDiv, categoryCount, segmentCount) {
     var buttonInput = document.createElement("input");
     buttonInput.type = "radio";
     buttonInput.name = "category" + getSegmentCountPostfix(segmentCount);
-    buttonInput.id = "category" + categoryCount;
+    buttonInput.id = "category" + categoryCount + segmentCount;
     buttonInput.autocomplete = "off";
     buttonInput.value = categoryCount;
 

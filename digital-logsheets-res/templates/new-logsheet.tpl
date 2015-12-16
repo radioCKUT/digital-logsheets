@@ -27,12 +27,15 @@
 
         <!-- Script for adding form fields -->
         <script src="js/dynamic_form.js"></script>
-        <script src="js/segment_form.js"></script>
+        {*<script src="js/segment_form.js"></script>*}
+        <script src="js/category_button.js"></script>
+        <script src="js/sisyphus.min.js"></script>
+
     </head>
     <body>
         <div class="container">
     <h3>New Logsheet</h3>
-        <form id="logsheet" role="form" action="../../digital-logsheets-res/php/save-logsheet.php" method="post">
+        <form id="logsheet" data-persist="garlic" role="form" action="../../digital-logsheets-res/php/save-logsheet.php" method="post">
             <h4>Episode Metadata</h4>
             <div class="form-group">
 
@@ -74,7 +77,39 @@
             <h5>Enter the segments in any order; they will be sorted automatically later.</h5>
 
             <div id="segments">
-                {*segment_form.js fills this div programmatically*}
+                <div id="segment" class="form-group">
+                    <div class="form-group">
+                        <label for="segment_time" class="control-label">Time:</label>
+                        <input name="segment_time" id="segment_time" class="form-control" type="time">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <div class="btn-group" id="category" data-toggle="buttons">
+                            <label class="btn btn-primary"><input type="radio" name="category" id="category1" autocomplete="off" value="1">1</label>
+                            <label class="btn btn-primary" onclick="musicCategory()"><input type="radio" name="category" id="category2" autocomplete="off" value="2">2</label>
+                            <label class="btn btn-primary"><input type="radio" name="category" id="category3" autocomplete="off" value="3">3</label>
+                            <label class="btn btn-primary"><input type="radio" name="category" id="category4" autocomplete="off" value="4">4</label>
+                            <label class="btn btn-primary"><input type="radio" name="category" id="category5" autocomplete="off" value="5">5</label></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input class="form-control" type="text" name="name" id="name">
+                    </div>
+                    <div class="form-group"><label for="author">Author:</label>
+                        <input class="form-control" type="text" name="author" id="author">
+                    </div>
+                    <div class="form-group">
+                        <label for="album">Album:</label>
+                        <input class="form-control" type="text" name="album" id="album">
+                    </div>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="can_con" id="can_con" value="">CC</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="new_release" id="new_release" value="">NR</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="french_vocal_music" id="french_vocal_music" value="">FV</label>
+                    <hr>
+                </div>
             </div>
             
             <input type="submit" value="Continue">
