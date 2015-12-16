@@ -5,6 +5,8 @@ include_once("database/manageEpisodeEntries.php");
 include_once("database/managePlaylistEntries.php");
 include_once("database/manageSegmentEntries.php");
 
+error_reporting(E_ALL ^ E_NOTICE);
+
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
 $programId = $_POST['program'];
@@ -50,8 +52,7 @@ try {
     manageEpisodeEntries::saveNewEpisode($db, $playlistId, $programId, $programmerId,
         $episode_start_time, $episode_end_time, isset($prerecord), $prerecord_date);
 
-    print "Entry added! \n";
-    include('../../public_html/digital-logsheets/new-logsheet.php');
+    header('Location: ../../public_html/digital-logsheets/new-logsheet.php');
 
 } catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
@@ -109,3 +110,5 @@ function computeSegmentDurations($segments, $end_time) {
 
     return $segments;
 }
+
+?>

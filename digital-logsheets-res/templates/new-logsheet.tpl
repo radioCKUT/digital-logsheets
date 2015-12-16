@@ -22,23 +22,22 @@
 
         <!-- Boostrap JS -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
-
-
+        
         <!-- Script for adding form fields -->
         <script src="js/dynamic_form.js"></script>
         {*<script src="js/segment_form.js"></script>*}
         <script src="js/category_button.js"></script>
         <script src="js/sisyphus.min.js"></script>
-
-        <style>
-            .required:after { content:" *"; }
-        </style>​
+        <script type="text/javascript">
+            function startStoringFormEntries() {
+                $('form').sisyphus();
+            }
+        </script>
     </head>
-    <body>
+    <body onload="startStoringFormEntries()">
         <div class="container">
     <h3>New Logsheet</h3>
-        <form id="logsheet" data-persist="garlic" role="form" action="../../digital-logsheets-res/php/save-logsheet.php" method="post">
+        <form id="logsheet" role="form" action="../php/save-episode.php" method="post">
             <h4>Episode Metadata</h4>
             <div class="form-group">
                 <div class="form-group">
@@ -75,7 +74,6 @@
             
             <hr>
             <h4>Episode Playlist</h4>
-            <h5>Enter the segments in any order; they will be sorted automatically later.</h5>
 
             <div id="segments">
                 <div id="segment" class="form-group">
@@ -99,7 +97,7 @@
                     </div>
                     <div class="form-group" id="name_group">
                         <label for="name" id="name_label">Name:</label>
-                        <input class="form-control" type="text" name="name" id="name_input">
+                        <input class="form-control" type="text" name="name" id="name_input" required>
                     </div>
                     <div class="form-group" id="author_group">
                         <label for="author">Author:</label>

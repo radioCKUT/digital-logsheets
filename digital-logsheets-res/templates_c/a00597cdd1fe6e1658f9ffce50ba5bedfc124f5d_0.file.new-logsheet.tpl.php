@@ -59,7 +59,7 @@ $_smarty_tpl->properties['nocache_hash'] = '7553127955651ce6cb27d64_14796879';
 >
     </head>
     <body>
-        <form id="logsheet" role="form" action="../php/save-logsheet.php" method="post">
+        <form id="logsheet" role="form" action="../php/save-episode.php" method="post">
             <div>
                 First Name: <input type="text" name="first_name"><br />
                 Last Name: <input type="text" name="last_name"><br />
