@@ -30,6 +30,10 @@
         {*<script src="js/segment_form.js"></script>*}
         <script src="js/category_button.js"></script>
         <script src="js/sisyphus.min.js"></script>
+
+        <style>
+            .required:after { content:" *"; }
+        </style>​
     </head>
     <body>
         <div class="container">
@@ -37,7 +41,6 @@
         <form id="logsheet" data-persist="garlic" role="form" action="../../digital-logsheets-res/php/save-logsheet.php" method="post">
             <h4>Episode Metadata</h4>
             <div class="form-group">
-
                 <div class="form-group">
                     <label for="programmers">Programmer(s):</label>
                     <input type="text" name="programmers" id="programmers"><br />
@@ -47,27 +50,26 @@
                 {html_options name="program" id="program" options=$programs}<br />
                 </div>
                 <div class="form-group">
-                <label for="prerecord">Pre-recorded</label>
-                <input type="checkbox" name="prerecord" value="prerecord" id="prerecord">
-                <label for="prerecord_date">Pre-recorded Date:</label>
-                <input type="date" name="prerecord_date" id="prerecord_date"><br />
+                    <label for="prerecord">Pre-recorded</label>
+                    <input type="checkbox" name="prerecord" value="prerecord" id="prerecord">
+                    <label for="prerecord_date">Pre-recorded Date:</label>
+                    <input type="date" name="prerecord_date" id="prerecord_date"><br />
                 </div>
                 <div class="form-group">
-                <label for="start_date">Start Date:</label>
-                <input type="date" name="start_date" id="start_date">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" name="start_date" id="start_date">
                 </div>
                 <div class="form-group">
-                <label for="start_time">Start Time:</label>
-                <input type="time" name="start_time" id="start_time">
+                    <label for="start_time">Start Time:</label>
+                    <input type="time" name="start_time" id="start_time">
                 </div>
                 <div class="form-group">
-                <label for="end_time">End Time:</label>
-                <input type="time" name="end_time" id="end_time">
+                    <label for="end_time">End Time:</label>
+                    <input type="time" name="end_time" id="end_time">
                 </div>
                 <div class="form-group">
-
-                <label for="notes">Notes:</label>
-                <textarea class="form-control" name="notes" id="notes"></textarea>
+                    <label for="notes">Notes:</label>
+                    <textarea class="form-control" name="notes" id="notes"></textarea>
                 </div>
             </div>
             
@@ -96,7 +98,7 @@
                                 <input type="radio" name="category" id="category5" autocomplete="off" value="5">5</label></div>
                     </div>
                     <div class="form-group" id="name_group">
-                        <label for="name">Name:</label>
+                        <label for="name" id="name_label">Name:</label>
                         <input class="form-control" type="text" name="name" id="name_input">
                     </div>
                     <div class="form-group" id="author_group">

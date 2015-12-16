@@ -1,4 +1,4 @@
-function musicCategory() {
+function setupMusicCatFields() {
     $('#author_group').show();
     $('#author_input').prop('required', true);
     $('#album_group').show();
@@ -8,7 +8,7 @@ function musicCategory() {
     $('#french_vocal_music_group').show();
 }
 
-function nonMusicCategory() {
+function setupNonMusicCatFields() {
     $('#author_input').prop('required', false);
     $('#album_input').prop('required', false);
     $('#can_con_group').hide();
@@ -17,27 +17,34 @@ function nonMusicCategory() {
 }
 
 function setupCat1Fields() {
-    nonMusicCategory();
+    setupNonMusicCatFields();
     $('#author_group').show();
     $('#album_group').show();
+    $('#name_label').text("Description:");
 }
 
 function setupCat2Fields() {
-    musicCategory();
+    setupMusicCatFields();
+    $('#name_label').text("Name:");
 }
 
 function setupCat3Fields() {
-    musicCategory();
+    setupMusicCatFields();
+    $('#name_label').text("Name:");
 }
 
 function setupCat4Fields() {
-    nonMusicCategory();
+    setupNonMusicCatFields();
     $('#author_group').hide();
     $('#album_group').hide();
+
+    $('#name_label').text("Name:");
 }
 
 function setupCat5Fields() {
-    nonMusicCategory();
+    setupNonMusicCatFields();
     $('#author_group').hide();
     $('#album_group').hide();
+
+    $('#name_label').text("Ad Number:");
 }
