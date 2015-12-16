@@ -30,7 +30,6 @@
         {*<script src="js/segment_form.js"></script>*}
         <script src="js/category_button.js"></script>
         <script src="js/sisyphus.min.js"></script>
-
     </head>
     <body>
         <div class="container">
@@ -85,29 +84,35 @@
                     <div class="form-group">
                         <label for="category">Category:</label>
                         <div class="btn-group" id="category" data-toggle="buttons">
-                            <label class="btn btn-primary"><input type="radio" name="category" id="category1" autocomplete="off" value="1">1</label>
-                            <label class="btn btn-primary" onclick="musicCategory()"><input type="radio" name="category" id="category2" autocomplete="off" value="2">2</label>
-                            <label class="btn btn-primary"><input type="radio" name="category" id="category3" autocomplete="off" value="3">3</label>
-                            <label class="btn btn-primary"><input type="radio" name="category" id="category4" autocomplete="off" value="4">4</label>
-                            <label class="btn btn-primary"><input type="radio" name="category" id="category5" autocomplete="off" value="5">5</label></div>
+                            <label class="btn btn-primary" onclick="setupCat1Fields()">
+                                <input type="radio" name="category" id="category1" autocomplete="off" value="1">1</label>
+                            <label class="btn btn-primary" onclick="setupCat2Fields()">
+                                <input type="radio" name="category" id="category2" autocomplete="off" value="2">2</label>
+                            <label class="btn btn-primary" onclick="setupCat3Fields()">
+                                <input type="radio" name="category" id="category3" autocomplete="off" value="3">3</label>
+                            <label class="btn btn-primary" onclick="setupCat4Fields()">
+                                <input type="radio" name="category" id="category4" autocomplete="off" value="4">4</label>
+                            <label class="btn btn-primary" onclick="setupCat5Fields()">
+                                <input type="radio" name="category" id="category5" autocomplete="off" value="5">5</label></div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="name_group">
                         <label for="name">Name:</label>
-                        <input class="form-control" type="text" name="name" id="name">
+                        <input class="form-control" type="text" name="name" id="name_input">
                     </div>
-                    <div class="form-group"><label for="author">Author:</label>
-                        <input class="form-control" type="text" name="author" id="author">
+                    <div class="form-group" id="author_group">
+                        <label for="author">Author:</label>
+                        <input class="form-control" type="text" name="author" id="author_input">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="album_group">
                         <label for="album">Album:</label>
-                        <input class="form-control" type="text" name="album" id="album">
+                        <input class="form-control" type="text" name="album" id="album_input">
                     </div>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" name="can_con" id="can_con" value="">CC</label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" name="new_release" id="new_release" value="">NR</label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" name="french_vocal_music" id="french_vocal_music" value="">FV</label>
+                    <label class="checkbox-inline" id="can_con_group">
+                        <input type="checkbox" name="can_con" value="">CC</label>
+                    <label class="checkbox-inline" id="new_release_group">
+                        <input type="checkbox" name="new_release" value="">NR</label>
+                    <label class="checkbox-inline" id="french_vocal_music_group">
+                        <input type="checkbox" name="french_vocal_music" value="">FV</label>
                     <hr>
                 </div>
             </div>
