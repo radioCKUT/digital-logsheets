@@ -54,7 +54,7 @@
                 self::$authorColumnName, self::$albumColumnName, self::$categoryColumnName, self::$canConColumnName, self::$newReleaseColumnName, self::$frenchVocalColumnName);
 
             $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::$segmentTableName, $column_names, $values);
-
+            error_log("playlistId passed: " . $playlistId);
             managePlaylistEntries::addSegmentToDatabasePlaylist($db_conn, $playlistId, $segmentId);
 
             return $segmentId;

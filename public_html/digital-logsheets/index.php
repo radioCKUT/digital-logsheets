@@ -2,7 +2,6 @@
     //----INCLUDE FILES----
     include('../../digital-logsheets-res/smarty/libs/Smarty.class.php');
     include("../../digital-logsheets-res/php/database/connectToDatabase.php");
-    include("../../digital-logsheets-res/php/dev-mode.php");
     require_once("../../digital-logsheets-res/php/objects/logsheet-classes.php");
     
     // create object

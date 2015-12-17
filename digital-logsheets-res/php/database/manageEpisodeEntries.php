@@ -2,6 +2,9 @@
 
     include_once("readFromDatabase.php");
     include_once("writeToDatabase.php");
+    include_once(__DIR__ . "/../objects/logsheet-classes.php");
+
+
     class manageEpisodeEntries {
 
         private static $episodeTableName = "episode";
@@ -53,6 +56,6 @@
                 $end_time, $is_prerecord, $prerecord_date);
 
 
-            writeToDatabase::writeEntryToDatabase($db_conn, self::$episodeTableName, $column_names, $values);
+            return writeToDatabase::writeEntryToDatabase($db_conn, self::$episodeTableName, $column_names, $values);
         }
     }

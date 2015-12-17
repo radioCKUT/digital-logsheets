@@ -1,6 +1,6 @@
 <?php
     include_once(__DIR__ . "/../database/manageSegmentEntries.php");
-    class Segment extends LogsheetComponent{
+    class Segment extends LogsheetComponent implements JsonSerializable{
 
 
         private $name;
@@ -24,6 +24,14 @@
 
         public function setAuthor($author) {
             $this->author = $author;
+        }
+
+        public function jsonSerialize() {
+            return [
+                'name' => $this->getName(),
+                'album' => $this->getAlbum(),
+                'author' => $this->getAuthor()
+            ];
         }
 
         

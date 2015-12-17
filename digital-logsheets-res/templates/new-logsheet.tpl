@@ -37,7 +37,7 @@
     <body onload="startStoringFormEntries()">
         <div class="container">
     <h3>New Logsheet</h3>
-        <form id="logsheet" role="form" action="../php/save-episode.php" method="post">
+        <form id="logsheet" role="form" action="../../digital-logsheets-res/php/save-episode.php" method="post">
             <h4>Episode Metadata</h4>
             <div class="form-group">
                 <div class="form-group">

@@ -2,6 +2,8 @@
 
     //TODO: Error checking...
     require_once(__DIR__ . "/../database/manageEpisodeEntries.php");
+    require_once(__DIR__ . "/LogsheetComponent.php");
+
     class Episode extends LogsheetComponent {
 
         private $program;
@@ -48,8 +50,13 @@
         }
         
         //returns an array of segment objects
-        public function getPlaylist() {
+        public function getSegments() {
             return $this->playlist->getSegments();
+        }
+
+        public function getPlaylistId() {
+            error_log("getting playlist id:" . $this->playlist->getId());
+            return $this->playlist->getId();
         }
         
         public function getStartDate() {
