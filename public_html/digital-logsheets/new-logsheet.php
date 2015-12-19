@@ -21,7 +21,10 @@
         
         //close database connection
         $db = NULL;
-        
+
+        $programs = json_encode(array_values($programs));
+        error_log($programs);
+
         //assign categories to smarty variable
         $smarty->assign("programs", $programs);
         

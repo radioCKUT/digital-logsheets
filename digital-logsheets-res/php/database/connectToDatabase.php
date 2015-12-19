@@ -5,6 +5,7 @@
         //Attempt to connect to database, throw an error if connection fails
 		try {
 			$database = getPDOStatementWithLogin();
+			$database->exec("set names utf8");
 			
 			//set the PDO error mode to exception
     		$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

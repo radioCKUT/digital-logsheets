@@ -11,6 +11,11 @@
         <!-- Bootstrap theme -->
         <link href="http://getbootstrap.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 
+        <!-- Select2 -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+        <link href="css/select2-bootstrap.css" rel="stylesheet"/>
+
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -22,19 +27,26 @@
 
         <!-- Boostrap JS -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        
-        <!-- Script for adding form fields -->
+
+        <!-- Select2 -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+
+
         <script src="js/prerecord.js"></script>
         <script src="js/category_button.js"></script>
-        <script src="js/sisyphus.min.js"></script>
         <script type="text/javascript">
-            function startStoringFormEntries() {
-                //$('form').sisyphus();
+            function init() {
                 checkPrerecordInput();
+                var data = {$programs};
+
+                console.log(data);
+                $(".programs").select2({
+                    data: data
+                })
             }
         </script>
     </head>
-    <body onload="startStoringFormEntries()">
+    <body onload="init()">
         <div class="container">
     <h3>New Logsheet</h3>
         <form id="logsheet" role="form" action="save-episode.php" method="post">
@@ -46,7 +58,8 @@
                 </div>
                 <div class="form-group">
                 <label for="program">Program:</label>
-                {html_options name="program" id="program" options=$programs}<br />
+                <select name="program" id="program" class="programs"></select>
+                {*{html_options name="program" id="program" options=$programs}<br />*}
                 </div>
                 <div class="form-group">
                     <label for="prerecord">Pre-recorded: </label>
