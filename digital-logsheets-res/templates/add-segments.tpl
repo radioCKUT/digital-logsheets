@@ -31,14 +31,17 @@
     <script src="js/sisyphus.min.js"></script>
     <script type="text/javascript">
         function startStoringFormEntries() {
+            getEpisodeSegments();
             $('form').sisyphus();
         }
     </script>
 </head>
 <body onload="startStoringFormEntries()">
-<div class="container">
+
+
+<div class="col-md-8">
     <h3>New Logsheet</h3>
-    <form id="logsheet" role="form" onsubmit="addSegment()" method="post">
+    <form id="logsheet" role="form" method="post">
         <h4>Episode Playlist</h4>
 
         <h5>Episode ID: {$episode_id}</h5>
@@ -87,12 +90,25 @@
             </div>
         </div>
 
+
+
         <input type="submit" value="Add">
     </form>
 
     <form id="finalize" role="form" action="../../digital-logsheets-res/php/finalize-segments.php" method="post">
         <input type="submit" value="Submit All">
     </form>
+</div>
+
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Episode Segments</div>
+
+        <!-- Table -->
+        <table class="table" id="added_segments">
+        </table>
+    </div>
 </div>
 </body>
 </html>

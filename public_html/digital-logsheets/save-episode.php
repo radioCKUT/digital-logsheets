@@ -1,8 +1,8 @@
 <?php
-include_once('database/connectToDatabase.php');
-include_once("database/manageEpisodeEntries.php");
-include_once("database/managePlaylistEntries.php");
-include_once("database/manageSegmentEntries.php");
+include_once('../../digital-logsheets-res/php/database/connectToDatabase.php');
+include_once("../../digital-logsheets-res/php/database/manageEpisodeEntries.php");
+include_once("../../digital-logsheets-res/php/database/managePlaylistEntries.php");
+include_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
 
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -31,7 +31,7 @@ try {
 
     $_SESSION["episode_id"] = $episode_id;
 
-    header('Location: ../../public_html/digital-logsheets/add-segments.php');
+    header('Location: add-segments.php');
 
 } catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();

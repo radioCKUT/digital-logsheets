@@ -24,47 +24,47 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         
         <!-- Script for adding form fields -->
-        <script src="js/dynamic_form.js"></script>
-        {*<script src="js/segment_form.js"></script>*}
+        <script src="js/prerecord.js"></script>
         <script src="js/category_button.js"></script>
         <script src="js/sisyphus.min.js"></script>
         <script type="text/javascript">
             function startStoringFormEntries() {
-                $('form').sisyphus();
+                //$('form').sisyphus();
+                checkPrerecordInput();
             }
         </script>
     </head>
     <body onload="startStoringFormEntries()">
         <div class="container">
     <h3>New Logsheet</h3>
-        <form id="logsheet" role="form" action="../../digital-logsheets-res/php/save-episode.php" method="post">
+        <form id="logsheet" role="form" action="save-episode.php" method="post">
             <h4>Episode Metadata</h4>
             <div class="form-group">
                 <div class="form-group">
                     <label for="programmers">Programmer(s):</label>
-                    <input type="text" name="programmers" id="programmers"><br />
+                    <input type="text" name="programmers" id="programmers" required><br />
                 </div>
                 <div class="form-group">
                 <label for="program">Program:</label>
                 {html_options name="program" id="program" options=$programs}<br />
                 </div>
                 <div class="form-group">
-                    <label for="prerecord">Pre-recorded</label>
-                    <input type="checkbox" name="prerecord" value="prerecord" id="prerecord">
-                    <label for="prerecord_date">Pre-recorded Date:</label>
-                    <input type="date" name="prerecord_date" id="prerecord_date"><br />
+                    <label for="prerecord">Pre-recorded: </label>
+                    <input type="checkbox" name="prerecord" value="prerecord" id="prerecord"> &nbsp;
+                    <label for="prerecord_date" id="prerecord_date_label">Date recorded: </label>
+                    <input type="date" name="prerecord_date" id="prerecord_date">
                 </div>
                 <div class="form-group">
                     <label for="start_date">Start Date:</label>
-                    <input type="date" name="start_date" id="start_date">
+                    <input type="date" name="start_date" id="start_date" required>
                 </div>
                 <div class="form-group">
                     <label for="start_time">Start Time:</label>
-                    <input type="time" name="start_time" id="start_time">
+                    <input type="time" name="start_time" id="start_time" required>
                 </div>
                 <div class="form-group">
                     <label for="end_time">End Time:</label>
-                    <input type="time" name="end_time" id="end_time">
+                    <input type="time" name="end_time" id="end_time" required>
                 </div>
                 <div class="form-group">
                     <label for="notes">Notes:</label>
@@ -72,52 +72,7 @@
                 </div>
             </div>
             
-            <hr>
-            <h4>Episode Playlist</h4>
-
-            <div id="segments">
-                <div id="segment" class="form-group">
-                    <div class="form-group">
-                        <label for="segment_time" class="control-label">Time:</label>
-                        <input name="segment_time" id="segment_time" class="form-control" type="time">
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Category:</label>
-                        <div class="btn-group" id="category" data-toggle="buttons">
-                            <label class="btn btn-primary" onclick="setupCat1Fields()">
-                                <input type="radio" name="category" id="category1" autocomplete="off" value="1">1</label>
-                            <label class="btn btn-primary" onclick="setupCat2Fields()">
-                                <input type="radio" name="category" id="category2" autocomplete="off" value="2">2</label>
-                            <label class="btn btn-primary" onclick="setupCat3Fields()">
-                                <input type="radio" name="category" id="category3" autocomplete="off" value="3">3</label>
-                            <label class="btn btn-primary" onclick="setupCat4Fields()">
-                                <input type="radio" name="category" id="category4" autocomplete="off" value="4">4</label>
-                            <label class="btn btn-primary" onclick="setupCat5Fields()">
-                                <input type="radio" name="category" id="category5" autocomplete="off" value="5">5</label></div>
-                    </div>
-                    <div class="form-group" id="name_group">
-                        <label for="name" id="name_label">Name:</label>
-                        <input class="form-control" type="text" name="name" id="name_input" required>
-                    </div>
-                    <div class="form-group" id="author_group">
-                        <label for="author">Author:</label>
-                        <input class="form-control" type="text" name="author" id="author_input">
-                    </div>
-                    <div class="form-group" id="album_group">
-                        <label for="album">Album:</label>
-                        <input class="form-control" type="text" name="album" id="album_input">
-                    </div>
-                    <label class="checkbox-inline" id="can_con_group">
-                        <input type="checkbox" name="can_con" value="">CC</label>
-                    <label class="checkbox-inline" id="new_release_group">
-                        <input type="checkbox" name="new_release" value="">NR</label>
-                    <label class="checkbox-inline" id="french_vocal_music_group">
-                        <input type="checkbox" name="french_vocal_music" value="">FV</label>
-                    <hr>
-                </div>
-            </div>
-            
-            <input type="submit" value="Continue">
+            <input type="submit" value="Add Segments">
         </form>
         </div>
     </body>

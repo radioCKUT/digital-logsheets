@@ -27,6 +27,10 @@
                 }
             }
 
+            usort($segments, function ($a, $b) {
+                return strtotime($a->getStartTime()) > strtotime($b->getStartTime());
+            });
+
             return $segments;
         }
 

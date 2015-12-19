@@ -20,4 +20,24 @@
 
             return null; //TODO think more about what to return here
         }
+
+        public static function editDatabaseEntry($db_conn, $id_to_edit, $table_name, $column_names, $values_to_write) {
+            try {
+
+                $query = "UPDATE " . $table_name . " SET ";
+                    for($i = 0; $i < count($column_names); $i++) {
+                        $query .= $column_names[$i] . "=" . $values_to_write[$i];
+                    }
+                $query .= "WHERE id=" . $id_to_edit;
+
+                $db_conn->exec($query);
+
+                return $db_conn->lastInsertId();
+
+            } catch (Exception $error) {
+                echo "Write to database failed: " . $error;
+            }
+
+            return null; //TODO think more about what to return here
+        }
     }

@@ -18,6 +18,7 @@
 
         private static $isPrerecordColumnName = "prerecord";
         private static $prerecordDateColumnName = "prerecord_date";
+        private static $isDraftColumnName = "draft";
 
 
         public static function getEpisodeAttributesFromDatabase($db_conn, $episode_id, $episode_object) {
@@ -27,6 +28,8 @@
             $episode_object->setProgram(new Program($db_conn, $database_results[0][self::$programColumnName]));
             $episode_object->setPlaylist(new Playlist($db_conn, $database_results[0][self::$playlistColumnName]));
             $episode_object->setProgrammer(new Programmer($db_conn, $database_results[0][self::$programmerColumnName]));
+
+
             $episode_object->setStartTime($database_results[0][self::$startTimeColumnName]);
             $episode_object->setEndTime($database_results[0][self::$endTimeColumnName]);
         }
@@ -48,14 +51,23 @@
 
         public static function saveNewEpisode($db_conn, $playlistId, $programId, $programmerId, $start_time, $end_time, $is_prerecord, $prerecord_date) {
 
+
             $column_names = array(self::$playlistColumnName, self::$programColumnName,
                 self::$programmerColumnName, self::$startTimeColumnName, self::$endTimeColumnName,
-                self::$isPrerecordColumnName, self::$prerecordDateColumnName);
+                self::$isPrerecordColumnName, self::$prerecordDateColumnName, self::$isDraftColumnName);
 
             $values = array($playlistId, $programId, $programmerId, $start_time,
-                $end_time, $is_prerecord, $prerecord_date);
+                $end_time, $is_prerecord, $prerecord_date, true);
 
 
             return writeToDatabase::writeEntryToDatabase($db_conn, self::$episodeTableName, $column_names, $values);
         }
+
+        public static function turnOffEpisodeDraftStatus($db_conn, $episode_object) {
+            $column_names = array(self::$isDraftColumnName);
+            $values = array(false);
+
+            return writeToDatabase::editDatabaseEntry($db_conn, $episode_object->getId(), self::$episodeTableName, $column_names, $values);
+        }
+
     }
