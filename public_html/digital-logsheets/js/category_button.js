@@ -1,4 +1,11 @@
+function setupAllFields() {
+    $('#name_group').show();
+    $('#ad_number_group').hide();
+    $('#ad_number_input').prop('required', false);
+}
+
 function setupMusicCatFields() {
+    setupAllFields();
     $('#author_group').show();
     $('#author_input').prop('required', true);
     $('#album_group').show();
@@ -6,9 +13,11 @@ function setupMusicCatFields() {
     $('#can_con_group').show();
     $('#new_release_group').show();
     $('#french_vocal_music_group').show();
+    $('#name_label').text("Title:");
 }
 
 function setupNonMusicCatFields() {
+    setupAllFields();
     $('#author_input').prop('required', false);
     $('#album_input').prop('required', false);
     $('#can_con_group').hide();
@@ -25,12 +34,10 @@ function setupCat1Fields() {
 
 function setupCat2Fields() {
     setupMusicCatFields();
-    $('#name_label').text("Name:");
 }
 
 function setupCat3Fields() {
     setupMusicCatFields();
-    $('#name_label').text("Name:");
 }
 
 function setupCat4Fields() {
@@ -43,8 +50,10 @@ function setupCat4Fields() {
 
 function setupCat5Fields() {
     setupNonMusicCatFields();
+    $('#name_group').hide();
     $('#author_group').hide();
     $('#album_group').hide();
+    $('#ad_number_group').show();
 
-    $('#name_label').text("Ad Number:");
+    $('#ad_number_input').prop('required', true);
 }

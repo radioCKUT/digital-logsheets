@@ -24,9 +24,7 @@
     <!-- Boostrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-    <!-- Script for adding form fields -->
-    <script src="js/dynamic_form.js"></script>
-    {*<script src="js/segment_form.js"></script>*}
+
     <script src="js/add-segments.js"></script>
     <script src="js/category_button.js"></script>
     <script src="js/sisyphus.min.js"></script>
@@ -38,19 +36,18 @@
     </script>
 </head>
 <body onload="startStoringFormEntries()">
-
-
+<div class="container-fluid">
 <div class="col-md-8">
-    <h3>New Logsheet</h3>
+    <h3>Add Segments</h3>
     <form id="logsheet" role="form" method="post">
-        <h4>Episode Playlist</h4>
-
         <h5>Episode ID: {$episode_id}</h5>
 
         <div id="segments">
-            <div class="form-group">
-                <label for="segment_time" class="control-label">Time:</label>
-                <input name="segment_time" id="segment_time" class="form-control" type="time" required>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label for="segment_time" class="control-label">Time:</label>
+                    <input name="segment_time" id="segment_time" class="form-control" type="time" required>
+                </div>
             </div>
             <div class="form-group">
                 <label for="category">Category:</label>
@@ -66,23 +63,35 @@
                     <label class="btn btn-primary" onclick="setupCat5Fields()">
                         <input type="radio" name="category" id="category5" autocomplete="off" value="5">5</label></div>
             </div>
-            <div class="form-group" id="name_group">
-                <label for="name_input" id="name_label">Name:</label>
-                <input class="form-control" type="text" name="name" id="name_input" required>
+            <div class="form-group row" id="ad_number_group" style="display:none;">
+                <div class="col-md-3">
+                    <label for="ad_number_input" id="ad_number_label">Ad Number:</label>
+                    <input class="form-control" type="number" min="1" step="1" name="ad_number" id="ad_number_input">
+                </div>
             </div>
-            <div class="form-group" id="author_group">
-                <label for="author_input">Author:</label>
-                <input class="form-control" type="text" name="author" id="author_input">
+            <div class="form-group row" id="name_group" style="display:none;">
+                <div class="col-md-9">
+                    <label for="name_input" id="name_label">Name:</label>
+                    <input class="form-control" type="text" name="name" id="name_input" required>
+                </div>
             </div>
-            <div class="form-group" id="album_group">
-                <label for="album_input">Album:</label>
-                <input class="form-control" type="text" name="album" id="album_input">
+            <div class="form-group row" id="author_group" style="display:none;">
+                <div class="col-md-9">
+                    <label for="author_input">Author:</label>
+                    <input class="form-control" type="text" name="author" id="author_input">
+                </div>
             </div>
-            <label class="checkbox-inline" id="can_con_group">
+            <div class="form-group row" id="album_group" style="display:none;">
+                <div class="col-md-9">
+                    <label for="album_input">Album:</label>
+                    <input class="form-control" type="text" name="album" id="album_input">
+                </div>
+            </div>
+            <label class="checkbox-inline" id="can_con_group" style="display:none;">
                 <input type="checkbox" name="can_con" value="">CC</label>
-            <label class="checkbox-inline" id="new_release_group">
+            <label class="checkbox-inline" id="new_release_group" style="display:none;">
                 <input type="checkbox" name="new_release" value="">NR</label>
-            <label class="checkbox-inline" id="french_vocal_music_group">
+            <label class="checkbox-inline" id="french_vocal_music_group" style="display:none;">
                 <input type="checkbox" name="french_vocal_music" value="">FV</label>
 
             <input type="hidden" name="episode_id" value={$episode_id}>
@@ -109,5 +118,6 @@
         </table>
     </div>
 </div>
+    </div>
 </body>
 </html>

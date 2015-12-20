@@ -47,15 +47,15 @@
 </head>
 
 <body onload="init()">
-<div class="container">
+<div class="container-fluid">
     <h3>New Logsheet</h3>
     <form id="logsheet" role="form" action="save-episode.php" method="post">
         <h4>Episode Metadata</h4>
 
         <div class="form-group row">
             <div class="col-md-6">
-            <label for="programmers">Programmer(s):</label>
-            <input class="form-control" type="text" name="programmers" id="programmers" required>
+                <label for="programmers">Programmer(s):</label>
+                <input class="form-control" type="text" name="programmers" id="programmers" required>
             </div>
         </div>
         <div class="form-group row">
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label for="start_date">Start Date:</label>
                 <input class="form-control" type="date" name="start_date" id="start_date" required>
             </div>
@@ -78,19 +78,19 @@
         </div>
         <div class="form-group row">
             <div class="col-md-2">
-            <label for="end_time">End Time:</label>
-            <input class="form-control" type="time" name="end_time" id="end_time" required>
+                <label for="end_time">End Time:</label>
+                <input class="form-control" type="time" name="end_time" id="end_time" required>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-md-2">
-            <label for="prerecord_date" id="prerecord_date_label">Prerecord Date:</label>
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <input type="checkbox" id="prerecord" aria-label="Was episode prerecorded?">
-                </span>
-                <input class="form-control" type="date" name="prerecord_date" id="prerecord_date" aria-label="Prerecord date" disabled>
-            </div>
+                <label for="prerecord_date" id="prerecord_date_label">Prerecord Date:</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input type="checkbox" id="prerecord" title="Was episode prerecorded?" aria-label="Was episode prerecorded?">
+                    </span>
+                    <input class="form-control" type="date" name="prerecord_date" id="prerecord_date" aria-label="Prerecord date" disabled>
+                </div>
             </div>
         </div>
         <div class="form-group">

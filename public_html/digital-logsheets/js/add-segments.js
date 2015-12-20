@@ -8,23 +8,27 @@ $(document).ready(function () {
 function getEpisodeSegments() {
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "/digital-logsheets/get-episode-data.php",
+        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/get-episode-data.php",
         data: $('#logsheet').serialize(),
         success: successCallback,
         error: errorCallback
     });
+
+    console.log(window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/get-episode-data.php");
+
 }
 
 
 function addSegment() {
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "/digital-logsheets/save-segment.php",
+        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/save-segment.php",
         dataType: "json",
         data: $('#logsheet').serialize(),
         success: successCallback,
         error: errorCallback
     });
+
 }
 
 function errorCallback(jqhxr, textStatus, errorThrown) {
