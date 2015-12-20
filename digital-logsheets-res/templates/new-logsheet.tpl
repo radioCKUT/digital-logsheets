@@ -15,7 +15,6 @@
         <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
         <link href="css/select2-bootstrap.css" rel="stylesheet"/>
 
-
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -30,8 +29,8 @@
 
         <!-- Select2 -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-
-
+        
+        <!-- Script for adding form fields -->
         <script src="js/prerecord.js"></script>
         <script src="js/category_button.js"></script>
         <script type="text/javascript">
@@ -59,7 +58,6 @@
                 <div class="form-group">
                 <label for="program">Program:</label>
                 <select name="program" id="program" class="programs"></select>
-                {*{html_options name="program" id="program" options=$programs}<br />*}
                 </div>
                 <div class="form-group">
                     <label for="prerecord">Pre-recorded: </label>

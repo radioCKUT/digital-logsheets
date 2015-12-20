@@ -45,8 +45,7 @@ function successCallback(data) {
 
         $.each(data, function(i, e) {
             var name = data[i].name;
-            var time = data[i].start_time;
-            addedSegments.append($('<tr>' + '<td>' + name + '</td>' + '</tr>'));
+            addedSegments.append($('<tr>' + '<td class="vert-align">' + name + '</td><td class="vert-align">' + '<div class="btn-group" role="group" aria-label="..."><button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-pencil"></span> </button>' + '<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> </button></div>' + '</td></tr>'));
 
         });
     } else {
