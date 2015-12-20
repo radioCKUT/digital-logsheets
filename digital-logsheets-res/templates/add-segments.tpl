@@ -48,47 +48,45 @@
         <h5>Episode ID: {$episode_id}</h5>
 
         <div id="segments">
-            <div id="segment" class="form-group">
-                <div class="form-group">
-                    <label for="segment_time" class="control-label">Time:</label>
-                    <input name="segment_time" id="segment_time" class="form-control" type="time" required>
-                </div>
-                <div class="form-group">
-                    <label for="category">Category:</label>
-                    <div class="btn-group" id="category" data-toggle="buttons">
-                        <label class="btn btn-primary" onclick="setupCat1Fields()">
-                            <input type="radio" name="category" id="category1" autocomplete="off" required value="1">1</label>
-                        <label class="btn btn-primary" onclick="setupCat2Fields()">
-                            <input type="radio" name="category" id="category2" autocomplete="off" value="2">2</label>
-                        <label class="btn btn-primary" onclick="setupCat3Fields()">
-                            <input type="radio" name="category" id="category3" autocomplete="off" value="3">3</label>
-                        <label class="btn btn-primary" onclick="setupCat4Fields()">
-                            <input type="radio" name="category" id="category4" autocomplete="off" value="4">4</label>
-                        <label class="btn btn-primary" onclick="setupCat5Fields()">
-                            <input type="radio" name="category" id="category5" autocomplete="off" value="5">5</label></div>
-                </div>
-                <div class="form-group" id="name_group">
-                    <label for="name" id="name_label">Name:</label>
-                    <input class="form-control" type="text" name="name" id="name_input" required>
-                </div>
-                <div class="form-group" id="author_group">
-                    <label for="author">Author:</label>
-                    <input class="form-control" type="text" name="author" id="author_input">
-                </div>
-                <div class="form-group" id="album_group">
-                    <label for="album">Album:</label>
-                    <input class="form-control" type="text" name="album" id="album_input">
-                </div>
-                <label class="checkbox-inline" id="can_con_group">
-                    <input type="checkbox" name="can_con" value="">CC</label>
-                <label class="checkbox-inline" id="new_release_group">
-                    <input type="checkbox" name="new_release" value="">NR</label>
-                <label class="checkbox-inline" id="french_vocal_music_group">
-                    <input type="checkbox" name="french_vocal_music" value="">FV</label>
-
-                <input type="hidden" name="episode_id" value={$episode_id}>
-                <hr>
+            <div class="form-group">
+                <label for="segment_time" class="control-label">Time:</label>
+                <input name="segment_time" id="segment_time" class="form-control" type="time" required>
             </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <div class="btn-group" id="category" data-toggle="buttons">
+                    <label class="btn btn-primary" onclick="setupCat1Fields()">
+                        <input type="radio" name="category" id="category1" autocomplete="off" required value="1">1</label>
+                    <label class="btn btn-primary" onclick="setupCat2Fields()">
+                        <input type="radio" name="category" id="category2" autocomplete="off" value="2">2</label>
+                    <label class="btn btn-primary" onclick="setupCat3Fields()">
+                        <input type="radio" name="category" id="category3" autocomplete="off" value="3">3</label>
+                    <label class="btn btn-primary" onclick="setupCat4Fields()">
+                        <input type="radio" name="category" id="category4" autocomplete="off" value="4">4</label>
+                    <label class="btn btn-primary" onclick="setupCat5Fields()">
+                        <input type="radio" name="category" id="category5" autocomplete="off" value="5">5</label></div>
+            </div>
+            <div class="form-group" id="name_group">
+                <label for="name_input" id="name_label">Name:</label>
+                <input class="form-control" type="text" name="name" id="name_input" required>
+            </div>
+            <div class="form-group" id="author_group">
+                <label for="author_input">Author:</label>
+                <input class="form-control" type="text" name="author" id="author_input">
+            </div>
+            <div class="form-group" id="album_group">
+                <label for="album_input">Album:</label>
+                <input class="form-control" type="text" name="album" id="album_input">
+            </div>
+            <label class="checkbox-inline" id="can_con_group">
+                <input type="checkbox" name="can_con" value="">CC</label>
+            <label class="checkbox-inline" id="new_release_group">
+                <input type="checkbox" name="new_release" value="">NR</label>
+            <label class="checkbox-inline" id="french_vocal_music_group">
+                <input type="checkbox" name="french_vocal_music" value="">FV</label>
+
+            <input type="hidden" name="episode_id" value={$episode_id}>
+            <hr>
         </div>
 
 
