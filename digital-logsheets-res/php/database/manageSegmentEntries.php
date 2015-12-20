@@ -41,7 +41,7 @@
         }
 
         public static function saveNewSegmentToDatabase($db_conn, $start_time, $duration, $name, $author, $album, $category,
-                                                        $is_can_con, $is_new_release, $is_french_vocal_music, $playlistId) {
+                                                        $is_can_con, $is_new_release, $is_french_vocal_music, $ad_number, $playlistId) {
 
             switch ($category) {
                 case 2:
@@ -51,7 +51,7 @@
                     break;
 
                 case 5:
-                    $values = self::prepareAdSegmentEntryValues($start_time, $duration, $name, 0); //TODO: add ad number
+                    $values = self::prepareAdSegmentEntryValues($start_time, $duration, $ad_number); //TODO: add ad number
                     break;
 
                 case 1:
@@ -77,8 +77,8 @@
                 $is_can_con, $is_new_release, $is_french_vocal_music);
         }
 
-        private static function prepareAdSegmentEntryValues($start_time, $duration, $name, $ad_number) {
-            return array($start_time, $duration, $name, null, null, 5, false, false, false);
+        private static function prepareAdSegmentEntryValues($start_time, $duration, $ad_number) {
+            return array($start_time, $duration, $ad_number, null, null, 5, false, false, false);
         }
 
         private static function prepareOtherSegmentEntryValues($start_time, $duration, $name, $category, $station_id_given, $hide_from_listener) {

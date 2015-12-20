@@ -7,6 +7,7 @@ $episode_id = $_POST['episode_id'];
 
 $segment_time = $_POST['segment_time'];
 $name = $_POST['name'];
+$ad_number = $_POST['ad_number'];
 $author = $_POST['author'];
 $album = $_POST['album'];
 $category = $_POST['category'];
@@ -32,7 +33,7 @@ try {
     $playlist_id = $episode->getPlaylistId();
 
     manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, 0, $name, $author,
-        $album, $category, $can_con, $new_release, $french_vocal_music, $playlist_id);
+        $album, $category, $can_con, $new_release, $french_vocal_music, $ad_number, $playlist_id);
 
     $episode = new Episode($db, $episode_id);
     $segment_list = $episode->getSegments();
