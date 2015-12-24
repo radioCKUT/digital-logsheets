@@ -33,18 +33,31 @@ try {
     echo $e->getMessage();
 }
 
-function computeSegmentDurations($segments, $episode_end_time) {
+function computeSegmentDurations($segments, $episodeEndTime) {
     $segmentCount = count($segments);
 
     for ($i = 0; $i < $segmentCount; $i++) {
+        $currentSegment = $segments[$i];
+        $currentSegmentStartDateTime = $currentSegment->getStartTime();
+        $currentSegmentStartTimeStamp = $currentSegmentStartDateTime->getTimestamp();
+
         if ($i < ($segmentCount - 1)) {
-            $duration = date_diff($segments[$i+1]->getStartTime(), $segments[$i]->getStartTime());
+            $nextSegment = $segments[$i+1];
+            $nextSegmentStartDateTime = $nextSegment->getStartTime();
+            $nextSegmentStartTimestamp = $nextSegmentStartDateTime->getTimestamp();
+
+            $duration = $nextSegmentStartTimestamp - $currentSegmentStartTimeStamp;
+
         } else {
-            $duration = date_diff($episode_end_time, $segments[$i]->getStartTime());
+            $episodeEndTimeStamp = $episodeEndTime->getTimestamp();
+            $duration = $episodeEndTimeStamp - $currentSegmentStartTimeStamp;
         }
 
-        $formatted_duration = $duration->i;
-        $segments[$i]->setDuration($formatted_duration);
+        error_log("duration: " . $duration);
+
+        $durationMinutes = $duration/60;
+        error_log("duration minutes: " . $durationMinutes);
+        $currentSegment->setDuration($durationMinutes);
     }
 
     return $segments;

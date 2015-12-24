@@ -28,7 +28,7 @@
             }
 
             usort($segments, function ($a, $b) {
-                return strtotime($a->getStartTime()) > strtotime($b->getStartTime());
+                return ($a->getStartTime() > $b->getStartTime());
             });
 
             return $segments;

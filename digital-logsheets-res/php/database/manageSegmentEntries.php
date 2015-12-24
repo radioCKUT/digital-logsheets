@@ -15,7 +15,7 @@
         private static $authorColumnName = "author";
 
         private static $startTimeColumnName = "start_time";
-        private static $durationColumnName = "duration";
+        private static $durationColumnName = "approx_duration_mins";
         private static $categoryColumnName = "category";
 
         private static $canConColumnName = "can_con";

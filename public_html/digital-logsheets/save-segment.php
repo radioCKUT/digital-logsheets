@@ -25,10 +25,9 @@ try {
 
     $episode = new Episode($db, $episode_id);
 
-    $episode_start_date = $episode->getStartDate();
-    $episode_start_time = $episode->getStartTime();
+    $episodeStartDateTime = $episode->getStartTime();
 
-    $segment_time = addDateToSegmentStartTime($episode_start_date, $episode_start_time, $segment_time);
+    $segment_time = addDateToSegmentStartTime($episodeStartDateTime, $segment_time);
 
     $playlist_id = $episode->getPlaylistId();
 
@@ -65,15 +64,15 @@ function outputResponse($response) {
     exit();
 }
 
-function addDateToSegmentStartTime($episode_start_date, $episode_start_time, $segment_time) {
+function addDateToSegmentStartTime($episodeStartDateTime, $segment_time) {
 
-    $episode_start_date = strtotime($episode_start_date);
-    $dateToUse = date("Y-m-d", $episode_start_date);
+    $dateToUse = $episodeStartDateTime->format("Y-m-d");
+    $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
 
-    if (strtotime($segment_time) < strtotime($episode_start_time)) {
-        $episodeStartDateTimestamp = strtotime($episode_start_date);
-        $dayAfterStartDateTimestamp = strtotime('+1 day', $episodeStartDateTimestamp);
-        $dateToUse = date("Y-m-d", $dayAfterStartDateTimestamp);
+    if (strtotime($segment_time) < strtotime($episodeStartTimeString)) {
+        $dayAfterEpisodeStartDateTime = clone $episodeStartDateTime;
+        $dayAfterEpisodeStartDateTime->add(new DateInterval('P1D'));
+        $dateToUse = $dayAfterEpisodeStartDateTime->format("Y-m-d");
     }
 
     error_log("segmentTimeString: " . $dateToUse . " " . $segment_time);
