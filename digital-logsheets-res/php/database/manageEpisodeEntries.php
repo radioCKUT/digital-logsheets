@@ -2,6 +2,7 @@
 
     include_once("readFromDatabase.php");
     include_once("writeToDatabase.php");
+    include_once("formatDateStrings.php");
     include_once(__DIR__ . "/../objects/logsheet-classes.php");
 
 
@@ -49,16 +50,18 @@
             return $episodes;
         }
 
-        public static function saveNewEpisode($db_conn, $playlistId, $programId, $programmerId, $start_time, $end_time, $is_prerecord, $prerecord_date) {
+        public static function saveNewEpisode($db_conn, $playlistId, $programId, $programmerId,
+                                              $startDateTimeObject, $endDateTimeObject, $is_prerecord, $prerecord_date, $timeZone) {
 
+            $startDateTimeObject = formatDateString($startDateTimeObject);
+            $endDateTimeObject = formatDateString($endDateTimeObject);
 
             $column_names = array(self::$playlistColumnName, self::$programColumnName,
                 self::$programmerColumnName, self::$startTimeColumnName, self::$endTimeColumnName,
                 self::$isPrerecordColumnName, self::$prerecordDateColumnName, self::$isDraftColumnName);
 
-            $values = array($playlistId, $programId, $programmerId, $start_time,
-                $end_time, $is_prerecord, $prerecord_date, true);
-
+            $values = array($playlistId, $programId, $programmerId, $startDateTimeObject,
+                $endDateTimeObject, $is_prerecord, $prerecord_date, true);
 
             return writeToDatabase::writeEntryToDatabase($db_conn, self::$episodeTableName, $column_names, $values);
         }

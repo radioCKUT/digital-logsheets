@@ -27,16 +27,13 @@ try {
     $programId = 1; //TODO get actual program id from input
 
     $episode_start_time = new DateTime($episode_start_time, new DateTimeZone('America/Montreal'));
-    $episode_start_timestamp = $episode_start_time->format('U');
-    $episode_start_time = date("Y-m-d H:m:s", $episode_start_timestamp);
 
-    $episode_end_time = strtotime("+" . $episode_duration . " hours", $episode_start_timestamp);
-    $episode_end_time = date("Y-m-d H:m:s", $episode_end_time);
-
-    error_log("      episode start time: " . $episode_start_time . "      duration: " . $episode_duration . " hours" . "     episode end time: " . $episode_end_time);
+    $episode_end_timestamp = strtotime("+" . $episode_duration . " hours", $episode_start_time);
+    $episode_end_time = new DateTime(null, new DateTimeZone('America/Montreal'));
+    $episode_end_time->setTimeStamp($episode_end_timestamp);
 
     $episode_id = manageEpisodeEntries::saveNewEpisode($db, $playlistId, $programId, $programmerId,
-        $episode_start_time, $episode_end_time, isset($prerecord), $prerecord_date);
+        $episode_start_time, $episode_end_time, isset($prerecord), $prerecord_date, new DateTimeZone('America/Montreal'));
 
     $_SESSION["episode_id"] = $episode_id;
 

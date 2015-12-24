@@ -40,25 +40,29 @@
             writeToDatabase::editDatabaseEntry($db_conn, $segment_object->getId(), self::$segmentTableName, $column_names, $values);
         }
 
-        public static function saveNewSegmentToDatabase($db_conn, $start_time, $duration, $name, $author, $album, $category,
-                                                        $is_can_con, $is_new_release, $is_french_vocal_music, $ad_number, $playlistId) {
+        public static function saveNewSegmentToDatabase($db_conn, $startDateTime, $duration, $name, $author, $album, $category,
+                                                        $is_can_con, $is_new_release, $is_french_vocal_music, $ad_number, $playlistId, $timeZone) {
+
+            $startDateString = formatDateString($startDateTime);
 
             switch ($category) {
                 case 2:
                 case 3:
-                    $values = self::prepareMusicSegmentEntryValues($start_time, $duration, $name, $author, $album, $category,
+                    $values = self::prepareMusicSegmentEntryValues($startDateString, $duration, $name, $author, $album, $category,
                         $is_can_con, $is_new_release, $is_french_vocal_music);
                     break;
 
                 case 5:
-                    $values = self::prepareAdSegmentEntryValues($start_time, $duration, $ad_number);
+                    $values = self::prepareAdSegmentEntryValues($startDateString, $duration, $ad_number);
                     break;
 
                 case 4:
-                    $values = self::prepareMusicProductionSegmentEntryValues($start_time, $duration, $name, $category, false); //TODO: add hide from listener, add station ID given
+                    $values = self::prepareMusicProductionSegmentEntryValues($startDateString, $duration, $name, $category, false); //TODO: add hide from listener, add station ID given
+                    break;
+
                 case 1:
                 default:
-                $values = self::prepareSpokenWordSegmentEntryValues($start_time, $duration, $name, $author, $album, $category, false, false); //TODO: add hide from listener, add station ID given
+                $values = self::prepareSpokenWordSegmentEntryValues($startDateString, $duration, $name, $author, $album, $category, false, false); //TODO: add hide from listener, add station ID given
                     break;
             }
 

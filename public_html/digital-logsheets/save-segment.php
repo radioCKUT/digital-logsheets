@@ -33,7 +33,7 @@ try {
     $playlist_id = $episode->getPlaylistId();
 
     manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
-        $album, $category, $can_con, $new_release, $french_vocal_music, $ad_number, $playlist_id);
+        $album, $category, $can_con, $new_release, $french_vocal_music, $ad_number, $playlist_id, new DateTimeZone('America/Montreal'));
 
     $episode = new Episode($db, $episode_id);
     $segment_list = $episode->getSegments();
@@ -67,8 +67,8 @@ function outputResponse($response) {
 
 function addDateToSegmentStartTime($episode_start_date, $episode_start_time, $segment_time) {
 
-    $episode_start_date_timestamp = strtotime($episode_start_date);
-    $dateToUse = date("Y-m-d", $episode_start_date_timestamp);
+    $episode_start_date = strtotime($episode_start_date);
+    $dateToUse = date("Y-m-d", $episode_start_date);
     error_log("segment_time: " . $segment_time . " episode_start_time " . $episode_start_time);
 
     if (strtotime($segment_time) < strtotime($episode_start_time)) {
@@ -77,10 +77,10 @@ function addDateToSegmentStartTime($episode_start_date, $episode_start_time, $se
         $dateToUse = date("Y-m-d", $dayAfterStartDateTimestamp);
     }
 
-    error_log("dateToUse: " . $dateToUse);
+    error_log("segmentTimeString: " . $dateToUse . " " . $segment_time);
 
-    $segmentTimeWithDate = strtotime($dateToUse . " " . $segment_time);
-    $segment_time = date("Y-m-d H:m:s", $segmentTimeWithDate);
+    $segmentTimeString = $dateToUse . " " . $segment_time;
+    $segmentDateTime = new DateTime($segmentTimeString, new DateTimeZone('America/Montreal'));
 
-    return $segment_time;
+    return $segmentDateTime;
 }
