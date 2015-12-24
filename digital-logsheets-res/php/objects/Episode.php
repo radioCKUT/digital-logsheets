@@ -32,7 +32,6 @@
         }
 
         public function setStartTime($start_time) {
-            error_log("setting episode start time to: " . $start_time);
             $this->episode_start_time = $start_time;
         }
 

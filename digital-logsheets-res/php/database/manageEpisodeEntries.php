@@ -26,13 +26,22 @@
             $database_results = readFromDatabase::readFilteredColumnFromTable($db_conn, array(self::$programColumnName, self::$playlistColumnName,
                 self::$programmerColumnName, self::$startTimeColumnName, self::$endTimeColumnName), self::$episodeTableName, array(self::$idColumnName), array($episode_id));
 
-            $episode_object->setProgram(new Program($db_conn, $database_results[0][self::$programColumnName]));
-            $episode_object->setPlaylist(new Playlist($db_conn, $database_results[0][self::$playlistColumnName]));
-            $episode_object->setProgrammer(new Programmer($db_conn, $database_results[0][self::$programmerColumnName]));
+            $programId = $database_results[0][self::$programColumnName];
+            $playlistId = $database_results[0][self::$playlistColumnName];
+            $programmerId = $database_results[0][self::$programmerColumnName];
+
+            $episode_object->setProgram(new Program($db_conn, $programId));
+            $episode_object->setPlaylist(new Playlist($db_conn, $playlistId));
+            $episode_object->setProgrammer(new Programmer($db_conn, $programmerId));
 
 
-            $episode_object->setStartTime($database_results[0][self::$startTimeColumnName]);
-            $episode_object->setEndTime($database_results[0][self::$endTimeColumnName]);
+            $startTimeString = $database_results[0][self::$startTimeColumnName];
+            $startDateTime = formatDateStringFromDatabase($startTimeString);
+            $endTimeString = $database_results[0][self::$endTimeColumnName];
+            $endDateTime = formatDateStringFromDatabase($endTimeString);
+
+            $episode_object->setStartTime($startDateTime);
+            $episode_object->setEndTime($endDateTime);
         }
 
         public static function getAllEpisodesFromDatabase($db_conn) {
@@ -53,8 +62,8 @@
         public static function saveNewEpisode($db_conn, $playlistId, $programId, $programmerId,
                                               $startDateTimeObject, $endDateTimeObject, $is_prerecord, $prerecord_date, $timeZone) {
 
-            $startDateTimeObject = formatDateString($startDateTimeObject);
-            $endDateTimeObject = formatDateString($endDateTimeObject);
+            $startDateTimeObject = formatDateStringForDatabaseWrite($startDateTimeObject);
+            $endDateTimeObject = formatDateStringForDatabaseWrite($endDateTimeObject);
 
             $column_names = array(self::$playlistColumnName, self::$programColumnName,
                 self::$programmerColumnName, self::$startTimeColumnName, self::$endTimeColumnName,

@@ -38,8 +38,11 @@
         }
 
         public function jsonSerialize() {
+            $startDateTime = $this->getStartTime();
+            $startTimeString = $startDateTime->format('H:i');
+
             return [
-                'start_time' => $this->getStartTime(),
+                'start_time' => $startTimeString,
                 'name' => $this->getName(),
                 'album' => $this->getAlbum(),
                 'author' => $this->getAuthor()

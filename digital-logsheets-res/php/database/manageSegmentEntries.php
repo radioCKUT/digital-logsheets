@@ -26,11 +26,17 @@
             $database_result = readFromDatabase::readFilteredColumnFromTable($db_conn, array(self::$startTimeColumnName, self::$segmentNameColumnName,
                 self::$albumColumnName, self::$authorColumnName), self::$segmentTableName, array(self::$idColumnName), array($segment_id));
 
-            $segment_object->setName($database_result[0][self::$segmentNameColumnName]);
-            $segment_object->setAlbum($database_result[0][self::$albumColumnName]);
-            $segment_object->setAuthor($database_result[0][self::$authorColumnName]);
+            $segmentName = $database_result[0][self::$segmentNameColumnName];
+            $segmentAlbum = $database_result[0][self::$albumColumnName];
+            $segmentAuthor = $database_result[0][self::$authorColumnName];
 
-            $segment_object->setStartTime($database_result[0][self::$startTimeColumnName]);
+            $segment_object->setName($segmentName);
+            $segment_object->setAlbum($segmentAlbum);
+            $segment_object->setAuthor($segmentAuthor);
+
+            $dbStartTimeString = $database_result[0][self::$startTimeColumnName];
+            $startDateTime = formatDateStringFromDatabase($dbStartTimeString);
+            $segment_object->setStartTime($startDateTime);
         }
 
         public static function editExistingSegmentDuration($db_conn, $segment_object) {
@@ -43,7 +49,7 @@
         public static function saveNewSegmentToDatabase($db_conn, $startDateTime, $duration, $name, $author, $album, $category,
                                                         $is_can_con, $is_new_release, $is_french_vocal_music, $ad_number, $playlistId, $timeZone) {
 
-            $startDateString = formatDateString($startDateTime);
+            $startDateString = formatDateStringForDatabaseWrite($startDateTime);
 
             switch ($category) {
                 case 2:
