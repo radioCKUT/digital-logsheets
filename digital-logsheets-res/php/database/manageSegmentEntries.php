@@ -43,6 +43,8 @@
             $column_names = array(self::$durationColumnName);
             $values = array($segment_object->getDuration());
 
+            error_log("segment duration: " . $segment_object->getDuration());
+
             writeToDatabase::editDatabaseEntry($db_conn, $segment_object->getId(), self::$segmentTableName, $column_names, $values);
         }
 

@@ -28,14 +28,15 @@
                     for($i = 0; $i < count($column_names); $i++) {
                         $query .= $column_names[$i] . "=" . $values_to_write[$i];
                     }
-                $query .= "WHERE id=" . $id_to_edit;
+                $query .= " WHERE id=" . $id_to_edit;
 
+                error_log("edit database query: " . $query);
                 $db_conn->exec($query);
 
                 return $db_conn->lastInsertId();
 
             } catch (Exception $error) {
-                echo "Write to database failed: " . $error;
+                echo "Edit database entry failed: " . $error;
             }
 
             return null; //TODO think more about what to return here

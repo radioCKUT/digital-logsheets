@@ -28,9 +28,10 @@ try {
 
     $episode_start_time = new DateTime($episode_start_time, new DateTimeZone('America/Montreal'));
 
-    $episode_end_timestamp = strtotime("+" . $episode_duration . " hours", $episode_start_time);
-    $episode_end_time = new DateTime(null, new DateTimeZone('America/Montreal'));
-    $episode_end_time->setTimeStamp($episode_end_timestamp);
+    $episode_end_time = clone $episode_start_time;
+    $episode_duration_mins = ($episode_duration*60);
+    $episodeDurationDateInterval = new DateInterval('PT' . $episode_duration_mins . 'M');
+    $episode_end_time->add($episodeDurationDateInterval);
 
     $episode_id = manageEpisodeEntries::saveNewEpisode($db, $playlistId, $programId, $programmerId,
         $episode_start_time, $episode_end_time, isset($prerecord), $prerecord_date, new DateTimeZone('America/Montreal'));

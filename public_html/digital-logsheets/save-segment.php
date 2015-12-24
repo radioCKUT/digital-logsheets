@@ -69,7 +69,6 @@ function addDateToSegmentStartTime($episode_start_date, $episode_start_time, $se
 
     $episode_start_date = strtotime($episode_start_date);
     $dateToUse = date("Y-m-d", $episode_start_date);
-    error_log("segment_time: " . $segment_time . " episode_start_time " . $episode_start_time);
 
     if (strtotime($segment_time) < strtotime($episode_start_time)) {
         $episodeStartDateTimestamp = strtotime($episode_start_date);

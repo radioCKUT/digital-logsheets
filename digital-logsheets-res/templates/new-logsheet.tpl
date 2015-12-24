@@ -72,8 +72,8 @@
         </div>
         <div class="form-group row">
             <div class="col-md-2">
-                <label for="episode_duration">Duration:</label>
-                <input class="form-control" type="number" step="0.5" max="6.0" name="episode_duration" id="episode_duration" required>
+                <label for="episode_duration">Duration (in hours):</label>
+                <input class="form-control" type="number" step="0.5" min="0.5" max="6.0" name="episode_duration" id="episode_duration" required>
             </div>
         </div>
         <div class="form-group row">

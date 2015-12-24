@@ -77,7 +77,9 @@
 
         public static function turnOffEpisodeDraftStatus($db_conn, $episode_object) {
             $column_names = array(self::$isDraftColumnName);
-            $values = array(false);
+            $values = array("false");
+
+            error_log("turnOffEpisodeDraftStatus values[0]: " . $values[0]);
 
             return writeToDatabase::editDatabaseEntry($db_conn, $episode_object->getId(), self::$episodeTableName, $column_names, $values);
         }

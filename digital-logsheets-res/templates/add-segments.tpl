@@ -98,12 +98,11 @@
             <hr>
         </div>
 
-
-
         <input type="submit" value="Add">
     </form>
 
-    <form id="finalize" role="form" action="../../digital-logsheets-res/php/finalize-segments.php" method="post">
+    <form id="finalize" role="form" action="finalize-segments.php" method="post">
+        <input type="hidden" name="episode_id" value={$episode_id}>
         <input type="submit" value="Submit All">
     </form>
 </div>
