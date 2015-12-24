@@ -51,13 +51,14 @@
                     break;
 
                 case 5:
-                    $values = self::prepareAdSegmentEntryValues($start_time, $duration, $ad_number); //TODO: add ad number
+                    $values = self::prepareAdSegmentEntryValues($start_time, $duration, $ad_number);
                     break;
 
-                case 1:
                 case 4:
+                    $values = self::prepareMusicProductionSegmentEntryValues($start_time, $duration, $name, $category, false); //TODO: add hide from listener, add station ID given
+                case 1:
                 default:
-                    $values = self::prepareOtherSegmentEntryValues($start_time, $duration, $name, $category, false, false); //TODO: add hide from listener, add station ID given
+                $values = self::prepareSpokenWordSegmentEntryValues($start_time, $duration, $name, $author, $album, $category, false, false); //TODO: add hide from listener, add station ID given
                     break;
             }
 
@@ -81,8 +82,13 @@
             return array($start_time, $duration, $ad_number, null, null, 5, false, false, false);
         }
 
-        private static function prepareOtherSegmentEntryValues($start_time, $duration, $name, $category, $station_id_given, $hide_from_listener) {
+        private static function prepareMusicProductionSegmentEntryValues($start_time, $duration, $name, $category, $station_id_given) {
             return array($start_time, $duration, $name, null, null, $category,
+                false, false, false);
+        }
+
+        private static function prepareSpokenWordSegmentEntryValues($start_time, $duration, $name, $author, $album, $category, $station_id_given, $hide_from_listener) {
+            return array($start_time, $duration, $name, $author, $album, $category,
                 false, false, false);
         }
 

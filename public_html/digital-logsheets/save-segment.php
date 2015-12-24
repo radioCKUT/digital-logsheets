@@ -32,7 +32,7 @@ try {
 
     $playlist_id = $episode->getPlaylistId();
 
-    manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, 0, $name, $author,
+    manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
         $album, $category, $can_con, $new_release, $french_vocal_music, $ad_number, $playlist_id);
 
     $episode = new Episode($db, $episode_id);
@@ -67,14 +67,14 @@ function outputResponse($response) {
 
 function addDateToSegmentStartTime($episode_start_date, $episode_start_time, $segment_time) {
 
-    $dateToUse = $episode_start_date;
+    $episode_start_date_timestamp = strtotime($episode_start_date);
+    $dateToUse = date("Y-m-d", $episode_start_date_timestamp);
     error_log("segment_time: " . $segment_time . " episode_start_time " . $episode_start_time);
 
     if (strtotime($segment_time) < strtotime($episode_start_time)) {
         $episodeStartDateTimestamp = strtotime($episode_start_date);
         $dayAfterStartDateTimestamp = strtotime('+1 day', $episodeStartDateTimestamp);
         $dateToUse = date("Y-m-d", $dayAfterStartDateTimestamp);
-
     }
 
     error_log("dateToUse: " . $dateToUse);

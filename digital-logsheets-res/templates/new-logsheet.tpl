@@ -66,20 +66,14 @@
         </div>
         <div class="form-group row">
             <div class="col-md-3">
-                <label for="start_date">Start Date:</label>
-                <input class="form-control" type="date" name="start_date" id="start_date" required>
+                <label for="start_datetime">Start Date/Time:</label>
+                <input class="form-control" type="datetime-local" name="start_datetime" id="start_datetime" required>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-md-2">
-                <label for="start_time">Start Time:</label>
-                <input class="form-control" type="time" name="start_time" id="start_time" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-2">
-                <label for="end_time">End Time:</label>
-                <input class="form-control" type="time" name="end_time" id="end_time" required>
+                <label for="episode_duration">Duration:</label>
+                <input class="form-control" type="number" step="0.5" max="6.0" name="episode_duration" id="episode_duration" required>
             </div>
         </div>
         <div class="form-group row">

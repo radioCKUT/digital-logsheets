@@ -114,7 +114,7 @@
         <div class="panel-heading">Episode Segments</div>
 
         <!-- Table -->
-        <table class="table" id="added_segments">
+        <table class="table table-hover" id="added_segments">
         </table>
     </div>
 </div>
