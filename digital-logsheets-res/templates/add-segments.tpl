@@ -25,6 +25,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 
+    <script src="js/date.js"></script>
+    <script src="js/field-validation.js"></script>
     <script src="js/add-segments.js"></script>
     <script src="js/category_button.js"></script>
     <script src="js/sisyphus.min.js"></script>

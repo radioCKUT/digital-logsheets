@@ -1,15 +1,20 @@
 function setupAllFields() {
     $('#name_group').show();
     $('#ad_number_group').hide();
-    $('#ad_number_input').prop('required', false);
+
+    var adNumberInput = $('#ad_number_input');
+    setupAllCatHTMLValidation(adNumberInput);
 }
 
 function setupMusicCatFields() {
     setupAllFields();
+
+    var albumInput = $('#album_input');
+    var authorInput = $('#author_input');
+    setupMusicCatHTMLValidation(authorInput, albumInput);
+
     $('#author_group').show();
-    $('#author_input').prop('required', true);
     $('#album_group').show();
-    $('#album_input').prop('required', true);
     $('#can_con_group').show();
     $('#new_release_group').show();
     $('#french_vocal_music_group').show();
@@ -18,8 +23,11 @@ function setupMusicCatFields() {
 
 function setupNonMusicCatFields() {
     setupAllFields();
-    $('#author_input').prop('required', false);
-    $('#album_input').prop('required', false);
+
+    var albumInput = $('#album_input');
+    var authorInput = $('#author_input');
+    setupNonMusicCatHTMLValidation(authorInput, albumInput);
+
     $('#can_con_group').hide();
     $('#new_release_group').hide();
     $('#french_vocal_music_group').hide();
@@ -27,6 +35,7 @@ function setupNonMusicCatFields() {
 
 function setupCat1Fields() {
     setupNonMusicCatFields();
+
     $('#author_group').show();
     $('#album_group').show();
     $('#name_label').text("Description:");
@@ -44,7 +53,6 @@ function setupCat4Fields() {
     setupNonMusicCatFields();
     $('#author_group').hide();
     $('#album_group').hide();
-
     $('#name_label').text("Name:");
 }
 
@@ -55,5 +63,6 @@ function setupCat5Fields() {
     $('#album_group').hide();
     $('#ad_number_group').show();
 
-    $('#ad_number_input').prop('required', true);
+    var adNumberInput = $('#ad_number_input');
+    setupCat5HTMLValidation(adNumberInput);
 }

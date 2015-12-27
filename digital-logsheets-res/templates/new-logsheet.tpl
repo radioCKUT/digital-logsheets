@@ -30,7 +30,9 @@
     <!-- Select2 -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
-    <!-- Script for adding form fields -->
+
+    <script src="js/date.js"></script>
+    <script src="js/episode-validation.js"></script>
     <script src="js/prerecord.js"></script>
     <script src="js/category_button.js"></script>
     <script type="text/javascript">
