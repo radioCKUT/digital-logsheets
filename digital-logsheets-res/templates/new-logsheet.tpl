@@ -37,11 +37,10 @@
     <script src="js/category_button.js"></script>
     <script type="text/javascript">
         function init() {
-            //checkPrerecordInput();
             var data = {$programs};
 
-            console.log(data);
-            $(".programs").select2({
+            console.log(data[0]);
+            $(".program").select2({
                 data: data
             })
         }
@@ -63,7 +62,7 @@
         <div class="form-group row">
             <div class="col-md-4">
                 <label for="program">Program:</label>
-                <select class="form-control programs" name="program" id="program"></select>
+                <select class="form-control program" name="program" id="program"></select>
             </div>
         </div>
         <div class="form-group row">

@@ -6,7 +6,7 @@ $(document).ready(function () {
 function adjustPrerecordDateBounds() {
     var episodeStartInput = $('#start_datetime');
     var episodeStartVal = episodeStartInput.val();
-    episodeStartVal = episodeStartVal.replace('T', ' ');
+    episodeStartVal = episodeStartVal.replace('T', ' '); //So HTML input may be parsed by Date.js
     var episodeStartDate = Date.parse(episodeStartVal);
 
     var upperBound;
@@ -24,10 +24,6 @@ function adjustPrerecordDateBounds() {
     var prerecordDateInput = $('#prerecord_date');
     prerecordDateInput.prop('min', lowerBound);
     prerecordDateInput.prop('max', upperBound);
-
-    console.log('in adjust prerecord');
-    console.log('episode start date: ' + episodeStartDate);
-    console.log('episode start value: ' + episodeStartVal);
 }
 
 function setStartDateTimeBounds() {

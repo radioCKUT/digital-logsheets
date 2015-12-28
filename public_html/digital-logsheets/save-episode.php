@@ -24,7 +24,6 @@ try {
 
     $programmerId = 1; //TODO change programmerId once settled how programmers will be stored
     $playlistId = managePlaylistEntries::createNewPlaylist($db);
-    $programId = 1; //TODO get actual program id from input
 
     $episode_start_time = new DateTime($episode_start_time, new DateTimeZone('America/Montreal'));
 

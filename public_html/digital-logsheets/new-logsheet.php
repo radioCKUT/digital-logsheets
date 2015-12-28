@@ -22,7 +22,13 @@
         //close database connection
         $db = NULL;
 
-        $programs = json_encode(array_values($programs));
+
+        $programsArrayForSelect2 = array();
+        for ($i = 1; $i < count($programs); $i++) {
+            $programsArrayForSelect2[$i] = array("id" => $i, "text" => $programs[$i]);
+        }
+
+        $programs = json_encode(array_values($programsArrayForSelect2));
 
         //assign categories to smarty variable
         $smarty->assign("programs", $programs);
