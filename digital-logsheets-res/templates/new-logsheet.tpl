@@ -69,7 +69,7 @@
         <div class="form-group row">
             <div class="col-md-3">
                 <label for="start_datetime">Start Date/Time:</label>
-                <input class="form-control" type="datetime-local" name="start_datetime" id="start_datetime" required>
+                <input class="form-control" type="datetime-local" name="start_datetime" id="start_datetime" onchange="adjustPrerecordDateBounds()" required>
             </div>
         </div>
         <div class="form-group row">
