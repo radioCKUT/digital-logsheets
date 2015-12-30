@@ -41,6 +41,8 @@ function successCallback(data) {
 
     if (!data.hasOwnProperty("error")) {
         $('#logsheet').trigger("reset");
+        $('.category').button('reset');
+
         console.log(data[0]);
 
         var addedSegments = $('#added_segments');
