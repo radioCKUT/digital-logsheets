@@ -1,3 +1,5 @@
-# Past versions that shouldn't be tracked
-/old
-/old-v2
+#phpStorm-specific data
+**/.idea/**
+
+#database credentials that depend on local machine
+digital-logsheets-res/php/database/databaseLogin.php
