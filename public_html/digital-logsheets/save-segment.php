@@ -50,8 +50,8 @@ try {
 
         case 1:
         default:
-        manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
-            $album, $category, false, false, false, null, $playlist_id); //TODO: add hide from listener, add station ID given
+            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
+                $album, $category, false, false, false, null, $playlist_id); //TODO: add hide from listener, add station ID given
             break;
     }
 
