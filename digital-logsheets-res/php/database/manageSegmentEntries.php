@@ -49,59 +49,21 @@
         }
 
         public static function saveNewSegmentToDatabase($db_conn, $startDateTime, $duration, $name, $author, $album, $category,
-                                                        $is_can_con, $is_new_release, $is_french_vocal_music, $ad_number, $playlistId, $timeZone) {
+                                                        $is_can_con, $is_new_release, $is_french_vocal_music, $ad_number, $playlistId)
+        {
 
             $startDateString = formatDateStringForDatabaseWrite($startDateTime);
 
-            switch ($category) {
-                case 2:
-                case 3:
-                    $values = self::prepareMusicSegmentEntryValues($startDateString, $duration, $name, $author, $album, $category,
-                        $is_can_con, $is_new_release, $is_french_vocal_music);
-                    break;
-
-                case 5:
-                    $values = self::prepareAdSegmentEntryValues($startDateString, $duration, $ad_number);
-                    break;
-
-                case 4:
-                    $values = self::prepareMusicProductionSegmentEntryValues($startDateString, $duration, $name, $category, false); //TODO: add hide from listener, add station ID given
-                    break;
-
-                case 1:
-                default:
-                $values = self::prepareSpokenWordSegmentEntryValues($startDateString, $duration, $name, $author, $album, $category, false, false); //TODO: add hide from listener, add station ID given
-                    break;
-            }
-
             $column_names = array(self::$startTimeColumnName, self::$durationColumnName, self::$segmentNameColumnName,
                 self::$authorColumnName, self::$albumColumnName, self::$categoryColumnName, self::$canConColumnName, self::$newReleaseColumnName, self::$frenchVocalColumnName);
+
+            $values = array($startDateString, $duration, $name, $author, $album, $category, $is_can_con, $is_new_release, $is_french_vocal_music);
 
             $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::$segmentTableName, $column_names, $values);
 
             managePlaylistEntries::addSegmentToDatabasePlaylist($db_conn, $playlistId, $segmentId);
 
             return $segmentId;
-        }
-
-        private static function prepareMusicSegmentEntryValues($start_time, $duration, $name, $author, $album, $category,
-                                                               $is_can_con, $is_new_release, $is_french_vocal_music) {
-            return array($start_time, $duration, $name, $author, $album, $category,
-                $is_can_con, $is_new_release, $is_french_vocal_music);
-        }
-
-        private static function prepareAdSegmentEntryValues($start_time, $duration, $ad_number) {
-            return array($start_time, $duration, $ad_number, null, null, 5, false, false, false);
-        }
-
-        private static function prepareMusicProductionSegmentEntryValues($start_time, $duration, $name, $category, $station_id_given) {
-            return array($start_time, $duration, $name, null, null, $category,
-                false, false, false);
-        }
-
-        private static function prepareSpokenWordSegmentEntryValues($start_time, $duration, $name, $author, $album, $category, $station_id_given, $hide_from_listener) {
-            return array($start_time, $duration, $name, $author, $album, $category,
-                false, false, false);
         }
 
     }

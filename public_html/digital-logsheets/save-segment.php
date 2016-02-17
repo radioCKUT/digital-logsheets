@@ -31,8 +31,31 @@ try {
 
     $playlist_id = $episode->getPlaylistId();
 
-    manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
-        $album, $category, $can_con, $new_release, $french_vocal_music, $ad_number, $playlist_id, new DateTimeZone('America/Montreal'));
+    switch ($category) {
+        case 2:
+        case 3:
+            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
+                $album, $category, $can_con, $new_release, $french_vocal_music, null, $playlist_id);
+            break;
+
+        case 5:
+            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $ad_number, null,
+                null, 5, false, false, false, $ad_number, $playlist_id);
+            break;
+
+        case 4:
+            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, null,
+                null, $category, false, false, false, null, $playlist_id); //TODO: add hide from listener, add station ID given
+            break;
+
+        case 1:
+        default:
+        manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
+            $album, $category, false, false, false, null, $playlist_id); //TODO: add hide from listener, add station ID given
+            break;
+    }
+
+
 
     $episode = new Episode($db, $episode_id);
     $segment_list = $episode->getSegments();
