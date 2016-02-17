@@ -22,6 +22,14 @@
         private static $newReleaseColumnName = "new_release";
         private static $frenchVocalColumnName = "french_vocal_music";
 
+        /**
+         * @param PDO $db_conn
+         *
+         * @param int $segment_id
+         *
+         * @param Segment $segment_object
+         *
+         */
         public static function getSegmentAttributesFromDatabase($db_conn, $segment_id, $segment_object) {
             $database_result = readFromDatabase::readFilteredColumnFromTable($db_conn, array(self::$startTimeColumnName, self::$segmentNameColumnName,
                 self::$albumColumnName, self::$authorColumnName), self::$segmentTableName, array(self::$idColumnName), array($segment_id));

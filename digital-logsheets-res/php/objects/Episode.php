@@ -13,6 +13,9 @@
         private $episode_start_time;
         private $episode_end_time;
 
+        private $is_prerecord;
+        private $prerecord_date;
+
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
@@ -37,6 +40,18 @@
 
         public function setEndTime($end_time) {
             $this->episode_end_time = $end_time;
+        }
+
+        public function setIsPrerecord($is_prerecord) {
+            $this->is_prerecord = $is_prerecord;
+
+            if (!$is_prerecord) {
+                $this->prerecord_date = null;
+            }
+        }
+
+        public function setPrerecordDate($prerecord_date) {
+            $this->prerecord_date = $prerecord_date;
         }
 
         public function getProgramName() {
@@ -81,6 +96,14 @@
             } catch (Exception $error) {
                 echo $error;
             }
+        }
+
+        public function isPrerecord() {
+            return $this->is_prerecord;
+        }
+
+        public function getPrerecordDate() {
+            return $this->prerecord_date;
         }
     }
 ?>
