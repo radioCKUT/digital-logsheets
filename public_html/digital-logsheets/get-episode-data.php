@@ -31,6 +31,7 @@ try {
 
 } catch(PDOException $e) {
     $db = null;
+    error_log("get_segments error: " . $e->getMessage());
     outputErrorResponse($e->getMessage());
 }
 

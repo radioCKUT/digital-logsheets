@@ -34,7 +34,7 @@ try {
 
     $episode_object = new Episode($db, null);
 
-    $episode_object->setPlaylist($playlistId);
+    $episode_object->setPlaylist(new Playlist($db, $playlistId));
     $episode_object->setProgram(new Program($db, $programId));
     $episode_object->setProgrammer(new Programmer($db, $programmerId));
     $episode_object->setStartTime($episode_start_time);

@@ -71,13 +71,7 @@
         }
 
         public function getProgramName() {
-            try {
-                if($this->checkForId()) {
-                    return $this->program->getName();
-                }
-            } catch (Exception $error) {
-                echo $error;
-            }
+            return $this->program->getName();
         }
         
         //returns an array of segment objects
@@ -86,7 +80,6 @@
         }
 
         public function getPlaylistId() {
-            error_log("getting playlist id:" . $this->playlist->getId());
             return $this->playlist->getId();
         }
 
@@ -97,28 +90,12 @@
             return $this->playlist;
         }
         
-        public function getStartDate() {
-            return $this->getStartTime();
-        }
-        
         public function getStartTime() {
-            try {
-                if($this->checkForId()) {
-                    return $this->episode_start_time;
-                }
-            } catch (Exception $error) {
-                echo $error;
-            }
+            return $this->episode_start_time;
         }
         
         public function getEndTime() {
-            try {
-                if($this->checkForId()) {
-                    return $this->episode_end_time;
-                }
-            } catch (Exception $error) {
-                echo $error;
-            }
+            return $this->episode_end_time;
         }
 
         public function isPrerecord() {
@@ -129,4 +106,3 @@
             return $this->prerecord_date;
         }
     }
-?>

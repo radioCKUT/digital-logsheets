@@ -21,7 +21,11 @@
         private static $prerecordDateColumnName = "prerecord_date";
         private static $isDraftColumnName = "draft";
 
-
+        /**
+         * @param PDO $db_conn
+         * @param int $episode_id
+         * @param Episode $episode_object
+         */
         public static function getEpisodeAttributesFromDatabase($db_conn, $episode_id, $episode_object) {
             $database_results = readFromDatabase::readFilteredColumnFromTable($db_conn, array(self::$programColumnName, self::$playlistColumnName,
                 self::$programmerColumnName, self::$startTimeColumnName, self::$endTimeColumnName), self::$episodeTableName, array(self::$idColumnName), array($episode_id));
@@ -73,8 +77,12 @@
                 self::$programmerColumnName, self::$startTimeColumnName, self::$endTimeColumnName,
                 self::$isPrerecordColumnName, self::$prerecordDateColumnName, self::$isDraftColumnName);
 
-            $values = array($episode_object->getPlaylist()->getId(), $episode_object->getProgram()->getId(), $episode_object->getProgrammer()->getId(), $startDateTimeObject,
-                $endDateTimeObject, $episode_object->isPrerecord(), $episode_object->getPrerecordDate(), true);
+            $values = array($episode_object->getPlaylist()->getId(),
+                $episode_object->getProgram()->getId(),
+                $episode_object->getProgrammer()->getId(),
+                $startDateTimeObject, $endDateTimeObject,
+                $episode_object->isPrerecord(),
+                $episode_object->getPrerecordDate(), true);
 
             return writeToDatabase::writeEntryToDatabase($db_conn, self::$episodeTableName, $column_names, $values);
         }

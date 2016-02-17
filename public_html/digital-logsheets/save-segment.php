@@ -35,6 +35,7 @@ try {
     $segment->setCategory($category);
     $segment->setPlaylistId($playlist_id);
     $segment->setDuration(null);
+    $segment->setStartTime($segment_time);
 
     switch ($category) {
         case 2:
