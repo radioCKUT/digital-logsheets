@@ -31,31 +31,57 @@ try {
 
     $playlist_id = $episode->getPlaylistId();
 
+    $segment = new Segment($db, null);
+    $segment->setCategory($category);
+    $segment->setPlaylistId($playlist_id);
+    $segment->setDuration(null);
+
     switch ($category) {
         case 2:
         case 3:
-            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
-                $album, $category, $can_con, $new_release, $french_vocal_music, null, $playlist_id);
+            $segment->setName($name);
+            $segment->setAuthor($author);
+            $segment->setAlbum($album);
+            $segment->setCategory($category);
+            $segment->setIsCanCon($can_con);
+            $segment->setIsNewRelease($new_release);
+            $segment->setIsFrenchVocalMusic($french_vocal_music);
+            $segment->setAdNumber(null);
             break;
 
         case 5:
-            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $ad_number, null,
-                null, 5, false, false, false, $ad_number, $playlist_id);
+            $segment->setName(null);
+            $segment->setAuthor(null);
+            $segment->setAlbum(null);
+            $segment->setIsCanCon(null);
+            $segment->setIsNewRelease(null);
+            $segment->setIsFrenchVocalMusic(null);
+            $segment->setAdNumber($ad_number);
             break;
 
         case 4:
-            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, null,
-                null, $category, false, false, false, null, $playlist_id); //TODO: add hide from listener, add station ID given
+            $segment->setName($name);
+            $segment->setAuthor(null);
+            $segment->setAlbum(null);
+            $segment->setIsCanCon(false);
+            $segment->setIsNewRelease(false);
+            $segment->setIsFrenchVocalMusic(false);
+            $segment->setAdNumber(null);
             break;
 
         case 1:
         default:
-            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
-                $album, $category, false, false, false, null, $playlist_id); //TODO: add hide from listener, add station ID given
+            $segment->setName($name);
+            $segment->setAuthor($author);
+            $segment->setAlbum($album);
+            $segment->setIsCanCon(false);
+            $segment->setIsNewRelease(false);
+            $segment->setIsFrenchVocalMusic(false);
+            $segment->setAdNumber(null);
             break;
     }
 
-
+    manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
 
     $episode = new Episode($db, $episode_id);
     $segment_list = $episode->getSegments();

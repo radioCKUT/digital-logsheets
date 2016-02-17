@@ -39,6 +39,12 @@
             $segment_object->setStartTime($startDateTime);
         }
 
+        /**
+         * @param PDO $db_conn
+         *
+         * @param Segment $segment_object
+         *
+         */
         public static function editExistingSegmentDuration($db_conn, $segment_object) {
             $column_names = array(self::$durationColumnName);
             $values = array($segment_object->getDuration());
@@ -48,20 +54,27 @@
             writeToDatabase::editDatabaseEntry($db_conn, $segment_object->getId(), self::$segmentTableName, $column_names, $values);
         }
 
-        public static function saveNewSegmentToDatabase($db_conn, $startDateTime, $duration, $name, $author, $album, $category,
-                                                        $is_can_con, $is_new_release, $is_french_vocal_music, $ad_number, $playlistId)
+        /**
+         * @param PDO $db_conn
+         *
+         * @param Segment $segment_object
+         *
+         * @return int
+         */
+        public static function saveNewSegmentToDatabase($db_conn, $segment_object)
         {
-
-            $startDateString = formatDateStringForDatabaseWrite($startDateTime);
+            $startDateString = formatDateStringForDatabaseWrite($segment_object->getStartTime());
 
             $column_names = array(self::$startTimeColumnName, self::$durationColumnName, self::$segmentNameColumnName,
                 self::$authorColumnName, self::$albumColumnName, self::$categoryColumnName, self::$canConColumnName, self::$newReleaseColumnName, self::$frenchVocalColumnName);
 
-            $values = array($startDateString, $duration, $name, $author, $album, $category, $is_can_con, $is_new_release, $is_french_vocal_music);
+            $values = array($startDateString, $segment_object->getDuration(), $segment_object->getName(),
+                $segment_object->getAuthor(), $segment_object->getAlbum(), $segment_object->getCategory(),
+                $segment_object->isCanCon(), $segment_object->isNewRelease(), $segment_object->isFrenchVocalMusic());
 
             $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::$segmentTableName, $column_names, $values);
 
-            managePlaylistEntries::addSegmentToDatabasePlaylist($db_conn, $playlistId, $segmentId);
+            managePlaylistEntries::addSegmentToDatabasePlaylist($db_conn, $segment_object->getPlaylistId(), $segmentId);
 
             return $segmentId;
         }

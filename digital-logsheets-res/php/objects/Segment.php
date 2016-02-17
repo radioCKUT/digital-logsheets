@@ -22,7 +22,9 @@
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
-            manageSegmentEntries::getSegmentAttributesFromDatabase($db, $component_id, $this);
+            if ($component_id != null) {
+                manageSegmentEntries::getSegmentAttributesFromDatabase($db, $component_id, $this);
+            }
         }
 
 
@@ -60,6 +62,10 @@
 
         public function setIsFrenchVocalMusic($is_french_vocal_music) {
             $this->is_french_vocal_music = $is_french_vocal_music;
+        }
+
+        public function setAdNumber($ad_number) {
+            $this->ad_number = $ad_number;
         }
 
         public function setPlaylistId($playlist_id) {
