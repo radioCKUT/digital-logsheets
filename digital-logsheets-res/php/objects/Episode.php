@@ -19,7 +19,9 @@
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
-            manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $component_id, $this);
+            if ($component_id != null) {
+                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $component_id, $this);
+            }
         }
 
         public function setProgram($program) {
@@ -54,6 +56,20 @@
             $this->prerecord_date = $prerecord_date;
         }
 
+        /**
+         * @return Programmer
+         */
+        public function getProgrammer() {
+            return $this->programmer;
+        }
+
+        /**
+         * @return Program
+         */
+        public function getProgram() {
+            return $this->program;
+        }
+
         public function getProgramName() {
             try {
                 if($this->checkForId()) {
@@ -72,6 +88,13 @@
         public function getPlaylistId() {
             error_log("getting playlist id:" . $this->playlist->getId());
             return $this->playlist->getId();
+        }
+
+        /**
+         * @return Playlist
+         */
+        public function getPlaylist() {
+            return $this->playlist;
         }
         
         public function getStartDate() {
