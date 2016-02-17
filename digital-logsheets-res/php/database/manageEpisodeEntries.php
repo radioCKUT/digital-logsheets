@@ -60,7 +60,7 @@
         }
 
         public static function saveNewEpisode($db_conn, $playlistId, $programId, $programmerId,
-                                              $startDateTimeObject, $endDateTimeObject, $is_prerecord, $prerecord_date, $timeZone) {
+                                              $startDateTimeObject, $endDateTimeObject, $is_prerecord, $prerecord_date) {
 
             $startDateTimeObject = formatDateStringForDatabaseWrite($startDateTimeObject);
             $endDateTimeObject = formatDateStringForDatabaseWrite($endDateTimeObject);

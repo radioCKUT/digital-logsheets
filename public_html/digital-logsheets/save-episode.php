@@ -33,7 +33,7 @@ try {
     $episode_end_time->add($episodeDurationDateInterval);
 
     $episode_id = manageEpisodeEntries::saveNewEpisode($db, $playlistId, $programId, $programmerId,
-        $episode_start_time, $episode_end_time, isset($prerecord), $prerecord_date, new DateTimeZone('America/Montreal'));
+        $episode_start_time, $episode_end_time, isset($prerecord), $prerecord_date);
 
     $_SESSION["episode_id"] = $episode_id;
 
@@ -42,3 +42,4 @@ try {
 } catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }
+
