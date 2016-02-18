@@ -53,7 +53,8 @@ function successCallback(data) {
             var name = data[i].name;
             var start_time = data[i].start_time;
             addedSegments.append($('<tr>' + '<td class="vert-align">' + start_time + '</td>' + '<td class="vert-align">' + name + '</td><td class="vert-align">' + '<div class="dropdown"> <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>  </button> <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"><li><a href="#">Edit</a></li><li style="background-color: red; color: white;"><a href="#">Delete</a></li> </ul> </div></td>' + '</tr>').data("segment", data[i]));
-
+            console.log(addedSegments.closest("tr"));
+            console.log(addedSegments.closest("tr").data());
         });
 
         addedSegments.append($('</tbody>'));
