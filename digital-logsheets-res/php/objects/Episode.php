@@ -7,6 +7,9 @@
     class Episode extends LogsheetComponent {
 
         private $program;
+        /**
+         * @var Playlist
+         */
         private $playlist;
         private $programmer;
 
@@ -75,6 +78,9 @@
         }
         
         //returns an array of segment objects
+        /**
+         * @return Segment[]
+         */
         public function getSegments() {
             return $this->playlist->getSegments();
         }

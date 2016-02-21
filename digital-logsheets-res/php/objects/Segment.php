@@ -77,6 +77,7 @@
             $startTimeString = $startDateTime->format('H:i');
 
             return [
+                'id' => $this->getId(),
                 'start_time' => $startTimeString,
                 'name' => $this->getName(),
                 'album' => $this->getAlbum(),
