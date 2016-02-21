@@ -54,17 +54,22 @@ function successCallback(data) {
             var name = data[i].name;
             var start_time = data[i].start_time;
 
-            var delete_button = $(document.createElement("li"));
-            delete_button.attr("style", "background-color: red; color: white;");
-            delete_button.click(deleteEpisodeSegment(segment_id));
+            var delete_button = $(document.createElement("li"))
+                .attr("style", "background-color: red; color: white;")
+                .click(function(eventObject) {
+                    console.log("entered delete button on click handler");
+                    deleteEpisodeSegment(segment_id);
+                })
+                .text("Delete");
 
-            addedSegments.append($('<tr>' + '<td class="vert-align">' + start_time + '</td>' + '<td class="vert-align">' + name + '</td><td class="vert-align">' + '<div class="dropdown"> ' +
-                '<button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> ' +
-                    '<span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>  </button> ' +
-                    '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
-                        '<li><a href="#">Edit</a></li>' +
-                        '<li style="background-color: red; color: white;"><a href="#">Delete</a></li> </ul> </div></td>' + '</tr>')
-                .data("segment", data[i]));;
+            addedSegments.append($('<tr>')
+                .append($('<td class="vert-align">' + start_time + '</td>')).append($('<td class="vert-align">' + name + '</td>')).append($('<td class="vert-align">')
+                    .append($('<div class="dropdown">')
+                        .append($('<button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">')
+                        .append($('<span class="glyphicon glyphicon-option-vertical" aria-hidden="true">')))
+                            .append($('<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">')
+                                .append($('<li><a href="#">Edit</a></li>')).append(delete_button)))))
+                .data("segment", data[i]);
         });
 
         addedSegments.append($('</tbody>'));
