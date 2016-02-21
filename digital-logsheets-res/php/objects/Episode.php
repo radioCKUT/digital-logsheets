@@ -6,6 +6,9 @@
 
     class Episode extends LogsheetComponent {
 
+        /**
+         * @var Program
+         */
         private $program;
         /**
          * @var Playlist
@@ -73,6 +76,9 @@
             return $this->program;
         }
 
+        /**
+         * @return string
+         */
         public function getProgramName() {
             return $this->program->getName();
         }

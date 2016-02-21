@@ -50,13 +50,16 @@
         public static function deleteDatabaseEntry($db_conn, $id_to_delete, $table_name) {
             try {
 
-                $query = "DELETE FROM " . $table_name . " WHERE id = " . $id_to_delete;
+                $query = "DELETE FROM " . $table_name . " WHERE id=" . $id_to_delete;
+                error_log("delete query: " . $query);
 
                 $db_conn->exec($query);
 
+                error_log("delete query successful:");
+
 
             } catch (Exception $error) {
-                echo "Delete database entry failed: " . $error;
+                error_log("delete query unsuccessful: " . $error);
             }
         }
     }
