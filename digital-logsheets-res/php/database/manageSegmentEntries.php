@@ -87,4 +87,9 @@
             return $segmentId;
         }
 
+        public static function deleteSegmentFromDatabase($db_conn, $segment_id)
+        {
+            writeToDatabase::deleteDatabaseEntry($db_conn, $segment_id, self::$segmentTableName);
+        }
+
     }
