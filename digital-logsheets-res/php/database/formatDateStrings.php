@@ -18,8 +18,8 @@ function formatDateStringForDatabaseWrite($dateTimeObject) {
  */
 function formatDateStringFromDatabase($dateString) {
 
-    $StartDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
-    $StartDateTime->setTimezone(new DateTimeZone('America/Montreal'));
+    $startDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
+    $startDateTime->setTimezone(new DateTimeZone('America/Montreal'));
 
-    return $StartDateTime;
+    return $startDateTime;
 }
