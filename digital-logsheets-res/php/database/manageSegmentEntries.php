@@ -71,6 +71,27 @@
          */
         public static function saveNewSegmentToDatabase($db_conn, $segment_object)
         {
+            list($column_name, $values) = self::processSegmentForWrite($segment_object);
+            $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::$segmentTableName, $column_names, $values);
+
+            managePlaylistEntries::addSegmentToDatabasePlaylist($db_conn, $segment_object->getPlaylistId(), $segmentId);
+
+            return $segmentId;
+        }
+
+        /**
+         * @param PDO $db_conn
+         * @param Segment $segment_object
+         */
+        public static function editSegmentInDatabase($db_conn, $segment_object)
+        {
+            list($column_names, $values) = self::processSegmentForWrite($segment_object);
+
+            writeToDatabase::editDatabaseEntry($db_conn, $segment_object->getId(), self::$segmentTableName, $column_names, $values);
+        }
+
+        private static function processSegmentForWrite($segment_object)
+        {
             $startDateString = formatDateStringForDatabaseWrite($segment_object->getStartTime());
 
             $column_names = array(self::$startTimeColumnName, self::$durationColumnName, self::$segmentNameColumnName,
@@ -80,11 +101,7 @@
                 $segment_object->getAuthor(), $segment_object->getAlbum(), $segment_object->getCategory(),
                 $segment_object->isCanCon(), $segment_object->isNewRelease(), $segment_object->isFrenchVocalMusic());
 
-            $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::$segmentTableName, $column_names, $values);
-
-            managePlaylistEntries::addSegmentToDatabasePlaylist($db_conn, $segment_object->getPlaylistId(), $segmentId);
-
-            return $segmentId;
+            return array($column_names, $values);
         }
 
         public static function deleteSegmentFromDatabase($db_conn, $segment_id)
