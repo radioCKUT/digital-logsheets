@@ -32,9 +32,14 @@
         public static function readEntireColumnFromTable($db_conn, $column_names, $table_name)
         {
             $sql_query_string = self::getEntireColumnsQueryString($column_names, $table_name);
-            $sql_query_stmt = $db_conn->prepare($sql_query_string);
 
-            return self::readFromDatabaseWithStatement($sql_query_stmt);
+            try {
+                $sql_query_stmt = $db_conn->prepare($sql_query_string);
+
+                return self::readFromDatabaseWithStatement($sql_query_stmt);
+            } catch (Exception $e) {
+                echo "Read entire column failed " . $e;
+            }
         }
 
         public static function readFilteredColumnFromTable($db_conn, $column_names, $table_name, $filter_columns, $filter_values)
@@ -44,15 +49,23 @@
                 return null; //TODO think more about what should be returned here
             }
 
+            if ($column_names == null) {
+                $column_names = "*"; //return all columns if no specific columns given
+            }
+
             $sql_query_string = self::getEntireColumnsQueryString($column_names, $table_name);
 
             for ($i = 0; $i < count($filter_columns); $i++) {
                 $sql_query_string .= " WHERE " . $filter_columns[$i] . "=" . $filter_values[$i];
             }
 
-            $sql_query_stmt = $db_conn->prepare($sql_query_string);
+            try {
+                $sql_query_stmt = $db_conn->prepare($sql_query_string);
 
-            return self::readFromDatabaseWithStatement($sql_query_stmt);
+                return self::readFromDatabaseWithStatement($sql_query_stmt);
+            } catch (Exception $e) {
+                echo "Read filtered column failed: " . $e;
+            }
         }
 
         public static function readFirstMatchingEntryFromTable($db_conn, $column_names, $table_name, $filter_columns, $filter_values)

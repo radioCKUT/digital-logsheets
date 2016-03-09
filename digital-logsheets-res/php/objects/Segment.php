@@ -81,7 +81,14 @@
                 'start_time' => $startTimeString,
                 'name' => $this->getName(),
                 'album' => $this->getAlbum(),
-                'author' => $this->getAuthor()
+                'author' => $this->getAuthor(),
+                'duration' => $this->getDuration(),
+                'category' => $this->getCategory(),
+                'can_con' => $this->isCanCon(),
+                'new_release' => $this->isNewRelease(),
+                'french_vocal_music' => $this->isFrenchVocalMusic(),
+                'ad_number' => $this->getAdNumber(),
+                'playlist_id' => $this->getPlaylistId()
             ];
         }
 

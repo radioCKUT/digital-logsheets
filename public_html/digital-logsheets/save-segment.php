@@ -16,6 +16,9 @@ $can_con = isset($_POST['can_con']);
 $new_release = isset($_POST['new_release']);
 $french_vocal_music = isset($_POST['french_vocal_music']);
 
+$edit_segment = isset($_POST['is_existing_segment']);
+$segment_id = $_POST['segment_id'];
+
 if (!isset($episode_id) || $episode_id <= 0) {
     outputErrorResponse("Invalid episode ID");
 }
@@ -82,7 +85,15 @@ try {
             break;
     }
 
-    manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
+    error_log("edit segment status: " . $edit_segment);
+
+    if ($edit_segment) {
+        error_log("segment id to edit: " . $segment_id);
+        $segment->setId($segment_id);
+        manageSegmentEntries::editExistingSegmentDuration($db, $segment);
+    } else {
+        manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
+    }
 
     $episode = new Episode($db, $episode_id);
     $segment_list = $episode->getSegments();
