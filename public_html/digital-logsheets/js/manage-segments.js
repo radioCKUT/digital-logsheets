@@ -33,6 +33,19 @@ function cancelEdit() {
     $('#logsheet_edit').trigger("reset");
     hideEditForm();
     resetAllFields();
+
+    if ($('.category1').parent().hasClass("active")) {
+        setupCat1Fields()
+    } else if ($('.category2').parent().hasClass("active")) {
+        setupCat2Fields()
+    } else if ($('.category3').parent().hasClass("active")) {
+        console.log("cat 3 when completing new segment");
+        setupCat3Fields()
+    } else if ($('.category4').parent().hasClass("active")) {
+        setupCat4Fields()
+    } else if ($('.category5').parent().hasClass("active")) {
+        setupCat5Fields()
+    }
 }
 
 function editEpisodeSegment() {
