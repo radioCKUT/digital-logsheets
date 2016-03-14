@@ -40,12 +40,6 @@ function prepareFormForEdit(eventObject) {
     console.log(" tableRow: " + tableRow);
     var segment_object = $(tableRow).data("segment");
     console.log("segment_object: " + segment_object);
-    var propValue;
-    for (var propName in segment_object) {
-        propValue = segment_object[propName];
-
-        console.log(propName, propValue);
-    }
 
     //set values of logsheet form
 
@@ -60,7 +54,8 @@ function prepareFormForEdit(eventObject) {
             $('.category3').prop('checked', true);
             break;
         case 4:
-            $('.category4').prop('checked', true);
+            $('.category4').closest('.btn').button('toggle');
+            setupCat4Fields();
             break;
         case 5:
             $('.category5').prop('checked', true);
