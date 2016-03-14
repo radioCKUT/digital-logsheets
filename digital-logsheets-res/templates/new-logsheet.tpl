@@ -39,7 +39,6 @@
         function init() {
             var data = {$programs};
 
-            console.log(data[0]);
             $(".program").select2({
                 data: data
             })

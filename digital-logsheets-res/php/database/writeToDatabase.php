@@ -26,7 +26,7 @@
 
                 $query = "UPDATE " . $table_name . " SET ";
                     for($i = 0; $i < count($column_names); $i++) {
-                        $query .= $column_names[$i] . "=" . $values_to_write[$i];
+                        $query .= $column_names[$i] . "=" . "'" . $values_to_write[$i] . "'";
                     }
                 $query .= " WHERE id=" . $id_to_edit;
 
