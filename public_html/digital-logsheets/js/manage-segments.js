@@ -45,20 +45,24 @@ function prepareFormForEdit(eventObject) {
 
     switch (segment_object.category) {
         case 1:
-            $('.category1').prop('checked', true);
+            $('.category1').closest('.btn').button('toggle');
+            setupCat1Fields();
             break;
         case 2:
-            $('.category2').prop('checked', true);
+            $('.category2').closest('.btn').button('toggle');
+            setupCat2Fields();
             break;
         case 3:
-            $('.category3').prop('checked', true);
+            $('.category3').closest('.btn').button('toggle');
+            setupCat3Fields();
             break;
         case 4:
             $('.category4').closest('.btn').button('toggle');
             setupCat4Fields();
             break;
         case 5:
-            $('.category5').prop('checked', true);
+            $('.category5').closest('.btn').button('toggle');
+            setupCat5Fields();
             break;
     }
 
@@ -67,7 +71,7 @@ function prepareFormForEdit(eventObject) {
     $('#album_input').attr("value", segment_object.album);
     $('#ad_number_input').attr("value", segment_object.ad_number);
 
-    //change submit value to editEpisodeSegment
+    //TODO: change submit value to editEpisodeSegment
 }
 
 function sendRequestToSaveSegment(dataToSend) {
