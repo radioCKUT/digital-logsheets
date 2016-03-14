@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     $('#logsheet_edit').on('submit', function(e) {
         e.preventDefault();
-        editEpisodeSegment(id);
+        editEpisodeSegment();
     });
 });
 
@@ -35,10 +35,13 @@ function cancelEdit() {
     resetAllFields();
 }
 
-function editEpisodeSegment(id) {
+function editEpisodeSegment() {
     var dataToSend = $('#logsheet_edit').serializeArray();
 
-    dataToSend.push({name: "segment_id", value: id});
+    var segment_id = dataToSend[id];
+    console.log("segment_id in editEpisodeSegment: " + segment_id);
+
+    dataToSend.push({name: "segment_id", value: segment_id});
     dataToSend.push({name: "is_existing_segment", value: true});
 
     sendRequestToSaveSegment(dataToSend);
@@ -57,13 +60,10 @@ function hideEditForm() {
 }
 
 function prepareFormForEdit(eventObject) {
-    console.log("preparing form for edit.");
     var tableRow = $(eventObject.target).parent().parent().parent().parent();
-    console.log(" tableRow: " + tableRow);
     var segment_object = $(tableRow).data("segment");
-    console.log("segment_object: " + segment_object);
+    console.log("start time: " + segment_object.start_time);
 
-    //set values of logsheet form
     showEditForm();
 
     switch (segment_object.category) {
@@ -89,10 +89,12 @@ function prepareFormForEdit(eventObject) {
             break;
     }
 
+    $('#segment_time_edit').attr("value", segment_object.start_time);
     $('#name_input_edit').attr("value", segment_object.name);
     $('#author_input_edit').attr("value", segment_object.author);
     $('#album_input_edit').attr("value", segment_object.album);
     $('#ad_number_input_edit').attr("value", segment_object.ad_number);
+    $('#segment_id_edit').attr("value", segment_object.id);
 
     //TODO: change submit value to editEpisodeSegment
 }

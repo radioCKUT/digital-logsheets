@@ -110,8 +110,8 @@
             <div id="segments">
                 <div class="form-group row">
                     <div class="col-md-3">
-                        <label for="segment_time" class="control-label">Time:</label>
-                        <input name="segment_time_edit" class="form-control segment-time" type="time" required>
+                        <label for="segment_time_edit" class="control-label">Time:</label>
+                        <input name="segment_time" class="form-control segment-time" type="time" id="segment_time_edit" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -163,6 +163,7 @@
                 <hr>
             </div>
 
+            <input type="hidden" name="segment_id" id="segment_id_edit">
             <input type="button" name="cancel" value="Cancel" onclick="cancelEdit()">
             <input type="submit" name="save" value="Save">
         </form>
