@@ -35,7 +35,17 @@ function editEpisodeSegment(id) {
 }
 
 function prepareFormForEdit(eventObject) {
-    var segment_object = eventObject.currentTarget.data("segment");
+    console.log("preparing form for edit.");
+    var tableRow = $(eventObject.target).parent().parent().parent().parent();
+    console.log(" tableRow: " + tableRow);
+    var segment_object = $(tableRow).data("segment");
+    console.log("segment_object: " + segment_object);
+    var propValue;
+    for (var propName in segment_object) {
+        propValue = segment_object[propName];
+
+        console.log(propName, propValue);
+    }
 
     //set values of logsheet form
 

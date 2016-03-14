@@ -5,11 +5,13 @@
         private static function getEntireColumnsQueryString($column_names, $table_name)
         {
 
-            if (!is_array($column_names) || count($column_names) <= 0) {
-                return null; //TODO think more about what should be returned here
-            }
+            $column_names_string = "";
 
-            $column_names_string = implode(",", $column_names);
+            if (!is_array($column_names) || count($column_names) <= 0) {
+                $column_names_string = "*";
+            } else {
+                $column_names_string = implode(",", $column_names);
+            }
 
             return "SELECT " . $column_names_string . " FROM " . $table_name;
         }
@@ -23,7 +25,7 @@
                 return $db_result;
 
             } catch (Exception $error) {
-                echo "Read from database failed: " . $error;
+                error_log("Read from database failed: " . $error);
             }
 
             return null;
@@ -38,7 +40,7 @@
 
                 return self::readFromDatabaseWithStatement($sql_query_stmt);
             } catch (Exception $e) {
-                echo "Read entire column failed " . $e;
+                error_log("Read entire column failed " . $e);
             }
         }
 
@@ -49,11 +51,9 @@
                 return null; //TODO think more about what should be returned here
             }
 
-            if ($column_names == null) {
-                $column_names = "*"; //return all columns if no specific columns given
-            }
-
             $sql_query_string = self::getEntireColumnsQueryString($column_names, $table_name);
+
+            error_log("read column base string: " . $sql_query_string);
 
             for ($i = 0; $i < count($filter_columns); $i++) {
                 $sql_query_string .= " WHERE " . $filter_columns[$i] . "=" . $filter_values[$i];
@@ -64,7 +64,7 @@
 
                 return self::readFromDatabaseWithStatement($sql_query_stmt);
             } catch (Exception $e) {
-                echo "Read filtered column failed: " . $e;
+                error_log("Read filtered column failed: " . $e);
             }
         }
 
