@@ -31,8 +31,58 @@ try {
 
     $playlist_id = $episode->getPlaylistId();
 
-    manageSegmentEntries::saveNewSegmentToDatabase($db, $segment_time, null, $name, $author,
-        $album, $category, $can_con, $new_release, $french_vocal_music, $ad_number, $playlist_id, new DateTimeZone('America/Montreal'));
+    $segment = new Segment($db, null);
+    $segment->setCategory($category);
+    $segment->setPlaylistId($playlist_id);
+    $segment->setDuration(null);
+    $segment->setStartTime($segment_time);
+
+    switch ($category) {
+        case 2:
+        case 3:
+            $segment->setName($name);
+            $segment->setAuthor($author);
+            $segment->setAlbum($album);
+            $segment->setCategory($category);
+            $segment->setIsCanCon($can_con);
+            $segment->setIsNewRelease($new_release);
+            $segment->setIsFrenchVocalMusic($french_vocal_music);
+            $segment->setAdNumber(null);
+            break;
+
+        case 5:
+            $segment->setName(null);
+            $segment->setAuthor(null);
+            $segment->setAlbum(null);
+            $segment->setIsCanCon(null);
+            $segment->setIsNewRelease(null);
+            $segment->setIsFrenchVocalMusic(null);
+            $segment->setAdNumber($ad_number);
+            break;
+
+        case 4:
+            $segment->setName($name);
+            $segment->setAuthor(null);
+            $segment->setAlbum(null);
+            $segment->setIsCanCon(false);
+            $segment->setIsNewRelease(false);
+            $segment->setIsFrenchVocalMusic(false);
+            $segment->setAdNumber(null);
+            break;
+
+        case 1:
+        default:
+            $segment->setName($name);
+            $segment->setAuthor($author);
+            $segment->setAlbum($album);
+            $segment->setIsCanCon(false);
+            $segment->setIsNewRelease(false);
+            $segment->setIsFrenchVocalMusic(false);
+            $segment->setAdNumber(null);
+            break;
+    }
+
+    manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
 
     $episode = new Episode($db, $episode_id);
     $segment_list = $episode->getSegments();

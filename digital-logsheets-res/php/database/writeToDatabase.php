@@ -41,4 +41,25 @@
 
             return null; //TODO think more about what to return here
         }
+
+        /**
+         * @param PDO $db_conn
+         * @param int $id_to_delete
+         * @param string $table_name
+         */
+        public static function deleteDatabaseEntry($db_conn, $id_to_delete, $table_name) {
+            try {
+
+                $query = "DELETE FROM " . $table_name . " WHERE id=" . $id_to_delete;
+                error_log("delete query: " . $query);
+
+                $db_conn->exec($query);
+
+                error_log("delete query successful:");
+
+
+            } catch (Exception $error) {
+                error_log("delete query unsuccessful: " . $error);
+            }
+        }
     }

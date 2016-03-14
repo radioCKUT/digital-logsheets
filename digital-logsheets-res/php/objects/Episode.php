@@ -6,17 +6,28 @@
 
     class Episode extends LogsheetComponent {
 
+        /**
+         * @var Program
+         */
         private $program;
+        /**
+         * @var Playlist
+         */
         private $playlist;
         private $programmer;
 
         private $episode_start_time;
         private $episode_end_time;
 
+        private $is_prerecord;
+        private $prerecord_date;
+
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
-            manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $component_id, $this);
+            if ($component_id != null) {
+                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $component_id, $this);
+            }
         }
 
         public function setProgram($program) {
@@ -39,48 +50,71 @@
             $this->episode_end_time = $end_time;
         }
 
-        public function getProgramName() {
-            try {
-                if($this->checkForId()) {
-                    return $this->program->getName();
-                }
-            } catch (Exception $error) {
-                echo $error;
+        public function setIsPrerecord($is_prerecord) {
+            $this->is_prerecord = $is_prerecord;
+
+            if (!$is_prerecord) {
+                $this->prerecord_date = null;
             }
+        }
+
+        public function setPrerecordDate($prerecord_date) {
+            $this->prerecord_date = $prerecord_date;
+        }
+
+        /**
+         * @return Programmer
+         */
+        public function getProgrammer() {
+            return $this->programmer;
+        }
+
+        /**
+         * @return Program
+         */
+        public function getProgram() {
+            return $this->program;
+        }
+
+        /**
+         * @return string
+         */
+        public function getProgramName() {
+            return $this->program->getName();
         }
         
         //returns an array of segment objects
+        /**
+         * @return Segment[]
+         */
         public function getSegments() {
             return $this->playlist->getSegments();
         }
 
         public function getPlaylistId() {
-            error_log("getting playlist id:" . $this->playlist->getId());
             return $this->playlist->getId();
         }
-        
-        public function getStartDate() {
-            return $this->getStartTime();
+
+        /**
+         * @return Playlist
+         */
+        public function getPlaylist() {
+            return $this->playlist;
         }
         
         public function getStartTime() {
-            try {
-                if($this->checkForId()) {
-                    return $this->episode_start_time;
-                }
-            } catch (Exception $error) {
-                echo $error;
-            }
+            return $this->episode_start_time;
         }
         
         public function getEndTime() {
-            try {
-                if($this->checkForId()) {
-                    return $this->episode_end_time;
-                }
-            } catch (Exception $error) {
-                echo $error;
-            }
+            return $this->episode_end_time;
+        }
+
+        public function isPrerecord() {
+            return $this->is_prerecord;
+        }
+
+        public function getPrerecordDate() {
+            return $this->prerecord_date;
         }
     }
-?>

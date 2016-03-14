@@ -10,7 +10,7 @@ $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
 $programId = $_POST['program'];
 
-$prerecord = $_POST['prerecord'];
+$prerecord = isset($_POST['prerecord']);
 $prerecord_date = $_POST['prerecord_date'];
 
 $episode_start_time = $_POST['start_datetime'];
@@ -32,8 +32,17 @@ try {
     $episodeDurationDateInterval = new DateInterval('PT' . $episode_duration_mins . 'M');
     $episode_end_time->add($episodeDurationDateInterval);
 
-    $episode_id = manageEpisodeEntries::saveNewEpisode($db, $playlistId, $programId, $programmerId,
-        $episode_start_time, $episode_end_time, isset($prerecord), $prerecord_date, new DateTimeZone('America/Montreal'));
+    $episode_object = new Episode($db, null);
+
+    $episode_object->setPlaylist(new Playlist($db, $playlistId));
+    $episode_object->setProgram(new Program($db, $programId));
+    $episode_object->setProgrammer(new Programmer($db, $programmerId));
+    $episode_object->setStartTime($episode_start_time);
+    $episode_object->setEndTime($episode_end_time);
+    $episode_object->setIsPrerecord($prerecord);
+    $episode_object->setPrerecordDate($prerecord_date);
+
+    $episode_id = manageEpisodeEntries::saveNewEpisode($db, $episode_object);
 
     $_SESSION["episode_id"] = $episode_id;
 
@@ -42,3 +51,4 @@ try {
 } catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }
+

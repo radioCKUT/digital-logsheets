@@ -12,9 +12,9 @@ This application aims to serve the following CKUT 90.3FM stakeholders:
 
 It will also reduce paper waste created by the current paper system. In its first iteration, programmers should be able to complete all their logging via the application (i.e. they won't need to log any segments on a paper logsheet any more).
 
-##Requirements
+##Project goals
 
-These requirements are divided up by the stakeholders they would most affect. Separate interfaces would likely need to be created for each of these sections, but all features (if applicable) should read from and write to the same database.
+These goals are divided up by the stakeholders they would most affect. Separate interfaces would likely need to be created for each of these sections, but all features (if applicable) should read from and write to the same database.
 
 ###Programmers
 Maximize use of webpage accessibility features while remaining compatible with the computer in the Master Control Room.
