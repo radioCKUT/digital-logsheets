@@ -3,6 +3,11 @@ $(document).ready(function () {
         e.preventDefault();
         addSegment();
     });
+
+    $('#logsheet_edit').on('submit', function(e) {
+        e.preventDefault();
+        editEpisodeSegment(id);
+    });
 });
 
 function getEpisodeSegments() {
@@ -24,14 +29,31 @@ function addSegment() {
     sendRequestToSaveSegment(dataToSend);
 }
 
+function cancelEdit() {
+    $('#logsheet_edit').trigger("reset");
+    hideEditForm();
+    resetAllFields();
+}
+
 function editEpisodeSegment(id) {
-    var dataToSend = $('#logsheet').serializeArray();
+    var dataToSend = $('#logsheet_edit').serializeArray();
+
     dataToSend.push({name: "segment_id", value: id});
     dataToSend.push({name: "is_existing_segment", value: true});
 
     sendRequestToSaveSegment(dataToSend);
 
     // change submit value to addSegment
+}
+
+function showEditForm() {
+    $('#logsheet').hide();
+    $('#logsheet_edit').show();
+}
+
+function hideEditForm() {
+    $('#logsheet').show();
+    $('#logsheet_edit').hide();
 }
 
 function prepareFormForEdit(eventObject) {
@@ -42,8 +64,7 @@ function prepareFormForEdit(eventObject) {
     console.log("segment_object: " + segment_object);
 
     //set values of logsheet form
-    $('#logsheet').hide();
-    $('#logsheet_edit').show();
+    showEditForm();
 
     switch (segment_object.category) {
         case 1:

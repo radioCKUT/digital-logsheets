@@ -1,3 +1,15 @@
+function resetAllFields() {
+    $('.name_group').hide();
+    $('.author_group').hide();
+    $('.album_group').hide();
+    $('.author_group').hide();
+    $('.album_group').hide();
+    $('.can_con_group').hide();
+    $('.new_release_group').hide();
+    $('.french_vocal_music_group').hide();
+}
+
+
 function setupAllFields() {
     $('.name_group').show();
     $('.ad_number_group').hide();

@@ -163,7 +163,8 @@
                 <hr>
             </div>
 
-            <input type="submit" value="Add">
+            <input type="button" name="cancel" value="Cancel" onclick="cancelEdit()">
+            <input type="submit" name="save" value="Save">
         </form>
 
         <form id="finalize" role="form" action="finalize-segments.php" method="post">
