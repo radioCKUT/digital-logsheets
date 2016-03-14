@@ -42,34 +42,36 @@ function prepareFormForEdit(eventObject) {
     console.log("segment_object: " + segment_object);
 
     //set values of logsheet form
+    $('#logsheet').hide();
+    $('#logsheet_edit').show();
 
     switch (segment_object.category) {
         case 1:
-            $('.category1').closest('.btn').button('toggle');
+            $('.category1_edit').closest('.btn').button('toggle');
             setupCat1Fields();
             break;
         case 2:
-            $('.category2').closest('.btn').button('toggle');
+            $('.category2_edit').closest('.btn').button('toggle');
             setupCat2Fields();
             break;
         case 3:
-            $('.category3').closest('.btn').button('toggle');
+            $('.category3_edit').closest('.btn').button('toggle');
             setupCat3Fields();
             break;
         case 4:
-            $('.category4').closest('.btn').button('toggle');
+            $('.category4_edit').closest('.btn').button('toggle');
             setupCat4Fields();
             break;
         case 5:
-            $('.category5').closest('.btn').button('toggle');
+            $('.category5_edit').closest('.btn').button('toggle');
             setupCat5Fields();
             break;
     }
 
-    $('#name_input').attr("value", segment_object.name);
-    $('#author_input').attr("value", segment_object.author);
-    $('#album_input').attr("value", segment_object.album);
-    $('#ad_number_input').attr("value", segment_object.ad_number);
+    $('#name_input_edit').attr("value", segment_object.name);
+    $('#author_input_edit').attr("value", segment_object.author);
+    $('#album_input_edit').attr("value", segment_object.album);
+    $('#ad_number_input_edit').attr("value", segment_object.ad_number);
 
     //TODO: change submit value to editEpisodeSegment
 }

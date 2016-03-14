@@ -33,6 +33,7 @@
     <script type="text/javascript">
         function startStoringFormEntries() {
             getEpisodeSegments();
+            $('#logsheet_edit').hide();
             $('form').sisyphus();
         }
     </script>
@@ -80,13 +81,13 @@
                 <div class="form-group row author_group" style="display:none;">
                     <div class="col-md-9">
                         <label for="author_input" class="control-label">Author:</label>
-                        <input class="form-control author_input" type="text" name="author">
+                        <input class="form-control author_input" type="text" name="author" id="author_input">
                     </div>
                 </div>
                 <div class="form-group row album_group" style="display:none;">
                     <div class="col-md-9">
                         <label for="album_input" class="control-label">Album:</label>
-                        <input class="form-control album_input" type="text" name="album">
+                        <input class="form-control album_input" type="text" name="album" id="album_input">
                     </div>
                 </div>
                 <label class="checkbox-inline can_con_group" style="display:none;">
@@ -95,6 +96,68 @@
                     <input type="checkbox" name="new_release" value="">NR</label>
                 <label class="checkbox-inline french_vocal_music_group" style="display:none;">
                     <input type="checkbox" name="french_vocal_music" value="">FV</label>
+
+                <input type="hidden" name="episode_id" value={$episode_id}>
+                <hr>
+            </div>
+
+            <input type="submit" value="Add">
+        </form>
+
+        <form id="logsheet_edit" role="form" method="post">
+            <h5>Episode ID: {$episode_id}</h5>
+
+            <div id="segments">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="segment_time" class="control-label">Time:</label>
+                        <input name="segment_time_edit" class="form-control segment-time" type="time" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="category" class="control-label">Category:</label>
+                    <div class="btn-group category" data-toggle="buttons">
+                        <label class="btn btn-primary" onclick="setupCat1Fields()">
+                            <input type="radio" name="category" class="category1_edit" autocomplete="off" required value="1">1</label>
+                        <label class="btn btn-primary" onclick="setupCat2Fields()">
+                            <input type="radio" name="category" class="category2_edit" autocomplete="off" value="2">2</label>
+                        <label class="btn btn-primary" onclick="setupCat3Fields()">
+                            <input type="radio" name="category" class="category3_edit" autocomplete="off" value="3">3</label>
+                        <label class="btn btn-primary" onclick="setupCat4Fields()">
+                            <input type="radio" name="category" class="category4_edit" autocomplete="off" value="4">4</label>
+                        <label class="btn btn-primary" onclick="setupCat5Fields()">
+                            <input type="radio" name="category" class="category5_edit" autocomplete="off" value="5">5</label></div>
+                </div>
+                <div class="form-group row ad_number_group" style="display:none;">
+                    <div class="col-md-3">
+                        <label for="ad_number_input_edit" class="control-label ad_number_label">Ad Number:</label>
+                        <input class="form-control" type="number" min="1" step="1" max="300" name="ad_number" id="ad_number_input_edit">
+                    </div>
+                </div>
+                <div class="form-group row name_group" style="display:none;">
+                    <div class="col-md-9">
+                        <label for="name_input_edit" class="control-label name_label">Name:</label>
+                        <input class="form-control" type="text" name="name" id="name_input_edit" required>
+                    </div>
+                </div>
+                <div class="form-group row author_group" style="display:none;">
+                    <div class="col-md-9">
+                        <label for="author_input_edit" class="control-label">Author:</label>
+                        <input class="form-control author_input" type="text" name="author" id="author_input_edit">
+                    </div>
+                </div>
+                <div class="form-group row album_group" style="display:none;">
+                    <div class="col-md-9">
+                        <label for="album_input_edit" class="control-label">Album:</label>
+                        <input class="form-control album_input" type="text" name="album" id="album_input_edit">
+                    </div>
+                </div>
+                <label class="checkbox-inline can_con_group" style="display:none;">
+                    <input type="checkbox" name="can_con" value="" id="can_con_edit">CC</label>
+                <label class="checkbox-inline new_release_group" style="display:none;">
+                    <input type="checkbox" name="new_release" value="" id="new_release_edit">NR</label>
+                <label class="checkbox-inline french_vocal_music_group" style="display:none;">
+                    <input type="checkbox" name="french_vocal_music" value="" id="french_vocal_music_edit">FV</label>
 
                 <input type="hidden" name="episode_id" value={$episode_id}>
                 <hr>
