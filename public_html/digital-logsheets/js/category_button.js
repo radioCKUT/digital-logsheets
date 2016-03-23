@@ -1,7 +1,7 @@
 function resetAllFields() {
+    $('.category').button('reset');
+    $('.ad_number_group').hide();
     $('.name_group').hide();
-    $('.author_group').hide();
-    $('.album_group').hide();
     $('.author_group').hide();
     $('.album_group').hide();
     $('.can_con_group').hide();
@@ -15,7 +15,9 @@ function setupAllFields() {
     $('.ad_number_group').hide();
 
     var adNumberInput = $('.ad_number_input');
-    setupAllCatHTMLValidation(adNumberInput);
+    var nameInput = $('.name_input');
+    console.log("name input: " + nameInput);
+    setupAllCatHTMLValidation(adNumberInput, nameInput);
 }
 
 function setupMusicCatFields() {
@@ -76,5 +78,6 @@ function setupCat5Fields() {
     $('.ad_number_group').show();
 
     var adNumberInput = $('.ad_number_input');
-    setupCat5HTMLValidation(adNumberInput);
+    var nameInput = $('.name_input');
+    setupCat5HTMLValidation(adNumberInput, nameInput);
 }

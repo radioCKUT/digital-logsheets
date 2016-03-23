@@ -15,7 +15,7 @@
                 return $db_conn->lastInsertId();
 
             } catch (Exception $error) {
-                echo "Write to database failed: " . $error;
+                error_log("Write to database failed: " . $error);
             }
 
             return null; //TODO think more about what to return here
@@ -27,6 +27,10 @@
                 $query = "UPDATE " . $table_name . " SET ";
                     for($i = 0; $i < count($column_names); $i++) {
                         $query .= $column_names[$i] . "=" . "'" . $values_to_write[$i] . "'";
+
+                        if ($i < count($column_names) - 1) {
+                            $query .= ", \n";
+                        }
                     }
                 $query .= " WHERE id=" . $id_to_edit;
 
@@ -36,7 +40,7 @@
                 return $db_conn->lastInsertId();
 
             } catch (Exception $error) {
-                echo "Edit database entry failed: " . $error;
+                error_log("Edit database entry failed: " . $error);
             }
 
             return null; //TODO think more about what to return here

@@ -39,7 +39,6 @@ function cancelEdit() {
     } else if ($('.category2').parent().hasClass("active")) {
         setupCat2Fields()
     } else if ($('.category3').parent().hasClass("active")) {
-        console.log("cat 3 when completing new segment");
         setupCat3Fields()
     } else if ($('.category4').parent().hasClass("active")) {
         setupCat4Fields()
@@ -51,8 +50,13 @@ function cancelEdit() {
 function editEpisodeSegment() {
     var dataToSend = $('#logsheet_edit').serializeArray();
 
-    var segment_id = dataToSend[id];
-    console.log("segment_id in editEpisodeSegment: " + segment_id);
+    var segment_id = null;
+
+    $.each(dataToSend, function (i, e) {
+        if (dataToSend[i].name == "segment_id"){
+            segment_id = dataToSend[i].value;
+        }
+    });
 
     dataToSend.push({name: "segment_id", value: segment_id});
     dataToSend.push({name: "is_existing_segment", value: true});
@@ -81,23 +85,23 @@ function prepareFormForEdit(eventObject) {
 
     switch (segment_object.category) {
         case 1:
-            $('.category1_edit').closest('.btn').button('toggle');
+            $('.category1').closest('.btn').button('toggle');
             setupCat1Fields();
             break;
         case 2:
-            $('.category2_edit').closest('.btn').button('toggle');
+            $('.category2').closest('.btn').button('toggle');
             setupCat2Fields();
             break;
         case 3:
-            $('.category3_edit').closest('.btn').button('toggle');
+            $('.category3').closest('.btn').button('toggle');
             setupCat3Fields();
             break;
         case 4:
-            $('.category4_edit').closest('.btn').button('toggle');
+            $('.category4').closest('.btn').button('toggle');
             setupCat4Fields();
             break;
         case 5:
-            $('.category5_edit').closest('.btn').button('toggle');
+            $('.category5').closest('.btn').button('toggle');
             setupCat5Fields();
             break;
     }
@@ -107,6 +111,11 @@ function prepareFormForEdit(eventObject) {
     $('#author_input_edit').attr("value", segment_object.author);
     $('#album_input_edit').attr("value", segment_object.album);
     $('#ad_number_input_edit').attr("value", segment_object.ad_number);
+
+    $('#can_con_edit').prop("checked", segment_object.can_con);
+    $('#new_release_edit').prop("checked", segment_object.new_release);
+    $('#french_vocal_music_edit').prop("checked", segment_object.french_vocal_music);
+
     $('#segment_id_edit').attr("value", segment_object.id);
 
     //TODO: change submit value to editEpisodeSegment
@@ -142,13 +151,13 @@ function errorCallback(jqhxr, textStatus, errorThrown) {
 }
 
 
+
 function successCallback(data) {
     console.log("success callback");
 
     if (!data.hasOwnProperty("error")) {
+        hideEditForm();
         $('#logsheet').trigger("reset");
-        $('.category').button('reset');
-
         console.log(data[0]);
 
         var addedSegments = $('#added_segments');

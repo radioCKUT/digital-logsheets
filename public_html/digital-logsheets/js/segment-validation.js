@@ -1,5 +1,6 @@
-function setupAllCatHTMLValidation(adNumberInput) {
+function setupAllCatHTMLValidation(adNumberInput, nameInput) {
     adNumberInput.prop('required', false);
+    nameInput.prop('required', true);
 }
 
 function setupMusicCatHTMLValidation(authorInput, albumInput) {
@@ -12,8 +13,9 @@ function setupNonMusicCatHTMLValidation(authorInput, albumInput) {
     albumInput.prop('required', false);
 }
 
-function setupCat5HTMLValidation(adNumberInput) {
+function setupCat5HTMLValidation(adNumberInput, nameInput) {
     adNumberInput.prop('required', true);
+    nameInput.prop('required', false);
 }
 
 function makeRequired(group, label, input) {

@@ -8,7 +8,7 @@
         private $album;
 
         private $start_time;
-        private $duration;
+        private $duration = 0;
 
         private $category;
 
@@ -53,7 +53,15 @@
         }
 
         public function setIsCanCon($is_can_con) {
-            $this->is_can_con = $is_can_con;
+            $can_con_value_to_set = $is_can_con;
+
+            if ($is_can_con == 1) {
+                $can_con_value_to_set = true;
+            } else if ($is_can_con == 0) {
+                $can_con_value_to_set = false;
+            }
+
+            $this->is_can_con = $can_con_value_to_set;
         }
 
         public function setIsNewRelease($is_new_release) {
@@ -138,4 +146,3 @@
         }
         
     }
-?>

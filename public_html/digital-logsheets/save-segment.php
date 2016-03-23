@@ -20,6 +20,7 @@ $edit_segment = isset($_POST['is_existing_segment']);
 $segment_id = $_POST['segment_id'];
 
 if (!isset($episode_id) || $episode_id <= 0) {
+    error_log("episode id received by save segment: " . $episode_id . ", segment_time: " . $segment_time);
     outputErrorResponse("Invalid episode ID");
 }
 
@@ -34,7 +35,7 @@ try {
 
     $playlist_id = $episode->getPlaylistId();
 
-    $segment = new Segment($db, null);
+    $segment = new Segment($db, $segment_id);
     $segment->setCategory($category);
     $segment->setPlaylistId($playlist_id);
     $segment->setDuration(null);
@@ -88,9 +89,9 @@ try {
     error_log("edit segment status: " . $edit_segment);
 
     if ($edit_segment) {
-        error_log("segment id to edit: " . $segment_id);
+        error_log("segment id: " . $segment->getId());
         $segment->setId($segment_id);
-        manageSegmentEntries::editExistingSegmentDuration($db, $segment);
+        manageSegmentEntries::editSegmentInDatabase($db, $segment);
     } else {
         manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
     }

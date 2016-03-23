@@ -75,7 +75,7 @@
                 <div class="form-group row name_group" style="display:none;">
                     <div class="col-md-9">
                         <label for="name_input" class="control-label name_label">Name:</label>
-                        <input class="form-control" type="text" name="name" id="name_input" required>
+                        <input class="form-control name_input" type="text" name="name" id="name_input" required>
                     </div>
                 </div>
                 <div class="form-group row author_group" style="display:none;">
@@ -118,15 +118,15 @@
                     <label for="category" class="control-label">Category:</label>
                     <div class="btn-group category" data-toggle="buttons">
                         <label class="btn btn-primary" onclick="setupCat1Fields()">
-                            <input type="radio" name="category" class="category1_edit" autocomplete="off" required value="1">1</label>
+                            <input type="radio" name="category" class="category1" autocomplete="off" required value="1">1</label>
                         <label class="btn btn-primary" onclick="setupCat2Fields()">
-                            <input type="radio" name="category" class="category2_edit" autocomplete="off" value="2">2</label>
+                            <input type="radio" name="category" class="category2" autocomplete="off" value="2">2</label>
                         <label class="btn btn-primary" onclick="setupCat3Fields()">
-                            <input type="radio" name="category" class="category3_edit" autocomplete="off" value="3">3</label>
+                            <input type="radio" name="category" class="category3" autocomplete="off" value="3">3</label>
                         <label class="btn btn-primary" onclick="setupCat4Fields()">
-                            <input type="radio" name="category" class="category4_edit" autocomplete="off" value="4">4</label>
+                            <input type="radio" name="category" class="category4" autocomplete="off" value="4">4</label>
                         <label class="btn btn-primary" onclick="setupCat5Fields()">
-                            <input type="radio" name="category" class="category5_edit" autocomplete="off" value="5">5</label></div>
+                            <input type="radio" name="category" class="category5" autocomplete="off" value="5">5</label></div>
                 </div>
                 <div class="form-group row ad_number_group" style="display:none;">
                     <div class="col-md-3">
@@ -137,7 +137,7 @@
                 <div class="form-group row name_group" style="display:none;">
                     <div class="col-md-9">
                         <label for="name_input_edit" class="control-label name_label">Name:</label>
-                        <input class="form-control" type="text" name="name" id="name_input_edit" required>
+                        <input class="form-control name_input" type="text" name="name" id="name_input_edit" required>
                     </div>
                 </div>
                 <div class="form-group row author_group" style="display:none;">
@@ -164,6 +164,7 @@
             </div>
 
             <input type="hidden" name="segment_id" id="segment_id_edit">
+            <input type="hidden" name="is_segment_edit" id="is_segment_edit">
             <input type="button" name="cancel" value="Cancel" onclick="cancelEdit()">
             <input type="submit" name="save" value="Save">
         </form>
