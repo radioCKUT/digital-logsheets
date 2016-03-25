@@ -129,4 +129,14 @@
             writeToDatabase::deleteDatabaseEntry($db_conn, $segment_id, self::TABLE_NAME);
         }
 
+        public static function getAllSegmentsForEpisodeId($db_conn, $episode_id)
+        {
+            $episode = new Episode($db_conn, $episode_id);
+            $playlist_id = $episode->getPlaylistId();
+
+            $segments = managePlaylistEntries::getPlaylistSegmentsFromDatabase($db_conn, $playlist_id);
+
+            return $segments;
+        }
+
     }
