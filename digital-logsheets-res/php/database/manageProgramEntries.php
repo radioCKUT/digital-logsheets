@@ -3,22 +3,22 @@
     include_once("readFromDatabase.php");
     class manageProgramEntries {
 
-        private static $programTableName = "program";
+        const TABLE_NAME = "program";
 
-        private static $idColumnName = "id";
-        private static $nameColumnName = "name";
+        const ID_COLUMN_NAME = "id";
+        const PROGRAM_NAME_COLUMN_NAME = "name";
 
         public static function getProgramNameFromDatabase($db_conn, $program_id) {
-            return readFromDatabase::readFirstMatchingEntryFromTable($db_conn, array(self::$nameColumnName),
-                self::$programTableName, array(self::$idColumnName), array($program_id));
+            return readFromDatabase::readFirstMatchingEntryFromTable($db_conn, array(self::PROGRAM_NAME_COLUMN_NAME),
+                self::programTableName, array(self::ID_COLUMN_NAME), array($program_id));
         }
 
         public static function getAllProgramsFromDatabase($db_conn) {
-            $program_ids = readFromDatabase::readEntireColumnFromTable($db_conn, array(self::$idColumnName), self::$programTableName);
+            $program_ids = readFromDatabase::readEntireColumnFromTable($db_conn, array(self::ID_COLUMN_NAME), self::programTableName);
 
             $programs = array();
             foreach($program_ids as $program_id) {
-                $program = new Program($db_conn, $program_id[self::$idColumnName]);
+                $program = new Program($db_conn, $program_id[self::ID_COLUMN_NAME]);
                 $programs[$program->getId()] = $program->getName();
             }
 
