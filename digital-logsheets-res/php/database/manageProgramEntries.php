@@ -10,11 +10,11 @@
 
         public static function getProgramNameFromDatabase($db_conn, $program_id) {
             return readFromDatabase::readFirstMatchingEntryFromTable($db_conn, array(self::PROGRAM_NAME_COLUMN_NAME),
-                self::programTableName, array(self::ID_COLUMN_NAME), array($program_id));
+                self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($program_id));
         }
 
         public static function getAllProgramsFromDatabase($db_conn) {
-            $program_ids = readFromDatabase::readEntireColumnFromTable($db_conn, array(self::ID_COLUMN_NAME), self::programTableName);
+            $program_ids = readFromDatabase::readEntireColumnFromTable($db_conn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);
 
             $programs = array();
             foreach($program_ids as $program_id) {

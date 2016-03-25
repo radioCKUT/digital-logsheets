@@ -56,8 +56,10 @@
             error_log("read column base string: " . $sql_query_string);
 
             for ($i = 0; $i < count($filter_columns); $i++) {
-                $sql_query_string .= " WHERE " . $filter_columns[$i] . "=" . $filter_values[$i];
+                $sql_query_string .= "\n WHERE " . $filter_columns[$i] . "=" . $filter_values[$i];
             }
+
+            error_log("readFilteredColumnFromTable query: " . $sql_query_string);
 
             try {
                 $sql_query_stmt = $db_conn->prepare($sql_query_string);

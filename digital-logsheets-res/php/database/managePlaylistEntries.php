@@ -44,6 +44,6 @@
 
             error_log("adding segment to playlist: " . $playlist_id);
 
-            return writeToDatabase::writeEntryToDatabase($db_conn, self::TABLE_NAME, $column_names, $values);
+            return writeToDatabase::writeEntryToDatabase($db_conn, self::PLAYLIST_SEGMENTS_TABLE_NAME, $column_names, $values);
         }
     }

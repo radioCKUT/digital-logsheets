@@ -80,7 +80,8 @@
          * @return string
          */
         public function getProgramName() {
-            return $this->program->getName();
+
+            return $this->program != null ? $this->program->getName() : "";
         }
         
         //returns an array of segment objects
@@ -88,11 +89,11 @@
          * @return Segment[]
          */
         public function getSegments() {
-            return $this->playlist->getSegments();
+            return $this->playlist != null ? $this->playlist->getSegments() : null;
         }
 
         public function getPlaylistId() {
-            return $this->playlist->getId();
+            return $this->playlist != null ? $this->playlist->getId() : null;
         }
 
         /**

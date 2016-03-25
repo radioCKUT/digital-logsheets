@@ -1,4 +1,5 @@
 <?php
+require_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/database/manageEpisodeEntries.php");
 require_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
@@ -25,9 +26,22 @@ try {
 
     manageEpisodeEntries::turnOffEpisodeDraftStatus($db, $episode);
 
-    $db = null;
+    $smarty = new Smarty();
 
-    echo "Episode saved!";
+    error_log("episode id in finalize-segments: " . $episode_id);
+    $episode = new Episode($db, $episode_id);
+
+    $segmentsForThisEpisode = manageSegmentEntries::getAllSegmentsForEpisodeId($db, $episode_id);
+
+    //close database connection
+    $db = NULL;
+
+    $smarty->assign("episode", $episode);
+    $smarty->assign("segments", $segmentsForThisEpisode);
+
+
+    // display it
+    echo $smarty->fetch('../../digital-logsheets-res/templates/finalize-logsheet.tpl');
 
 } catch (PDOException $e) {
     echo $e->getMessage();
