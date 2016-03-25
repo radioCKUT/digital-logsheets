@@ -35,11 +35,11 @@
 <div class="container-fluid">
     <h1>Review Submission</h1>
 
-    Show Name:
-    Programmer(s):
-    Day and Date:
-    Time Started:   Time Ended:
-    Pre-recorded?   Date?
+    Show Name: {$episode.program} <br/>
+    Programmer(s): <br/>
+    Day and Date: {$episode.start_date} <br/>
+    Time Started: {$episode.start_time}  Time Ended: {$episode.end_time} <br/>
+    Pre-recorded? {$episode.prerecorded}  Date? {$episode.prerecord_date} <br/> <br/>
 
     <table class="table">
         <tr>
@@ -56,9 +56,17 @@
             <tr>
                 <td>{$segment.start_time}</td>
                 <td>{$segment.duration}</td>
-                <td>"Implement Description"</td>
-                <td>"description col 2"</td>
-                <td>"description col 3"</td>
+
+                {if {$segment.category} == 2 || {$segment.category} == 3}}
+                    <td>{$segment.name}</td>
+                    <td>{$segment.album}</td>
+                    <td>{$segment.artist}</td>
+                {elseif {$segment.category} == 5}
+                    <td colspan="3">{$segment.ad_number}</td>
+                {else}
+                    <td colspan="3">{$segment.name}</td>
+                {/if}
+
                 <td>{$segment.category}</td>
                 <td>{$segment.can_con}</td>
                 <td>{$segment.new_release}</td>

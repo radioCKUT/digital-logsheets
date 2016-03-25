@@ -30,9 +30,9 @@ try {
 
     manageEpisodeEntries::turnOffEpisodeDraftStatus($db, $episode);
 
-    $smarty = new Smarty();
 
-    $episode = new Episode($db, $episode_id);
+
+    $episode_as_array = $episode->getObjectAsArray();
 
     $segmentsForThisEpisode = manageSegmentEntries::getAllSegmentsForEpisodeId($db, $episode_id);
 
@@ -40,17 +40,14 @@ try {
         $currentSegment = $segmentsForThisEpisode[$i];
         $segmentsForThisEpisode[$i] = $currentSegment->getObjectAsArray();
         $segmentsForThisEpisode[$i]["duration"] = $segmentsForThisEpisode[$i]["duration"]/60;
-        error_log($segmentsForThisEpisode);
     }
 
     //close database connection
     $db = NULL;
 
-    $smarty->assign("episode", $episode);
+    $smarty = new Smarty();
+    $smarty->assign("episode", $episode_as_array);
     $smarty->assign("segments", $segmentsForThisEpisode);
-
-    error_log("segment array passed into finalize-logsheet.tpl: " . $segmentsForThisEpisode);
-
 
     // display it
     echo $smarty->fetch('../../digital-logsheets-res/templates/finalize-logsheet.tpl');

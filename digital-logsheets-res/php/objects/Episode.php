@@ -19,7 +19,7 @@
         private $episode_start_time;
         private $episode_end_time;
 
-        private $is_prerecord;
+        private $is_prerecord = false;
         private $prerecord_date;
 
         public function __construct($db, $component_id) {
@@ -60,6 +60,52 @@
 
         public function setPrerecordDate($prerecord_date) {
             $this->prerecord_date = $prerecord_date;
+        }
+
+        public function jsonSerialize() {
+            $startDate = $this->getStartTime();
+            $startDateString = $this->prepareDateForSerialize($startDate);
+            $startTimeString = $this->prepareTimeForSerialize($startDate);
+
+            $endDate = $this->getEndTime();
+            $endTimeString = $this->prepareTimeForSerialize($endDate);
+
+            $prerecordDate = $this->getPrerecordDate();
+            $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
+
+            return [
+                'program' => $this->getProgram()->getName(),
+                'playlist' => $this->getPlaylistId(),
+                'start_date' => $startDateString,
+                'start_time' => $startTimeString,
+                'end_time' => $endTimeString,
+                'prerecorded' => $this->isPrerecord(),
+                'prerecord_date' => $prerecordDateString
+            ];
+        }
+
+        /**
+         * @param DateTime $date
+         * @return mixed
+         */
+        private function prepareDateForSerialize($date) {
+            if ($date != null) {
+                return $date->format('D, M j, Y');
+            } else {
+                return "";
+            }
+        }
+
+        private function prepareTimeForSerialize($date) {
+            if ($date != null) {
+                return $date->format('H:i');
+            } else {
+                return "";
+            }
+        }
+
+        public function getObjectAsArray() {
+            return $this->jsonSerialize();
         }
 
         /**
