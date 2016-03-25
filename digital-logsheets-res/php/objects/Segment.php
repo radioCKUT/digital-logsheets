@@ -100,6 +100,10 @@
             ];
         }
 
+        public function getObjectAsArray() {
+            return $this->jsonSerialize();
+        }
+
         
         public function getName() {
             return $this->name;

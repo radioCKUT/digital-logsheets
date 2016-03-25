@@ -7,10 +7,14 @@ require_once("../../digital-logsheets-res/php/objects/Episode.php");
 
 $episode_id = $_POST['episode_id'];
 
+session_start();
+
 try {
     error_log("just entered finalize-segments try statement");
     $db = connectToDatabase();
     error_log("passed connectToDatabase()");
+
+    $episode_id = $_SESSION['episode_id'];
 
     $episode = new Episode($db, $episode_id);
     error_log("new Episode created");
@@ -28,16 +32,24 @@ try {
 
     $smarty = new Smarty();
 
-    error_log("episode id in finalize-segments: " . $episode_id);
     $episode = new Episode($db, $episode_id);
 
     $segmentsForThisEpisode = manageSegmentEntries::getAllSegmentsForEpisodeId($db, $episode_id);
+
+    for($i = 0; $i < count($segmentsForThisEpisode); $i++) {
+        $currentSegment = $segmentsForThisEpisode[$i];
+        $segmentsForThisEpisode[$i] = $currentSegment->getObjectAsArray();
+        $segmentsForThisEpisode[$i]["duration"] = $segmentsForThisEpisode[$i]["duration"]/60;
+        error_log($segmentsForThisEpisode);
+    }
 
     //close database connection
     $db = NULL;
 
     $smarty->assign("episode", $episode);
     $smarty->assign("segments", $segmentsForThisEpisode);
+
+    error_log("segment array passed into finalize-logsheet.tpl: " . $segmentsForThisEpisode);
 
 
     // display it

@@ -41,7 +41,7 @@
     Time Started:   Time Ended:
     Pre-recorded?   Date?
 
-    <table>
+    <table class="table">
         <tr>
             <th>Time</th>
             <th>Duration</th>
@@ -51,6 +51,20 @@
             <th>NR</th>
             <th>FR</th>
         </tr>
+
+        {foreach $segments as $segment}
+            <tr>
+                <td>{$segment.start_time}</td>
+                <td>{$segment.duration}</td>
+                <td>"Implement Description"</td>
+                <td>"description col 2"</td>
+                <td>"description col 3"</td>
+                <td>{$segment.category}</td>
+                <td>{$segment.can_con}</td>
+                <td>{$segment.new_release}</td>
+                <td>{$segment.french_vocal_music}</td>
+            </tr>
+        {/foreach}
     </table>
 
 </div>

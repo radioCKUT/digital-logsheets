@@ -129,6 +129,11 @@
             writeToDatabase::deleteDatabaseEntry($db_conn, $segment_id, self::TABLE_NAME);
         }
 
+        /**
+         * @param $db_conn
+         * @param $episode_id
+         * @return Segment[]
+         */
         public static function getAllSegmentsForEpisodeId($db_conn, $episode_id)
         {
             $episode = new Episode($db_conn, $episode_id);
