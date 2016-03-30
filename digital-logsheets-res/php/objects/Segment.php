@@ -7,6 +7,9 @@
         private $author;
         private $album;
 
+        /**
+         * @var DateTime
+         */
         private $start_time;
         private $duration = 0;
 
@@ -53,23 +56,27 @@
         }
 
         public function setIsCanCon($is_can_con) {
-            $can_con_value_to_set = $is_can_con;
-
-            if ($is_can_con == 1) {
-                $can_con_value_to_set = true;
-            } else if ($is_can_con == 0) {
-                $can_con_value_to_set = false;
+            if (!$is_can_con) {
+                $this->is_can_con = false;
+            } else {
+                $this->is_can_con = true;
             }
-
-            $this->is_can_con = $can_con_value_to_set;
         }
 
         public function setIsNewRelease($is_new_release) {
-            $this->is_new_release = $is_new_release;
+            if (!$is_new_release) {
+                $this->is_new_release = false;
+            } else {
+                $this->is_new_release = true;
+            }
         }
 
         public function setIsFrenchVocalMusic($is_french_vocal_music) {
-            $this->is_french_vocal_music = $is_french_vocal_music;
+            if (!$is_french_vocal_music) {
+                $this->is_french_vocal_music = false;
+            } else {
+                $this->is_french_vocal_music = true;
+            }
         }
 
         public function setAdNumber($ad_number) {
@@ -101,7 +108,23 @@
         }
 
         public function getObjectAsArray() {
-            return $this->jsonSerialize();
+            $startDateTime = $this->getStartTime();
+            $startTimeString = $startDateTime->format('H:i');
+
+            return [
+                'id' => $this->getId(),
+                'start_time' => $startTimeString,
+                'name' => $this->getName(),
+                'album' => $this->getAlbum(),
+                'author' => $this->getAuthor(),
+                'duration' => $this->getDuration(),
+                'category' => $this->getCategory(),
+                'can_con' => $this->isCanCon() ? "Yes" : "No",
+                'new_release' => $this->isNewRelease() ? "Yes" : "No",
+                'french_vocal_music' => $this->isFrenchVocalMusic() ? "Yes" : "No",
+                'ad_number' => $this->getAdNumber(),
+                'playlist_id' => $this->getPlaylistId()
+            ];
         }
 
         

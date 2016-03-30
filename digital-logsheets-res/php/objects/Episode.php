@@ -19,7 +19,7 @@
         private $episode_start_time;
         private $episode_end_time;
 
-        private $is_prerecord = false;
+        private $is_prerecord;
         private $prerecord_date;
 
         public function __construct($db, $component_id) {
@@ -51,10 +51,12 @@
         }
 
         public function setIsPrerecord($is_prerecord) {
-            $this->is_prerecord = $is_prerecord;
 
             if (!$is_prerecord) {
                 $this->prerecord_date = null;
+                $this->is_prerecord = false;
+            } else {
+                $this->is_prerecord = true;
             }
         }
 
@@ -74,12 +76,12 @@
             $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
 
             return [
-                'program' => $this->getProgram()->getName(),
+                'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
                 'playlist' => $this->getPlaylistId(),
                 'start_date' => $startDateString,
                 'start_time' => $startTimeString,
                 'end_time' => $endTimeString,
-                'prerecorded' => $this->isPrerecord(),
+                'prerecorded' => $this->isPrerecord() ? "Yes" : "No",
                 'prerecord_date' => $prerecordDateString
             ];
         }

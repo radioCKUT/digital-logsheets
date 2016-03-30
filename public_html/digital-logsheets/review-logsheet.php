@@ -1,23 +1,31 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Evan
+ * Date: 2016-03-24
+ * Time: 7:40 PM
+ */
+
 require_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
-require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
-require_once("../../digital-logsheets-res/php/database/manageEpisodeEntries.php");
 require_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
+require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
+require_once("../../digital-logsheets-res/php/objects/logsheet-classes.php");
 
-$episode_id = $_POST['episode_id'];
+// create object
+$smarty = new Smarty;
 
 session_start();
 
+
+//database interactions
 try {
-    error_log("just entered finalize-segments try statement");
+    //connect to database
     $db = connectToDatabase();
-    error_log("passed connectToDatabase()");
 
     $episode_id = $_SESSION['episode_id'];
 
     $episode = new Episode($db, $episode_id);
-    error_log("new Episode created");
     $segments = $episode->getSegments();
     $episode_end_time = $episode->getEndTime();
 
@@ -28,10 +36,6 @@ try {
         manageSegmentEntries::editExistingSegmentDuration($db, $segment);
     }
 
-    manageEpisodeEntries::turnOffEpisodeDraftStatus($db, $episode);
-
-
-
     $episode_as_array = $episode->getObjectAsArray();
 
     $segmentsForThisEpisode = manageSegmentEntries::getAllSegmentsForEpisodeId($db, $episode_id);
@@ -39,21 +43,19 @@ try {
     for($i = 0; $i < count($segmentsForThisEpisode); $i++) {
         $currentSegment = $segmentsForThisEpisode[$i];
         $segmentsForThisEpisode[$i] = $currentSegment->getObjectAsArray();
-        $segmentsForThisEpisode[$i]["duration"] = $segmentsForThisEpisode[$i]["duration"]/60;
     }
 
     //close database connection
     $db = NULL;
 
-    $smarty = new Smarty();
     $smarty->assign("episode", $episode_as_array);
     $smarty->assign("segments", $segmentsForThisEpisode);
 
-    // display it
-    echo $smarty->fetch('../../digital-logsheets-res/templates/finalize-logsheet.tpl');
 
-} catch (PDOException $e) {
-    echo $e->getMessage();
+    // display it
+    echo $smarty->fetch('../../digital-logsheets-res/templates/review-logsheet.tpl');
+} catch(PDOException $e) {
+    echo 'ERROR: ' . $e->getMessage();
 }
 
 function computeSegmentDurations($segments, $episodeEndTime) {
