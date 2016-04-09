@@ -76,7 +76,7 @@
             $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
 
             return [
-                'id' => $this->getId(),
+                'episode_id' => $this->getId(),
                 'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
                 'playlist' => $this->getPlaylistId(),
                 'start_date' => $startDateString,

@@ -41,6 +41,8 @@
         </script>
     </head>
     <body onload="init()">
+
+    <div class="container-fluid">
         <a href="new-logsheet.php">New logsheet</a>
 
         </br>
@@ -48,9 +50,10 @@
 
         <div class="logsheets">
             {foreach $episodes as $episode}
-                <a href="view-episode-logsheet.php?episode_id=252">{$episode.program} - {$episode.start_date}</a> </br>
+                <a href="view-episode-logsheet.php?episode_id={$episode.episode_id}">{$episode.program} - {$episode.start_date}</a> </br>
             {/foreach}
         </div>
+    </div>
 
 
     </body>
