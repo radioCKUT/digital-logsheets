@@ -3,6 +3,9 @@
     class Archive {
 
         private $db;
+        /**
+         * @var Episode[]
+         */
         private $episodes = array();
 
         public function __construct($db) {

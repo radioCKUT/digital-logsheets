@@ -3,6 +3,7 @@
     include('../../digital-logsheets-res/smarty/libs/Smarty.class.php');
     include("../../digital-logsheets-res/php/database/connectToDatabase.php");
     require_once("../../digital-logsheets-res/php/objects/logsheet-classes.php");
+    require_once("../../digital-logsheets-res/php/select2-preparation.php");
     
     // create object
     $smarty = new Smarty;
@@ -18,32 +19,25 @@
     
         foreach($episodes_archive as $episode) {
             $playlist = array();
-            $segments = $episode->getPlaylist();
+            $segments = $episode->getPlaylist()->getSegments();
             
             //create the playlist for each episode
             foreach($segments as $segment) {
-                $playlist[$segment->getId()] = array(
-                    "name"=>$segment->getName(),
-                    "album"=>$segment->getAlbum(),
-                    "author"=>$segment->getAuthor()
-                );
+                $playlist[$segment->getId()] = $segment->getObjectAsArray();
             }
             
             //create an array to store each episode's data
-            $episodes[$episode->getId()] = array(
-                "program_name"=>$episode->getProgramName(),
-                "start_date"=>$episode->getStartDate(),
-                "start_time"=>$episode->getStartTime(),
-                "end_time"=>$episode->getEndTime(),
-                "playlist"=> $playlist
-            );
+            $episodes[$episode->getId()] = $episode->getObjectAsArray();
         }
+
+        $programs = getSelect2ProgramsList($db);
         
         //close database connection
         $db = NULL;
         
         $smarty->assign("episodes", $episodes);
-    
+        $smarty->assign("programs", $programs);
+
         // display it
         echo $smarty->fetch('../../digital-logsheets-res/templates/index.tpl');
     } catch(PDOException $e) {

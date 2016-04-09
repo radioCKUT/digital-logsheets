@@ -33,13 +33,9 @@
 <body>
 
 <div class="container-fluid">
-    <h1>Review Submission</h1>
+    <h1>View Episode</h1>
 
     {include '../../digital-logsheets-res/templates/logsheet-template.tpl'}
-
-    <form action="save-submission.php">
-        <input type="submit"/>
-    </form>
 
 </div>
 

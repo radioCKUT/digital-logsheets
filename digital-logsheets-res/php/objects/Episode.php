@@ -76,13 +76,15 @@
             $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
 
             return [
+                'id' => $this->getId(),
                 'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
                 'playlist' => $this->getPlaylistId(),
                 'start_date' => $startDateString,
                 'start_time' => $startTimeString,
                 'end_time' => $endTimeString,
                 'prerecorded' => $this->isPrerecord() ? "Yes" : "No",
-                'prerecord_date' => $prerecordDateString
+                'prerecord_date' => $prerecordDateString,
+                'segments' => $this->getSegments()
             ];
         }
 
