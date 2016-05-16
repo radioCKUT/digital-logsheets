@@ -28,7 +28,7 @@
     <script src="js/date.js"></script>
     <script src="js/segment-validation.js"></script>
     <script src="js/manage-segments.js"></script>
-    <script src="js/category_button.js"></script>
+    <script src="js/category-button.js"></script>
     <script src="js/sisyphus.min.js"></script>
     <script type="text/javascript">
         function startStoringFormEntries() {

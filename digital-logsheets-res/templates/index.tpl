@@ -22,7 +22,7 @@
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
-
+    <script src="js/filter-logsheet-list.js"
     <script type="text/javascript">
         var episodes = {$episodes|json_encode};
 
@@ -35,68 +35,19 @@
             });
 
             $programSelect.on("select2:select", function (e) {
-                var selectedProgramName = e.params.data.text;
-                console.log(selectedProgramName);
-
+                updateFilteredLogsheetList();
             } );
         }
 
-        function isDateEntryBlank(dateEntry) {
-            return dateEntry == null || dateEntry == '';
-        }
-
-        function checkWhetherEpisodeFallsWithinDateRange(startDate, endDate) {
-            if (isDateEntryBlank(startDate) && isDateEntryBlank(endDate)) { //TODO: check if this covers blank date submissions
-                return true;
-
-            } else if (isDateEntryBlank(startDate)) {
-                return episode.start_date < endDate;
-
-            } else if (isDateEntryBlank(endDate)) {
-                return episode.end_date > startDate;
-
-            } else if (startDate < endDate) {
-                return episode.start_date < endDate || episode.end_date > startDate;
-            }
-        }
-
-        function appendEpisodeLink(existingLogsheetsContainer, episode) {
-            existingLogsheetsContainer.append("<a href=\"view-episode-logsheet.php?episode_id=" + episode.episode_id + "\">" + episode.program + " - " + episode.start_date + "</a> <br />");
-        }
-
-        function filterDate(programNameFilterList, startDateFilter, endDateFilter) {
-            var episodes = {$episodes|json_encode};
-
-            var existingLogsheetsContainer = $(".logsheets");
-            existingLogsheetsContainer.empty();
-
-            episodes.each(function (index, episode) {
-                if (programNameFilterList == null && startDateFilter == null && endDateFilter == null) {
-                    appendEpisodeLink(existingLogsheetsContainer, episode);
-                }
-
-                var doesEpisodeMatchProgramName = false;
-                var episodeProgramName = episode.program;
-
-                programNameFilterList.each(function(index, element) {
-                    if (episodeProgramName == element) {
-                        doesEpisodeMatchProgramName = true;
-                        return false;
-                    }
-                    return true;
-                });
-
-                if (!doesEpisodeMatchProgramName) {
-                    return true;
-                }
-
-                var doesEpisodeFallWithinDateRange = checkWhetherEpisodeFallsWithinDateRange(startDateFilter, endDateFilter);
-
-                if (doesEpisodeFallWithinDateRange) {
-                    appendEpisodeLink(existingLogsheetsContainer, episode);
-                }
+        function updateFilteredLogsheetList() {
+            var programNameFilterList = $(".leaderMultiSelctdropdown").select2('data').map(function (index, element) {
+                return element.text;
             });
 
+            var startDateFilter = $( "#startDateFilter" ).val();
+            var endDateFilter = $( "#endDateFilter" ).val();
+
+            filterLogsheetList(episodes, programNameFilterList, startDateFilter, endDateFilter);
         }
 
     </script>
@@ -111,18 +62,18 @@
 
     <div class="row">
         <div class="col-sm-4">
-            <label for="filterProgram" class="control-label">Program:</label>
-            <select class="form-control program" name="filterProgram" id="filterProgram" multiple="multiple"></select>
+            <label for="programNameFilterList" class="control-label">Program:</label>
+            <select class="form-control program" name="filterProgram" id="programNameFilterList" multiple="multiple"></select>
         </div>
 
         <div class="col-sm-4">
-            <label for="filterStartDate" class="control-label">Start:</label>
-            <input type="datetime" id="filterStartDate">
+            <label for="startDateFilter" class="control-label">Start:</label>
+            <input type="datetime" id="startDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
 
         <div class="col-sm-4">
-            <label for="filterEndDate" class="control-label">End:</label>
-            <input type="datetime" id="filterEndDate">
+            <label for="endDateFilter" class="control-label">End:</label>
+            <input type="datetime" id="endDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
 
 
