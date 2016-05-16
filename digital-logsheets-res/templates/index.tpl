@@ -22,10 +22,6 @@
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
-    <!-- Moment.js (for date picker) -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-    <script type="text/javascript" src="../../digital-logsheets-res/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <link rel="stylesheet" href="../../digital-logsheets-res/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 
     <script type="text/javascript">
         var episodes = {$episodes|json_encode};
@@ -44,6 +40,65 @@
 
             } );
         }
+
+        function isDateEntryBlank(dateEntry) {
+            return dateEntry == null || dateEntry == '';
+        }
+
+        function checkWhetherEpisodeFallsWithinDateRange(startDate, endDate) {
+            if (isDateEntryBlank(startDate) && isDateEntryBlank(endDate)) { //TODO: check if this covers blank date submissions
+                return true;
+
+            } else if (isDateEntryBlank(startDate)) {
+                return episode.start_date < endDate;
+
+            } else if (isDateEntryBlank(endDate)) {
+                return episode.end_date > startDate;
+
+            } else if (startDate < endDate) {
+                return episode.start_date < endDate || episode.end_date > startDate;
+            }
+        }
+
+        function appendEpisodeLink(existingLogsheetsContainer, episode) {
+            existingLogsheetsContainer.append("<a href=\"view-episode-logsheet.php?episode_id=" + episode.episode_id + "\">" + episode.program + " - " + episode.start_date + "</a> <br />");
+        }
+
+        function filterDate(programNameFilterList, startDateFilter, endDateFilter) {
+            var episodes = {$episodes|json_encode};
+
+            var existingLogsheetsContainer = $(".logsheets");
+            existingLogsheetsContainer.empty();
+
+            episodes.each(function (index, episode) {
+                if (programNameFilterList == null && startDateFilter == null && endDateFilter == null) {
+                    appendEpisodeLink(existingLogsheetsContainer, episode);
+                }
+
+                var doesEpisodeMatchProgramName = false;
+                var episodeProgramName = episode.program;
+
+                programNameFilterList.each(function(index, element) {
+                    if (episodeProgramName == element) {
+                        doesEpisodeMatchProgramName = true;
+                        return false;
+                    }
+                    return true;
+                });
+
+                if (!doesEpisodeMatchProgramName) {
+                    return true;
+                }
+
+                var doesEpisodeFallWithinDateRange = checkWhetherEpisodeFallsWithinDateRange(startDateFilter, endDateFilter);
+
+                if (doesEpisodeFallWithinDateRange) {
+                    appendEpisodeLink(existingLogsheetsContainer, episode);
+                }
+            });
+
+        }
+
     </script>
 </head>
 <body onload="init()">
@@ -56,49 +111,27 @@
 
     <div class="row">
         <div class="col-sm-4">
-            <label for="program" class="control-label">Program:</label>
-            <select class="form-control program" name="program" id="program"></select>
+            <label for="filterProgram" class="control-label">Program:</label>
+            <select class="form-control program" name="filterProgram" id="filterProgram" multiple="multiple"></select>
         </div>
 
-        <div class='col-sm-4'>
-            <div class="form-group">
-                <label for="datetimepicker1" class="control-label">Start:</label>
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
+        <div class="col-sm-4">
+            <label for="filterStartDate" class="control-label">Start:</label>
+            <input type="datetime" id="filterStartDate">
         </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
-        </script>
 
-        <div class='col-sm-4'>
-            <div class="form-group">
-                <label for="datetimepicker2" class="control-label">End:</label>
-                <div class='input-group date' id='datetimepicker2'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
+        <div class="col-sm-4">
+            <label for="filterEndDate" class="control-label">End:</label>
+            <input type="datetime" id="filterEndDate">
         </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker2').datetimepicker();
-            });
-        </script>
+
+
 
     </div>
 
     <div class="logsheets">
         {foreach $episodes as $episode}
-            <a href="view-episode-logsheet.php?episode_id={$episode.episode_id}">{$episode.program} - {$episode.start_date}</a> </br>
+            <a href="view-episode-logsheet.php?episode_id={$episode.episode_id}">{$episode.program} - {$episode.start_date}</a> <br />
         {/foreach}
     </div>
 </div>
