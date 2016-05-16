@@ -22,27 +22,34 @@ function appendEpisodeLink(existingLogsheetsContainer, episode) {
 }
 
 function filterLogsheetList(episodes, programNameFilterList, startDateFilter, endDateFilter) {
+    console.log(programNameFilterList + ", " + startDateFilter + ", " + endDateFilter);
     var existingLogsheetsContainer = $(".logsheets");
     existingLogsheetsContainer.empty();
 
-    episodes.each(function (index, episode) {
-        if (programNameFilterList == null && startDateFilter == null && endDateFilter == null) {
+    var episodesKeyList = Object.keys(episodes);
+    var numberOfEpisodes = episodesKeyList.length;
+
+    for (var i = 0; i < numberOfEpisodes; i++) {
+        var episode = episodes[episodesKeyList[i]];
+
+
+
+        if ((programNameFilterList == null || programNameFilterList.length == 0) && startDateFilter == '' && endDateFilter == '') {
             appendEpisodeLink(existingLogsheetsContainer, episode);
         }
 
         var doesEpisodeMatchProgramName = false;
         var episodeProgramName = episode.program;
 
-        programNameFilterList.each(function(index, element) {
-            if (episodeProgramName == element) {
+        for (var j = 0; j < programNameFilterList.length; j++) {
+            if (episodeProgramName == programNameFilterList[j]) {
                 doesEpisodeMatchProgramName = true;
-                return false;
+                break;
             }
-            return true;
-        });
+        }
 
         if (!doesEpisodeMatchProgramName) {
-            return true;
+            continue;
         }
 
         var doesEpisodeFallWithinDateRange = checkWhetherEpisodeFallsWithinDateRange(startDateFilter, endDateFilter);
@@ -50,5 +57,7 @@ function filterLogsheetList(episodes, programNameFilterList, startDateFilter, en
         if (doesEpisodeFallWithinDateRange) {
             appendEpisodeLink(existingLogsheetsContainer, episode);
         }
-    });
+    }
+
+
 }

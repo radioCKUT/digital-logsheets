@@ -22,9 +22,9 @@
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
-    <script src="js/filter-logsheet-list.js"
+    <script src="js/filter-logsheet-list.js"></script>
     <script type="text/javascript">
-        var episodes = {$episodes|json_encode};
+
 
         function init() {
             var data = {$programs};
@@ -34,18 +34,21 @@
                 data: data
             });
 
-            $programSelect.on("select2:select", function (e) {
+            $programSelect.on("change", function (e) {
                 updateFilteredLogsheetList();
             } );
         }
 
         function updateFilteredLogsheetList() {
-            var programNameFilterList = $(".leaderMultiSelctdropdown").select2('data').map(function (index, element) {
-                return element.text;
+            var programNameFilterList = $(".program").select2('data').map(function (index, element) {
+                console.log(index.text);
+                return index.text;
             });
 
             var startDateFilter = $( "#startDateFilter" ).val();
             var endDateFilter = $( "#endDateFilter" ).val();
+
+            var episodes = {$episodes|json_encode};
 
             filterLogsheetList(episodes, programNameFilterList, startDateFilter, endDateFilter);
         }
@@ -62,8 +65,8 @@
 
     <div class="row">
         <div class="col-sm-4">
-            <label for="programNameFilterList" class="control-label">Program:</label>
-            <select class="form-control program" name="filterProgram" id="programNameFilterList" multiple="multiple"></select>
+            <label for="program" class="control-label">Program:</label>
+            <select class="form-control program" name="program" id="program" multiple="multiple"></select>
         </div>
 
         <div class="col-sm-4">
