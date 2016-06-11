@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>
-        Page Title
+        Logsheets Retrieval
     </title>
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -71,12 +71,12 @@
 
         <div class="col-sm-4">
             <label for="startDateFilter" class="control-label">Start:</label>
-            <input type="datetime" id="startDateFilter" onchange="updateFilteredLogsheetList()">
+            <input type="datetime-local" id="startDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
 
         <div class="col-sm-4">
             <label for="endDateFilter" class="control-label">End:</label>
-            <input type="datetime" id="endDateFilter" onchange="updateFilteredLogsheetList()">
+            <input type="datetime-local" id="endDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
 
 
