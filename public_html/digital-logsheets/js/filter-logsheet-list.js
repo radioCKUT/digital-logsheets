@@ -4,30 +4,25 @@ function isDateEntryBlank(dateEntry) {
 
 function checkWhetherEpisodeFallsWithinDateRange(startDateString, endDateString, episode) {
 
-    var startDate = new Date(startDateString);
-    var endDate = new Date(endDateString);
+    var filterStartDate = new Date(startDateString);
+    var filterEndDate = new Date(endDateString);
 
-    console.log("start date object: " + startDate);
-    console.log("end date object: " + isNaN(new Date(endDateString).getTime()));
+    var episodeStartDatetime = new Date(episode.start_datetime);
+    var episodeEndDatetime = new Date(episode.end_datetime);
 
-    if (isDateEntryBlank(startDate) && isDateEntryBlank(endDate)) { //TODO: check if this covers blank date
-        console.log("Both dates blank");
+    if (isDateEntryBlank(filterStartDate) && isDateEntryBlank(filterEndDate)) { //TODO: check if this covers blank date
         return true;
 
-    } else if (isDateEntryBlank(startDate)) {
-        console.log("start date blank");
-        return episode.start_date < endDate;
+    } else if (isDateEntryBlank(filterStartDate)) {
+        return episodeStartDatetime < filterEndDate;
 
-    } else if (isDateEntryBlank(endDate)) {
-        console.log("end date blank");
-        console.log("episode end date: " + episode.end_date);
-        return episode.end_date > startDate;
+    } else if (isDateEntryBlank(filterEndDate)) {
+        return episodeEndDatetime > filterStartDate;
 
-    } else if (startDate < endDate) {
-        console.log("Neither date blank - start date before end date");
-        return episode.start_date < endDate || episode.end_date > startDate;
+    } else if (filterStartDate < filterEndDate) {
+        return episodeStartDatetime < filterEndDate && episodeEndDatetime > filterStartDate;
     } else {
-        console.error("Unexpected date option. isDateEntryBlank(endDate): " + isDateEntryBlank(endDate) + " isDateIsBlank(startDate): " + isDateEntryBlank(startDate) + " endDate: " + endDate);
+        return false;
     }
 }
 

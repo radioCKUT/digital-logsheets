@@ -68,9 +68,11 @@
             $startDate = $this->getStartTime();
             $startDateString = $this->prepareDateForSerialize($startDate);
             $startTimeString = $this->prepareTimeForSerialize($startDate);
+            $startDatetimeString = $this->prepareDateTimeForSerialize($startDate);
 
             $endDate = $this->getEndTime();
             $endTimeString = $this->prepareTimeForSerialize($endDate);
+            $endDatetimeString = $this->prepareDateTimeForSerialize($endDate);
 
             $prerecordDate = $this->getPrerecordDate();
             $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
@@ -82,6 +84,8 @@
                 'start_date' => $startDateString,
                 'start_time' => $startTimeString,
                 'end_time' => $endTimeString,
+                'start_datetime' => $startDatetimeString,
+                'end_datetime' => $endDatetimeString,
                 'prerecorded' => $this->isPrerecord() ? "Yes" : "No",
                 'prerecord_date' => $prerecordDateString,
                 'segments' => $this->getSegments()
@@ -103,6 +107,14 @@
         private function prepareTimeForSerialize($date) {
             if ($date != null) {
                 return $date->format('H:i');
+            } else {
+                return "";
+            }
+        }
+
+        private function prepareDateTimeForSerialize($date) {
+            if ($date != null) {
+                return $date->format('D, M j, Y H:i');
             } else {
                 return "";
             }
