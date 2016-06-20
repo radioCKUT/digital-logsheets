@@ -23,8 +23,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
     <script src="js/filter-logsheet-list.js"></script>
-    <script type="text/javascript">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
+
+    <script type="text/javascript">
 
         function init() {
             var data = {$programs};
@@ -71,12 +75,12 @@
 
         <div class="col-sm-4">
             <label for="startDateFilter" class="control-label">Start:</label>
-            <input type="datetime-local" id="startDateFilter" onchange="updateFilteredLogsheetList()">
+            <input type="date" id="startDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
 
         <div class="col-sm-4">
             <label for="endDateFilter" class="control-label">End:</label>
-            <input type="datetime-local" id="endDateFilter" onchange="updateFilteredLogsheetList()">
+            <input type="date" id="endDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
 
 
