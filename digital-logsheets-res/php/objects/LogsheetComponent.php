@@ -8,9 +8,10 @@
             $this->setId($component_id);
         }
         
-        //TODO put error checking here to make sure id is an integer
         public function setId($component_id) {
-            $this->id = $component_id;
+            if (is_int($component_id)) {
+                $this->id = $component_id;
+            }
         }
         
         public function getId() {
