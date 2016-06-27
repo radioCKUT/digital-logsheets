@@ -117,8 +117,6 @@ function prepareFormForEdit(eventObject) {
     $('#french_vocal_music_edit').prop("checked", segment_object.french_vocal_music);
 
     $('#segment_id_edit').attr("value", segment_object.id);
-
-    //TODO: change submit value to editEpisodeSegment
 }
 
 function sendRequestToSaveSegment(dataToSend) {
@@ -190,7 +188,7 @@ function successCallback(data) {
         addedSegments.append($('</tbody>'));
 
     } else {
-        console.log("error in data " + data.error);
+        console.error("error in data " + data.error);
         //TODO error handling
     }
 }
@@ -221,7 +219,7 @@ function deleteSuccessCallback(data) {
     if (!data.hasOwnProperty("error")) {
         getEpisodeSegments();
     } else {
-        console.log("error in data " + data.error);
+        console.error("error in data " + data.error);
         //TODO error handling
     }
 }

@@ -10,7 +10,7 @@ function checkWhetherEpisodeFallsWithinDateRange(startDateString, endDateString,
     var episodeStartDatetime = new Date(episode.start_datetime);
     var episodeEndDatetime = new Date(episode.end_datetime);
 
-    if (isDateEntryBlank(filterStartDate) && isDateEntryBlank(filterEndDate)) { //TODO: check if this covers blank date
+    if (isDateEntryBlank(filterStartDate) && isDateEntryBlank(filterEndDate)) {
         return true;
 
     } else if (isDateEntryBlank(filterStartDate)) {
