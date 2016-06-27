@@ -15,7 +15,7 @@ $prerecord_date = $_POST['prerecord_date'];
 
 $episode_start_time = $_POST['start_datetime'];
 $episode_duration = $_POST['episode_duration'];
-$comment = $_POST['comment']; //TODO: table with comment column
+$comment = $_POST['comment'];
 
 session_start();
 
@@ -41,6 +41,7 @@ try {
     $episode_object->setEndTime($episode_end_time);
     $episode_object->setIsPrerecord($prerecord);
     $episode_object->setPrerecordDate($prerecord_date);
+    $episode_object->setComment($comment);
 
     $episode_id = manageEpisodeEntries::saveNewEpisode($db, $episode_object);
 

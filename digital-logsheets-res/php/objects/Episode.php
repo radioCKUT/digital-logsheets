@@ -22,6 +22,10 @@
         private $is_prerecord;
         private $prerecord_date;
 
+        private $comment;
+
+
+
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 
@@ -62,6 +66,14 @@
 
         public function setPrerecordDate($prerecord_date) {
             $this->prerecord_date = $prerecord_date;
+        }
+
+        /**
+         * @param mixed $comment
+         */
+        public function setComment($comment)
+        {
+            $this->comment = $comment;
         }
 
         public function jsonSerialize() {
@@ -179,5 +191,13 @@
 
         public function getPrerecordDate() {
             return $this->prerecord_date;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getComment()
+        {
+            return $this->comment;
         }
     }
