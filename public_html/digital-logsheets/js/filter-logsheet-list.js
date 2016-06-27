@@ -40,7 +40,6 @@ function filterLogsheetList(episodes, programNameFilterList, startDateFilter, en
 
     for (var i = 0; i < numberOfEpisodes; i++) {
         var episode = episodes[episodesKeyList[i]];
-        //console.log("episode to consider: " + JSON.stringify(episode));
 
         if ((programNameFilterList == null || programNameFilterList.length == 0) && startDateFilter == '' && endDateFilter == '') {
             appendEpisodeLink(existingLogsheetsContainer, episode);
