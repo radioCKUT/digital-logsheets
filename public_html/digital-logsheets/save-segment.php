@@ -85,9 +85,7 @@ try {
             $segment->setAdNumber(null);
             break;
     }
-
-    error_log("edit segment status: " . $edit_segment);
-
+    
     if ($edit_segment) {
         error_log("segment id: " . $segment->getId());
         $segment->setId($segment_id);
@@ -136,9 +134,7 @@ function addDateToSegmentStartTime($episodeStartDateTime, $segment_time) {
         $dayAfterEpisodeStartDateTime->add(new DateInterval('P1D'));
         $dateToUse = $dayAfterEpisodeStartDateTime->format("Y-m-d");
     }
-
-    error_log("segmentTimeString: " . $dateToUse . " " . $segment_time);
-
+    
     $segmentTimeString = $dateToUse . " " . $segment_time;
     $segmentDateTime = new DateTime($segmentTimeString, new DateTimeZone('America/Montreal'));
 

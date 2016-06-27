@@ -4,8 +4,6 @@ include_once("../../digital-logsheets-res/php/database/manageEpisodeEntries.php"
 include_once("../../digital-logsheets-res/php/database/managePlaylistEntries.php");
 include_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
 
-error_reporting(E_ALL ^ E_NOTICE);
-
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
 $programId = $_POST['program'];
@@ -50,6 +48,7 @@ try {
     header('Location: add-segments.php');
 
 } catch(PDOException $e) {
-    echo 'ERROR: ' . $e->getMessage();
+    error_log('Error while saving an episode: ' . $e->getMessage());
+    //TODO: error handling
 }
 

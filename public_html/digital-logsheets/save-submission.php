@@ -17,8 +17,7 @@ try {
     manageEpisodeEntries::turnOffEpisodeDraftStatus($db, $episode);
 
     unset($_SESSION['episode_id']);
-
-    // display it
+    
     echo "Episode saved!";
 
 } catch (PDOException $e) {
