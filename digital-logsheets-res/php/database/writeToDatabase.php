@@ -16,9 +16,8 @@
 
             } catch (Exception $error) {
                 error_log("Write to database failed: " . $error);
+                return null;
             }
-
-            return null; //TODO think more about what to return here
         }
 
         public static function editDatabaseEntry($db_conn, $id_to_edit, $table_name, $column_names, $values_to_write) {
@@ -41,9 +40,8 @@
 
             } catch (Exception $error) {
                 error_log("Edit database entry failed: " . $error);
+                return null;
             }
-
-            return null; //TODO think more about what to return here
         }
 
         /**
@@ -58,9 +56,6 @@
                 error_log("delete query: " . $query);
 
                 $db_conn->exec($query);
-
-                error_log("delete query successful:");
-
 
             } catch (Exception $error) {
                 error_log("delete query unsuccessful: " . $error);
