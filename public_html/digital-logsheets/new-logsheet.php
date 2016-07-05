@@ -22,10 +22,7 @@
         //close database connection
         $db = NULL;
         
-        //assign categories to smarty variable
         $smarty->assign("programs", $programs);
-        
-        //assign categories to smarty variable
         $smarty->assign("categories", $categories);
         
         // display it
