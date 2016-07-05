@@ -1,5 +1,5 @@
 <?php
-include_once("../database/manageProgramEntries.php");
+include_once("database/manageProgramEntries.php");
 
 function getSelect2ProgramsList($db) {
     $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
