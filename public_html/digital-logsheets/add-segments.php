@@ -19,17 +19,16 @@
         $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
         $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
 
+        $episode_id = $_SESSION['episode_id'];
+        $episode = new Episode($db, $episode_id);
+        $episode_array = $episode->getObjectAsArray();
+
         //close database connection
         $db = NULL;
 
-        //assign categories to smarty variable
         $smarty->assign("programs", $programs);
-
-        //assign categories to smarty variable
         $smarty->assign("categories", $categories);
-
-        $episode_id = $_SESSION['episode_id'];
-        $smarty->assign("episode_id", $episode_id);
+        $smarty->assign("episode", $episode_array);
 
         // display it
         echo $smarty->fetch('../../digital-logsheets-res/templates/add-segments.tpl');

@@ -43,13 +43,13 @@
     <div class="col-md-8">
         <h3>Add Segments</h3>
         <form id="logsheet" role="form" method="post">
-            <h5>Episode ID: {$episode_id}</h5>
+            <h5>Episode ID: {$episode.episode_id|json_encode}</h5>
 
             <div id="segments">
                 <div class="form-group row">
                     <div class="col-md-3">
                         <label for="segment_time" class="control-label">Time:</label>
-                        <input name="segment_time" class="form-control segment-time" type="time" required>
+                        <input name="segment_time" id="segment_time" class="form-control segment-time" type="time" onchange='console.log(isSegmentTimeWithinEpisode({$episode.start_datetime|json_encode}, {$episode.end_datetime|json_encode}))' required>
                     </div>
                 </div>
                 <div class="form-group">

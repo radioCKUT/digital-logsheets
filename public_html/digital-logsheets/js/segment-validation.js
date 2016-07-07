@@ -18,14 +18,32 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
     nameInput.prop('required', false);
 }
 
-function makeRequired(group, label, input) {
-
+function getTimeInMinutes(datetimeObject) {
+    return (datetimeObject.getHours() * 60) + datetimeObject.getMinutes();
 }
 
-function makeOptional(group, label, input) {
+function isSegmentTimeWithinEpisode(episodeStartDatetime, episodeEndDatetime) {
+    var segmentStartTime = $('#segment_time').val();
 
+    var segmentStartTimeObject = new Date("January 1 " + segmentStartTime);
+    var segmentStartTimeInMinutes = getTimeInMinutes(segmentStartTimeObject);
+
+    var episodeStartDatetimeObject = new Date(episodeStartDatetime);
+    var episodeStartTimeInMinutes = getTimeInMinutes(episodeStartDatetimeObject);
+
+    var episodeEndDatetimeObject = new Date(episodeEndDatetime);
+    var episodeEndTimeInMinutes = getTimeInMinutes(episodeEndDatetimeObject);
+
+    var episodeStartDay = episodeStartDatetimeObject.getDay();
+    var episodeEndDay = episodeEndDatetimeObject.getDay();
+
+    if (episodeStartDay === episodeEndDay) {
+        return (segmentStartTimeInMinutes >= episodeStartTimeInMinutes) && (segmentStartTimeInMinutes <= episodeEndTimeInMinutes);
+
+    } else {
+        const MINUTES_IN_DAY = 24 * 60;
+        return (segmentStartTimeInMinutes + MINUTES_IN_DAY >= episodeStartTimeInMinutes && segmentStartTimeInMinutes <= episodeEndTimeInMinutes)
+            || (segmentStartTimeInMinutes >= episodeStartTimeInMinutes && segmentStartTimeInMinutes <= episodeEndTimeInMinutes + MINUTES_IN_DAY)
+    }
 }
 
-function makeNotApplicable(group, label, input) {
-
-}
