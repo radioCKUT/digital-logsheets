@@ -16,7 +16,7 @@ function setupAllFields() {
 
     var adNumberInput = $('.ad_number_input');
     var nameInput = $('.name_input');
-    console.log("name input: " + nameInput);
+
     setupAllCatHTMLValidation(adNumberInput, nameInput);
 }
 

@@ -12,26 +12,33 @@
     <link href="http://getbootstrap.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <!-- Boostrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="js/parsley.js"></script>
 
 
-    <script src="js/date.js"></script>
-    <script src="js/segment-validation.js"></script>
-    <script src="js/manage-segments.js"></script>
-    <script src="js/category-button.js"></script>
-    <script src="js/sisyphus.min.js"></script>
+    <script type="text/javascript" src="js/date.js"></script>
+    <script type="text/javascript" src="js/segment-validation.js"></script>
+    <script type="text/javascript" src="js/manage-segments.js"></script>
+    <script type="text/javascript" src="js/category-button.js"></script>
+    <script type="text/javascript" src="js/sisyphus.min.js"></script>
     <script type="text/javascript">
+
         function startStoringFormEntries() {
+            window.Parsley
+                    .addValidator('is', {
+                        requirementType: ['string', 'string'],
+                        validateString: function (value, arg1, arg2) {
+                            return isSegmentTimeWithinEpisode(value, arg1, arg2);
+                        }
+                    });
+
+            $('#logsheet').parsley();
+
             getEpisodeSegments();
             $('#logsheet_edit').hide();
             $('form').sisyphus();
@@ -49,7 +56,9 @@
                 <div class="form-group row">
                     <div class="col-md-3">
                         <label for="segment_time" class="control-label">Time:</label>
-                        <input name="segment_time" id="segment_time" class="form-control segment-time" type="time" onchange='console.log(isSegmentTimeWithinEpisode({$episode.start_datetime|json_encode}, {$episode.end_datetime|json_encode}))' required>
+                        <input name="segment_time" id="segment_time" class="form-control segment-time" type="time"
+                               data-parsley-is='[{$episode.start_datetime|json_encode}, {$episode.end_datetime|json_encode}]'
+                               required>
                     </div>
                 </div>
                 <div class="form-group">

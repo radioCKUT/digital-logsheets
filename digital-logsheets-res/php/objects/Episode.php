@@ -23,9 +23,7 @@
         private $prerecord_date;
 
         private $comment;
-
-
-
+        
         public function __construct($db, $component_id) {
             parent::__construct($db, $component_id);
 

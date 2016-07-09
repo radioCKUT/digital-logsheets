@@ -18,13 +18,11 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
     nameInput.prop('required', false);
 }
 
-function getTimeInMinutes(datetimeObject) {
-    return (datetimeObject.getHours() * 60) + datetimeObject.getMinutes();
-}
 
-function isSegmentTimeWithinEpisode(episodeStartDatetime, episodeEndDatetime) {
-    var segmentStartTime = $('#segment_time').val();
 
+
+function isSegmentTimeWithinEpisode(segmentStartTime, episodeStartDatetime, episodeEndDatetime) {
+    console.log("in isSegmentTimeWithinEpisode");
     var segmentStartTimeObject = new Date("January 1 " + segmentStartTime);
     var segmentStartTimeInMinutes = getTimeInMinutes(segmentStartTimeObject);
 
@@ -38,12 +36,20 @@ function isSegmentTimeWithinEpisode(episodeStartDatetime, episodeEndDatetime) {
     var episodeEndDay = episodeEndDatetimeObject.getDay();
 
     if (episodeStartDay === episodeEndDay) {
-        return (segmentStartTimeInMinutes >= episodeStartTimeInMinutes) && (segmentStartTimeInMinutes <= episodeEndTimeInMinutes);
+        return (segmentStartTimeInMinutes >= episodeStartTimeInMinutes)
+            && (segmentStartTimeInMinutes <= episodeEndTimeInMinutes);
 
     } else {
         const MINUTES_IN_DAY = 24 * 60;
-        return (segmentStartTimeInMinutes + MINUTES_IN_DAY >= episodeStartTimeInMinutes && segmentStartTimeInMinutes <= episodeEndTimeInMinutes)
-            || (segmentStartTimeInMinutes >= episodeStartTimeInMinutes && segmentStartTimeInMinutes <= episodeEndTimeInMinutes + MINUTES_IN_DAY)
+
+        return (segmentStartTimeInMinutes + MINUTES_IN_DAY >= episodeStartTimeInMinutes
+                && segmentStartTimeInMinutes <= episodeEndTimeInMinutes)
+            || (segmentStartTimeInMinutes >= episodeStartTimeInMinutes
+                && segmentStartTimeInMinutes <= episodeEndTimeInMinutes + MINUTES_IN_DAY)
     }
+}
+
+function getTimeInMinutes(datetimeObject) {
+    return (datetimeObject.getHours() * 60) + datetimeObject.getMinutes();
 }
 

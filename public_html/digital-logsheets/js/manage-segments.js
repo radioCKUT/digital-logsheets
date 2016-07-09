@@ -151,12 +151,10 @@ function errorCallback(jqhxr, textStatus, errorThrown) {
 
 
 function successCallback(data) {
-    console.log("success callback");
 
     if (!data.hasOwnProperty("error")) {
         hideEditForm();
         $('#logsheet').trigger("reset");
-        console.log(data[0]);
 
         var addedSegments = $('#added_segments');
         addedSegments.empty();
@@ -180,8 +178,6 @@ function successCallback(data) {
                         .append(edit_button).append(delete_button))));
 
             addedSegments.append(segmentRow);
-            console.log("segment saved in row:");
-            console.log(segmentRow.data("segment"));
 
         });
 
