@@ -97,7 +97,7 @@
                 <label class="checkbox-inline french_vocal_music_group" style="display:none;">
                     <input type="checkbox" name="french_vocal_music" value="">FV</label>
 
-                <input type="hidden" name="episode_id" value={$episode_id}>
+                <input type="hidden" name="episode_id" value={$episode.episode_id|json_encode}>
                 <hr>
             </div>
 
@@ -105,7 +105,7 @@
         </form>
 
         <form id="logsheet_edit" role="form" method="post">
-            <h5>Episode ID: {$episode_id}</h5>
+            <h5>Episode ID: {$episode.episode_id|json_encode}</h5>
 
             <div id="segments">
                 <div class="form-group row">
@@ -159,7 +159,7 @@
                 <label class="checkbox-inline french_vocal_music_group" style="display:none;">
                     <input type="checkbox" name="french_vocal_music" value="" id="french_vocal_music_edit">FV</label>
 
-                <input type="hidden" name="episode_id" value={$episode_id}>
+                <input type="hidden" name="episode_id" value={$episode.episode_id|json_encode}>
                 <hr>
             </div>
 
@@ -170,7 +170,7 @@
         </form>
 
         <form id="finalize" role="form" action="review-logsheet.php" method="post">
-            <input type="hidden" name="episode_id" value={$episode_id}>
+            <input type="hidden" name="episode_id" value={$episode.episode_id|json_encode}>
             <input type="submit" value="Submit All">
         </form>
     </div>
