@@ -10,7 +10,7 @@ require_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
 require_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
-require_once("../../digital-logsheets-res/php/objects/logsheet-classes.php");
+require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
 
 // create object
 $smarty = new Smarty;
