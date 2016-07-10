@@ -10,23 +10,23 @@
         /**
          * @var DateTime
          */
-        private $start_time;
+        private $startTime;
         private $duration = 0;
 
         private $category;
 
-        private $is_can_con;
-        private $is_new_release;
-        private $is_french_vocal_music;
+        private $isCanCon;
+        private $isNewRelease;
+        private $isFrenchVocalMusic;
 
-        private $ad_number;
-        private $playlist_id;
+        private $adNumber;
+        private $playlistId;
 
-        public function __construct($db, $component_id) {
-            parent::__construct($db, $component_id);
+        public function __construct($db, $componentId) {
+            parent::__construct($db, $componentId);
 
-            if ($component_id != null) {
-                manageSegmentEntries::getSegmentAttributesFromDatabase($db, $component_id, $this);
+            if ($componentId != null) {
+                manageSegmentEntries::getSegmentAttributesFromDatabase($db, $componentId, $this);
             }
         }
 
@@ -43,8 +43,8 @@
             $this->author = $author;
         }
 
-        public function setStartTime($start_time) {
-            $this->start_time = $start_time;
+        public function setStartTime($startTime) {
+            $this->startTime = $startTime;
         }
 
         public function setDuration($duration) {
@@ -55,36 +55,36 @@
             $this->category = $category;
         }
 
-        public function setIsCanCon($is_can_con) {
-            if (!$is_can_con) {
-                $this->is_can_con = false;
+        public function setIsCanCon($isCanCon) {
+            if (!$isCanCon) {
+                $this->isCanCon = false;
             } else {
-                $this->is_can_con = true;
+                $this->isCanCon = true;
             }
         }
 
-        public function setIsNewRelease($is_new_release) {
-            if (!$is_new_release) {
-                $this->is_new_release = false;
+        public function setIsNewRelease($isNewRelease) {
+            if (!$isNewRelease) {
+                $this->isNewRelease = false;
             } else {
-                $this->is_new_release = true;
+                $this->isNewRelease = true;
             }
         }
 
-        public function setIsFrenchVocalMusic($is_french_vocal_music) {
-            if (!$is_french_vocal_music) {
-                $this->is_french_vocal_music = false;
+        public function setIsFrenchVocalMusic($isFrenchVocalMusic) {
+            if (!$isFrenchVocalMusic) {
+                $this->isFrenchVocalMusic = false;
             } else {
-                $this->is_french_vocal_music = true;
+                $this->isFrenchVocalMusic = true;
             }
         }
 
-        public function setAdNumber($ad_number) {
-            $this->ad_number = $ad_number;
+        public function setAdNumber($adNumber) {
+            $this->adNumber = $adNumber;
         }
 
-        public function setPlaylistId($playlist_id) {
-            $this->playlist_id = $playlist_id;
+        public function setPlaylistId($playlistId) {
+            $this->playlistId = $playlistId;
         }
 
         public function jsonSerialize() {
@@ -93,17 +93,17 @@
 
             return [
                 'id' => $this->getId(),
-                'start_time' => $startTimeString,
+                'startTime' => $startTimeString,
                 'name' => $this->getName(),
                 'album' => $this->getAlbum(),
                 'author' => $this->getAuthor(),
                 'duration' => $this->getDuration(),
                 'category' => $this->getCategory(),
-                'can_con' => $this->isCanCon(),
-                'new_release' => $this->isNewRelease(),
-                'french_vocal_music' => $this->isFrenchVocalMusic(),
-                'ad_number' => $this->getAdNumber(),
-                'playlist_id' => $this->getPlaylistId()
+                'canCon' => $this->isCanCon(),
+                'newRelease' => $this->isNewRelease(),
+                'frenchVocalMusic' => $this->isFrenchVocalMusic(),
+                'adNumber' => $this->getAdNumber(),
+                'playlistId' => $this->getPlaylistId()
             ];
         }
 
@@ -113,17 +113,17 @@
 
             return [
                 'id' => $this->getId(),
-                'start_time' => $startTimeString,
+                'startTime' => $startTimeString,
                 'name' => $this->getName(),
                 'album' => $this->getAlbum(),
                 'author' => $this->getAuthor(),
                 'duration' => $this->getDuration(),
                 'category' => $this->getCategory(),
-                'can_con' => $this->isCanCon() ? "Yes" : "No",
-                'new_release' => $this->isNewRelease() ? "Yes" : "No",
-                'french_vocal_music' => $this->isFrenchVocalMusic() ? "Yes" : "No",
-                'ad_number' => $this->getAdNumber(),
-                'playlist_id' => $this->getPlaylistId()
+                'canCon' => $this->isCanCon() ? "Yes" : "No",
+                'newRelease' => $this->isNewRelease() ? "Yes" : "No",
+                'frenchVocalMusic' => $this->isFrenchVocalMusic() ? "Yes" : "No",
+                'adNumber' => $this->getAdNumber(),
+                'playlistId' => $this->getPlaylistId()
             ];
         }
 
@@ -141,7 +141,7 @@
         }
 
         public function getStartTime() {
-            return $this->start_time;
+            return $this->startTime;
         }
 
         public function getDuration() {
@@ -153,23 +153,23 @@
         }
 
         public function isCanCon() {
-            return $this->is_can_con;
+            return $this->isCanCon;
         }
 
         public function isNewRelease() {
-            return $this->is_new_release;
+            return $this->isNewRelease;
         }
 
         public function isFrenchVocalMusic() {
-            return $this->is_french_vocal_music;
+            return $this->isFrenchVocalMusic;
         }
 
         public function getAdNumber() {
-            return $this->ad_number;
+            return $this->adNumber;
         }
 
         public function getPlaylistId() {
-            return $this->playlist_id;
+            return $this->playlistId;
         }
         
     }

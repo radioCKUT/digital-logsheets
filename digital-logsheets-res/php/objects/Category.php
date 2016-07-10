@@ -4,10 +4,10 @@
 
         private $name;
 
-        public function __construct($db, $component_id) {
-            parent::__construct($db, $component_id);
+        public function __construct($db, $componentId) {
+            parent::__construct($db, $componentId);
 
-            $this->name = manageCategoryEntries::getCategoryNameFromDatabase($db, $component_id);
+            $this->name = manageCategoryEntries::getCategoryNameFromDatabase($db, $componentId);
         }
         
         public function getName() {

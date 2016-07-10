@@ -7,10 +7,10 @@
          */
         private $segments;
 
-        public function __construct($db, $component_id) {
-            parent::__construct($db, $component_id);
+        public function __construct($db, $componentId) {
+            parent::__construct($db, $componentId);
 
-            $this->segments = managePlaylistEntries::getPlaylistSegmentsFromDatabase($db, $component_id);
+            $this->segments = managePlaylistEntries::getPlaylistSegmentsFromDatabase($db, $componentId);
         }
 
 

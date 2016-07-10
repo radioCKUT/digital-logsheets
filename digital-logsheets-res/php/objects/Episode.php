@@ -16,19 +16,19 @@
         private $playlist;
         private $programmer;
 
-        private $episode_start_time;
-        private $episode_end_time;
+        private $episodeStartTime;
+        private $episodeEndTime;
 
-        private $is_prerecord;
-        private $prerecord_date;
+        private $isPrerecord;
+        private $prerecordDate;
 
         private $comment;
         
-        public function __construct($db, $component_id) {
-            parent::__construct($db, $component_id);
+        public function __construct($db, $componentId) {
+            parent::__construct($db, $componentId);
 
-            if ($component_id != null) {
-                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $component_id, $this);
+            if ($componentId != null) {
+                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $componentId, $this);
             }
         }
 
@@ -44,26 +44,26 @@
             $this->programmer = $programmer;
         }
 
-        public function setStartTime($start_time) {
-            $this->episode_start_time = $start_time;
+        public function setStartTime($startTime) {
+            $this->episodeStartTime = $startTime;
         }
 
-        public function setEndTime($end_time) {
-            $this->episode_end_time = $end_time;
+        public function setEndTime($endTime) {
+            $this->episodeEndTime = $endTime;
         }
 
-        public function setIsPrerecord($is_prerecord) {
+        public function setIsPrerecord($isPrerecord) {
 
-            if (!$is_prerecord) {
-                $this->prerecord_date = null;
-                $this->is_prerecord = false;
+            if (!$isPrerecord) {
+                $this->prerecordDate = null;
+                $this->isPrerecord = false;
             } else {
-                $this->is_prerecord = true;
+                $this->isPrerecord = true;
             }
         }
 
-        public function setPrerecordDate($prerecord_date) {
-            $this->prerecord_date = $prerecord_date;
+        public function setPrerecordDate($prerecordDate) {
+            $this->prerecordDate = $prerecordDate;
         }
 
         /**
@@ -88,16 +88,16 @@
             $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
 
             return [
-                'episode_id' => $this->getId(),
+                'episodeId' => $this->getId(),
                 'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
                 'playlist' => $this->getPlaylistId(),
-                'start_date' => $startDateString,
-                'start_time' => $startTimeString,
-                'end_time' => $endTimeString,
-                'start_datetime' => $startDatetimeString,
-                'end_datetime' => $endDatetimeString,
+                'startDate' => $startDateString,
+                'startTime' => $startTimeString,
+                'endTime' => $endTimeString,
+                'startDatetime' => $startDatetimeString,
+                'endDatetime' => $endDatetimeString,
                 'prerecorded' => $this->isPrerecord() ? "Yes" : "No",
-                'prerecord_date' => $prerecordDateString,
+                'prerecordDate' => $prerecordDateString,
                 'segments' => $this->getSegments()
             ];
         }
@@ -176,19 +176,19 @@
         }
         
         public function getStartTime() {
-            return $this->episode_start_time;
+            return $this->episodeStartTime;
         }
         
         public function getEndTime() {
-            return $this->episode_end_time;
+            return $this->episodeEndTime;
         }
 
         public function isPrerecord() {
-            return $this->is_prerecord;
+            return $this->isPrerecord;
         }
 
         public function getPrerecordDate() {
-            return $this->prerecord_date;
+            return $this->prerecordDate;
         }
 
         /**

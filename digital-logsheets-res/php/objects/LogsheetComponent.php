@@ -3,13 +3,13 @@
         protected $db;
         protected $id;
         
-        public function __construct($db, $component_id) {
+        public function __construct($db, $componentId) {
             $this->db = $db;
-            $this->setId($component_id);
+            $this->setId($componentId);
         }
         
-        public function setId($component_id) {
-            $this->id = $component_id;
+        public function setId($componentId) {
+            $this->id = $componentId;
         }
         
         public function getId() {
