@@ -11,7 +11,7 @@
 
     {foreach $segments as $segment}
         <tr>
-            <td>{$segment.start_time}</td>
+            <td>{$segment.startTime}</td>
             <td>{$segment.duration}</td>
 
             {if {$segment.category} == 2 || {$segment.category} == 3}}
@@ -19,15 +19,15 @@
                 <td>{$segment.album}</td>
                 <td>{$segment.artist}</td>
             {elseif {$segment.category} == 5}
-                <td colspan="3">{$segment.ad_number}</td>
+                <td colspan="3">{$segment.adNumber}</td>
             {else}
                 <td colspan="3">{$segment.name}</td>
             {/if}
 
             <td>{$segment.category}</td>
-            <td>{$segment.can_con}</td>
-            <td>{$segment.new_release}</td>
-            <td>{$segment.french_vocal_music}</td>
+            <td>{$segment.canCon}</td>
+            <td>{$segment.newRelease}</td>
+            <td>{$segment.frenchVocalMusic}</td>
         </tr>
     {/foreach}
 </table>
