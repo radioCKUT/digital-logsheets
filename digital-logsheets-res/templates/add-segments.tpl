@@ -27,18 +27,7 @@
     <script type="text/javascript" src="js/category-button.js"></script>
     <script type="text/javascript" src="js/sisyphus.min.js"></script>
     <script type="text/javascript">
-
         function startStoringFormEntries() {
-            window.Parsley
-                    .addValidator('is', {
-                        requirementType: ['string', 'string'],
-                        validateString: function (value, arg1, arg2) {
-                            return isSegmentTimeWithinEpisode(value, arg1, arg2);
-                        }
-                    });
-
-            $('#logsheet').parsley();
-
             getEpisodeSegments();
             $('#logsheet_edit').hide();
             $('form').sisyphus();
