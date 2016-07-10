@@ -18,9 +18,6 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
     nameInput.prop('required', false);
 }
 
-
-
-
 function isSegmentTimeWithinEpisode(segmentStartTime, episodeStartDatetime, episodeEndDatetime) {
     console.log("in isSegmentTimeWithinEpisode");
     var segmentStartTimeObject = new Date("January 1 " + segmentStartTime);

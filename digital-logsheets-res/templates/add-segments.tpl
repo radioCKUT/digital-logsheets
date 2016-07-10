@@ -45,24 +45,29 @@
                 <div class="form-group row">
                     <div class="col-md-3">
                         <label for="segment_time" class="control-label">Time:</label>
-                        <input name="segment_time" id="segment_time" class="form-control segment-time" type="time"
-                               data-parsley-is='[{$episode.start_datetime|json_encode}, {$episode.end_datetime|json_encode}]'
-                               required>
+                        <input name="segment_time" id="segment_time"
+                               class="form-control segment-time" type="time" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="category" class="control-label">Category:</label>
                     <div class="btn-group category" data-toggle="buttons">
                         <label class="btn btn-primary" onclick="setupCat1Fields()">
-                            <input type="radio" name="category" class="category1" autocomplete="off" required value="1">1</label>
+                            <input type="radio" name="category" class="category1"
+                                   autocomplete="off" required value="1">1</label>
                         <label class="btn btn-primary" onclick="setupCat2Fields()">
-                            <input type="radio" name="category" class="category2" autocomplete="off" value="2">2</label>
+                            <input type="radio" name="category" class="category2"
+                                   autocomplete="off" value="2">2</label>
                         <label class="btn btn-primary" onclick="setupCat3Fields()">
-                            <input type="radio" name="category" class="category3" autocomplete="off" value="3">3</label>
+                            <input type="radio" name="category" class="category3"
+                                   autocomplete="off" value="3">3</label>
                         <label class="btn btn-primary" onclick="setupCat4Fields()">
-                            <input type="radio" name="category" class="category4" autocomplete="off" value="4">4</label>
+                            <input type="radio" name="category" class="category4"
+                                   autocomplete="off" value="4">4</label>
                         <label class="btn btn-primary" onclick="setupCat5Fields()">
-                            <input type="radio" name="category" class="category5" autocomplete="off" value="5">5</label></div>
+                            <input type="radio" name="category" class="category5"
+                                   autocomplete="off" value="5">5</label>
+                    </div>
                 </div>
                 <div class="form-group row ad_number_group" style="display:none;">
                     <div class="col-md-3">

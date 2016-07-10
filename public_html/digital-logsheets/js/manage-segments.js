@@ -150,11 +150,22 @@ function errorCallback(jqhxr, textStatus, errorThrown) {
 
 
 
+
 function successCallback(data) {
 
     if (!data.hasOwnProperty("error")) {
         hideEditForm();
         $('#logsheet').trigger("reset");
+
+        // TODO: move to own resetCategoryButtons function
+        $('.btn.btn-primary').removeClass('active');
+        $('.category1').prop('checked', false);
+        $('.category2').prop('checked', false);
+        $('.category3').prop('checked', false);
+        $('.category5').prop('checked', false);
+        $('.category4').prop('checked', false);
+        resetAllFields();
+        // end of resetCategoryButtons function
 
         var addedSegments = $('#added_segments');
         addedSegments.empty();
@@ -178,7 +189,6 @@ function successCallback(data) {
                         .append(edit_button).append(delete_button))));
 
             addedSegments.append(segmentRow);
-
         });
 
         addedSegments.append($('</tbody>'));
@@ -188,6 +198,7 @@ function successCallback(data) {
         //TODO error handling
     }
 }
+
 
 function generateDeleteButton(segment_id) {
     return $(document.createElement("li"))
