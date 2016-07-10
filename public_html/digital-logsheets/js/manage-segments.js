@@ -174,7 +174,7 @@ function successCallback(data) {
         $.each(data, function(i, e) {
             var segment_id = data[i].id;
             var name = data[i].name;
-            var start_time = data[i].start_time;
+            var start_time = data[i].startTime;
 
             var delete_button = generateDeleteButton(segment_id);
             var edit_button = generateEditButton(segment_id);

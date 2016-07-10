@@ -24,7 +24,7 @@
         
         $smarty->assign("programs", $programs);
         $smarty->assign("categories", $categories);
-        
+
         // display it
         echo $smarty->fetch('../../digital-logsheets-res/templates/new-logsheet.tpl');
     } catch(PDOException $e) {

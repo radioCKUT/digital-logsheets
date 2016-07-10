@@ -5,7 +5,7 @@ require_once("../../digital-logsheets-res/php/objects/Episode.php");
 
 $episodeId = $_POST['episode_id'];
 
-$segmentTime = $_POST['segmentTime'];
+$segmentTime = $_POST['segment_time'];
 $name = $_POST['name'];
 $adNumber = $_POST['ad_number'];
 $author = $_POST['author'];
@@ -32,6 +32,7 @@ try {
     $episodeStartDateTime = $episode->getStartTime();
 
     $segmentTime = addDateToSegmentStartTime($episodeStartDateTime, $segmentTime);
+    error_log("segmentTime: " . date_format($segmentTime,"Y/m/d H:i:s"));
 
     $playlistId = $episode->getPlaylistId();
 
@@ -85,6 +86,8 @@ try {
             $segment->setAdNumber(null);
             break;
     }
+
+    error_log("segment->getTime: " . date_format($segment->getStartTime(),"Y/m/d H:i:s"));
     
     if ($editSegment) {
         error_log("segment id: " . $segment->getId());
