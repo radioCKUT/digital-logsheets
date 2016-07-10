@@ -23,22 +23,22 @@ try {
     //connect to database
     $db = connectToDatabase();
 
-    $episode_id = $_SESSION['episode_id'];
+    $episodeId = $_SESSION['episodeId'];
 
-    $episode = new Episode($db, $episode_id);
+    $episode = new Episode($db, $episodeId);
     $segments = $episode->getSegments();
-    $episode_end_time = $episode->getEndTime();
+    $episodeEndTime = $episode->getEndTime();
 
-    $segments = computeSegmentDurations($segments, $episode_end_time);
+    $segments = computeSegmentDurations($segments, $episodeEndTime);
 
     foreach ($segments as $segment) {
         error_log("about to edit segment duration");
         manageSegmentEntries::editExistingSegmentDuration($db, $segment);
     }
 
-    $episode_as_array = $episode->getObjectAsArray();
-
-    $segmentsForThisEpisode = manageSegmentEntries::getAllSegmentsForEpisodeId($db, $episode_id);
+    $episodeAsArray = $episode->getObjectAsArray();
+    
+    $segmentsForThisEpisode = manageSegmentEntries::getAllSegmentsForEpisodeId($db, $episodeId);
 
     for($i = 0; $i < count($segmentsForThisEpisode); $i++) {
         $currentSegment = $segmentsForThisEpisode[$i];
@@ -48,7 +48,7 @@ try {
     //close database connection
     $db = NULL;
 
-    $smarty->assign("episode", $episode_as_array);
+    $smarty->assign("episode", $episodeAsArray);
     $smarty->assign("segments", $segmentsForThisEpisode);
 
 

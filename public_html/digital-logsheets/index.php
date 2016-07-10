@@ -13,11 +13,11 @@
         //open database connection
         $db = connectToDatabase();
         $archive = new Archive($db);
-        $episodes_archive = $archive->getArchive();
+        $episodesArchive = $archive->getArchive();
 
         $episodes = array();
     
-        foreach($episodes_archive as $episode) {
+        foreach($episodesArchive as $episode) {
             $playlist = array();
             $segments = $episode->getPlaylist()->getSegments();
             

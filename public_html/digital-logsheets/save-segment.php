@@ -3,43 +3,43 @@
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
 
-$episode_id = $_POST['episode_id'];
+$episodeId = $_POST['episode_id'];
 
-$segment_time = $_POST['segment_time'];
+$segmentTime = $_POST['segmentTime'];
 $name = $_POST['name'];
-$ad_number = $_POST['ad_number'];
+$adNumber = $_POST['ad_number'];
 $author = $_POST['author'];
 $album = $_POST['album'];
 $category = $_POST['category'];
 
-$can_con = isset($_POST['can_con']);
-$new_release = isset($_POST['new_release']);
-$french_vocal_music = isset($_POST['french_vocal_music']);
+$canCon = isset($_POST['can_con']);
+$newRelease = isset($_POST['new_release']);
+$frenchVocalMusic = isset($_POST['french_vocal_music']);
 
-$edit_segment = isset($_POST['is_existing_segment']);
-$segment_id = $_POST['segment_id'];
+$editSegment = isset($_POST['is_existing_segment']);
+$segmentId = $_POST['segment_id'];
 
-if (!isset($episode_id) || $episode_id <= 0) {
-    error_log("episode id received by save segment: " . $episode_id . ", segment_time: " . $segment_time);
+if (!isset($episodeId) || $episodeId <= 0) {
+    error_log("episode id received by save segment: " . $episodeId . ", segmentTime: " . $segmentTime);
     outputErrorResponse("Invalid episode ID");
 }
 
 try {
     $db = connectToDatabase();
 
-    $episode = new Episode($db, $episode_id);
+    $episode = new Episode($db, $episodeId);
 
     $episodeStartDateTime = $episode->getStartTime();
 
-    $segment_time = addDateToSegmentStartTime($episodeStartDateTime, $segment_time);
+    $segmentTime = addDateToSegmentStartTime($episodeStartDateTime, $segmentTime);
 
-    $playlist_id = $episode->getPlaylistId();
+    $playlistId = $episode->getPlaylistId();
 
-    $segment = new Segment($db, $segment_id);
+    $segment = new Segment($db, $segmentId);
     $segment->setCategory($category);
-    $segment->setPlaylistId($playlist_id);
+    $segment->setPlaylistId($playlistId);
     $segment->setDuration(null);
-    $segment->setStartTime($segment_time);
+    $segment->setStartTime($segmentTime);
 
     switch ($category) {
         case 2:
@@ -48,9 +48,9 @@ try {
             $segment->setAuthor($author);
             $segment->setAlbum($album);
             $segment->setCategory($category);
-            $segment->setIsCanCon($can_con);
-            $segment->setIsNewRelease($new_release);
-            $segment->setIsFrenchVocalMusic($french_vocal_music);
+            $segment->setIsCanCon($canCon);
+            $segment->setIsNewRelease($newRelease);
+            $segment->setIsFrenchVocalMusic($frenchVocalMusic);
             $segment->setAdNumber(null);
             break;
 
@@ -61,7 +61,7 @@ try {
             $segment->setIsCanCon(null);
             $segment->setIsNewRelease(null);
             $segment->setIsFrenchVocalMusic(null);
-            $segment->setAdNumber($ad_number);
+            $segment->setAdNumber($adNumber);
             break;
 
         case 4:
@@ -86,20 +86,20 @@ try {
             break;
     }
     
-    if ($edit_segment) {
+    if ($editSegment) {
         error_log("segment id: " . $segment->getId());
-        $segment->setId($segment_id);
+        $segment->setId($segmentId);
         manageSegmentEntries::editSegmentInDatabase($db, $segment);
     } else {
         manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
     }
 
-    $episode = new Episode($db, $episode_id);
-    $segment_list = $episode->getSegments();
+    $episode = new Episode($db, $episodeId);
+    $segmentList = $episode->getSegments();
 
     $db = null;
 
-    outputSuccessResponse($segment_list);
+    outputSuccessResponse($segmentList);
 
 } catch(PDOException $e) {
     $db = null;
@@ -112,30 +112,30 @@ function outputSuccessResponse($data) {
     outputResponse($data);
 }
 
-function outputErrorResponse($error_message) {
-    $error_array = array("error" => $error_message);
-    outputResponse($error_array);
+function outputErrorResponse($errorMessage) {
+    $errorArray = array("error" => $errorMessage);
+    outputResponse($errorArray);
 }
 
 function outputResponse($response) {
     header('Content-type: application/json');
-    $response_json = json_encode($response);
-    echo $response_json;
+    $responseJson = json_encode($response);
+    echo $responseJson;
     exit();
 }
 
-function addDateToSegmentStartTime($episodeStartDateTime, $segment_time) {
+function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
 
     $dateToUse = $episodeStartDateTime->format("Y-m-d");
     $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
 
-    if (strtotime($segment_time) < strtotime($episodeStartTimeString)) {
+    if (strtotime($segmentTime) < strtotime($episodeStartTimeString)) {
         $dayAfterEpisodeStartDateTime = clone $episodeStartDateTime;
         $dayAfterEpisodeStartDateTime->add(new DateInterval('P1D'));
         $dateToUse = $dayAfterEpisodeStartDateTime->format("Y-m-d");
     }
     
-    $segmentTimeString = $dateToUse . " " . $segment_time;
+    $segmentTimeString = $dateToUse . " " . $segmentTime;
     $segmentDateTime = new DateTime($segmentTimeString, new DateTimeZone('America/Montreal'));
 
     return $segmentDateTime;

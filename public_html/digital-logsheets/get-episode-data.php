@@ -3,31 +3,31 @@
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
 
-$episode_id = $_POST['episode_id'];
+$episodeId = $_POST['episode_id'];
 
-$segment_time = $_POST['segment_time'];
+$segmentTime = $_POST['segmentTime'];
 $name = $_POST['name'];
 $author = $_POST['author'];
 $album = $_POST['album'];
 $category = $_POST['category'];
 
-$can_con = isset($_POST['can_con']);
-$new_release = isset($_POST['new_release']);
-$french_vocal_music = isset($_POST['french_vocal_music']);
+$canCon = isset($_POST['can_con']);
+$newRelease = isset($_POST['new_release']);
+$frenchVocalMusic = isset($_POST['french_vocal_music']);
 
-if (!isset($episode_id) || $episode_id <= 0) {
+if (!isset($episodeId) || $episodeId <= 0) {
     outputErrorResponse("Invalid episode ID");
 }
 
 try {
     $db = connectToDatabase();
 
-    $episode = new Episode($db, $episode_id);
-    $segment_list = $episode->getSegments();
+    $episode = new Episode($db, $episodeId);
+    $segmentList = $episode->getSegments();
 
     $db = null;
 
-    outputSuccessResponse($segment_list);
+    outputSuccessResponse($segmentList);
 
 } catch(PDOException $e) {
     $db = null;
@@ -41,25 +41,25 @@ function outputSuccessResponse($data) {
     outputResponse($data);
 }
 
-function outputErrorResponse($error_message) {
-    $error_array = array("error" => $error_message);
-    outputResponse($error_array);
+function outputErrorResponse($errorMessage) {
+    $errorArray = array("error" => $errorMessage);
+    outputResponse($errorArray);
 }
 
 function outputResponse($response) {
     header('Content-type: application/json');
-    $response_json = json_encode($response);
-    echo $response_json;
+    $responseJSON = json_encode($response);
+    echo $responseJSON;
     exit();
 }
 
-function addDateToSegmentStartTime($episode_start_date, $episode_start_time, $segment_time) {
+function addDateToSegmentStartTime($episodeStartDate, $episodeStartTime, $segmentTime) {
 
-    $dateToUse = $episode_start_date;
-    error_log("segment_time: " . $segment_time . " episode_start_time " . $episode_start_time);
+    $dateToUse = $episodeStartDate;
+    error_log("segmentTime: " . $segmentTime . " episodeStartTime " . $episodeStartTime);
 
-    if (strtotime($segment_time) < strtotime($episode_start_time)) {
-        $episodeStartDateTimestamp = strtotime($episode_start_date);
+    if (strtotime($segmentTime) < strtotime($episodeStartTime)) {
+        $episodeStartDateTimestamp = strtotime($episodeStartDate);
         $dayAfterStartDateTimestamp = strtotime('+1 day', $episodeStartDateTimestamp);
         $dateToUse = date("Y-m-d", $dayAfterStartDateTimestamp);
 
@@ -67,8 +67,8 @@ function addDateToSegmentStartTime($episode_start_date, $episode_start_time, $se
 
     error_log("dateToUse: " . $dateToUse);
 
-    $segmentTimeWithDate = strtotime($dateToUse . " " . $segment_time);
-    $segment_time = date("Y-m-d H:m:s", $segmentTimeWithDate);
+    $segmentTimeWithDate = strtotime($dateToUse . " " . $segmentTime);
+    $segmentTime = date("Y-m-d H:m:s", $segmentTimeWithDate);
 
-    return $segment_time;
+    return $segmentTime;
 }

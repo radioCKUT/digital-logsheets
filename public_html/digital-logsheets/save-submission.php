@@ -11,12 +11,12 @@ try {
     //connect to database
     $db = connectToDatabase();
 
-    $episode_id = $_SESSION['episode_id'];
-    $episode = new Episode($db, $episode_id);
+    $episodeId = $_SESSION['episodeId'];
+    $episode = new Episode($db, $episodeId);
 
     manageEpisodeEntries::turnOffEpisodeDraftStatus($db, $episode);
 
-    unset($_SESSION['episode_id']);
+    unset($_SESSION['episodeId']);
     
     echo "Episode saved!";
 
