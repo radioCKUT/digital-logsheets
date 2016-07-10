@@ -22,40 +22,40 @@
         const IS_DRAFT_COLUMN_NAME = "draft";
 
         /**
-         * @param PDO $db_conn
-         * @param int $episode_id
-         * @param Episode $episode_object
+         * @param PDO $dbConn
+         * @param int $episodeId
+         * @param Episode $episodeObject
          */
-        public static function getEpisodeAttributesFromDatabase($db_conn, $episode_id, $episode_object) {
-            $database_results = readFromDatabase::readFilteredColumnFromTable($db_conn, array(self::PROGRAM_COLUMN_NAME, self::PLAYLIST_COLUMN_NAME,
-                self::PROGRAMMER_COLUMN_NAME, self::START_TIME_COLUMN_NAME, self::END_TIME_COLUMN_NAME), self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($episode_id));
+        public static function getEpisodeAttributesFromDatabase($dbConn, $episodeId, $episodeObject) {
+            $databaseResults = readFromDatabase::readFilteredColumnFromTable($dbConn, array(self::PROGRAM_COLUMN_NAME, self::PLAYLIST_COLUMN_NAME,
+                self::PROGRAMMER_COLUMN_NAME, self::START_TIME_COLUMN_NAME, self::END_TIME_COLUMN_NAME), self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($episodeId));
 
-            $programId = $database_results[0][self::PROGRAM_COLUMN_NAME];
-            $playlistId = $database_results[0][self::PLAYLIST_COLUMN_NAME];
-            $programmerId = $database_results[0][self::PROGRAMMER_COLUMN_NAME];
+            $programId = $databaseResults[0][self::PROGRAM_COLUMN_NAME];
+            $playlistId = $databaseResults[0][self::PLAYLIST_COLUMN_NAME];
+            $programmerId = $databaseResults[0][self::PROGRAMMER_COLUMN_NAME];
 
-            $episode_object->setProgram(new Program($db_conn, $programId));
-            $episode_object->setPlaylist(new Playlist($db_conn, $playlistId));
-            $episode_object->setProgrammer(new Programmer($db_conn, $programmerId));
+            $episodeObject->setProgram(new Program($dbConn, $programId));
+            $episodeObject->setPlaylist(new Playlist($dbConn, $playlistId));
+            $episodeObject->setProgrammer(new Programmer($dbConn, $programmerId));
 
 
-            $startTimeString = $database_results[0][self::START_TIME_COLUMN_NAME];
+            $startTimeString = $databaseResults[0][self::START_TIME_COLUMN_NAME];
             $startDateTime = formatDateStringFromDatabase($startTimeString);
-            $endTimeString = $database_results[0][self::END_TIME_COLUMN_NAME];
+            $endTimeString = $databaseResults[0][self::END_TIME_COLUMN_NAME];
             $endDateTime = formatDateStringFromDatabase($endTimeString);
 
-            $episode_object->setStartTime($startDateTime);
-            $episode_object->setEndTime($endDateTime);
+            $episodeObject->setStartTime($startDateTime);
+            $episodeObject->setEndTime($endDateTime);
         }
 
-        public static function getAllEpisodesFromDatabase($db_conn) {
-            $episode_ids = readFromDatabase::readEntireColumnFromTable($db_conn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);
+        public static function getAllEpisodesFromDatabase($dbConn) {
+            $episodeIds = readFromDatabase::readEntireColumnFromTable($dbConn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);
 
             $episodes = array();
 
-            if(count($episode_ids)) {
-                foreach($episode_ids as $episode_row) {
-                    $episode = new Episode($db_conn, $episode_row[self::ID_COLUMN_NAME]);
+            if(count($episodeIds)) {
+                foreach($episodeIds as $episodeRow) {
+                    $episode = new Episode($dbConn, $episodeRow[self::ID_COLUMN_NAME]);
                     $episodes[$episode->getId()] = $episode;
                 }
             }
@@ -64,36 +64,36 @@
         }
 
         /**
-         * @param PDO $db_conn
-         * @param Episode $episode_object
+         * @param PDO $dbConn
+         * @param Episode $episodeObject
          * @return null
          */
-        public static function saveNewEpisode($db_conn, $episode_object) {
+        public static function saveNewEpisode($dbConn, $episodeObject) {
 
-            $startDateTimeObject = formatDateStringForDatabaseWrite($episode_object->getStartTime());
-            $endDateTimeObject = formatDateStringForDatabaseWrite($episode_object->getEndTime());
+            $startDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getStartTime());
+            $endDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getEndTime());
 
-            $column_names = array(self::PLAYLIST_COLUMN_NAME, self::PROGRAM_COLUMN_NAME,
+            $columnNames = array(self::PLAYLIST_COLUMN_NAME, self::PROGRAM_COLUMN_NAME,
                 self::PROGRAMMER_COLUMN_NAME, self::START_TIME_COLUMN_NAME, self::END_TIME_COLUMN_NAME,
                 self::IS_PRERECORD_COLUMN_NAME, self::PRERECORD_COLUMN_NAME, self::IS_DRAFT_COLUMN_NAME);
 
-            $values = array($episode_object->getPlaylist()->getId(),
-                $episode_object->getProgram()->getId(),
-                $episode_object->getProgrammer()->getId(),
+            $values = array($episodeObject->getPlaylist()->getId(),
+                $episodeObject->getProgram()->getId(),
+                $episodeObject->getProgrammer()->getId(),
                 $startDateTimeObject, $endDateTimeObject,
-                $episode_object->isPrerecord(),
-                $episode_object->getPrerecordDate(), true);
+                $episodeObject->isPrerecord(),
+                $episodeObject->getPrerecordDate(), true);
 
-            return writeToDatabase::writeEntryToDatabase($db_conn, self::TABLE_NAME, $column_names, $values);
+            return writeToDatabase::writeEntryToDatabase($dbConn, self::TABLE_NAME, $columnNames, $values);
         }
 
-        public static function turnOffEpisodeDraftStatus($db_conn, $episode_object) {
-            $column_names = array(self::IS_DRAFT_COLUMN_NAME);
+        public static function turnOffEpisodeDraftStatus($dbConn, $episodeObject) {
+            $columnNames = array(self::IS_DRAFT_COLUMN_NAME);
             $values = array("false");
 
             error_log("turnOffEpisodeDraftStatus values[0]: " . $values[0]);
 
-            return writeToDatabase::editDatabaseEntry($db_conn, $episode_object->getId(), self::TABLE_NAME, $column_names, $values);
+            return writeToDatabase::editDatabaseEntry($dbConn, $episodeObject->getId(), self::TABLE_NAME, $columnNames, $values);
         }
 
     }

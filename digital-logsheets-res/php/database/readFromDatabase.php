@@ -2,24 +2,24 @@
 
     class readFromDatabase
     {
-        private static function getEntireColumnsQueryString($column_names, $table_name)
+        private static function getEntireColumnsQueryString($columnNames, $tableName)
         {
-            if (!is_array($column_names) || count($column_names) <= 0) {
-                $column_names_string = "*";
+            if (!is_array($columnNames) || count($columnNames) <= 0) {
+                $columnNamesString = "*";
             } else {
-                $column_names_string = implode(",", $column_names);
+                $columnNamesString = implode(",", $columnNames);
             }
 
-            return "SELECT " . $column_names_string . " FROM " . $table_name;
+            return "SELECT " . $columnNamesString . " FROM " . $tableName;
         }
 
-        private static function readFromDatabaseWithStatement($sql_query_stmt)
+        private static function readFromDatabaseWithStatement($sqlQueryStmt)
         {
             try {
-                $sql_query_stmt->execute();
-                $db_result = $sql_query_stmt->fetchAll(PDO::FETCH_ASSOC);
+                $sqlQueryStmt->execute();
+                $dbResult = $sqlQueryStmt->fetchAll(PDO::FETCH_ASSOC);
 
-                return $db_result;
+                return $dbResult;
 
             } catch (Exception $error) {
                 error_log("Read from database failed: " . $error);
@@ -27,13 +27,13 @@
             }
         }
 
-        public static function readEntireColumnFromTable($db_conn, $column_names, $table_name)
+        public static function readEntireColumnFromTable($dbConn, $columnNames, $tableName)
         {
-            $sql_query_string = self::getEntireColumnsQueryString($column_names, $table_name);
+            $sqlQueryString = self::getEntireColumnsQueryString($columnNames, $tableName);
 
             try {
-                $sql_query_stmt = $db_conn->prepare($sql_query_string);
-                return self::readFromDatabaseWithStatement($sql_query_stmt);
+                $sqlQueryStmt = $dbConn->prepare($sqlQueryString);
+                return self::readFromDatabaseWithStatement($sqlQueryStmt);
                 
             } catch (Exception $e) {
                 error_log("Read entire column failed " . $e);
@@ -41,22 +41,22 @@
             }
         }
 
-        public static function readFilteredColumnFromTable($db_conn, $column_names, $table_name, $filter_columns, $filter_values)
+        public static function readFilteredColumnFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues)
         {
 
-            if (is_array($filter_columns) && is_array($filter_values) && count($filter_columns) != count($filter_values)) {
+            if (is_array($filterColumns) && is_array($filterValues) && count($filterColumns) != count($filterValues)) {
                 return null;
             }
 
-            $sql_query_string = self::getEntireColumnsQueryString($column_names, $table_name);
+            $sqlQueryString = self::getEntireColumnsQueryString($columnNames, $tableName);
 
-            for ($i = 0; $i < count($filter_columns); $i++) {
-                $sql_query_string .= "\n WHERE " . $filter_columns[$i] . "=" . $filter_values[$i];
+            for ($i = 0; $i < count($filterColumns); $i++) {
+                $sqlQueryString .= "\n WHERE " . $filterColumns[$i] . "=" . $filterValues[$i];
             }
 
             try {
-                $sql_query_stmt = $db_conn->prepare($sql_query_string);
-                return self::readFromDatabaseWithStatement($sql_query_stmt);
+                $sqlQueryStmt = $dbConn->prepare($sqlQueryString);
+                return self::readFromDatabaseWithStatement($sqlQueryStmt);
                 
             } catch (Exception $e) {
                 error_log("Read filtered column failed: " . $e);
@@ -64,10 +64,10 @@
             }
         }
 
-        public static function readFirstMatchingEntryFromTable($db_conn, $column_names, $table_name, $filter_columns, $filter_values)
+        public static function readFirstMatchingEntryFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues)
         {
-            $all_matching_entries = self::readFilteredColumnFromTable($db_conn, $column_names, $table_name, $filter_columns, $filter_values);
-            return $all_matching_entries[0][$column_names[0]];
+            $allMatchingEntries = self::readFilteredColumnFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues);
+            return $allMatchingEntries[0][$columnNames[0]];
         }
 
 

@@ -2,17 +2,17 @@
 
     class writeToDatabase {
 
-        public static function writeEntryToDatabase($db_conn, $table_name, $column_names, $values_to_write)
+        public static function writeEntryToDatabase($dbConn, $tableName, $columnNames, $valuesToWrite)
         {
             try {
-                $column_names_string = "(" . implode(",", $column_names) . ")";
-                $values_to_write_string = "('" . implode("','", $values_to_write) . "')";
+                $columnNamesString = "(" . implode(",", $columnNames) . ")";
+                $valuesToWriteString = "('" . implode("','", $valuesToWrite) . "')";
 
-                $query = "INSERT INTO " . $table_name . " " . $column_names_string . " VALUES " . $values_to_write_string;
+                $query = "INSERT INTO " . $tableName . " " . $columnNamesString . " VALUES " . $valuesToWriteString;
 
-                $db_conn->exec($query);
+                $dbConn->exec($query);
 
-                return $db_conn->lastInsertId();
+                return $dbConn->lastInsertId();
 
             } catch (Exception $error) {
                 error_log("Write to database failed: " . $error);
@@ -20,23 +20,23 @@
             }
         }
 
-        public static function editDatabaseEntry($db_conn, $id_to_edit, $table_name, $column_names, $values_to_write) {
+        public static function editDatabaseEntry($dbConn, $idToEdit, $tableName, $columnNames, $valuesToWrite) {
             try {
 
-                $query = "UPDATE " . $table_name . " SET ";
-                    for($i = 0; $i < count($column_names); $i++) {
-                        $query .= $column_names[$i] . "=" . "'" . $values_to_write[$i] . "'";
+                $query = "UPDATE " . $tableName . " SET ";
+                    for($i = 0; $i < count($columnNames); $i++) {
+                        $query .= $columnNames[$i] . "=" . "'" . $valuesToWrite[$i] . "'";
 
-                        if ($i < count($column_names) - 1) {
+                        if ($i < count($columnNames) - 1) {
                             $query .= ", \n";
                         }
                     }
-                $query .= " WHERE id=" . $id_to_edit;
+                $query .= " WHERE id=" . $idToEdit;
 
                 error_log("edit database query: " . $query);
-                $db_conn->exec($query);
+                $dbConn->exec($query);
 
-                return $db_conn->lastInsertId();
+                return $dbConn->lastInsertId();
 
             } catch (Exception $error) {
                 error_log("Edit database entry failed: " . $error);
@@ -45,17 +45,17 @@
         }
 
         /**
-         * @param PDO $db_conn
-         * @param int $id_to_delete
-         * @param string $table_name
+         * @param PDO $dbConn
+         * @param int $idToDelete
+         * @param string $tableName
          */
-        public static function deleteDatabaseEntry($db_conn, $id_to_delete, $table_name) {
+        public static function deleteDatabaseEntry($dbConn, $idToDelete, $tableName) {
             try {
 
-                $query = "DELETE FROM " . $table_name . " WHERE id=" . $id_to_delete;
+                $query = "DELETE FROM " . $tableName . " WHERE id=" . $idToDelete;
                 error_log("delete query: " . $query);
 
-                $db_conn->exec($query);
+                $dbConn->exec($query);
 
             } catch (Exception $error) {
                 error_log("delete query unsuccessful: " . $error);

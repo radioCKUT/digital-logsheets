@@ -23,123 +23,123 @@
         const FRENCH_VOCAL_MUSIC_COLUMN_NAME = "french_vocal_music";
 
         /**
-         * @param PDO $db_conn
+         * @param PDO $dbConn
          *
-         * @param int $segment_id
+         * @param int $segmentId
          *
-         * @param Segment $segment_object
+         * @param Segment $segmentObject
          *
          */
-        public static function getSegmentAttributesFromDatabase($db_conn, $segment_id, $segment_object) {
-            $database_result = readFromDatabase::readFilteredColumnFromTable($db_conn, null, self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($segment_id));
+        public static function getSegmentAttributesFromDatabase($dbConn, $segmentId, $segmentObject) {
+            $databaseResult = readFromDatabase::readFilteredColumnFromTable($dbConn, null, self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($segmentId));
 
 
-            $segment_name = $database_result[0][self::SEGMENT_NAME_COLUMN_NAME];
-            $segment_object->setName($segment_name);
+            $segmentName = $databaseResult[0][self::SEGMENT_NAME_COLUMN_NAME];
+            $segmentObject->setName($segmentName);
 
-            $segment_album = $database_result[0][self::ALBUM_COLUMN_NAME];
-            $segment_object->setAlbum($segment_album);
+            $segmentAlbum = $databaseResult[0][self::ALBUM_COLUMN_NAME];
+            $segmentObject->setAlbum($segmentAlbum);
 
-            $segment_author = $database_result[0][self::AUTHOR_COLUMN_NAME];
-            $segment_object->setAuthor($segment_author);
+            $segmentAuthor = $databaseResult[0][self::AUTHOR_COLUMN_NAME];
+            $segmentObject->setAuthor($segmentAuthor);
 
-            $segment_category = $database_result[0][self::CATEGORY_COLUMN_NAME];
-            $segment_object->setCategory($segment_category);
+            $segmentCategory = $databaseResult[0][self::CATEGORY_COLUMN_NAME];
+            $segmentObject->setCategory($segmentCategory);
 
-            $segment_duration = $database_result[0][self::DURATION_COLUMN_NAME];
-            $segment_object->setDuration($segment_duration);
+            $segmentDuration = $databaseResult[0][self::DURATION_COLUMN_NAME];
+            $segmentObject->setDuration($segmentDuration);
 
-            $segment_can_con = $database_result[0][self::CAN_CON_COLUMN_NAME];
-            $segment_object->setIsCanCon($segment_can_con);
+            $segmentCanCon = $databaseResult[0][self::CAN_CON_COLUMN_NAME];
+            $segmentObject->setIsCanCon($segmentCanCon);
 
-            $segment_new_release = $database_result[0][self::NEW_RELEASE_COLUMN_NAME];
-            $segment_object->setIsNewRelease($segment_new_release);
+            $segmentNewRelease = $databaseResult[0][self::NEW_RELEASE_COLUMN_NAME];
+            $segmentObject->setIsNewRelease($segmentNewRelease);
 
-            $segment_french_vocal_music = $database_result[0][self::FRENCH_VOCAL_MUSIC_COLUMN_NAME];
-            $segment_object->setIsFrenchVocalMusic($segment_french_vocal_music);
+            $segmentFrenchVocalMusic = $databaseResult[0][self::FRENCH_VOCAL_MUSIC_COLUMN_NAME];
+            $segmentObject->setIsFrenchVocalMusic($segmentFrenchVocalMusic);
 
-            $dbStartTimeString = $database_result[0][self::START_TIME_COLUMN_NAME];
+            $dbStartTimeString = $databaseResult[0][self::START_TIME_COLUMN_NAME];
             $startDateTime = formatDateStringFromDatabase($dbStartTimeString);
-            $segment_object->setStartTime($startDateTime);
+            $segmentObject->setStartTime($startDateTime);
         }
 
         /**
-         * @param PDO $db_conn
+         * @param PDO $dbConn
          *
-         * @param Segment $segment_object
+         * @param Segment $segmentObject
          *
          */
-        public static function editExistingSegmentDuration($db_conn, $segment_object) {
-            $column_names = array(self::DURATION_COLUMN_NAME);
-            $values = array($segment_object->getDuration());
+        public static function editExistingSegmentDuration($dbConn, $segmentObject) {
+            $columnNames = array(self::DURATION_COLUMN_NAME);
+            $values = array($segmentObject->getDuration());
 
-            error_log("segment duration: " . $segment_object->getDuration());
+            error_log("segment duration: " . $segmentObject->getDuration());
 
-            writeToDatabase::editDatabaseEntry($db_conn, $segment_object->getId(), self::TABLE_NAME, $column_names, $values);
+            writeToDatabase::editDatabaseEntry($dbConn, $segmentObject->getId(), self::TABLE_NAME, $columnNames, $values);
         }
 
         /**
-         * @param PDO $db_conn
+         * @param PDO $dbConn
          *
-         * @param Segment $segment_object
+         * @param Segment $segmentObject
          *
          * @return int
          */
-        public static function saveNewSegmentToDatabase($db_conn, $segment_object)
+        public static function saveNewSegmentToDatabase($dbConn, $segmentObject)
         {
-            list($column_names, $values) = self::processSegmentForWrite($segment_object);
-            $segmentId = writeToDatabase::writeEntryToDatabase($db_conn, self::TABLE_NAME, $column_names, $values);
+            list($columnNames, $values) = self::processSegmentForWrite($segmentObject);
+            $segmentId = writeToDatabase::writeEntryToDatabase($dbConn, self::TABLE_NAME, $columnNames, $values);
 
-            managePlaylistEntries::addSegmentToDatabasePlaylist($db_conn, $segment_object->getPlaylistId(), $segmentId);
+            managePlaylistEntries::addSegmentToDatabasePlaylist($dbConn, $segmentObject->getPlaylistId(), $segmentId);
 
             return $segmentId;
         }
 
         /**
-         * @param PDO $db_conn
-         * @param Segment $segment_object
+         * @param PDO $dbConn
+         * @param Segment $segmentObject
          */
-        public static function editSegmentInDatabase($db_conn, $segment_object)
+        public static function editSegmentInDatabase($dbConn, $segmentObject)
         {
-            list($column_names, $values) = self::processSegmentForWrite($segment_object);
+            list($columnNames, $values) = self::processSegmentForWrite($segmentObject);
 
-            writeToDatabase::editDatabaseEntry($db_conn, $segment_object->getId(), self::TABLE_NAME, $column_names, $values);
+            writeToDatabase::editDatabaseEntry($dbConn, $segmentObject->getId(), self::TABLE_NAME, $columnNames, $values);
         }
 
         /**
-         * @param Segment $segment_object
+         * @param Segment $segmentObject
          * @return array
          */
-        private static function processSegmentForWrite($segment_object)
+        private static function processSegmentForWrite($segmentObject)
         {
-            $startDateString = formatDateStringForDatabaseWrite($segment_object->getStartTime());
+            $startDateString = formatDateStringForDatabaseWrite($segmentObject->getStartTime());
 
-            $column_names = array(self::START_TIME_COLUMN_NAME, self::DURATION_COLUMN_NAME, self::SEGMENT_NAME_COLUMN_NAME,
+            $columnNames = array(self::START_TIME_COLUMN_NAME, self::DURATION_COLUMN_NAME, self::SEGMENT_NAME_COLUMN_NAME,
                 self::AUTHOR_COLUMN_NAME, self::ALBUM_COLUMN_NAME, self::CATEGORY_COLUMN_NAME, self::CAN_CON_COLUMN_NAME, self::NEW_RELEASE_COLUMN_NAME, self::FRENCH_VOCAL_MUSIC_COLUMN_NAME);
 
-            $values = array($startDateString, $segment_object->getDuration(), $segment_object->getName(),
-                $segment_object->getAuthor(), $segment_object->getAlbum(), $segment_object->getCategory(),
-                $segment_object->isCanCon(), $segment_object->isNewRelease(), $segment_object->isFrenchVocalMusic());
+            $values = array($startDateString, $segmentObject->getDuration(), $segmentObject->getName(),
+                $segmentObject->getAuthor(), $segmentObject->getAlbum(), $segmentObject->getCategory(),
+                $segmentObject->isCanCon(), $segmentObject->isNewRelease(), $segmentObject->isFrenchVocalMusic());
 
-            return array($column_names, $values);
+            return array($columnNames, $values);
         }
 
-        public static function deleteSegmentFromDatabase($db_conn, $segment_id)
+        public static function deleteSegmentFromDatabase($dbConn, $segmentId)
         {
-            writeToDatabase::deleteDatabaseEntry($db_conn, $segment_id, self::TABLE_NAME);
+            writeToDatabase::deleteDatabaseEntry($dbConn, $segmentId, self::TABLE_NAME);
         }
 
         /**
-         * @param $db_conn
-         * @param $episode_id
+         * @param $dbConn
+         * @param $episodeId
          * @return Segment[]
          */
-        public static function getAllSegmentsForEpisodeId($db_conn, $episode_id)
+        public static function getAllSegmentsForEpisodeId($dbConn, $episodeId)
         {
-            $episode = new Episode($db_conn, $episode_id);
-            $playlist_id = $episode->getPlaylistId();
+            $episode = new Episode($dbConn, $episodeId);
+            $playlistId = $episode->getPlaylistId();
 
-            $segments = managePlaylistEntries::getPlaylistSegmentsFromDatabase($db_conn, $playlist_id);
+            $segments = managePlaylistEntries::getPlaylistSegmentsFromDatabase($dbConn, $playlistId);
 
             return $segments;
         }
