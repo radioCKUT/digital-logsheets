@@ -16,7 +16,13 @@
         private $playlist;
         private $programmer;
 
+        /**
+         * @var DateTime
+         */
         private $episodeStartTime;
+        /**
+         * @var DateTime
+         */
         private $episodeEndTime;
 
         private $isPrerecord;
@@ -168,9 +174,7 @@
             return $this->playlist != null ? $this->playlist->getId() : null;
         }
 
-        /**
-         * @return Playlist
-         */
+
         public function getPlaylist() {
             return $this->playlist;
         }
@@ -178,7 +182,7 @@
         public function getStartTime() {
             return $this->episodeStartTime;
         }
-        
+
         public function getEndTime() {
             return $this->episodeEndTime;
         }
