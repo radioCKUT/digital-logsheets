@@ -45,6 +45,8 @@ try {
 
     $_SESSION["episodeId"] = $episodeId;
 
+    error_log("session episode Id: " . $_SESSION["episodeId"]);
+
     header('Location: add-segments.php');
 
 } catch(PDOException $e) {

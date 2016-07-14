@@ -122,7 +122,7 @@ function prepareFormForEdit(eventObject) {
 function sendRequestToSaveSegment(dataToSend) {
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/save-segment.php",
+        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/save-segment-validation.php",
         dataType: "json",
         data: dataToSend,
         success: successCallback,
@@ -135,7 +135,7 @@ function deleteEpisodeSegment(id) {
 
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/delete-segment.php",
+        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/delete-segment-validation.php",
         data: { segment_id : id },
         success: deleteSuccessCallback,
         error: deleteErrorCallback

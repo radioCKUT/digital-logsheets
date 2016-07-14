@@ -18,14 +18,13 @@
     <!-- Boostrap JS -->
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="js/parsley.js"></script>
-
 
     <script type="text/javascript" src="js/date.js"></script>
     <script type="text/javascript" src="js/segment-validation.js"></script>
     <script type="text/javascript" src="js/manage-segments.js"></script>
     <script type="text/javascript" src="js/category-button.js"></script>
     <script type="text/javascript" src="js/sisyphus.min.js"></script>
+    <script type="text/javascript" src="js/validator.min.js"></script>
     <script type="text/javascript">
         function startStoringFormEntries() {
             getEpisodeSegments();
@@ -38,14 +37,14 @@
 <div class="container-fluid">
     <div class="col-md-8">
         <h3>Add Segments</h3>
-        <form id="logsheet" role="form" method="post">
+        <form id="logsheet" data-toggle="validator" role="form" method="post">
             <h5>Episode ID: {$episode.id|json_encode}</h5>
 
             <div id="segments">
                 <div class="form-group row">
                     <div class="col-md-3">
                         <label for="segment_time" class="control-label">Time:</label>
-                        <input name="segment_time" id="segment_time"
+                        <input name="segment_time" id="segment_time" data-remote="validation/segment-validation.php"
                                class="form-control segment-time" type="time" required>
                     </div>
                 </div>
@@ -114,7 +113,9 @@
                 <div class="form-group row">
                     <div class="col-md-3">
                         <label for="segment_time_edit" class="control-label">Time:</label>
-                        <input name="segment_time" class="form-control segment-time" type="time" id="segment_time_edit" required>
+                        <input name="segment_time" class="form-control segment-time"
+                               data-remote="validation/segment-validation.php"
+                               type="time" id="segment_time_edit" required>
                     </div>
                 </div>
                 <div class="form-group">
