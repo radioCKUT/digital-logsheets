@@ -18,8 +18,6 @@ function getEpisodeSegments() {
         success: successCallback,
         error: errorCallback
     });
-
-    console.log(window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/get-episode-data.php");
 }
 
 
