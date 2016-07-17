@@ -19,7 +19,6 @@
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
-    <script type="text/javascript" src="js/date.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <script type="text/javascript" src="js/segment-validation.js"></script>
     <script type="text/javascript" src="js/manage-segments.js"></script>
