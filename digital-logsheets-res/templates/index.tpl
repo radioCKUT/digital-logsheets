@@ -89,7 +89,7 @@
 
     <div class="logsheets">
         {foreach $episodes as $episode}
-            <a href="view-episode-logsheet.php?episode_id={$episode.episode_id}">{$episode.program} - {$episode.start_date}</a> <br />
+            <a href="view-episode-logsheet.php?episode_id={$episode.id}">{$episode.program} - {$episode.startDate}</a> <br />
         {/foreach}
     </div>
 </div>
