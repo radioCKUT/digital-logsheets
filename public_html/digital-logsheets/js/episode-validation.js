@@ -6,7 +6,7 @@ $(document).ready(function () {
 function adjustPrerecordDateBounds() {
     var episodeStartInput = $('#start_datetime');
     var episodeStartVal = episodeStartInput.val();
-    episodeStartVal = episodeStartVal.replace('T', ' '); //So HTML input may be parsed by Date.js
+    episodeStartVal = episodeStartVal.replace('T', ' '); //So HTML input may be parsed by moment.js
     var episodeStartDate = Date.parse(episodeStartVal);
 
     var upperBound;
@@ -41,17 +41,17 @@ function setStartDateTimeBounds() {
 }
 
 function getDateOffset(monthOffsetFromDate, date) {
-    var todayWithOffset = date.addMonths(monthOffsetFromDate);
+    var todayWithOffset = moment(date).add(monthOffsetFromDate, 'months');
 
-    var dd = todayWithOffset.getDate();
-    var mm = todayWithOffset.getMonth()+1; //January is 0!
+    var dd = todayWithOffset.date();
+    var mm = todayWithOffset.month() + 1; //January is 0!
+    var yyyy = todayWithOffset.year();
 
-    var yyyy = todayWithOffset.getFullYear();
-    if(dd<10){
-        dd='0'+dd
+    if (dd < 10) {
+        dd = '0' + dd
     }
-    if(mm<10){
-        mm='0'+mm
+    if (mm < 10) {
+        mm = '0' + mm
     }
 
     todayWithOffset = yyyy + '-' + mm + '-' + dd;

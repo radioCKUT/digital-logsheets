@@ -20,6 +20,7 @@
 
 
     <script type="text/javascript" src="js/date.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <script type="text/javascript" src="js/segment-validation.js"></script>
     <script type="text/javascript" src="js/manage-segments.js"></script>
     <script type="text/javascript" src="js/category-button.js"></script>
@@ -173,7 +174,7 @@
             <input type="submit" name="save" value="Save">
         </form>
 
-        <form id="finalize" role="form" action="review-logsheet.php" method="post">
+        <form id="finalize" role="form" action="review-logsheet.php" method="post" onsubmit="">
             <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
             <input type="submit" value="Submit All">
         </form>
