@@ -20,15 +20,29 @@
 
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script type="text/javascript" src="js/segment-validation.js"></script>
-    <script type="text/javascript" src="js/manage-segments.js"></script>
-    <script type="text/javascript" src="js/category-button.js"></script>
-    <script type="text/javascript" src="js/sisyphus.min.js"></script>
-    <script type="text/javascript" src="js/validator.min.js"></script>
+    <script type="text/javascript" src="js/htmlValidation/segmentValidation.js"></script>
+    <script type="text/javascript" src="js/deleteSegment.js"></script>
+    <script type="text/javascript" src="js/editSegment.js"></script>
+    <script type="text/javascript" src="js/saveReceiveSegments.js"></script>
+    <script type="text/javascript" src="js/ui/categoryButton.js"></script>
+    <script type="text/javascript" src="js/lib/sisyphus.min.js"></script>
+    <script type="text/javascript" src="js/lib/validator.min.js"></script>
     <script type="text/javascript">
         function startStoringFormEntries() {
+            $('#logsheet').on('submit', function(e) {
+                e.preventDefault();
+                createSegment();
+            });
+
+            var logsheetEdit = $('#logsheet_edit');
+
+            logsheetEdit.on('submit', function(e) {
+                e.preventDefault();
+                editEpisodeSegment();
+            });
+
             getEpisodeSegments();
-            $('#logsheet_edit').hide();
+            logsheetEdit.hide();
             $('form').sisyphus();
         }
     </script>
