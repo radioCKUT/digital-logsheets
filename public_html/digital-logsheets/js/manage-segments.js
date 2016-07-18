@@ -201,7 +201,6 @@ function successCallback(data) {
 function generateDeleteButton(segment_id) {
     return $(document.createElement("li"))
         .click(function(eventObject) {
-            console.log("entered delete button on click handler");
             deleteEpisodeSegment(segment_id);
         })
         .text("Delete");
@@ -210,7 +209,6 @@ function generateDeleteButton(segment_id) {
 function generateEditButton(segment_id) {
     return $(document.createElement("li"))
         .click(function(eventObject) {
-            console.log("entered edit button on click handler");
             prepareFormForEdit(eventObject);
         })
         .text("Edit");
@@ -230,5 +228,6 @@ function deleteSuccessCallback(data) {
 }
 
 function deleteErrorCallback(jqhxr, textStatus, errorThrown) {
-    alert("add segment fail! status: " + textStatus + " error thrown: " + errorThrown);
+    alert("Add segment fail! status: " + textStatus + " error thrown: " + errorThrown);
+    //TODO: proper error handling
 }
