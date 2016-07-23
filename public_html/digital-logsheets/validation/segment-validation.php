@@ -25,18 +25,19 @@ $episodeEndDay = $episodeEndTime->format('N');
 if ($episodeStartDay === $episodeEndDay) {
     if (($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes)
     && ($segmentStartTimeInMinutes <= $episodeEndTimeInMinutes)) {
+        error_log('200');
         http_response_code(200);
     }
-} else {
-    if (($segmentStartTimeInMinutes + MINUTES_IN_DAY >= $episodeStartTimeInMinutes
+} else if (($segmentStartTimeInMinutes + MINUTES_IN_DAY >= $episodeStartTimeInMinutes
         && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes)
     || ($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes
         && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes + MINUTES_IN_DAY)) {
+        error_log('200');
         http_response_code(200);
-    }
+} else {
+    http_response_code(400);
 }
 
-http_response_code(400);
 
 /**
  * @param DateTime $dateTime
