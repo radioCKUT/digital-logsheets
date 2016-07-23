@@ -25,10 +25,10 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
 
-    <script src="js/date.js"></script>
-    <script src="js/episode-validation.js"></script>
-    <script src="js/prerecord.js"></script>
-    <script src="js/category_button.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="js/htmlValidation/episodeValidation.js"></script>
+    <script src="js/ui/prerecord.js"></script>
+    <script src="js/ui/categoryButton.js"></script>
     <script type="text/javascript">
         function init() {
             var data = {$programs};
