@@ -23,6 +23,7 @@
     <script type="text/javascript" src="js/htmlValidation/segmentValidation.js"></script>
     <script type="text/javascript" src="js/deleteSegment.js"></script>
     <script type="text/javascript" src="js/editSegment.js"></script>
+    <script type="text/javascript" src="js/ui/segmentOptionsMenu.js"></script>
     <script type="text/javascript" src="js/saveReceiveSegments.js"></script>
     <script type="text/javascript" src="js/ui/categoryButton.js"></script>
     <script type="text/javascript" src="js/lib/sisyphus.min.js"></script>

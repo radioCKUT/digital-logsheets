@@ -16,7 +16,7 @@ function createSegment() {
 function sendRequestToSaveSegment(dataToSend) {
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/save-segment-validation.php",
+        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/save-segment.php",
         dataType: "json",
         data: dataToSend,
         success: receiveSegmentsSuccess,
