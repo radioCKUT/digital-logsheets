@@ -35,6 +35,7 @@ if ($episodeStartDay === $episodeEndDay) {
         error_log('200');
         http_response_code(200);
 } else {
+    error_log('400');
     http_response_code(400);
 }
 
