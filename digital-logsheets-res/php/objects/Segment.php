@@ -30,6 +30,10 @@
             }
         }
 
+        public function validate() {
+
+        }
+
 
         public function setName($name) {
             $this->name = $name;
@@ -148,6 +152,9 @@
             return $this->duration;
         }
 
+        /**
+         * @return Category
+         */
         public function getCategory() {
             return $this->category;
         }

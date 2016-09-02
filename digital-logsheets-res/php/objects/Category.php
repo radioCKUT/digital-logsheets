@@ -1,6 +1,6 @@
 <?php
     include_once(__DIR__ . "/../database/manageCategoryEntries.php");
-    class Category extends LogsheetComponent{
+    class Category extends LogsheetComponent {
 
         private $name;
 
