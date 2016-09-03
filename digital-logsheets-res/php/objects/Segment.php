@@ -1,5 +1,6 @@
 <?php
     include_once(__DIR__ . "/../database/manageSegmentEntries.php");
+    include_once(__DIR__ . "/../validator/SegmentValidator.php");
 
     class Segment extends LogsheetComponent implements JsonSerializable{
 
@@ -30,8 +31,9 @@
             }
         }
 
-        public function validate() {
-
+        public function isValidForDraftSave($episode) {
+            $segmentValidator = new SegmentValidator($this, $episode);
+            return $segmentValidator->isSegmentValidForDraftSave();
         }
 
 

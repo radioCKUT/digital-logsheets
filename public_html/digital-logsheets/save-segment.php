@@ -87,11 +87,10 @@ try {
             break;
     }
 
-    $segmentValidator = new SegmentValidator($segment, $episode);
-    $errors = $segmentValidator->isSegmentValidForDraftSave();
+    $errorsContainer = $segment->isValidForDraftSave($episode);
 
-    if ($errors->doErrorsExist()) {
-        $errorsList = $errors->getAllErrors();
+    if ($errorsContainer->doErrorsExist()) {
+        $errorsList = $errorsContainer->getAllErrors();
         outputErrorResponse(json_encode($errorsList));
     };
 
@@ -145,9 +144,9 @@ function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
     $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
 
     if (!TimeValidator::isTimeInValidFormat($segmentTime)) {
-        $errors = new AddSegmentsErrors();
-        $errors->markStartTimeInvalidFormat();
-        outputErrorResponse($errors->getAllErrors());
+        $errorsContainer = new AddSegmentsErrors();
+        $errorsContainer->markStartTimeInvalidFormat();
+        outputErrorResponse($errorsContainer->getAllErrors());
     }
 
     if (strtotime($segmentTime) < strtotime($episodeStartTimeString)) {

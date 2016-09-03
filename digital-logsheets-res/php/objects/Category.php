@@ -1,5 +1,6 @@
 <?php
     include_once(__DIR__ . "/../database/manageCategoryEntries.php");
+    include_once(__DIR__ . "/../validator/CategoryValidator.php");
     class Category extends LogsheetComponent {
 
         private $name;
@@ -12,6 +13,11 @@
         
         public function getName() {
             return $this->name;
+        }
+
+        public function isValid() {
+            $categoryValidator = new CategoryValidator($this);
+            return $categoryValidator->isCategoryValid();
         }
     }
 ?>

@@ -28,6 +28,7 @@ class SegmentValidator {
     public function isSegmentValidForDraftSave() {
         $errors = new AddSegmentsErrors();
 
+        $this->isCategoryValid($errors);
         $this->isStartTimeDataAValidTime($errors);
         $this->isStartTimeWithinEpisodeBounds($errors);
         $this->areRequiredCategoryFieldsPresent($errors);
@@ -42,6 +43,21 @@ class SegmentValidator {
 
         return $errors;
 
+    }
+
+    /**
+     * @param AddSegmentsErrors $errors
+     */
+    private function isCategoryValid($errors) {
+        $category = $this->segment->getCategory();
+
+        if (!ValidatorUtility::doesFieldExist($category)) {
+            $errors->markCategoryMissing();
+        }
+
+        if (!$category->isValid()) {
+            $errors->markCategoryInvalidFormat();
+        }
     }
 
     /**
