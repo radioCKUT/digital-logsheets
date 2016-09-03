@@ -143,6 +143,12 @@ function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
     $dateToUse = $episodeStartDateTime->format("Y-m-d");
     $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
 
+    if (!TimeValidator::isTimeInValidFormat($segmentTime)) {
+        $errors = new AddSegmentsErrors();
+        $errors->markStartTimeInvalidFormat();
+        outputErrorResponse($errors->getAllErrors());
+    }
+
     if (strtotime($segmentTime) < strtotime($episodeStartTimeString)) {
         $dayAfterEpisodeStartDateTime = clone $episodeStartDateTime;
         $dayAfterEpisodeStartDateTime->add(new DateInterval('P1D'));

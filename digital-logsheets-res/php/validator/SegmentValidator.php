@@ -54,10 +54,12 @@ class SegmentValidator {
     private function isStartTimeDataAValidTime($errors) {
         $startTime = $this->segment->getStartTime();
 
-        if (!ValidatorUtility::doesFieldExist($startTime) ||
-            !TimeValidator::isTimeInValidFormat($startTime)) {
-
+        if (!ValidatorUtility::doesFieldExist($startTime)) {
             $errors->markStartTimeMissing();
+        }
+
+        if (!($startTime instanceof DateTime)) {
+            $errors->markStartTimeInvalidFormat();
         }
     }
 
@@ -100,6 +102,8 @@ class SegmentValidator {
                 if (!ValidatorUtility::doesFieldExist($name)) {
                     $errors->markNameMissing();
                 }
+                break;
+
             case 5:
                 self::isAdNumberValid($errors);
         }

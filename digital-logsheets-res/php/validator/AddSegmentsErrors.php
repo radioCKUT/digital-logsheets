@@ -11,6 +11,7 @@ require('ErrorsContainer.php');
                 'missingName' => false,
                 'missingAdNumber' => false,
                 'missingStartTime' => false,
+                'startTimeInvalidFormat' => false,
                 'outOfEpisodeBounds' => false
             ];
         }
@@ -33,6 +34,10 @@ require('ErrorsContainer.php');
 
         public function markStartTimeMissing() {
             $this->errors['missingStartTime'] = true;
+        }
+
+        public function markStartTimeInvalidFormat() {
+            $this->errors['startTimeInvalidFormat'] = true;
         }
 
         public function markStartTimeOutOfEpisodeBounds() {
