@@ -38,6 +38,7 @@
                     && ($segmentStartTimeInMinutes <= $episodeEndTimeInMinutes)) {
                     return true;
                 }
+
             } else if (($segmentStartTimeInMinutes + MINUTES_IN_DAY >= $episodeStartTimeInMinutes
                     && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes)
                 || ($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes

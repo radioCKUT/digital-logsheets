@@ -1,6 +1,6 @@
 <?php
 
-    class addSegmentsErrors {
+    class AddSegmentsErrors {
 
         private $errors = [
             'missingAlbum' => false,

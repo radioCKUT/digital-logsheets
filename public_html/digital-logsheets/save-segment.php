@@ -20,7 +20,6 @@ $editSegment = isset($_POST['is_existing_segment']);
 $segmentId = $_POST['segment_id'];
 
 if (!isset($episodeId) || $episodeId <= 0) {
-    error_log("episode id received by save segment: " . $episodeId . ", segmentTime: " . $segmentTime);
     outputErrorResponse("Invalid episode ID");
 }
 
@@ -123,6 +122,12 @@ function outputResponse($response) {
     exit();
 }
 
+
+/**
+ * @param DateTime $episodeStartDateTime
+ * @param $segmentTime
+ * @return DateTime
+ */
 function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
 
     $dateToUse = $episodeStartDateTime->format("Y-m-d");

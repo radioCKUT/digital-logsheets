@@ -3,7 +3,7 @@
 require('./ValidatorUtility.php');
 require('./CategoryValidator.php');
 require('./TimeValidator.php');
-require('../addSegmentsErrors.php');
+require('../AddSegmentsErrors.php');
 
 class SegmentValidator {
 
@@ -23,7 +23,7 @@ class SegmentValidator {
     }
 
     public function isSegmentValidForDraftSave() {
-        $errors = new addSegmentsErrors();
+        $errors = new AddSegmentsErrors();
 
         $this->isStartTimeDataAValidTime($errors);
         $this->isStartTimeWithinEpisodeBounds($errors);
@@ -33,12 +33,16 @@ class SegmentValidator {
     }
 
     public function isSegmentValidForFinalSave() {
+        $errors = $this->isSegmentValidForDraftSave();
+
+        // TODO: check for Segment duration, playlist ID
+
+        return $errors;
 
     }
 
-
     /**
-     * @param addSegmentsErrors $errors
+     * @param AddSegmentsErrors $errors
      */
     private function isStartTimeDataAValidTime($errors) {
         $startTime = $this->segment->getStartTime();
@@ -51,7 +55,7 @@ class SegmentValidator {
     }
 
     /**
-     * @param addSegmentsErrors $errors
+     * @param AddSegmentsErrors $errors
      */
     private function isStartTimeWithinEpisodeBounds($errors) {
         $startTime = $this->segment->getStartTime();
@@ -64,7 +68,7 @@ class SegmentValidator {
 
 
     /**
-     * @param addSegmentsErrors $errors
+     * @param AddSegmentsErrors $errors
      * @return array
      */
     private function areRequiredCategoryFieldsPresent($errors) {
@@ -95,7 +99,7 @@ class SegmentValidator {
     }
 
     /**
-     * @param addSegmentsErrors $errors
+     * @param AddSegmentsErrors $errors
      */
     private function isAdNumberValid($errors) {
         $adNumber = $this->segment->getAdNumber();
