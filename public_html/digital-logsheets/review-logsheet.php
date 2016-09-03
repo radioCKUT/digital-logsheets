@@ -32,7 +32,6 @@ try {
     $segments = computeSegmentDurations($segments, $episodeEndTime);
 
     foreach ($segments as $segment) {
-        error_log("about to edit segment duration");
         manageSegmentEntries::editExistingSegmentDuration($db, $segment);
     }
 

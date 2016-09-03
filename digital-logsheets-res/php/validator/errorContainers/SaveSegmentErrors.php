@@ -2,7 +2,7 @@
 
 require('ErrorsContainer.php');
 
-    class AddSegmentsErrors extends ErrorsContainer {
+    class SaveSegmentErrors extends ErrorsContainer {
 
         public function __constructor() {
             $this->errors = [
