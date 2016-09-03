@@ -2,6 +2,8 @@
 
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
+require("../../digital-logsheets-res/php/validator/SegmentValidator.php");
+require("../../digital-logsheets-res/php/validator/errorContainers/AddSegmentsErrors.php");
 
 $episodeId = $_POST['episode_id'];
 
@@ -20,7 +22,6 @@ $editSegment = isset($_POST['is_existing_segment']);
 $segmentId = $_POST['segment_id'];
 
 if (!isset($episodeId) || $episodeId <= 0) {
-    error_log("episode id received by save segment: " . $episodeId . ", segmentTime: " . $segmentTime);
     outputErrorResponse("Invalid episode ID");
 }
 
@@ -32,7 +33,6 @@ try {
     $episodeStartDateTime = $episode->getStartTime();
 
     $segmentTime = addDateToSegmentStartTime($episodeStartDateTime, $segmentTime);
-    error_log("segmentTime: " . date_format($segmentTime,"Y/m/d H:i:s"));
 
     $playlistId = $episode->getPlaylistId();
 
@@ -87,12 +87,17 @@ try {
             break;
     }
 
-    error_log("segment->getTime: " . date_format($segment->getStartTime(),"Y/m/d H:i:s"));
-    
+    $errorsContainer = $segment->isValidForDraftSave($episode);
+
+    if ($errorsContainer->doErrorsExist()) {
+        $errorsList = $errorsContainer->getAllErrors();
+        outputErrorResponse(json_encode($errorsList));
+    };
+
     if ($editSegment) {
-        error_log("segment id: " . $segment->getId());
         $segment->setId($segmentId);
         manageSegmentEntries::editSegmentInDatabase($db, $segment);
+
     } else {
         manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
     }
@@ -127,10 +132,22 @@ function outputResponse($response) {
     exit();
 }
 
+
+/**
+ * @param DateTime $episodeStartDateTime
+ * @param $segmentTime
+ * @return DateTime
+ */
 function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
 
     $dateToUse = $episodeStartDateTime->format("Y-m-d");
     $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
+
+    if (!TimeValidator::isTimeInValidFormat($segmentTime)) {
+        $errorsContainer = new AddSegmentsErrors();
+        $errorsContainer->markStartTimeInvalidFormat();
+        outputErrorResponse($errorsContainer->getAllErrors());
+    }
 
     if (strtotime($segmentTime) < strtotime($episodeStartTimeString)) {
         $dayAfterEpisodeStartDateTime = clone $episodeStartDateTime;

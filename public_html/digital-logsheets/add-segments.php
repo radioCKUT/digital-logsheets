@@ -26,9 +26,22 @@
         //close database connection
         $db = NULL;
 
+        $errorArray = array(
+            "segmentTimeInEpisode" => false,
+            "firstSegmentAlignWithEpisodeStart" => false,
+
+            "adNumberInteger" => false,
+            "albumRequired" => false,
+            "songRequired" => false,
+            "artistRequired" => false,
+
+
+        );
+
         $smarty->assign("programs", $programs);
         $smarty->assign("categories", $categories);
         $smarty->assign("episode", $episodeArray);
+        $smarty->assign("error", $errorArray);
 
         // display it
         echo $smarty->fetch('../../digital-logsheets-res/templates/add-segments.tpl');

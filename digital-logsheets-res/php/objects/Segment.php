@@ -1,5 +1,6 @@
 <?php
     include_once(__DIR__ . "/../database/manageSegmentEntries.php");
+    include_once(__DIR__ . "/../validator/SegmentValidator.php");
 
     class Segment extends LogsheetComponent implements JsonSerializable{
 
@@ -28,6 +29,11 @@
             if ($componentId != null) {
                 manageSegmentEntries::getSegmentAttributesFromDatabase($db, $componentId, $this);
             }
+        }
+
+        public function isValidForDraftSave($episode) {
+            $segmentValidator = new SegmentValidator($this, $episode);
+            return $segmentValidator->isSegmentValidForDraftSave();
         }
 
 
@@ -148,6 +154,9 @@
             return $this->duration;
         }
 
+        /**
+         * @return Category
+         */
         public function getCategory() {
             return $this->category;
         }
