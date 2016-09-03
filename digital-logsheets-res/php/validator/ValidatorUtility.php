@@ -7,7 +7,15 @@
         }
 
         public static function doesFieldExist($field) {
-            return ($field != null && $field != '');
+            if (is_null($field)) {
+                return false;
+            }
+
+            if (gettype($field) == 'string' && $field === '') {
+                return false;
+            }
+
+            return true;
         }
 
     }
