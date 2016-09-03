@@ -18,6 +18,7 @@ $isSegmentStartTimeInEpisode = $timeValidator::isSegmentWithinEpisodeBounds($seg
 
 if ($isSegmentStartTimeInEpisode) {
     http_response_code(200);
+
 } else {
     http_response_code(400);
 }

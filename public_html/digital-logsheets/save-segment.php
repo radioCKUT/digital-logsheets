@@ -2,6 +2,7 @@
 
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
+require("../../digital-logsheets-res/php/validator/SegmentValidator.php");
 
 $episodeId = $_POST['episode_id'];
 
@@ -85,9 +86,18 @@ try {
             break;
     }
 
+    $segmentValidator = new SegmentValidator($segment, $episode);
+    $errors = $segmentValidator->isSegmentValidForDraftSave();
+
+    if ($errors->doErrorsExist()) {
+        $errorsList = $errors->getAllErrors();
+        outputErrorResponse(json_encode($errorsList));
+    };
+
     if ($editSegment) {
         $segment->setId($segmentId);
         manageSegmentEntries::editSegmentInDatabase($db, $segment);
+
     } else {
         manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
     }

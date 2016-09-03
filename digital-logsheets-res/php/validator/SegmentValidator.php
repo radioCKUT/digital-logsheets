@@ -22,6 +22,9 @@ class SegmentValidator {
         $this->episode = $episode;
     }
 
+    /**
+     * @return AddSegmentsErrors
+     */
     public function isSegmentValidForDraftSave() {
         $errors = new AddSegmentsErrors();
 
@@ -38,6 +41,10 @@ class SegmentValidator {
         // TODO: check for Segment duration, playlist ID
 
         return $errors;
+
+    }
+
+    private function areRequiredMetadataFieldsPresent($errors) {
 
     }
 
