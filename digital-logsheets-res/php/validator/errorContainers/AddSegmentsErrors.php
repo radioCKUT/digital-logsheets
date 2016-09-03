@@ -6,6 +6,8 @@ require('ErrorsContainer.php');
 
         public function __constructor() {
             $this->errors = [
+                'missingCategory' => false,
+                'categoryInvalidFormat' => false,
                 'missingAlbum' => false,
                 'missingAuthor' => false,
                 'missingName' => false,
@@ -14,6 +16,14 @@ require('ErrorsContainer.php');
                 'startTimeInvalidFormat' => false,
                 'outOfEpisodeBounds' => false
             ];
+        }
+
+        public function markCategoryMissing() {
+            $this->errors['misisngCategory'] = true;
+        }
+
+        public function markCategoryInvalidFormat() {
+            $this->errors['categoryInvalidFormat'] = true;
         }
 
         public function markAlbumMissing() {
