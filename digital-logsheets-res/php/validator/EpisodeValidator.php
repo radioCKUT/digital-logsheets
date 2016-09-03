@@ -33,12 +33,22 @@ class EpisodeValidator {
         $startTime = $this->episode->getStartTime();
         $endTime = $this->episode->getEndTime();
 
-        $episodeInterval = $startTime->diff($endTime);
+        $episodeInterval = $endTime->diff($startTime);
 
-        $episodeLengthInHours = $episodeInterval->h + ($episodeInterval->days * 24);
+        $episodeLengthInHours = null;
+        $episodeIntervalDaysComponent = $episodeInterval->days;
+        if ($episodeIntervalDaysComponent != false && $episodeIntervalDaysComponent > 0) {
+            $episodeLengthInHours = $episodeInterval->h + ($episodeIntervalDaysComponent * 24);
+
+        } else {
+            $episodeLengthInHours = $episodeInterval->h;
+        }
 
         if ($episodeLengthInHours > self::EPISODE_MAX_LENGTH_HOURS) {
             $errorsContainer->markTooLong();
+
+        } else if ($episodeLengthInHours < 0) {
+            $errorsContainer->markTooShort();
         };
     }
 
