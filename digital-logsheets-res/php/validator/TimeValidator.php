@@ -22,7 +22,15 @@
          * @return bool
          */
         public static function isSegmentWithinEpisodeBounds($segmentTime, $episode) {
-            $segmentDateTime = new DateTime("January 1, " . $segmentTime);
+            $segmentDateTime = null;
+
+            if ($segmentTime instanceof DateTime) {
+                $segmentDateTime = $segmentTime;
+
+            } else {
+                $segmentDateTime = new DateTime("January 1, " . $segmentTime);
+            }
+
             $segmentStartTimeInMinutes = self::getTimeInMinutesSinceMidnight($segmentDateTime);
 
             $episodeStartTime = $episode->getStartTime();
