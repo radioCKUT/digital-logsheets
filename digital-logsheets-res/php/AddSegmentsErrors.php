@@ -1,18 +1,18 @@
 <?php
 
-    class AddSegmentsErrors {
+require('ErrorsContainer.php');
 
-        private $errors = [
-            'missingAlbum' => false,
-            'missingAuthor' => false,
-            'missingName' => false,
-            'missingAdNumber' => false,
-            'missingStartTime' => false,
-            'outOfEpisodeBounds' => false
-        ];
+    class AddSegmentsErrors extends ErrorsContainer {
 
-        public function getAllErrors() {
-            return $this->errors;
+        public function __constructor() {
+            $this->errors = [
+                'missingAlbum' => false,
+                'missingAuthor' => false,
+                'missingName' => false,
+                'missingAdNumber' => false,
+                'missingStartTime' => false,
+                'outOfEpisodeBounds' => false
+            ];
         }
 
         public function markAlbumMissing() {
