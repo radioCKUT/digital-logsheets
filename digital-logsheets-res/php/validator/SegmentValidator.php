@@ -1,9 +1,9 @@
 <?php
 
-require_once('ValidatorUtility.php');
+require_once('utilities/ValidatorUtility.php');
 require('CategoryValidator.php');
-require('TimeValidator.php');
-require('AddSegmentsErrors.php');
+require('utilities/TimeValidator.php');
+require('errorContainers/AddSegmentsErrors.php');
 
 class SegmentValidator {
 
@@ -38,13 +38,9 @@ class SegmentValidator {
     public function isSegmentValidForFinalSave() {
         $errors = $this->isSegmentValidForDraftSave();
 
-        // TODO: check for Segment duration, playlist ID
+        // TODO: check for Segment duration
 
         return $errors;
-
-    }
-
-    private function areRequiredMetadataFieldsPresent($errors) {
 
     }
 

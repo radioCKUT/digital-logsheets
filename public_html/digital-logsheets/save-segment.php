@@ -3,6 +3,7 @@
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
 require("../../digital-logsheets-res/php/validator/SegmentValidator.php");
+require("../../digital-logsheets-res/php/validator/errorContainers/AddSegmentsErrors.php");
 
 $episodeId = $_POST['episode_id'];
 
