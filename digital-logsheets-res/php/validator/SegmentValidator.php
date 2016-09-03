@@ -1,9 +1,9 @@
 <?php
 
-require('./ValidatorUtility.php');
-require('./CategoryValidator.php');
-require('./TimeValidator.php');
-require('../AddSegmentsErrors.php');
+require_once('ValidatorUtility.php');
+require('CategoryValidator.php');
+require('TimeValidator.php');
+require('AddSegmentsErrors.php');
 
 class SegmentValidator {
 

@@ -1,6 +1,6 @@
 <?php
 
-    require('./ValidatorUtility.php');
+    require_once('ValidatorUtility.php');
 
     class CategoryValidator {
 
