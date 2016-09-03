@@ -7,8 +7,6 @@ require('../addSegmentsErrors.php');
 
 class SegmentValidator {
 
-    private $errors;
-
     /**
      * @var Segment
      */
@@ -28,6 +26,7 @@ class SegmentValidator {
         $errors = new addSegmentsErrors();
 
         $this->isStartTimeDataAValidTime($errors);
+        $this->isStartTimeWithinEpisodeBounds($errors);
         $this->areRequiredCategoryFieldsPresent($errors);
 
         return $errors;
@@ -42,26 +41,25 @@ class SegmentValidator {
      * @param addSegmentsErrors $errors
      */
     private function isStartTimeDataAValidTime($errors) {
-        $this->isTimePresent($errors);
-
-        $startTime = $this->segment->getStartTime();
-        if (!TimeValidator::isTimeInValidFormat($startTime)){
-            $errors->markStartTimeMissing();
-        };
-    }
-
-
-    /**
-     * @param addSegmentsErrors $errors
-     */
-    private function isTimePresent($errors) {
         $startTime = $this->segment->getStartTime();
 
-        if (!ValidatorUtility::doesFieldExist($startTime)) {
+        if (!ValidatorUtility::doesFieldExist($startTime) ||
+            !TimeValidator::isTimeInValidFormat($startTime)) {
+
             $errors->markStartTimeMissing();
         }
     }
 
+    /**
+     * @param addSegmentsErrors $errors
+     */
+    private function isStartTimeWithinEpisodeBounds($errors) {
+        $startTime = $this->segment->getStartTime();
+
+        if (!TimeValidator::isSegmentWithinEpisodeBounds($startTime, $this->episode)) {
+            $errors->markStartTimeOutOfEpisodeBounds();
+        }
+    }
 
 
 
@@ -94,8 +92,6 @@ class SegmentValidator {
             case 5:
                 self::isAdNumberValid($errors);
         }
-
-        return $this->errors;
     }
 
     /**
