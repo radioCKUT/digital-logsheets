@@ -41,10 +41,7 @@ function setStartDateTimeBounds() {
 }
 
 function getDateOffset(monthOffsetFromDate, date) {
-    console.log('moment()', moment());
-    console.log('moment(moment()) = ', moment(date));
     var todayWithOffset = moment(date).add(monthOffsetFromDate, 'months');
-
 
     var dd = todayWithOffset.date();
     var mm = todayWithOffset.month() + 1; //January is 0!
