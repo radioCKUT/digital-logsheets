@@ -17,8 +17,8 @@ function adjustPrerecordDateBounds() {
         lowerBound = getDateOffset(-1, episodeStartDate);
 
     } else {
-        upperBound = getDateOffset(0, Date.today());
-        lowerBound = getDateOffset(-1, Date.today());
+        upperBound = getDateOffset(0, moment());
+        lowerBound = getDateOffset(-1, moment());
     }
 
     var prerecordDateInput = $('#prerecord_date');
@@ -30,9 +30,9 @@ function setStartDateTimeBounds() {
     var lowerBoundMonthOffset = -1;
     var upperBoundMonthOffset = 1;
 
-    var lowerBound = getDateOffset(lowerBoundMonthOffset, Date.today());
+    var lowerBound = getDateOffset(lowerBoundMonthOffset, moment());
     lowerBound += 'T00:00:00';
-    var upperBound = getDateOffset(upperBoundMonthOffset, Date.today());
+    var upperBound = getDateOffset(upperBoundMonthOffset, moment());
     upperBound += 'T23:59:59';
 
     var startDateTime = $('#start_datetime');
@@ -41,7 +41,10 @@ function setStartDateTimeBounds() {
 }
 
 function getDateOffset(monthOffsetFromDate, date) {
+    console.log('moment()', moment());
+    console.log('moment(moment()) = ', moment(date));
     var todayWithOffset = moment(date).add(monthOffsetFromDate, 'months');
+
 
     var dd = todayWithOffset.date();
     var mm = todayWithOffset.month() + 1; //January is 0!
