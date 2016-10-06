@@ -56,7 +56,7 @@ class SaveEpisodeErrors extends ErrorsContainer {
         $this->errors['missingPrerecordDate'] = true;
     }
 
-    public function markPrerecordDateInFuture() {
+    public function markPrerecordDateTooFarInFuture() {
         $this->errors['prerecordDateInFuture'] = true;
     }
 

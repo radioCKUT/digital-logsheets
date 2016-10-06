@@ -7,6 +7,7 @@ class EpisodeValidator {
 
 
     const EPISODE_MAX_LENGTH_HOURS = 24;
+    const EPISODE_MIN_LENGTH_HOURS = 0.001;
     const AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS = 31;
     const AIR_AFTER_CURRENT_DATE_LIMIT_DAYS = 31;
 
@@ -70,18 +71,21 @@ class EpisodeValidator {
 
         $episodeLengthInHours = null;
         $episodeIntervalDaysComponent = $episodeInterval->days;
+        $episodeIntervalHoursComponent = $episodeInterval->h;
+        $episodeIntervalMinutesComponent = $episodeInterval->i;
 
         if ($episodeIntervalDaysComponent != false && $episodeIntervalDaysComponent > 0) {
-            $episodeLengthInHours = $episodeInterval->h + ($episodeIntervalDaysComponent * 24);
+            $episodeLengthInHours =  ($episodeIntervalDaysComponent * 24) +
+                $episodeIntervalHoursComponent + ($episodeIntervalMinutesComponent / 60);
 
         } else {
-            $episodeLengthInHours = $episodeInterval->h;
+            $episodeLengthInHours = $episodeIntervalHoursComponent + ($episodeIntervalMinutesComponent / 60);
         }
 
         if ($episodeLengthInHours > self::EPISODE_MAX_LENGTH_HOURS) {
             $errorsContainer->markTooLong();
 
-        } else if ($episodeLengthInHours < 0) {
+        } else if ($episodeLengthInHours < self::EPISODE_MIN_LENGTH_HOURS) {
             $errorsContainer->markTooShort();
         };
     }
