@@ -10,6 +10,7 @@ class EpisodeValidator {
     const AIR_AFTER_CURRENT_DATE_LIMIT_DAYS = 31;
 
     const PRERECORD_BEFORE_CURRENT_DATE_LIMIT_DAYS = 62;
+    const PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS = 0;
 
     /**
      * @var Episode
@@ -25,7 +26,7 @@ class EpisodeValidator {
 
         $this->isEpisodeLengthValid($errorsContainer);
         $this->isEpisodeAirDateValid($errorsContainer);
-
+        $this->isEpisodePrerecordDateValid($errorsContainer);
     }
 
     /**
@@ -60,18 +61,53 @@ class EpisodeValidator {
      */
     private function isEpisodeAirDateValid($errorsContainer) {
         $startTime = $this->episode->getStartTime();
-        $currentTime = new DateTime();
+        $daysSinceAirDate = $this->getDayDifferenceFromCurrentDate($startTime);
 
-        $timeSinceAirDateInterval = $currentTime->diff($startTime);
-        $timeSinceAirDate = $timeSinceAirDateInterval->format('%R%a');
-
-        if ($timeSinceAirDate > self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS) {
+        if ($daysSinceAirDate > self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS) {
             $errorsContainer->markAirDateTooFarInFuture();
-        }
 
-        if ($timeSinceAirDate < self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS) {
+        } else if ($daysSinceAirDate < self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS) {
             $errorsContainer->markAirDateTooFarInPast();
         }
+    }
+
+
+    /**
+     * @param SaveEpisodeErrors $errorsContainer
+     */
+    private function isEpisodePrerecordDateValid($errorsContainer) {
+        $prerecord = $this->episode->isPrerecord();
+
+        if ($prerecord) {
+            $prerecordDate = $this->episode->getPrerecordDate();
+
+            if (is_null($prerecordDate)) {
+                $errorsContainer->markPrerecordDateMissing();
+
+            } else {
+                $daysSincePrerecordDate = $this->getDayDifferenceFromCurrentDate($prerecordDate);
+
+                if ($daysSincePrerecordDate > self::PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS) {
+                    $errorsContainer->markPrerecordDateInFuture();
+
+                } else if ($daysSincePrerecordDate < self::PRERECORD_BEFORE_CURRENT_DATE_LIMIT_DAYS) {
+                    $errorsContainer->markPrerecordDateTooFarInPast();
+                }
+            }
+        }
+    }
+
+
+    /**
+     * @param DateTime $comparisonDate
+     * @return int
+     */
+    private function getDayDifferenceFromCurrentDate($comparisonDate) {
+        $currentTime = new DateTime();
+
+        $timeSinceComparisonDateInterval = $currentTime->diff($comparisonDate);
+        $daysSinceComparisonDate = $timeSinceComparisonDateInterval->format('%R%a');
+        return intval($daysSinceComparisonDate);
     }
 
 }
