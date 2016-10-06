@@ -6,18 +6,34 @@ class SaveEpisodeErrors extends ErrorsContainer {
 
     public function __constructor() {
         $this->errors = [
+            'missingProgram' => false,
+            'missingProgrammer' => false,
+            'missingStartTime' => false,
+            'missingDuration' => false,
             'tooLong' => false,
             'tooShort' => false,
             'airDateTooFarInPast' => false,
             'airDateTooFarInFuture' => false,
-            'prerecordDateInFuture' => false,
-            'prerecordDateTooFarInPast' => false,
             'missingPrerecordDate' => false,
-            'missingProgram' => false,
-            'missingProgrammer' => false,
-            'missingStartTime' => false,
-            'missingDuration' => false
+            'prerecordDateInFuture' => false,
+            'prerecordDateTooFarInPast' => false
         ];
+    }
+
+    public function markProgramMissing() {
+        $this->errors['missingProgram'] = true;
+    }
+
+    public function markProgrammerMissing() {
+        $this->errors['missingProgrammer'] = true;
+    }
+
+    public function markStartTimeMissing() {
+        $this->errors['missingStartTime'] = true;
+    }
+
+    public function markDurationMissing() {
+        $this->errors['missingDuration'] = true;
     }
 
     public function markTooLong() {
@@ -36,16 +52,16 @@ class SaveEpisodeErrors extends ErrorsContainer {
         $this->errors['airDateTooFarInFuture'] = true;
     }
 
+    public function markPrerecordDateMissing() {
+        $this->errors['missingPrerecordDate'] = true;
+    }
+
     public function markPrerecordDateInFuture() {
         $this->errors['prerecordDateInFuture'] = true;
     }
 
     public function markPrerecordDateTooFarInPast() {
         $this->errors['prerecordDateTooFarInPast'] = true;
-    }
-
-    public function markPrerecordDateMissing() {
-        $this->errors['missingPrerecordDate'] = true;
     }
 
 }

@@ -1,6 +1,7 @@
 <?php
 
-require('errorContainers/SaveEpisodeErrors.php');
+require_once('errorContainers/SaveEpisodeErrors.php');
+require_once('utilities/ValidatorUtility.php');
 
 class EpisodeValidator {
 
@@ -24,9 +25,38 @@ class EpisodeValidator {
     public function isEpisodeValidForDraftSave() {
         $errorsContainer = new SaveEpisodeErrors();
 
+        $this->areRequiredFieldsPresent($errorsContainer);
         $this->isEpisodeLengthValid($errorsContainer);
         $this->isEpisodeAirDateValid($errorsContainer);
         $this->isEpisodePrerecordDateValid($errorsContainer);
+    }
+
+
+    /**
+     * @param SaveEpisodeErrors $errorsContainer
+     */
+    private function areRequiredFieldsPresent($errorsContainer) {
+
+        $program = $this->episode->getProgram();
+        if (ValidatorUtility::doesFieldExist($program)) {
+            $errorsContainer->markProgramMissing();
+        }
+
+        $programmer = $this->episode->getProgrammer();
+        if (ValidatorUtility::doesFieldExist($programmer)) {
+            $errorsContainer->markProgrammerMissing();
+        }
+
+        $startTime = $this->episode->getStartTime();
+        if (ValidatorUtility::doesFieldExist($startTime)) {
+            $errorsContainer->markStartTimeMissing();
+        }
+
+        $endTime = $this->episode->getEndTime();
+        if (ValidatorUtility::doesFieldExist($endTime)) {
+            //TODO: is it enough to check end time as proxy for duration?
+            $errorsContainer->markDurationMissing();
+        }
     }
 
     /**
