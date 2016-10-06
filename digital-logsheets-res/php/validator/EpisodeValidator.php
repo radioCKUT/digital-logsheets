@@ -24,6 +24,8 @@ class EpisodeValidator {
         $errorsContainer = new SaveEpisodeErrors();
 
         $this->isEpisodeLengthValid($errorsContainer);
+        $this->isEpisodeAirDateValid($errorsContainer);
+
     }
 
     /**
@@ -37,6 +39,7 @@ class EpisodeValidator {
 
         $episodeLengthInHours = null;
         $episodeIntervalDaysComponent = $episodeInterval->days;
+
         if ($episodeIntervalDaysComponent != false && $episodeIntervalDaysComponent > 0) {
             $episodeLengthInHours = $episodeInterval->h + ($episodeIntervalDaysComponent * 24);
 
@@ -52,8 +55,23 @@ class EpisodeValidator {
         };
     }
 
-    private function isEpisodeAirDateValid() {
+    /**
+     * @param SaveEpisodeErrors $errorsContainer
+     */
+    private function isEpisodeAirDateValid($errorsContainer) {
+        $startTime = $this->episode->getStartTime();
+        $currentTime = new DateTime();
 
+        $timeSinceAirDateInterval = $currentTime->diff($startTime);
+        $timeSinceAirDate = $timeSinceAirDateInterval->format('%R%a');
+
+        if ($timeSinceAirDate > self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS) {
+            $errorsContainer->markAirDateTooFarInFuture();
+        }
+
+        if ($timeSinceAirDate < self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS) {
+            $errorsContainer->markAirDateTooFarInPast();
+        }
     }
 
 }
