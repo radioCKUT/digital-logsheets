@@ -12,7 +12,7 @@ class EpisodeValidator {
     const AIR_AFTER_CURRENT_DATE_LIMIT_DAYS = 31;
 
     const PRERECORD_BEFORE_CURRENT_DATE_LIMIT_DAYS = 62;
-    const PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS = 0;
+    const PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS = 0.001;
 
     /**
      * @var Episode
@@ -100,7 +100,7 @@ class EpisodeValidator {
         if ($daysSinceAirDate > self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS) {
             $errorsContainer->markAirDateTooFarInFuture();
 
-        } else if ($daysSinceAirDate < self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS) {
+        } else if ($daysSinceAirDate < (self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS * -1)) {
             $errorsContainer->markAirDateTooFarInPast();
         }
     }
@@ -122,9 +122,9 @@ class EpisodeValidator {
                 $daysSincePrerecordDate = $this->getDayDifferenceFromCurrentDate($prerecordDate);
 
                 if ($daysSincePrerecordDate > self::PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS) {
-                    $errorsContainer->markPrerecordDateInFuture();
+                    $errorsContainer->markPrerecordDateTooFarInFuture();
 
-                } else if ($daysSincePrerecordDate < self::PRERECORD_BEFORE_CURRENT_DATE_LIMIT_DAYS) {
+                } else if ($daysSincePrerecordDate < (self::PRERECORD_BEFORE_CURRENT_DATE_LIMIT_DAYS * -1)) {
                     $errorsContainer->markPrerecordDateTooFarInPast();
                 }
             }
