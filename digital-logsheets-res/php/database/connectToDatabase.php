@@ -18,7 +18,7 @@
 			
 		} catch(PDOException $error) {
 			echo 'Connection failed: ' . $error->getMessage();
-		} //end try/catch statment
+		} //end try/catch statement
 		
 		//return null PDO object if successful conection is not made
 		return NULL;

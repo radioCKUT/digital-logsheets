@@ -19,7 +19,7 @@ require('ErrorsContainer.php');
         }
 
         public function markCategoryMissing() {
-            $this->errors['misisngCategory'] = true;
+            $this->errors['missingCategory'] = true;
         }
 
         public function markCategoryInvalidFormat() {

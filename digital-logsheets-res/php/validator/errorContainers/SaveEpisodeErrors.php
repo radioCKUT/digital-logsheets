@@ -23,4 +23,20 @@ class SaveEpisodeErrors extends ErrorsContainer {
         $this->errors['tooShort'] = true;
     }
 
+    public function markAirDateTooFarInPast() {
+        $this->errors['airDateTooFarInPast'] = true;
+    }
+
+    public function markAirDateTooFarInFuture() {
+        $this->errors['airDateTooFarInFuture'] = true;
+    }
+
+    public function markPrerecordDateInFuture() {
+        $this->errors['prerecordDateInFuture'] = true;
+    }
+
+    public function markPrerecordDateTooFarInPast() {
+        $this->errors['prerecordDateTooFarInPast'] = true;
+    }
+
 }
