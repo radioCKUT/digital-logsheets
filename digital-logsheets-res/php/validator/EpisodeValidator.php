@@ -42,13 +42,15 @@ class EpisodeValidator {
         $this->episode = $episode;
     }
 
-    public function isEpisodeValidForDraftSave() {
+    public function checkDraftSaveValidity() {
         $errorsContainer = new SaveEpisodeErrors();
 
         $this->areRequiredFieldsPresent($errorsContainer);
         $this->isEpisodeLengthValid($errorsContainer);
         $this->isEpisodeAirDateValid($errorsContainer);
         $this->isEpisodePrerecordDateValid($errorsContainer);
+
+        return $errorsContainer;
     }
 
 

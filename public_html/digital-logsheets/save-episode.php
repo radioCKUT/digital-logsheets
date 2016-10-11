@@ -23,6 +23,7 @@ include_once('../../digital-logsheets-res/php/database/connectToDatabase.php');
 include_once("../../digital-logsheets-res/php/database/manageEpisodeEntries.php");
 include_once("../../digital-logsheets-res/php/database/managePlaylistEntries.php");
 include_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
+require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
 
 $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
@@ -60,6 +61,13 @@ try {
     $episodeObject->setIsPrerecord($prerecord);
     $episodeObject->setPrerecordDate($prerecord_date);
     $episodeObject->setComment($comment);
+
+    $episodeValidator = new EpisodeValidator($episodeObject);
+    $episodeErrors = $episodeValidator->checkDraftSaveValidity();
+
+    $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
+
+    error_log('doEpisodeErrorsExist: ' . $doEpisodeErrorsExist);
 
     $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
 
