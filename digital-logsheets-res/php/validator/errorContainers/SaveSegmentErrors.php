@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require('ErrorsContainer.php');
+require_once('ErrorsContainer.php');
 
     class SaveSegmentErrors extends ErrorsContainer {
 

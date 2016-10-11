@@ -1,6 +1,6 @@
 <?php
 
-require('ErrorsContainer.php');
+require_once('ErrorsContainer.php');
 
 class SaveEpisodeErrors extends ErrorsContainer {
 
