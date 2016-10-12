@@ -36,7 +36,7 @@ include_once("readFromDatabase.php");
             $programIds = readFromDatabase::readEntireColumnFromTable($dbConn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);
 
             $programs = array();
-            foreach($programIds as $programId) {
+            foreach ($programIds as $programId) {
                 $program = new Program($dbConn, $programId[self::ID_COLUMN_NAME]);
                 $programs[$program->getId()] = $program->getName();
             }

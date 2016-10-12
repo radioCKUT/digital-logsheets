@@ -50,14 +50,14 @@ try {
     $episodeObject->setProgram(new Program($db, $programId));
     $episodeObject->setProgrammer(new Programmer($db, $programmerId));
 
-    $episodeStartTime = new DateTime($episodeStartTime, new DateTimeZone('America/Montreal'));
+    $episodeStartTime = getDateTimeFromDateString($episodeStartTime);
     $episodeObject->setStartTime($episodeStartTime);
 
     $episodeEndTime = computeEpisodeEndTime($episodeStartTime, $episodeDuration);
     $episodeObject->setEndTime($episodeEndTime);
 
     $episodeObject->setIsPrerecord($prerecord);
-    $prerecordDate = new DateTime($prerecordDate, new DateTimeZone('America/Montreal'));
+    $prerecordDate = getDateTimeFromDateString($prerecordDate);
     $episodeObject->setPrerecordDate($prerecordDate);
 
     $episodeObject->setComment($comment);
@@ -78,6 +78,18 @@ try {
 } catch(PDOException $e) {
     error_log('Error while saving an episode: ' . $e->getMessage());
     //TODO: error handling
+}
+
+function getDateTimeFromDateString($dateString)
+{
+    $d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
+    
+    if ($d && $d->format('Y-m-d\TH:i') === $dateString) {
+        return new DateTime($dateString, new DateTimeZone('America/Montreal'));
+
+    } else {
+        return null;
+    }
 }
 
 function computeEpisodeEndTime($episodeStartTime, $episodeDuration) {
