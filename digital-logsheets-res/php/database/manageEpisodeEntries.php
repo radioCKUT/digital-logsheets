@@ -89,19 +89,27 @@ include_once("readFromDatabase.php");
          */
         public static function saveNewEpisode($dbConn, $episodeObject) {
 
+            $columnNames = array(self::PLAYLIST_COLUMN_NAME,
+                self::PROGRAM_COLUMN_NAME,
+                self::PROGRAMMER_COLUMN_NAME,
+                self::START_TIME_COLUMN_NAME,
+                self::END_TIME_COLUMN_NAME,
+                self::IS_PRERECORD_COLUMN_NAME,
+                self::PRERECORD_COLUMN_NAME,
+                self::IS_DRAFT_COLUMN_NAME);
+
             $startDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getStartTime());
             $endDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getEndTime());
-
-            $columnNames = array(self::PLAYLIST_COLUMN_NAME, self::PROGRAM_COLUMN_NAME,
-                self::PROGRAMMER_COLUMN_NAME, self::START_TIME_COLUMN_NAME, self::END_TIME_COLUMN_NAME,
-                self::IS_PRERECORD_COLUMN_NAME, self::PRERECORD_COLUMN_NAME, self::IS_DRAFT_COLUMN_NAME);
+            $prerecordDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getPrerecordDate());
 
             $values = array($episodeObject->getPlaylist()->getId(),
                 $episodeObject->getProgram()->getId(),
                 $episodeObject->getProgrammer()->getId(),
-                $startDateTimeObject, $endDateTimeObject,
+                $startDateTimeObject,
+                $endDateTimeObject,
                 $episodeObject->isPrerecord(),
-                $episodeObject->getPrerecordDate(), true);
+                $prerecordDateTimeObject,
+                true);
 
             return writeToDatabase::writeEntryToDatabase($dbConn, self::TABLE_NAME, $columnNames, $values);
         }

@@ -30,7 +30,7 @@ $lastName = $_POST['last_name'];
 $programId = $_POST['program'];
 
 $prerecord = isset($_POST['prerecord']);
-$prerecord_date = $_POST['prerecord_date'];
+$prerecordDate = $_POST['prerecord_date'];
 
 $episodeStartTime = $_POST['start_datetime'];
 $episodeDuration = $_POST['episode_duration'];
@@ -59,7 +59,9 @@ try {
     $episodeObject->setStartTime($episodeStartTime);
     $episodeObject->setEndTime($episode_end_time);
     $episodeObject->setIsPrerecord($prerecord);
-    $episodeObject->setPrerecordDate($prerecord_date);
+    $prerecordDate = new DateTime($prerecordDate, new DateTimeZone('America/Montreal'));
+    $episodeObject->setPrerecordDate($prerecordDate);
+
     $episodeObject->setComment($comment);
 
     $episodeValidator = new EpisodeValidator($episodeObject);
