@@ -32,6 +32,7 @@ class readFromDatabase
             return "SELECT " . $columnNamesString . " FROM " . $tableName;
         }
 
+
         private static function readFromDatabaseWithStatement($sqlQueryStmt)
         {
             try {
@@ -85,8 +86,12 @@ class readFromDatabase
 
         public static function readFirstMatchingEntryFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues)
         {
-            $allMatchingEntries = self::readFilteredColumnFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues);
-            return $allMatchingEntries[0][$columnNames[0]];
+            try {
+                $allMatchingEntries = self::readFilteredColumnFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues);
+                return $allMatchingEntries[0][$columnNames[0]];
+            } catch (Exception $e) {
+                return null;
+            }
         }
 
 
