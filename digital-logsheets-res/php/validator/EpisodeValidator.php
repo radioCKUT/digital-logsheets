@@ -59,10 +59,7 @@ class EpisodeValidator {
      */
     private function areRequiredFieldsPresent($errorsContainer) {
 
-        $program = $this->episode->getProgram();
-        if (!ValidatorUtility::doesFieldExist($program)) {
-            $errorsContainer->markProgramMissing();
-        }
+        $this->isProgramPresent($errorsContainer);
 
         $programmer = $this->episode->getProgrammer();
         if (!ValidatorUtility::doesFieldExist($programmer)) {
@@ -78,6 +75,17 @@ class EpisodeValidator {
         if (!ValidatorUtility::doesFieldExist($endTime)) {
             //TODO: is it enough to check end time as proxy for duration?
             $errorsContainer->markDurationMissing();
+        }
+    }
+
+    /**
+     * @param SaveEpisodeErrors $errorsContainer
+     */
+    private function isProgramPresent($errorsContainer) {
+        $program = $this->episode->getProgram();
+
+        if (!ValidatorUtility::doesFieldExist($program->getName())) {
+            $errorsContainer->markProgramMissing();
         }
     }
 
