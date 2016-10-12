@@ -44,20 +44,18 @@ try {
     $programmerId = 1; //TODO change programmerId once settled how programmers will be stored
     $playlistId = managePlaylistEntries::createNewPlaylist($db);
 
-    $episodeStartTime = new DateTime($episodeStartTime, new DateTimeZone('America/Montreal'));
-
-    $episode_end_time = clone $episodeStartTime;
-    $episodeDurationMins = ($episodeDuration*60);
-    $episodeDurationDateInterval = new DateInterval('PT' . $episodeDurationMins . 'M');
-    $episode_end_time->add($episodeDurationDateInterval);
-
     $episodeObject = new Episode($db, null);
 
     $episodeObject->setPlaylist(new Playlist($db, $playlistId));
     $episodeObject->setProgram(new Program($db, $programId));
     $episodeObject->setProgrammer(new Programmer($db, $programmerId));
+
+    $episodeStartTime = new DateTime($episodeStartTime, new DateTimeZone('America/Montreal'));
     $episodeObject->setStartTime($episodeStartTime);
-    $episodeObject->setEndTime($episode_end_time);
+
+    $episodeEndTime = computeEpisodeEndTime($episodeStartTime, $episodeDuration);
+    $episodeObject->setEndTime($episodeEndTime);
+
     $episodeObject->setIsPrerecord($prerecord);
     $prerecordDate = new DateTime($prerecordDate, new DateTimeZone('America/Montreal'));
     $episodeObject->setPrerecordDate($prerecordDate);
@@ -68,14 +66,12 @@ try {
     $episodeErrors = $episodeValidator->checkDraftSaveValidity();
 
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
-
-    error_log('doEpisodeErrorsExist: ' . $doEpisodeErrorsExist);
-
-    $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
-
-    $_SESSION["episodeId"] = $episodeId;
-
-    error_log("session episode Id: " . $_SESSION["episodeId"]);
+    if ($doEpisodeErrorsExist) {
+        // TODO: handle episode errors present
+    } else {
+        $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
+        $_SESSION["episodeId"] = $episodeId;
+    }
 
     header('Location: add-segments.php');
 
@@ -84,3 +80,11 @@ try {
     //TODO: error handling
 }
 
+function computeEpisodeEndTime($episodeStartTime, $episodeDuration) {
+    $episodeEndTime = clone $episodeStartTime;
+    $episodeDurationMins = ($episodeDuration * 60);
+    $episodeDurationDateInterval = new DateInterval('PT' . $episodeDurationMins . 'M');
+    $episodeEndTime->add($episodeDurationDateInterval);
+
+    return $episodeEndTime;
+}
