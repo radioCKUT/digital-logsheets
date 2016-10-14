@@ -74,7 +74,9 @@ class SegmentValidator {
             $errors->markCategoryMissing();
         }
 
-        if (!$category->isValid()) {
+        $categoryValidator = new CategoryValidator($category);
+        
+        if (!$categoryValidator->isCategoryValid()) {
             $errors->markCategoryInvalidFormat();
         }
     }
