@@ -68,6 +68,10 @@ try {
     $episodeValidator = new EpisodeValidator($episodeObject);
     $episodeErrors = $episodeValidator->checkDraftSaveValidity();
 
+    if (!is_numeric($episodeDurationHours)) {
+        $episodeErrors->markDurationMissing();
+    }
+
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
     if ($doEpisodeErrorsExist) {
         error_log("Errors exist in episode: " . print_r($episodeErrors, true));

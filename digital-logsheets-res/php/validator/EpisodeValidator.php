@@ -69,12 +69,13 @@ class EpisodeValidator {
         $startTime = $this->episode->getStartTime();
         if (!ValidatorUtility::doesFieldExist($startTime)) {
             $errorsContainer->markStartTimeMissing();
-        }
 
-        $endTime = $this->episode->getEndTime();
-        if (!ValidatorUtility::doesFieldExist($endTime)) {
-            //TODO: is it enough to check end time as proxy for duration?
-            $errorsContainer->markDurationMissing();
+        } else {
+            $endTime = $this->episode->getEndTime();
+            if (!ValidatorUtility::doesFieldExist($endTime)) {
+                //TODO: is it enough to check end time as proxy for duration?
+                $errorsContainer->markDurationMissing();
+            }
         }
     }
 
