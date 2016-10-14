@@ -66,11 +66,7 @@ try {
     $episodeObject->setComment($comment);
 
     $episodeValidator = new EpisodeValidator($episodeObject);
-    $episodeErrors = $episodeValidator->checkDraftSaveValidity();
-
-    if (!is_numeric($episodeDurationHours)) {
-        $episodeErrors->markDurationMissing();
-    }
+    $episodeErrors = $episodeValidator->checkDraftSaveValidity($episodeDurationHours);
 
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
     if ($doEpisodeErrorsExist) {

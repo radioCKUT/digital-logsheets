@@ -42,8 +42,12 @@ class EpisodeValidator {
         $this->episode = $episode;
     }
 
-    public function checkDraftSaveValidity() {
+    public function checkDraftSaveValidity($durationHours) {
         $errorsContainer = new SaveEpisodeErrors();
+
+        if (!is_numeric($durationHours)) {
+            $errorsContainer->markDurationMissing();
+        }
 
         $this->areRequiredFieldsPresent($errorsContainer);
         $this->isEpisodeLengthValid($errorsContainer);
