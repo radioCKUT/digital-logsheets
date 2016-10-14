@@ -46,8 +46,8 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
-            if ($componentId != null) {
-                manageSegmentEntries::getSegmentAttributesFromDatabase($db, $componentId, $this);
+            if ($this->id != null) {
+                manageSegmentEntries::getSegmentAttributesFromDatabase($db, $this->id, $this);
             }
         }
 

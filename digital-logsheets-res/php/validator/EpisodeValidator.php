@@ -96,6 +96,10 @@ class EpisodeValidator {
         $startTime = $this->episode->getStartTime();
         $endTime = $this->episode->getEndTime();
 
+        if ($startTime == null || $endTime == null) {
+            return;
+        }
+
         $episodeInterval = $endTime->diff($startTime);
 
         $episodeLengthInHours = null;
@@ -124,6 +128,11 @@ class EpisodeValidator {
      */
     private function isEpisodeAirDateValid($errorsContainer) {
         $startTime = $this->episode->getStartTime();
+
+        if ($startTime == null) {
+            return;
+        }
+
         $daysSinceAirDate = $this->getDayDifferenceFromCurrentDate($startTime);
 
         if ($daysSinceAirDate > self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS) {

@@ -27,7 +27,9 @@ include_once(__DIR__ . "/../database/manageProgramEntries.php");
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
-            $this->name = manageProgramEntries::getProgramNameFromDatabase($db, $componentId);
+            if ($this->id != null) {
+                $this->name = manageProgramEntries::getProgramNameFromDatabase($db, $this->id);
+            }
         }
         
         public function getName() {

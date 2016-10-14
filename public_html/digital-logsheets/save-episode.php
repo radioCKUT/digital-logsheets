@@ -24,6 +24,7 @@ include_once("../../digital-logsheets-res/php/database/manageEpisodeEntries.php"
 include_once("../../digital-logsheets-res/php/database/managePlaylistEntries.php");
 include_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
+require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
 
 $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
@@ -33,7 +34,7 @@ $prerecord = isset($_POST['prerecord']);
 $prerecordDate = $_POST['prerecord_date'];
 
 $episodeStartTime = $_POST['start_datetime'];
-$episodeDuration = $_POST['episode_duration'];
+$episodeDurationHours = $_POST['episode_duration'];
 $comment = $_POST['comment'];
 
 session_start();
@@ -53,8 +54,10 @@ try {
     $episodeStartTime = getDateTimeFromDateString($episodeStartTime);
     $episodeObject->setStartTime($episodeStartTime);
 
-    $episodeEndTime = computeEpisodeEndTime($episodeStartTime, $episodeDuration);
-    $episodeObject->setEndTime($episodeEndTime);
+    if ($episodeStartTime != null) {
+        $episodeEndTime = computeEpisodeEndTime($episodeStartTime, $episodeDurationHours);
+        $episodeObject->setEndTime($episodeEndTime);
+    }
 
     $episodeObject->setIsPrerecord($prerecord);
     $prerecordDate = getDateTimeFromDateString($prerecordDate);
@@ -67,8 +70,10 @@ try {
 
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
     if ($doEpisodeErrorsExist) {
+        error_log("Errors exist in episode: " . print_r($episodeErrors, true));
         // TODO: handle episode errors present
     } else {
+        error_log("Epsiode is valid!");
         $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
         $_SESSION["episodeId"] = $episodeId;
     }
@@ -80,10 +85,9 @@ try {
     //TODO: error handling
 }
 
-function getDateTimeFromDateString($dateString)
-{
+function getDateTimeFromDateString($dateString) {
     $d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
-    
+
     if ($d && $d->format('Y-m-d\TH:i') === $dateString) {
         return new DateTime($dateString, new DateTimeZone('America/Montreal'));
 
@@ -92,9 +96,14 @@ function getDateTimeFromDateString($dateString)
     }
 }
 
-function computeEpisodeEndTime($episodeStartTime, $episodeDuration) {
+/**
+ * @param DateTime $episodeStartTime
+ * @param int $episodeDurationHours
+ * @return mixed
+ */
+function computeEpisodeEndTime($episodeStartTime, $episodeDurationHours) {
     $episodeEndTime = clone $episodeStartTime;
-    $episodeDurationMins = ($episodeDuration * 60);
+    $episodeDurationMins = ($episodeDurationHours * 60);
     $episodeDurationDateInterval = new DateInterval('PT' . $episodeDurationMins . 'M');
     $episodeEndTime->add($episodeDurationDateInterval);
 

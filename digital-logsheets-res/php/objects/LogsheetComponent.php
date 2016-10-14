@@ -29,7 +29,12 @@ class LogsheetComponent {
         }
         
         public function setId($componentId) {
-            $this->id = $componentId;
+            if (is_int($componentId) && $componentId >= 0) {
+                $this->id = $componentId;
+            } else {
+                $this->id = null;
+            }
+
         }
         
         public function getId() {

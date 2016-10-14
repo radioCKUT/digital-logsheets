@@ -28,7 +28,9 @@ include_once(__DIR__ . "/../database/manageCategoryEntries.php");
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
-            $this->name = manageCategoryEntries::getCategoryNameFromDatabase($db, $componentId);
+            if ($this->id != null) {
+                $this->name = manageCategoryEntries::getCategoryNameFromDatabase($db, $this->id);
+            }
         }
         
         public function getName() {

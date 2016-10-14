@@ -30,7 +30,9 @@ require_once(__DIR__ . "/../database/managePlaylistEntries.php");
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
-            $this->segments = managePlaylistEntries::getPlaylistSegmentsFromDatabase($db, $componentId);
+            if ($this->id != null) {
+                $this->segments = managePlaylistEntries::getPlaylistSegmentsFromDatabase($db, $this->id);
+            }
         }
 
 

@@ -52,8 +52,8 @@
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
-            if ($componentId != null) {
-                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $componentId, $this);
+            if ($this->id != null) {
+                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $componentId, $this->id);
             }
         }
 
