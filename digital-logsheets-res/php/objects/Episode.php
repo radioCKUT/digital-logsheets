@@ -53,7 +53,7 @@
             parent::__construct($db, $componentId);
 
             if ($this->id != null) {
-                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $componentId, $this->id);
+                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $this->id, $this);
             }
         }
 

@@ -158,7 +158,9 @@ class EpisodeValidator {
                 $errorsContainer->markPrerecordDateMissing();
 
             } else {
-                $daysSincePrerecordDate = $this->getDayDifferenceFromCurrentDate($prerecordDate);
+
+                $episodeStartDate = $this->episode->getStartTime();
+                $daysSincePrerecordDate = $this->getDayDifferenceFromDate($episodeStartDate, $prerecordDate);
 
                 if ($daysSincePrerecordDate > self::PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS) {
                     $errorsContainer->markPrerecordDateTooFarInFuture();
@@ -170,6 +172,24 @@ class EpisodeValidator {
         }
     }
 
+    /**
+     * @param DateTime $fromDate
+     * @param DateTime $toDate
+     * @return int
+     */
+    private function getDayDifferenceFromDate($fromDate, $toDate) {
+        $timeSinceFromDateInterval = $fromDate->diff($toDate);
+        $entireDaysSinceFromDate = $timeSinceFromDateInterval->format('%R%a');
+        $hoursSinceFromDate = $timeSinceFromDateInterval->format('%h');
+        $minutesSinceFromDate = $timeSinceFromDateInterval->format('%i');
+
+        $daysSinceFromDate = intval($entireDaysSinceFromDate) +
+            intval($hoursSinceFromDate) / 24 +
+            intval($minutesSinceFromDate) / (24 * 60);
+
+        return $daysSinceFromDate;
+    }
+
 
     /**
      * @param DateTime $comparisonDate
@@ -177,10 +197,8 @@ class EpisodeValidator {
      */
     private function getDayDifferenceFromCurrentDate($comparisonDate) {
         $currentTime = new DateTime();
+        return $this->getDayDifferenceFromDate($currentTime, $comparisonDate);
 
-        $timeSinceComparisonDateInterval = $currentTime->diff($comparisonDate);
-        $daysSinceComparisonDate = $timeSinceComparisonDateInterval->format('%R%a');
-        return intval($daysSinceComparisonDate);
     }
 
 }
