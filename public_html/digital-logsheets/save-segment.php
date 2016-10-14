@@ -106,18 +106,16 @@ try {
             break;
     }
 
-    $errorsContainer = $segment->isValidForDraftSave($episode);
-
-    if ($errorsContainer->doErrorsExist()) {
-        $errorsList = $errorsContainer->getAllErrors();
-        outputErrorResponse(json_encode($errorsList));
-    };
-
     if ($editSegment) {
         $segment->setId($segmentId);
         manageSegmentEntries::editSegmentInDatabase($db, $segment);
 
     } else {
+
+        $segmentValidator = new SegmentValidator($segment, $episode);
+        $errorsList = $segmentValidator->isSegmentValidForDraftSave();
+        outputErrorResponse(json_encode($errorsList));
+
         manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
     }
 

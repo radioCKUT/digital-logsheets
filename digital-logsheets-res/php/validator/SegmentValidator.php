@@ -55,6 +55,10 @@ class SegmentValidator {
         return $errors;
     }
 
+    public function isSegmentValidForEdit() {
+
+    }
+
     public function isSegmentValidForFinalSave() {
         $errors = $this->isSegmentValidForDraftSave();
 
