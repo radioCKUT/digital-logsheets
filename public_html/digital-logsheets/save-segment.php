@@ -21,8 +21,8 @@
 
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
-require("../../digital-logsheets-res/php/validator/SegmentValidator.php");
-require("../../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
+require_once("../../digital-logsheets-res/php/validator/SegmentValidator.php");
+require_once("../../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
 
 $episodeId = $_POST['episode_id'];
 
@@ -106,17 +106,30 @@ try {
             break;
     }
 
+    $segmentValidator = new SegmentValidator($segment, $episode);
+
     if ($editSegment) {
         $segment->setId($segmentId);
-        manageSegmentEntries::editSegmentInDatabase($db, $segment);
+
+        $segmentErrors = $segmentValidator->isSegmentValidForEdit();
+
+        if ($segmentErrors->doErrorsExist()) {
+            outputErrorResponse(json_encode($segmentErrors));
+
+        } else {
+            manageSegmentEntries::editSegmentInDatabase($db, $segment);
+        }
 
     } else {
 
-        $segmentValidator = new SegmentValidator($segment, $episode);
-        $errorsList = $segmentValidator->isSegmentValidForDraftSave();
-        outputErrorResponse(json_encode($errorsList));
+        $segmentErrors = $segmentValidator->isSegmentValidForDraftSave();
 
-        manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
+        if ($segmentErrors->doErrorsExist()) {
+            outputErrorResponse(json_encode($segmentErrors));
+
+        } else {
+            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
+        }
     }
 
     $episode = new Episode($db, $episodeId);

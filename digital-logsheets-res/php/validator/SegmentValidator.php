@@ -20,9 +20,9 @@
  */
 
 require_once('utilities/ValidatorUtility.php');
-require('CategoryValidator.php');
-require('utilities/TimeValidator.php');
-require('errorContainers/SaveSegmentErrors.php');
+require_once('CategoryValidator.php');
+require_once('utilities/TimeValidator.php');
+require_once('errorContainers/SaveSegmentErrors.php');
 
 class SegmentValidator {
 
@@ -42,7 +42,7 @@ class SegmentValidator {
     }
 
     /**
-     * @return SaveSegmentErrors
+     * @return SaveSegmentErrors $errors
      */
     public function isSegmentValidForDraftSave() {
         $errors = new SaveSegmentErrors();
@@ -56,7 +56,9 @@ class SegmentValidator {
     }
 
     public function isSegmentValidForEdit() {
+        $errors = new SaveSegmentErrors();
 
+        return $errors;
     }
 
     public function isSegmentValidForFinalSave() {
