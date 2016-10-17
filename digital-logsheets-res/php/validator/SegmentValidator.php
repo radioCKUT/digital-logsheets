@@ -127,8 +127,8 @@ class SegmentValidator {
         $name = $this->segment->getName();
 
         switch ($category) {
-            case 1:
             case 2:
+            case 3:
                 if (!ValidatorUtility::doesFieldExist($author)) {
                     $errors->markAuthorMissing();
                 }
@@ -136,7 +136,7 @@ class SegmentValidator {
                 if (!ValidatorUtility::doesFieldExist($album)) {
                     $errors->markAlbumMissing();
                 }
-            case 3:
+            case 1:
             case 4:
                 if (!ValidatorUtility::doesFieldExist($name)) {
                     $errors->markNameMissing();

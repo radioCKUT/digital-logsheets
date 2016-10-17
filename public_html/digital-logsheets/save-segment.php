@@ -114,20 +114,20 @@ try {
         $segmentErrors = $segmentValidator->isSegmentValidForEdit();
 
         if ($segmentErrors->doErrorsExist()) {
-            outputErrorResponse(json_encode($segmentErrors));
+            outputErrorResponse($segmentErrors->getAllErrors());
 
         } else {
             manageSegmentEntries::editSegmentInDatabase($db, $segment);
         }
 
     } else {
-
         $segmentErrors = $segmentValidator->isSegmentValidForDraftSave();
 
         if ($segmentErrors->doErrorsExist()) {
-            outputErrorResponse(json_encode($segmentErrors));
+            outputErrorResponse($segmentErrors->getAllErrors());
 
         } else {
+            error_log('save new segment to db');
             manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
         }
     }
