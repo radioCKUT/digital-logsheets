@@ -47,8 +47,7 @@ if (!isset($episodeId) || $episodeId <= 0) {
 try {
     $db = connectToDatabase();
 
-    $episode = new Episode($db, $episodeId);
-
+    $episode = new Episode($db, intval($episodeId));
     $episodeStartDateTime = $episode->getStartTime();
 
     $segmentTime = addDateToSegmentStartTime($episodeStartDateTime, $segmentTime);
