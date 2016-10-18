@@ -33,6 +33,7 @@ $author = $_POST['author'];
 $album = $_POST['album'];
 $category = $_POST['category'];
 
+$stationIdGiven = isset($_POST['station_id_given']);
 $canCon = isset($_POST['can_con']);
 $newRelease = isset($_POST['new_release']);
 $frenchVocalMusic = isset($_POST['french_vocal_music']);
@@ -59,6 +60,7 @@ try {
     $segment->setPlaylistId($playlistId);
     $segment->setDuration(null);
     $segment->setStartTime($segmentTime);
+    $segment->setStationIdGiven($stationIdGiven);
 
     switch ($category) {
         case 2:
