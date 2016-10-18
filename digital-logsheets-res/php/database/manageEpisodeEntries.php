@@ -48,19 +48,21 @@ include_once("readFromDatabase.php");
         public static function getEpisodeAttributesFromDatabase($dbConn, $episodeId, $episodeObject) {
             $databaseResults = readFromDatabase::readFilteredColumnFromTable($dbConn, array(self::PROGRAM_COLUMN_NAME, self::PLAYLIST_COLUMN_NAME,
                 self::PROGRAMMER_COLUMN_NAME, self::START_TIME_COLUMN_NAME, self::END_TIME_COLUMN_NAME), self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($episodeId));
+            $databaseResults = $databaseResults[0];
 
-            $programId = $databaseResults[0][self::PROGRAM_COLUMN_NAME];
-            $playlistId = $databaseResults[0][self::PLAYLIST_COLUMN_NAME];
-            $programmerId = $databaseResults[0][self::PROGRAMMER_COLUMN_NAME];
-
+            $programId = $databaseResults[self::PROGRAM_COLUMN_NAME];
             $episodeObject->setProgram(new Program($dbConn, $programId));
+
+            $playlistId = $databaseResults[self::PLAYLIST_COLUMN_NAME];
             $episodeObject->setPlaylist(new Playlist($dbConn, $playlistId));
+
+            $programmerId = $databaseResults[self::PROGRAMMER_COLUMN_NAME];
             $episodeObject->setProgrammer(new Programmer($dbConn, $programmerId));
 
 
-            $startTimeString = $databaseResults[0][self::START_TIME_COLUMN_NAME];
+            $startTimeString = $databaseResults[self::START_TIME_COLUMN_NAME];
             $startDateTime = formatDateStringFromDatabase($startTimeString);
-            $endTimeString = $databaseResults[0][self::END_TIME_COLUMN_NAME];
+            $endTimeString = $databaseResults[self::END_TIME_COLUMN_NAME];
             $endDateTime = formatDateStringFromDatabase($endTimeString);
 
             $episodeObject->setStartTime($startDateTime);
