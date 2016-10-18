@@ -22,6 +22,7 @@ function resetAllFields() {
     $('.category').button('reset');
     $('.ad_number_group').hide();
     $('.name_group').hide();
+    $('.station_id_group').hide();
     $('.author_group').hide();
     $('.album_group').hide();
     $('.can_con_group').hide();
@@ -47,6 +48,7 @@ function setupMusicCatFields() {
     var authorInput = $('.author_input');
     setupMusicCatHTMLValidation(authorInput, albumInput);
 
+    $('.station_id_group').hide();
     $('.author_group').show();
     $('.album_group').show();
     $('.can_con_group').show();
@@ -62,6 +64,9 @@ function setupNonMusicCatFields() {
     var authorInput = $('.author_input');
     setupNonMusicCatHTMLValidation(authorInput, albumInput);
 
+    $('.author_group').hide();
+    $('.album_group').hide();
+
     $('.can_con_group').hide();
     $('.new_release_group').hide();
     $('.french_vocal_music_group').hide();
@@ -70,8 +75,7 @@ function setupNonMusicCatFields() {
 function setupCat1Fields() {
     setupNonMusicCatFields();
 
-    $('.author_group').hide();
-    $('.album_group').hide();
+    $('.station_id_group').show();
     $('.name_label').text("Description:");
 }
 
@@ -85,16 +89,16 @@ function setupCat3Fields() {
 
 function setupCat4Fields() {
     setupNonMusicCatFields();
-    $('.author_group').hide();
-    $('.album_group').hide();
+
+    $('.station_id_group').show();
     $('.name_label').text("Name:");
 }
 
 function setupCat5Fields() {
     setupNonMusicCatFields();
     $('.name_group').hide();
-    $('.author_group').hide();
-    $('.album_group').hide();
+    $('.station_id_group').hide();
+
     $('.ad_number_group').show();
 
     var adNumberInput = $('.ad_number_input');

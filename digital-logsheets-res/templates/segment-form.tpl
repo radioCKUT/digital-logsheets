@@ -37,6 +37,8 @@
                 <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}" required>
             </div>
         </div>
+        <label class="checkbox-inline station_id_group" style="display:none;">
+            <input type="checkbox" name="station_id" value="" id="station_id{$idSuffix}">Station ID Given</label>
         <div class="form-group row author_group" style="display:none;">
             <div class="col-md-9">
                 <label for="author_input{$idSuffix}" class="control-label">Author:</label>
