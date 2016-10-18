@@ -70,8 +70,8 @@ function setupNonMusicCatFields() {
 function setupCat1Fields() {
     setupNonMusicCatFields();
 
-    $('.author_group').show();
-    $('.album_group').show();
+    $('.author_group').hide();
+    $('.album_group').hide();
     $('.name_label').text("Description:");
 }
 
