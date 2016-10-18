@@ -72,13 +72,16 @@ try {
     if ($doEpisodeErrorsExist) {
         error_log("Errors exist in episode: " . print_r($episodeErrors, true));
         // TODO: handle episode errors present
+        echo('Error in episode!');
+
     } else {
         error_log("Epsiode is valid!");
         $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
-        $_SESSION["episodeId"] = $episodeId;
+        $_SESSION["episodeId"] = intval($episodeId);
+        header('Location: add-segments.php');
     }
 
-    header('Location: add-segments.php');
+
 
 } catch(PDOException $e) {
     error_log('Error while saving an episode: ' . $e->getMessage());
