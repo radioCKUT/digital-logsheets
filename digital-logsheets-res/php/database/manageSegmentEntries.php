@@ -37,6 +37,7 @@ include_once("readFromDatabase.php");
         const DURATION_COLUMN_NAME = "approx_duration_mins";
         const CATEGORY_COLUMN_NAME = "category";
 
+        const STATION_ID_COLUMN_NAME = "station_id";
         const CAN_CON_COLUMN_NAME = "can_con";
         const NEW_RELEASE_COLUMN_NAME = "new_release";
         const FRENCH_VOCAL_MUSIC_COLUMN_NAME = "french_vocal_music";
@@ -51,33 +52,36 @@ include_once("readFromDatabase.php");
          */
         public static function getSegmentAttributesFromDatabase($dbConn, $segmentId, $segmentObject) {
             $databaseResult = readFromDatabase::readFilteredColumnFromTable($dbConn, null, self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($segmentId));
+            $databaseResult = $databaseResult[0];
 
-
-            $segmentName = $databaseResult[0][self::SEGMENT_NAME_COLUMN_NAME];
+            $segmentName = $databaseResult[self::SEGMENT_NAME_COLUMN_NAME];
             $segmentObject->setName($segmentName);
 
-            $segmentAlbum = $databaseResult[0][self::ALBUM_COLUMN_NAME];
+            $segmentAlbum = $databaseResult[self::ALBUM_COLUMN_NAME];
             $segmentObject->setAlbum($segmentAlbum);
 
-            $segmentAuthor = $databaseResult[0][self::AUTHOR_COLUMN_NAME];
+            $segmentAuthor = $databaseResult[self::AUTHOR_COLUMN_NAME];
             $segmentObject->setAuthor($segmentAuthor);
 
-            $segmentCategory = $databaseResult[0][self::CATEGORY_COLUMN_NAME];
+            $segmentCategory = $databaseResult[self::CATEGORY_COLUMN_NAME];
             $segmentObject->setCategory($segmentCategory);
 
-            $segmentDuration = $databaseResult[0][self::DURATION_COLUMN_NAME];
+            $segmentDuration = $databaseResult[self::DURATION_COLUMN_NAME];
             $segmentObject->setDuration($segmentDuration);
 
-            $segmentCanCon = $databaseResult[0][self::CAN_CON_COLUMN_NAME];
+            $segmentStationIdGiven = $databaseResult[self::STATION_ID_COLUMN_NAME];
+            $segmentObject->setStationIdGiven($segmentStationIdGiven);
+
+            $segmentCanCon = $databaseResult[self::CAN_CON_COLUMN_NAME];
             $segmentObject->setIsCanCon($segmentCanCon);
 
-            $segmentNewRelease = $databaseResult[0][self::NEW_RELEASE_COLUMN_NAME];
+            $segmentNewRelease = $databaseResult[self::NEW_RELEASE_COLUMN_NAME];
             $segmentObject->setIsNewRelease($segmentNewRelease);
 
-            $segmentFrenchVocalMusic = $databaseResult[0][self::FRENCH_VOCAL_MUSIC_COLUMN_NAME];
+            $segmentFrenchVocalMusic = $databaseResult[self::FRENCH_VOCAL_MUSIC_COLUMN_NAME];
             $segmentObject->setIsFrenchVocalMusic($segmentFrenchVocalMusic);
 
-            $dbStartTimeString = $databaseResult[0][self::START_TIME_COLUMN_NAME];
+            $dbStartTimeString = $databaseResult[self::START_TIME_COLUMN_NAME];
             $startDateTime = formatDateStringFromDatabase($dbStartTimeString);
             $segmentObject->setStartTime($startDateTime);
         }
@@ -139,6 +143,7 @@ include_once("readFromDatabase.php");
                 self::AUTHOR_COLUMN_NAME,
                 self::ALBUM_COLUMN_NAME,
                 self::CATEGORY_COLUMN_NAME,
+                self::STATION_ID_COLUMN_NAME,
                 self::CAN_CON_COLUMN_NAME,
                 self::NEW_RELEASE_COLUMN_NAME,
                 self::FRENCH_VOCAL_MUSIC_COLUMN_NAME);
@@ -149,6 +154,7 @@ include_once("readFromDatabase.php");
                 $segmentObject->getAuthor(),
                 $segmentObject->getAlbum(),
                 $segmentObject->getCategory(),
+                $segmentObject->wasStationIdGiven(),
                 $segmentObject->isCanCon(),
                 $segmentObject->isNewRelease(),
                 $segmentObject->isFrenchVocalMusic());
