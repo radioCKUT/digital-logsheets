@@ -102,12 +102,7 @@ include_once("readFromDatabase.php");
 
             $startDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getStartTime());
             $endDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getEndTime());
-
-            if ($episodeObject->getPrerecordDate()) {
-                $prerecordDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getPrerecordDate());
-            } else {
-                $prerecordDateTimeObject = null;
-            }
+            $prerecordDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getPrerecordDate());
 
             $values = array($episodeObject->getPlaylist()->getId(),
                 $episodeObject->getProgram()->getId(),

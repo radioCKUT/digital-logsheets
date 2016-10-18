@@ -25,10 +25,15 @@
  */
 function formatDateStringForDatabaseWrite($dateTimeObject) {
 
-    $dateTimeObject->setTimezone(new DateTimeZone('UTC'));
-    $dateTimeObject = $dateTimeObject->format("Y-m-d H:i:s");
+    if ($dateTimeObject) {
+        $dateTimeObject->setTimezone(new DateTimeZone('UTC'));
+        $dateTimeObject = $dateTimeObject->format("Y-m-d H:i:s");
 
-    return $dateTimeObject;
+        return $dateTimeObject;
+
+    } else {
+        return null;
+    }
 }
 
 /**
