@@ -28,7 +28,7 @@ require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
 
 $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
-$programId = $_POST['program'];
+$programId = intval($_POST['program']);
 
 $prerecord = isset($_POST['prerecord']);
 $prerecordDate = $_POST['prerecord_date'];
