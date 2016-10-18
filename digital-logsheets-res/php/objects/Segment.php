@@ -36,6 +36,7 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
 
         private $category;
 
+        private $stationIdGiven;
         private $isCanCon;
         private $isNewRelease;
         private $isFrenchVocalMusic;
@@ -75,28 +76,30 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
         public function setCategory($category) {
             $this->category = $category;
         }
+        
+        
+        
+        public function setStationIdGiven($stationIdGiven) {
+            $this->stationIdGiven = $this->getBooleanToSet($stationIdGiven);
+        }
 
         public function setIsCanCon($isCanCon) {
-            if (!$isCanCon) {
-                $this->isCanCon = false;
-            } else {
-                $this->isCanCon = true;
-            }
+            $this->isCanCon = $this->getBooleanToSet($isCanCon);
         }
 
         public function setIsNewRelease($isNewRelease) {
-            if (!$isNewRelease) {
-                $this->isNewRelease = false;
-            } else {
-                $this->isNewRelease = true;
-            }
+            $this->isNewRelease = $this->getBooleanToSet($isNewRelease);
         }
 
         public function setIsFrenchVocalMusic($isFrenchVocalMusic) {
-            if (!$isFrenchVocalMusic) {
-                $this->isFrenchVocalMusic = false;
+            $this->isFrenchVocalMusic = $this->getBooleanToSet($isFrenchVocalMusic);
+        }
+
+        private function getBooleanToSet($boolean) {
+            if (!$boolean) {
+                return false;
             } else {
-                $this->isFrenchVocalMusic = true;
+                return true;
             }
         }
 
@@ -174,6 +177,10 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
          */
         public function getCategory() {
             return $this->category;
+        }
+
+        public function wasStationIdGiven() {
+            return $this->stationIdGiven;
         }
 
         public function isCanCon() {
