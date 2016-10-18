@@ -20,9 +20,9 @@
  */
 
 require_once('utilities/ValidatorUtility.php');
-require('CategoryValidator.php');
-require('utilities/TimeValidator.php');
-require('errorContainers/SaveSegmentErrors.php');
+require_once('CategoryValidator.php');
+require_once('utilities/TimeValidator.php');
+require_once('errorContainers/SaveSegmentErrors.php');
 
 class SegmentValidator {
 
@@ -42,7 +42,7 @@ class SegmentValidator {
     }
 
     /**
-     * @return SaveSegmentErrors
+     * @return SaveSegmentErrors $errors
      */
     public function isSegmentValidForDraftSave() {
         $errors = new SaveSegmentErrors();
@@ -51,6 +51,12 @@ class SegmentValidator {
         $this->isStartTimeDataAValidTime($errors);
         $this->isStartTimeWithinEpisodeBounds($errors);
         $this->areRequiredCategoryFieldsPresent($errors);
+
+        return $errors;
+    }
+
+    public function isSegmentValidForEdit() {
+        $errors = new SaveSegmentErrors();
 
         return $errors;
     }
@@ -74,7 +80,9 @@ class SegmentValidator {
             $errors->markCategoryMissing();
         }
 
-        if (!$category->isValid()) {
+        $categoryValidator = new CategoryValidator($category);
+        
+        if (!$categoryValidator->isCategoryValid()) {
             $errors->markCategoryInvalidFormat();
         }
     }
@@ -119,8 +127,8 @@ class SegmentValidator {
         $name = $this->segment->getName();
 
         switch ($category) {
-            case 1:
             case 2:
+            case 3:
                 if (!ValidatorUtility::doesFieldExist($author)) {
                     $errors->markAuthorMissing();
                 }
@@ -128,7 +136,8 @@ class SegmentValidator {
                 if (!ValidatorUtility::doesFieldExist($album)) {
                     $errors->markAlbumMissing();
                 }
-            case 3:
+
+            case 1:
             case 4:
                 if (!ValidatorUtility::doesFieldExist($name)) {
                     $errors->markNameMissing();

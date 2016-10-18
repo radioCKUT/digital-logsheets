@@ -51,11 +51,6 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
             }
         }
 
-        public function isValidForDraftSave($episode) {
-            $segmentValidator = new SegmentValidator($this, $episode);
-            return $segmentValidator->isSegmentValidForDraftSave();
-        }
-
 
         public function setName($name) {
             $this->name = $name;

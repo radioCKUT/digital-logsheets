@@ -133,12 +133,25 @@ include_once("readFromDatabase.php");
         {
             $startDateString = formatDateStringForDatabaseWrite($segmentObject->getStartTime());
 
-            $columnNames = array(self::START_TIME_COLUMN_NAME, self::DURATION_COLUMN_NAME, self::SEGMENT_NAME_COLUMN_NAME,
-                self::AUTHOR_COLUMN_NAME, self::ALBUM_COLUMN_NAME, self::CATEGORY_COLUMN_NAME, self::CAN_CON_COLUMN_NAME, self::NEW_RELEASE_COLUMN_NAME, self::FRENCH_VOCAL_MUSIC_COLUMN_NAME);
+            $columnNames = array(self::START_TIME_COLUMN_NAME,
+                self::DURATION_COLUMN_NAME,
+                self::SEGMENT_NAME_COLUMN_NAME,
+                self::AUTHOR_COLUMN_NAME,
+                self::ALBUM_COLUMN_NAME,
+                self::CATEGORY_COLUMN_NAME,
+                self::CAN_CON_COLUMN_NAME,
+                self::NEW_RELEASE_COLUMN_NAME,
+                self::FRENCH_VOCAL_MUSIC_COLUMN_NAME);
 
-            $values = array($startDateString, $segmentObject->getDuration(), $segmentObject->getName(),
-                $segmentObject->getAuthor(), $segmentObject->getAlbum(), $segmentObject->getCategory(),
-                $segmentObject->isCanCon(), $segmentObject->isNewRelease(), $segmentObject->isFrenchVocalMusic());
+            $values = array($startDateString,
+                $segmentObject->getDuration(),
+                $segmentObject->getName(),
+                $segmentObject->getAuthor(),
+                $segmentObject->getAlbum(),
+                $segmentObject->getCategory(),
+                $segmentObject->isCanCon(),
+                $segmentObject->isNewRelease(),
+                $segmentObject->isFrenchVocalMusic());
 
             return array($columnNames, $values);
         }

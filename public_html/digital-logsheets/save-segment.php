@@ -21,8 +21,8 @@
 
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
-require("../../digital-logsheets-res/php/validator/SegmentValidator.php");
-require("../../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
+require_once("../../digital-logsheets-res/php/validator/SegmentValidator.php");
+require_once("../../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
 
 $episodeId = $_POST['episode_id'];
 
@@ -47,8 +47,7 @@ if (!isset($episodeId) || $episodeId <= 0) {
 try {
     $db = connectToDatabase();
 
-    $episode = new Episode($db, $episodeId);
-
+    $episode = new Episode($db, intval($episodeId));
     $episodeStartDateTime = $episode->getStartTime();
 
     $segmentTime = addDateToSegmentStartTime($episodeStartDateTime, $segmentTime);
@@ -106,19 +105,30 @@ try {
             break;
     }
 
-    $errorsContainer = $segment->isValidForDraftSave($episode);
-
-    if ($errorsContainer->doErrorsExist()) {
-        $errorsList = $errorsContainer->getAllErrors();
-        outputErrorResponse(json_encode($errorsList));
-    };
+    $segmentValidator = new SegmentValidator($segment, $episode);
 
     if ($editSegment) {
         $segment->setId($segmentId);
-        manageSegmentEntries::editSegmentInDatabase($db, $segment);
+
+        $segmentErrors = $segmentValidator->isSegmentValidForEdit();
+
+        if ($segmentErrors->doErrorsExist()) {
+            outputErrorResponse($segmentErrors->getAllErrors());
+
+        } else {
+            manageSegmentEntries::editSegmentInDatabase($db, $segment);
+        }
 
     } else {
-        manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
+        $segmentErrors = $segmentValidator->isSegmentValidForDraftSave();
+
+        if ($segmentErrors->doErrorsExist()) {
+            outputErrorResponse($segmentErrors->getAllErrors());
+
+        } else {
+            error_log('save new segment to db');
+            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
+        }
     }
 
     $episode = new Episode($db, $episodeId);
