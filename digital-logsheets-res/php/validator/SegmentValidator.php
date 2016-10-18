@@ -136,6 +136,7 @@ class SegmentValidator {
                 if (!ValidatorUtility::doesFieldExist($album)) {
                     $errors->markAlbumMissing();
                 }
+
             case 1:
             case 4:
                 if (!ValidatorUtility::doesFieldExist($name)) {
