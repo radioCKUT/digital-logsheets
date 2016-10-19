@@ -27,7 +27,6 @@
     <script type="text/javascript" src="js/saveReceiveSegments.js"></script>
     <script type="text/javascript" src="js/ui/categoryButton.js"></script>
     <script type="text/javascript" src="js/lib/sisyphus.min.js"></script>
-    <script type="text/javascript" src="js/lib/validator.min.js"></script>
     <script type="text/javascript">
         function startStoringFormEntries() {
             $('#logsheet').on('submit', function(e) {

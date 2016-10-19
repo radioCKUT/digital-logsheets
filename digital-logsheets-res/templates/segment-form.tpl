@@ -6,8 +6,6 @@
             <div class="col-md-3">
                 <label for="segment_time{$idSuffix}" class="control-label">Time:</label>
                 <input name="segment_time" class="form-control segment-time"
-                       data-remote="validation/segment-time.php"
-                       data-error="Segment start time must fall within episode start and end times"
                        type="time" id="segment_time{$idSuffix}" required>
             </div>
         </div>
@@ -37,8 +35,10 @@
                 <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}" required>
             </div>
         </div>
+
         <label class="checkbox-inline station_id_group" style="display:none;">
             <input type="checkbox" name="station_id" value="" id="station_id{$idSuffix}">Station ID Given</label>
+
         <div class="form-group row author_group" style="display:none;">
             <div class="col-md-9">
                 <label for="author_input{$idSuffix}" class="control-label">Author:</label>
