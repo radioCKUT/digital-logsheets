@@ -2,7 +2,7 @@
     <h5>Episode ID: {$episode.id|json_encode}</h5>
 
     <div id="segments">
-        <div class="form-group row">
+        <div class="form-group row time_group">
             <div class="col-md-3">
                 <label for="segment_time{$idSuffix}" class="control-label">Time:</label>
                 <input name="segment_time" class="form-control segment-time"

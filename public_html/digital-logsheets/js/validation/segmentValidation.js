@@ -37,3 +37,61 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
     adNumberInput.prop('required', true);
     nameInput.prop('required', false);
 }
+
+function getTimeInMinutesSinceMidnight(dateTime) {
+    return (dateTime.getHours() * 60) + dateTime.getMinutes();
+}
+
+function episodeSpanningOneCalendarDay(segmentStartTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes) {
+    return ((segmentStartTimeInMinutes >= episodeStartTimeInMinutes)
+    && (segmentStartTimeInMinutes <= episodeEndTimeInMinutes));
+}
+
+const MINUTES_IN_DAY = 24 * 60;
+
+function isInEpisodesFirstCalendarDay(segmentStartTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes) {
+    return (segmentStartTimeInMinutes >= episodeStartTimeInMinutes
+    && segmentStartTimeInMinutes <= episodeEndTimeInMinutes + MINUTES_IN_DAY);
+}
+
+function isInEpisodesSecondCalendarDay(segmentStartTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes) {
+    return (segmentStartTimeInMinutes + MINUTES_IN_DAY >= episodeStartTimeInMinutes
+    && segmentStartTimeInMinutes <= episodeEndTimeInMinutes);
+}
+
+function episodeSpanningTwoCalendarDays(segmentStartTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes) {
+    return (isInEpisodesFirstCalendarDay(segmentStartTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes)
+    || isInEpisodesSecondCalendarDay(segmentStartTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes));
+}
+
+function verifySegmentStartTime(segmentTime, episode) {
+    console.log('in verifySegmentStart');
+    var segmentDatetime = new Date("January 1, " + segmentTime);
+
+    console.log('episode: ', episode);
+    var episodeStartDatetime = new Date(episode.startDatetime);
+    var episodeEndDatetime = new Date(episode.endDatetime);
+
+    var segmentTimeInMinutes = getTimeInMinutesSinceMidnight(segmentDatetime);
+    var episodeStartTimeInMinutes = getTimeInMinutesSinceMidnight(episodeStartDatetime);
+    var episodeStartDay = episodeStartDatetime.getDay();
+
+    var episodeEndTimeInMinutes = getTimeInMinutesSinceMidnight(episodeEndDatetime);
+    var episodeEndDay = episodeEndDatetime.getDay();
+
+    var isSegmentInEpisode;
+
+    if (episodeStartDay == episodeEndDay) {
+        isSegmentInEpisode = episodeSpanningOneCalendarDay(segmentTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes);
+
+    } else {
+        isSegmentInEpisode = episodeSpanningTwoCalendarDays(segmentTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes);
+    }
+
+    if (isSegmentInEpisode) {
+        markSegmentTimeCorrect();
+
+    } else {
+        markSegmentTimeError();
+    }
+}

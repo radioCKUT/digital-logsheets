@@ -20,6 +20,7 @@
 
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script type="text/javascript" src="js/validation/markErrors.js"></script>
     <script type="text/javascript" src="js/validation/segmentValidation.js"></script>
     <script type="text/javascript" src="js/deleteSegment.js"></script>
     <script type="text/javascript" src="js/editSegment.js"></script>
@@ -32,6 +33,7 @@
         function init() {
             getEpisodeSegments();
             setFormOnSubmitBehaviour();
+            setFocusOutValidationBehaviour();
             $('form').sisyphus();
         }
 
@@ -51,13 +53,14 @@
             logsheetEdit.hide();
         }
 
-        function bindValidationData() {
-            //var earliestSegmentTime = {$episode.startTimeString|json_encode};
-            //var latestSegmentTime = {$episode.endTimeString|json_encode};
-
-
-
-
+        function setFocusOutValidationBehaviour() {
+            var segmentTimeInput = $('.segment-time');
+            segmentTimeInput
+                .focusout(function() {
+                    console.log('setFocusOut');
+                    verifySegmentStartTime(segmentTimeInput.val(),
+                            {$episode|json_encode});
+                });
         }
     </script>
 </head>
