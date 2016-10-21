@@ -26,7 +26,7 @@
 
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script src="js/htmlValidation/episodeValidation.js"></script>
+    <script src="js/validation/episodeValidation.js"></script>
     <script src="js/ui/prerecord.js"></script>
     <script src="js/ui/categoryButton.js"></script>
     <script type="text/javascript">

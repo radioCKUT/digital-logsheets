@@ -9,6 +9,7 @@
                        type="time" id="segment_time{$idSuffix}" required>
             </div>
         </div>
+
         <div class="form-group">
             <label for="category" class="control-label">Category:</label>
             <div class="btn-group category" data-toggle="buttons">
@@ -23,12 +24,14 @@
                 <label class="btn btn-primary" onclick="setupCat5Fields()">
                     <input type="radio" name="category" class="category5" autocomplete="off" value="5">5</label></div>
         </div>
+
         <div class="form-group row ad_number_group" style="display:none;">
             <div class="col-md-3">
                 <label for="ad_number_input{$idSuffix}" class="control-label ad_number_label">Ad Number:</label>
                 <input class="form-control" type="number" min="1" step="1" max="300" name="ad_number" id="ad_number_input{$idSuffix}">
             </div>
         </div>
+
         <div class="form-group row name_group" style="display:none;">
             <div class="col-md-9">
                 <label for="name_input{$idSuffix}" class="control-label name_label">Name:</label>
@@ -45,12 +48,14 @@
                 <input class="form-control author_input" type="text" name="author" id="author_input{$idSuffix}">
             </div>
         </div>
+
         <div class="form-group row album_group" style="display:none;">
             <div class="col-md-9">
                 <label for="album_input{$idSuffix}" class="control-label">Album:</label>
                 <input class="form-control album_input" type="text" name="album" id="album_input{$idSuffix}">
             </div>
         </div>
+
         <label class="checkbox-inline can_con_group" style="display:none;">
             <input type="checkbox" name="can_con" value="" id="can_con{$idSuffix}">CC</label>
         <label class="checkbox-inline new_release_group" style="display:none;">

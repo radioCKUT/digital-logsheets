@@ -21,7 +21,6 @@
 function prepareFormForEdit(eventObject) {
     var tableRow = $(eventObject.target).parent().parent().parent().parent();
     var segment_object = $(tableRow).data("segment");
-    console.log("start time: " + segment_object.start_time);
 
     showEditForm();
 

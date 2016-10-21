@@ -20,7 +20,7 @@
 
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script type="text/javascript" src="js/htmlValidation/segmentValidation.js"></script>
+    <script type="text/javascript" src="js/validation/segmentValidation.js"></script>
     <script type="text/javascript" src="js/deleteSegment.js"></script>
     <script type="text/javascript" src="js/editSegment.js"></script>
     <script type="text/javascript" src="js/ui/segmentOptionsMenu.js"></script>
@@ -28,7 +28,14 @@
     <script type="text/javascript" src="js/ui/categoryButton.js"></script>
     <script type="text/javascript" src="js/lib/sisyphus.min.js"></script>
     <script type="text/javascript">
-        function startStoringFormEntries() {
+
+        function init() {
+            getEpisodeSegments();
+            setFormOnSubmitBehaviour();
+            $('form').sisyphus();
+        }
+
+        function setFormOnSubmitBehaviour() {
             $('#logsheet').on('submit', function(e) {
                 e.preventDefault();
                 createSegment();
@@ -41,13 +48,20 @@
                 editEpisodeSegment();
             });
 
-            getEpisodeSegments();
             logsheetEdit.hide();
-            $('form').sisyphus();
+        }
+
+        function bindValidationData() {
+            //var earliestSegmentTime = {$episode.startTimeString|json_encode};
+            //var latestSegmentTime = {$episode.endTimeString|json_encode};
+
+
+
+
         }
     </script>
 </head>
-<body onload="startStoringFormEntries()">
+<body onload="init()">
 <div class="container-fluid">
     <div class="col-md-8">
         <h3>Add Segments</h3>

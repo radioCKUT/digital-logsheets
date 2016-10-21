@@ -21,7 +21,7 @@
 
 require_once("../../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../../digital-logsheets-res/php/objects/Episode.php");
-require("../../../digital-logsheets-res/php/validator/TimeValidator.php");
+require_once("../../../digital-logsheets-res/php/validator/utilities/TimeValidator.php");
 session_start();
 
 const MINUTES_IN_DAY = 24 * 60;
