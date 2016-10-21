@@ -24,7 +24,6 @@ require_once("../../../digital-logsheets-res/php/objects/Episode.php");
 require_once("../../../digital-logsheets-res/php/validator/utilities/TimeValidator.php");
 session_start();
 
-const MINUTES_IN_DAY = 24 * 60;
 $dbConn = connectToDatabase();
 
 $episodeId = $_SESSION["episodeId"];

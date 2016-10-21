@@ -20,6 +20,9 @@
  */
 
 class TimeValidator {
+
+        const MINUTES_IN_DAY = 24 * 60;
+
         public static function isTimeInValidFormat($time) {
             $dateTime = DateTime::createFromFormat('H:i', $time);
             if (!$dateTime) {
@@ -80,11 +83,11 @@ class TimeValidator {
 
         private static function isSegmentInEpisodesFirstCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
             return ($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes
-                && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes + MINUTES_IN_DAY);
+                && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes + self::MINUTES_IN_DAY);
         }
 
         private static function isSegmentInEpisodesSecondCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
-            return ($segmentStartTimeInMinutes + MINUTES_IN_DAY >= $episodeStartTimeInMinutes
+            return ($segmentStartTimeInMinutes + self::MINUTES_IN_DAY >= $episodeStartTimeInMinutes
                 && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes);
         }
 
