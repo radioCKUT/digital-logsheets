@@ -37,33 +37,19 @@
         $db = connectToDatabase();
 
         $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
+        $smarty->assign("categories", $categories);
+
         $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
+        $smarty->assign("programs", $programs);
 
         $episodeId = $_SESSION['episodeId'];
         $episode = new Episode($db, $episodeId);
         $episodeArray = $episode->getObjectAsArray();
+        $smarty->assign("episode", $episodeArray);
 
         //close database connection
         $db = NULL;
 
-        $errorArray = array(
-            "segmentTimeInEpisode" => false,
-            "firstSegmentAlignWithEpisodeStart" => false,
-
-            "adNumberInteger" => false,
-            "albumRequired" => false,
-            "songRequired" => false,
-            "artistRequired" => false,
-
-
-        );
-
-        $smarty->assign("programs", $programs);
-        $smarty->assign("categories", $categories);
-        $smarty->assign("episode", $episodeArray);
-        $smarty->assign("error", $errorArray);
-
-        // display it
         echo $smarty->fetch('../../digital-logsheets-res/templates/add-segments.tpl');
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
