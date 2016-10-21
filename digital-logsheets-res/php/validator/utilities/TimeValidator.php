@@ -61,19 +61,31 @@ class TimeValidator {
             $episodeEndDay = $episodeEndTime->format('N');
 
             if ($episodeStartDay === $episodeEndDay) {
-                if (($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes)
-                    && ($segmentStartTimeInMinutes <= $episodeEndTimeInMinutes)) {
-                    return true;
-                }
+                return self::isSegmentInEpisodeSpanningOneCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes);
 
-            } else if (($segmentStartTimeInMinutes + MINUTES_IN_DAY >= $episodeStartTimeInMinutes
-                    && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes)
-                || ($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes
-                    && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes + MINUTES_IN_DAY)) {
-                return true;
+            } else {
+                return self::isSegmentInEpisodeSpanningTwoCalendarDays($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes);
             }
+        }
 
-            return false;
+        private static function isSegmentInEpisodeSpanningOneCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
+            return (($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes)
+                && ($segmentStartTimeInMinutes <= $episodeEndTimeInMinutes));
+        }
+
+        private static function isSegmentInEpisodeSpanningTwoCalendarDays($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
+            return (self::isSegmentInEpisodesFirstCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes)
+                || self::isSegmentInEpisodesSecondCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes));
+        }
+
+        private static function isSegmentInEpisodesFirstCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
+            return ($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes
+                && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes + MINUTES_IN_DAY);
+        }
+
+        private static function isSegmentInEpisodesSecondCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
+            return ($segmentStartTimeInMinutes + MINUTES_IN_DAY >= $episodeStartTimeInMinutes
+                && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes);
         }
 
         /**
@@ -82,6 +94,6 @@ class TimeValidator {
          */
         private static function getTimeInMinutesSinceMidnight($dateTime) {
             //TODO: error handling
-            return (((int)$dateTime->format('H')) * 60) + (int)$dateTime->format('i');
+            return (((int) $dateTime->format('H')) * 60) + (int) $dateTime->format('i');
         }
     }
