@@ -20,11 +20,12 @@
  */
 
     //----INCLUDE FILES----
-    include("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
-    include_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
-    include_once("../../digital-logsheets-res/php/database/manageCategoryEntries.php");
+    require_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
+    require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
+    require_once("../../digital-logsheets-res/php/database/manageCategoryEntries.php");
     require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
     require_once("../../digital-logsheets-res/php/select2-preparation.php");
+require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
     
     // create object
     $smarty = new Smarty;
@@ -37,13 +38,21 @@
         $db = connectToDatabase();
         
         $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
+        $smarty->assign("categories", $categories);
+
         $programs = getSelect2ProgramsList($db);
+        $smarty->assign("programs", $programs);
         
         //close database connection
         $db = NULL;
-        
-        $smarty->assign("programs", $programs);
-        $smarty->assign("categories", $categories);
+
+        $episodeStartEarlyLimitDatetime = EpisodeValidator::getEpisodeEarlyLimit();
+        $episodeStartEarlyLimit = $episodeStartEarlyLimitDatetime->format("Y-m-d H:i:s");
+        $smarty->assign("episodeStartEarlyLimit", $episodeStartEarlyLimit);
+
+        $episodeStartLateLimitDatetime = EpisodeValidator::getEpisodeLateLimit();
+        $episodeStartLateLimit = $episodeStartLateLimitDatetime->format("Y-m-d H:i:s");
+        $smarty->assign("episodeStartLateLimit", $episodeStartLateLimit);
 
         // display it
         echo $smarty->fetch('../../digital-logsheets-res/templates/new-logsheet.tpl');

@@ -57,6 +57,20 @@ class EpisodeValidator {
         return $errorsContainer;
     }
 
+    public static function getEpisodeEarlyLimit() {
+        $episodeEarlyLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
+        $episodeEarlyLimit->sub(new DateInterval('P' . self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS . 'D'));
+
+        return $episodeEarlyLimit;
+    }
+
+    public static function getEpisodeLateLimit() {
+        $episodeEarlyLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
+        $episodeEarlyLimit->add(new DateInterval('P' . self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS . 'D'));
+
+        return $episodeEarlyLimit;
+    }
+
 
     /**
      * @param SaveEpisodeErrors $errorsContainer
@@ -200,7 +214,7 @@ class EpisodeValidator {
      * @return int
      */
     private function getDayDifferenceFromCurrentDate($comparisonDate) {
-        $currentTime = new DateTime();
+        $currentTime = new DateTime('now', new DateTimeZone('America/Montreal'));
         return $this->getDayDifferenceFromDate($currentTime, $comparisonDate);
 
     }

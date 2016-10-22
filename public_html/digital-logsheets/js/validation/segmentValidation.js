@@ -38,6 +38,10 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
     nameInput.prop('required', false);
 }
 
+
+
+
+
 function getTimeInMinutesSinceMidnight(dateTime) {
     return (dateTime.getHours() * 60) + dateTime.getMinutes();
 }
@@ -65,10 +69,8 @@ function episodeSpanningTwoCalendarDays(segmentStartTimeInMinutes, episodeStartT
 }
 
 function verifySegmentStartTime(segmentTime, episode) {
-    console.log('in verifySegmentStart');
     var segmentDatetime = new Date("January 1, " + segmentTime);
 
-    console.log('episode: ', episode);
     var episodeStartDatetime = new Date(episode.startDatetime);
     var episodeEndDatetime = new Date(episode.endDatetime);
 

@@ -31,6 +31,8 @@
     <script src="js/ui/categoryButton.js"></script>
     <script type="text/javascript">
         function init() {
+            setupEpisodeValidation({$episodeStartEarlyLimit|json_encode}, {$episodeStartLateLimit|json_encode});
+
             var data = {$programs};
 
             $(".program").select2({
@@ -52,24 +54,32 @@
                 <input class="form-control" type="text" name="programmers" id="programmers" required>
             </div>
         </div>
+
         <div class="form-group row">
             <div class="col-md-4 col-sm-6">
                 <label for="program" class="control-label">Program:</label>
                 <select class="form-control program" name="program" id="program"></select>
             </div>
         </div>
-        <div class="form-group row">
+
+        <div class="form-group row start_datetime_group">
             <div class="col-md-3 col-sm-5">
                 <label for="start_datetime" class="control-label">Start Date/Time:</label>
-                <input class="form-control" type="datetime-local" name="start_datetime" id="start_datetime" onchange="adjustPrerecordDateBounds()" required>
+                <input class="form-control" type="datetime-local"
+                       name="start_datetime" id="start_datetime"
+                       onchange="adjustPrerecordDateBounds()" required>
             </div>
         </div>
+
         <div class="form-group row">
             <div class="col-md-2 col-sm-4">
                 <label for="episode_duration" class="control-label">Duration (in hours):</label>
-                <input class="form-control" type="number" step="0.5" min="0.5" max="6.0" name="episode_duration" id="episode_duration" required>
+                <input class="form-control" type="number"
+                       step="0.5" min="0.5" max="6.0"
+                       name="episode_duration" id="episode_duration" required>
             </div>
         </div>
+
         <div class="form-group row">
             <div class="col-md-2 col-sm-4">
                 <label for="prerecord_date" id="prerecord_date_label" class="control-label">Prerecord Date:</label>
@@ -77,10 +87,13 @@
                     <span class="input-group-addon">
                         <input type="checkbox" id="prerecord" title="Was episode prerecorded?" aria-label="Was episode prerecorded?">
                     </span>
-                    <input class="form-control" type="date" name="prerecord_date" id="prerecord_date" aria-label="Prerecord date" disabled>
+                    <input class="form-control" type="date"
+                           name="prerecord_date" id="prerecord_date"
+                           aria-label="Prerecord date" disabled>
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <label for="notes" class="control-label">Notes:</label>
             <textarea class="form-control" name="notes" id="notes"></textarea>

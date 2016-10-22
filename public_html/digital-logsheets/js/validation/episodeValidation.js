@@ -18,10 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$(document).ready(function () {
-    setStartDateTimeBounds();
+function setupEpisodeValidation(earlyStartLimit, lateStartLimit) {
+    setStartDateTimeBounds(earlyStartLimit, lateStartLimit);
     adjustPrerecordDateBounds();
-});
+}
 
 function adjustPrerecordDateBounds() {
     var episodeStartInput = $('#start_datetime');
@@ -46,18 +46,10 @@ function adjustPrerecordDateBounds() {
     prerecordDateInput.prop('max', upperBound);
 }
 
-function setStartDateTimeBounds() {
-    var lowerBoundMonthOffset = -1;
-    var upperBoundMonthOffset = 1;
-
-    var lowerBound = getDateOffset(lowerBoundMonthOffset, moment());
-    lowerBound += 'T00:00:00';
-    var upperBound = getDateOffset(upperBoundMonthOffset, moment());
-    upperBound += 'T23:59:59';
-
+function setStartDateTimeBounds(earlyLimit, lateLimit) {
     var startDateTime = $('#start_datetime');
-    startDateTime.prop('min', lowerBound);
-    startDateTime.prop('max', upperBound);
+    startDateTime.prop('min', earlyLimit);
+    startDateTime.prop('max', lateLimit);
 }
 
 function getDateOffset(monthOffsetFromDate, date) {
