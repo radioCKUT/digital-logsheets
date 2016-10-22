@@ -39,6 +39,7 @@ include_once("readFromDatabase.php");
         const IS_PRERECORD_COLUMN_NAME = "prerecord";
         const PRERECORD_COLUMN_NAME = "prerecord_date";
         const IS_DRAFT_COLUMN_NAME = "draft";
+        const NOTES_COLUMN_NAME = "comment";
 
         /**
          * @param PDO $dbConn
@@ -62,11 +63,14 @@ include_once("readFromDatabase.php");
 
             $startTimeString = $databaseResults[self::START_TIME_COLUMN_NAME];
             $startDateTime = formatDateStringFromDatabase($startTimeString);
+            $episodeObject->setStartTime($startDateTime);
+
             $endTimeString = $databaseResults[self::END_TIME_COLUMN_NAME];
             $endDateTime = formatDateStringFromDatabase($endTimeString);
-
-            $episodeObject->setStartTime($startDateTime);
             $episodeObject->setEndTime($endDateTime);
+
+            $notes = $databaseResults[self::NOTES_COLUMN_NAME];
+            $episodeObject->setNotes($notes);
         }
 
         public static function getAllEpisodesFromDatabase($dbConn) {
@@ -98,6 +102,7 @@ include_once("readFromDatabase.php");
                 self::END_TIME_COLUMN_NAME,
                 self::IS_PRERECORD_COLUMN_NAME,
                 self::PRERECORD_COLUMN_NAME,
+                self::NOTES_COLUMN_NAME,
                 self::IS_DRAFT_COLUMN_NAME);
 
             $startDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getStartTime());
@@ -111,6 +116,7 @@ include_once("readFromDatabase.php");
                 $endDateTimeObject,
                 $episodeObject->isPrerecord(),
                 $prerecordDateTimeObject,
+                $episodeObject->getNotes(),
                 true);
 
             return writeToDatabase::writeEntryToDatabase($dbConn, self::TABLE_NAME, $columnNames, $values);

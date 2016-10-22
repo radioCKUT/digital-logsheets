@@ -35,7 +35,7 @@ $prerecordDate = $_POST['prerecord_date'];
 
 $episodeStartTime = $_POST['start_datetime'];
 $episodeDurationHours = $_POST['episode_duration'];
-$comment = $_POST['comment'];
+$notes = $_POST['notes'];
 
 session_start();
 
@@ -63,7 +63,7 @@ try {
     $prerecordDate = getDateTimeFromDateString($prerecordDate);
     $episodeObject->setPrerecordDate($prerecordDate);
 
-    $episodeObject->setComment($comment);
+    $episodeObject->setNotes($notes);
 
     $episodeValidator = new EpisodeValidator($episodeObject);
     $episodeErrors = $episodeValidator->checkDraftSaveValidity($episodeDurationHours);

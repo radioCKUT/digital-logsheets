@@ -47,7 +47,7 @@
         private $isPrerecord;
         private $prerecordDate;
 
-        private $comment;
+        private $notes;
         
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
@@ -92,11 +92,11 @@
         }
 
         /**
-         * @param mixed $comment
+         * @param mixed $notes
          */
-        public function setComment($comment)
+        public function setNotes($notes)
         {
-            $this->comment = $comment;
+            $this->notes = $notes;
         }
 
         public function jsonSerialize() {
@@ -217,8 +217,8 @@
         /**
          * @return mixed
          */
-        public function getComment()
+        public function getNotes()
         {
-            return $this->comment;
+            return $this->notes;
         }
     }
