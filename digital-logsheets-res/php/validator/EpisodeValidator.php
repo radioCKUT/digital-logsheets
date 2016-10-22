@@ -57,6 +57,15 @@ class EpisodeValidator {
         return $errorsContainer;
     }
 
+    public function checkFinalSaveValidity() {
+        $errorsContainer = new SaveEpisodeErrors();
+
+        $this->areRequiredFieldsPresent($errorsContainer);
+        $this->isEpisodeLengthValid($errorsContainer);
+        $this->isEpisodeAirDateValid($errorsContainer);
+        $this->isEpisodePrerecordDateValid($errorsContainer);
+    }
+
     public static function getEpisodeEarlyLimit() {
         $episodeEarlyLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
         $episodeEarlyLimit->sub(new DateInterval('P' . self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS . 'D'));
