@@ -54,6 +54,12 @@ require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
         $episodeStartLateLimit = $episodeStartLateLimitDatetime->format("Y-m-d H:i:s");
         $smarty->assign("episodeStartLateLimit", $episodeStartLateLimit);
 
+        $prerecordDateEarlyDaysLimit = EpisodeValidator::getPrerecordDateEarlyDaysLimit();
+        $smarty->assign("prerecordDateEarlyDaysLimit", $prerecordDateEarlyDaysLimit);
+
+        $prerecordDateLateDaysLimit = EpisodeValidator::getPrerecordDateLateDaysLimit();
+        $smarty->assign("prerecordDateLateDaysLimit", $prerecordDateLateDaysLimit);
+
         // display it
         echo $smarty->fetch('../../digital-logsheets-res/templates/new-logsheet.tpl');
     } catch(PDOException $e) {

@@ -31,7 +31,12 @@
     <script src="js/ui/categoryButton.js"></script>
     <script type="text/javascript">
         function init() {
-            setupEpisodeValidation({$episodeStartEarlyLimit|json_encode}, {$episodeStartLateLimit|json_encode});
+            setupEpisodeValidation({$episodeStartEarlyLimit|json_encode}, {$episodeStartLateLimit|json_encode},
+                    {$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
+
+            $('#start_datetime').change(function () {
+                adjustPrerecordDateBounds({$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
+            });
 
             var data = {$programs};
 
@@ -66,8 +71,7 @@
             <div class="col-md-3 col-sm-5">
                 <label for="start_datetime" class="control-label">Start Date/Time:</label>
                 <input class="form-control" type="datetime-local"
-                       name="start_datetime" id="start_datetime"
-                       onchange="adjustPrerecordDateBounds()" required>
+                       name="start_datetime" id="start_datetime" required>
             </div>
         </div>
 

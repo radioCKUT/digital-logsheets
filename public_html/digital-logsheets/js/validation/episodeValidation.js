@@ -18,12 +18,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function setupEpisodeValidation(earlyStartLimit, lateStartLimit) {
-    setStartDateTimeBounds(earlyStartLimit, lateStartLimit);
-    adjustPrerecordDateBounds();
+function setupEpisodeValidation(episodeEarlyStartLimit, episodeLateStartLimit,
+                                prerecordEarlyDaysLimit, prerecordLateDaysLimit) {
+    console.log('prerecord limits: ', prerecordEarlyDaysLimit, prerecordLateDaysLimit);
+    setStartDateTimeBounds(episodeEarlyStartLimit, episodeLateStartLimit);
+    adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLimit);
 }
 
-function adjustPrerecordDateBounds() {
+function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLimit) {
     var episodeStartInput = $('#start_datetime');
     var episodeStartVal = episodeStartInput.val();
     episodeStartVal = episodeStartVal.replace('T', ' '); //So HTML input may be parsed by moment.js
@@ -33,12 +35,12 @@ function adjustPrerecordDateBounds() {
     var lowerBound;
 
     if (episodeStartDate != null && !isNaN(episodeStartDate)) {
-        upperBound = getDateOffset(0, episodeStartDate);
-        lowerBound = getDateOffset(-1, episodeStartDate);
+        upperBound = getDateOffset(prerecordLateDaysLimit, episodeStartDate);
+        lowerBound = getDateOffset(-1 * prerecordEarlyDaysLimit, episodeStartDate);
 
     } else {
-        upperBound = getDateOffset(0, moment());
-        lowerBound = getDateOffset(-1, moment());
+        upperBound = getDateOffset(prerecordLateDaysLimit, moment());
+        lowerBound = getDateOffset(-1 * prerecordEarlyDaysLimit, moment());
     }
 
     var prerecordDateInput = $('#prerecord_date');
@@ -52,8 +54,8 @@ function setStartDateTimeBounds(earlyLimit, lateLimit) {
     startDateTime.prop('max', lateLimit);
 }
 
-function getDateOffset(monthOffsetFromDate, date) {
-    var todayWithOffset = moment(date).add(monthOffsetFromDate, 'months');
+function getDateOffset(daysOffsetFromDate, date) {
+    var todayWithOffset = moment(date).add(daysOffsetFromDate, 'days');
 
     var dd = todayWithOffset.date();
     var mm = todayWithOffset.month() + 1; //January is 0!

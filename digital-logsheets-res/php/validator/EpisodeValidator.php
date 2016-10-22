@@ -71,6 +71,16 @@ class EpisodeValidator {
         return $episodeEarlyLimit;
     }
 
+    public static function getPrerecordDateEarlyDaysLimit() {
+        return self::PRERECORD_BEFORE_CURRENT_DATE_LIMIT_DAYS;
+    }
+
+    public static function getPrerecordDateLateDaysLimit() {
+        return self::PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS;
+    }
+
+
+
 
     /**
      * @param SaveEpisodeErrors $errorsContainer
