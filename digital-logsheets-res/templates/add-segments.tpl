@@ -22,6 +22,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <script type="text/javascript" src="js/validation/markErrors.js"></script>
     <script type="text/javascript" src="js/validation/segmentValidation.js"></script>
+    <script type="text/javascript" src="js/validation/playlistValidation.js"></script>
     <script type="text/javascript" src="js/deleteSegment.js"></script>
     <script type="text/javascript" src="js/editSegment.js"></script>
     <script type="text/javascript" src="js/ui/segmentOptionsMenu.js"></script>
@@ -33,7 +34,16 @@
         function init() {
             getEpisodeSegments();
             setFormOnSubmitBehaviour();
-            setFocusOutValidationBehaviour();
+
+            var segmentTimeInput = $('.segment-time');
+
+            segmentTimeInput
+                    .focusout(function() {
+                        verifySegmentStartTime(segmentTimeInput.val(),
+                                {$episode|json_encode});
+                    });
+
+
             $('form').sisyphus();
         }
 
@@ -51,16 +61,25 @@
             });
 
             logsheetEdit.hide();
-        }
 
-        function setFocusOutValidationBehaviour() {
-            var segmentTimeInput = $('.segment-time');
-            segmentTimeInput
-                .focusout(function() {
-                    console.log('setFocusOut');
-                    verifySegmentStartTime(segmentTimeInput.val(),
-                            {$episode|json_encode});
-                });
+            $('#finalize')
+                    .on('submit', function(e) {
+                        var addedSegmentsTable = $('#added_segments');
+                        addedSegmentsTable = addedSegmentsTable.children('tbody');
+                        var segmentRows = addedSegmentsTable.children();
+
+                        var segmentData = [];
+
+                        segmentRows.each(function (i) {
+                            segmentData[i] = $(this).data("segment");
+                        });
+
+                        var episodeStartTime = {$episode.startTime|json_encode}
+
+                        if (!verifyPlaylistEpisodeAlignment(segmentData, episodeStartTime)) {
+                            e.preventDefault();
+                        }
+                    });
         }
     </script>
 </head>
