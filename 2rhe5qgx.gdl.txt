@@ -1,0 +1,12 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch pub
+# Changes to be committed:
+#	new file:   digital-logsheets-res/templates/index2.tpl
+#	new file:   digital-logsheets-res/templates/segment-template.tpl
+#	new file:   digital-logsheets-res/templates/view-episode-segment.tpl
+#	new file:   public_html/digital-logsheets/index2.php
+#	new file:   public_html/digital-logsheets/view-episode-segment.php
+#
+
