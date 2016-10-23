@@ -72,9 +72,11 @@ function verifySegmentStartTime(segmentTime, episode) {
 
     if (isSegmentInEpisode) {
         markSegmentTimeCorrect();
+        return true;
 
     } else {
         markSegmentTimeError();
+        return false;
     }
 }
 

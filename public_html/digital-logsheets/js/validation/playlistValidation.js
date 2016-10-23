@@ -33,5 +33,12 @@ function verifyPlaylistEpisodeAlignment(segments, episodeStartTime) {
     });
 
 
-    return segmentTimeAlignWithEpisodeStart;
+    if (segmentTimeAlignWithEpisodeStart) {
+        markFirstSegmentAtEpisodeStart();
+        return true;
+
+    } else {
+        markFirstSegmentNotAtEpisodeStart();
+        return false;
+    }
 }

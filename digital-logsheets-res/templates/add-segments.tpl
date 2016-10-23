@@ -48,16 +48,28 @@
         }
 
         function setFormOnSubmitBehaviour() {
+
+
+            var episode = {$episode|json_encode};
+
             $('#logsheet').on('submit', function(e) {
                 e.preventDefault();
-                createSegment();
+
+                var segmentTime = $('.segment-time').val();
+                if (verifySegmentStartTime(segmentTime, episode)) {
+                    createSegment();
+                }
             });
 
             var logsheetEdit = $('#logsheet_edit');
 
             logsheetEdit.on('submit', function(e) {
                 e.preventDefault();
-                editEpisodeSegment();
+
+                var segmentTime = $('.segment-time').val();
+                if (verifySegmentStartTime(segmentTime, episode)) {
+                    editEpisodeSegment();
+                }
             });
 
             logsheetEdit.hide();
@@ -78,10 +90,7 @@
 
                         if (!verifyPlaylistEpisodeAlignment(segmentData, episodeStartTime)) {
                             e.preventDefault();
-                            markFirstSegmentNotAtEpisodeStart();
-                            
-                        } else {
-                            markFirstSegmentAtEpisodeStart();
+
                         }
                     });
         }
