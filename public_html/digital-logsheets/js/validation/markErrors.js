@@ -31,6 +31,19 @@ function markSegmentTimeCorrect() {
     markFieldCorrect(segmentTimeFormGroup, SEGMENT_TIME_HELP_BLOCK_ID);
 }
 
+function markFirstSegmentNotAtEpisodeStart() {
+    console.log('in mark first segment error');
+    $('#start_time_column').addClass('red');
+}
+
+function markFirstSegmentAtEpisodeStart() {
+    $('#start_time_column').removeClass('red');
+}
+
+
+
+
+
 function markFieldError(formGroup, helpBlockId, message) {
     formGroup.addClass("has-error");
     if ($('#' + helpBlockId).length === 0) {

@@ -74,10 +74,14 @@
                             segmentData[i] = $(this).data("segment");
                         });
 
-                        var episodeStartTime = {$episode.startTime|json_encode}
+                        var episodeStartTime = {$episode.startTime|json_encode};
 
                         if (!verifyPlaylistEpisodeAlignment(segmentData, episodeStartTime)) {
                             e.preventDefault();
+                            markFirstSegmentNotAtEpisodeStart();
+                            
+                        } else {
+                            markFirstSegmentAtEpisodeStart();
                         }
                     });
         }

@@ -32,7 +32,6 @@ function verifyPlaylistEpisodeAlignment(segments, episodeStartTime) {
         }
     });
 
-    console.log('segmentTimeAlign', segmentTimeAlignWithEpisodeStart);
 
     return segmentTimeAlignWithEpisodeStart;
 }

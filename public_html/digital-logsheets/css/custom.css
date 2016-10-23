@@ -21,3 +21,7 @@
 .table tbody>tr>td.vert-align{
     vertical-align: middle;
 }
+
+.red {
+    background-color: rgba(255, 0, 0, 1);
+}

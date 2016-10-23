@@ -62,7 +62,7 @@ function receiveSegmentsSuccess(data) {
 
         var addedSegments = $('#added_segments');
         addedSegments.empty();
-        addedSegments.append($('<thead><tr>' + '<th>' + 'Time' + '</th>' +'<th>' + 'Name' + '</th>' + '</tr></thead><tbody>'));
+        addedSegments.append($('<colgroup> <col /> <col id="start_time_column"/> <col /> </colgroup><thead><tr>' + '<th>' + 'Time' + '</th>' +'<th>' + 'Name' + '</th>' + '</tr></thead><tbody>'));
 
         $.each(data, function(i, e) {
             var segment_id = data[i].id;
