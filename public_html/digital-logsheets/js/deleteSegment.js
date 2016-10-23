@@ -21,7 +21,7 @@
 function deleteEpisodeSegment(id) {
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/delete-segment-validation.php",
+        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/delete-segment.php",
         data: { segment_id : id },
         success: deleteSuccessCallback,
         error: deleteErrorCallback
