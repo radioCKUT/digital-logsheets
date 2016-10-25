@@ -38,6 +38,7 @@ include_once("readFromDatabase.php");
         const CATEGORY_COLUMN_NAME = "category";
 
         const STATION_ID_COLUMN_NAME = "station_id";
+        const AD_NUMBER_COLUMN_NAME = "ad_number";
         const CAN_CON_COLUMN_NAME = "can_con";
         const NEW_RELEASE_COLUMN_NAME = "new_release";
         const FRENCH_VOCAL_MUSIC_COLUMN_NAME = "french_vocal_music";
@@ -68,6 +69,9 @@ include_once("readFromDatabase.php");
 
             $segmentDuration = $databaseResult[self::DURATION_COLUMN_NAME];
             $segmentObject->setDuration($segmentDuration);
+
+            $segmentAdNumber = $databaseResult[self::AD_NUMBER_COLUMN_NAME];
+            $segmentObject->setAdNumber($segmentAdNumber);
 
             $segmentStationIdGiven = $databaseResult[self::STATION_ID_COLUMN_NAME];
             $segmentObject->setStationIdGiven($segmentStationIdGiven);
@@ -143,6 +147,7 @@ include_once("readFromDatabase.php");
                 self::AUTHOR_COLUMN_NAME,
                 self::ALBUM_COLUMN_NAME,
                 self::CATEGORY_COLUMN_NAME,
+                self::AD_NUMBER_COLUMN_NAME,
                 self::STATION_ID_COLUMN_NAME,
                 self::CAN_CON_COLUMN_NAME,
                 self::NEW_RELEASE_COLUMN_NAME,
@@ -154,6 +159,7 @@ include_once("readFromDatabase.php");
                 $segmentObject->getAuthor(),
                 $segmentObject->getAlbum(),
                 $segmentObject->getCategory(),
+                $segmentObject->getAdNumber(),
                 $segmentObject->wasStationIdGiven(),
                 $segmentObject->isCanCon(),
                 $segmentObject->isNewRelease(),
