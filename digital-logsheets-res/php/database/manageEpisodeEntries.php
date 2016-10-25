@@ -57,9 +57,8 @@ include_once("readFromDatabase.php");
             $playlistId = $databaseResults[self::PLAYLIST_COLUMN_NAME];
             $episodeObject->setPlaylist(new Playlist($dbConn, $playlistId));
 
-            $programmerId = $databaseResults[self::PROGRAMMER_COLUMN_NAME];
-            $episodeObject->setProgrammer(new Programmer($dbConn, $programmerId));
-
+            $programmer = $databaseResults[self::PROGRAMMER_COLUMN_NAME];
+            $episodeObject->setProgrammer($programmer);
 
             $startTimeString = $databaseResults[self::START_TIME_COLUMN_NAME];
             $startDateTime = formatDateStringFromDatabase($startTimeString);
@@ -111,7 +110,7 @@ include_once("readFromDatabase.php");
 
             $values = array($episodeObject->getPlaylist()->getId(),
                 $episodeObject->getProgram()->getId(),
-                $episodeObject->getProgrammer()->getId(),
+                $episodeObject->getProgrammer(),
                 $startDateTimeObject,
                 $endDateTimeObject,
                 $episodeObject->isPrerecord(),

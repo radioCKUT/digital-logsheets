@@ -33,6 +33,10 @@
          * @var Playlist
          */
         private $playlist;
+
+        /**
+         * @var String
+         */
         private $programmer;
 
         /**

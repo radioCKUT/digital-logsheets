@@ -30,6 +30,7 @@ $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
 $programId = intval($_POST['program']);
 
+$programmers = $_POST['programmers'];
 $prerecord = isset($_POST['prerecord']);
 $prerecordDate = $_POST['prerecord_date'];
 
@@ -49,7 +50,7 @@ try {
 
     $episodeObject->setPlaylist(new Playlist($db, $playlistId));
     $episodeObject->setProgram(new Program($db, $programId));
-    $episodeObject->setProgrammer(new Programmer($db, $programmerId));
+    $episodeObject->setProgrammer($programmers);
 
     $episodeStartTime = getDateTimeFromDateString($episodeStartTime);
     $episodeObject->setStartTime($episodeStartTime);
