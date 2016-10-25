@@ -88,6 +88,11 @@ try {
     echo 'ERROR: ' . $e->getMessage();
 }
 
+/**
+ * @param Segment[] $segments
+ * @param DateTime $episodeEndTime
+ * @return mixed
+ */
 function computeSegmentDurations($segments, $episodeEndTime) {
     $segmentCount = count($segments);
 
@@ -108,10 +113,7 @@ function computeSegmentDurations($segments, $episodeEndTime) {
             $duration = $episodeEndTimeStamp - $currentSegmentStartTimeStamp;
         }
 
-        error_log("duration: " . $duration);
-
-        $durationMinutes = $duration/60;
-        error_log("duration minutes: " . $durationMinutes);
+        $durationMinutes = $duration / 60;
         $currentSegment->setDuration($durationMinutes);
     }
 

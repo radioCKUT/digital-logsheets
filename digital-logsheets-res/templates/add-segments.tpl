@@ -48,8 +48,6 @@
         }
 
         function setFormOnSubmitBehaviour() {
-
-
             var episode = {$episode|json_encode};
 
             $('#logsheet').on('submit', function(e) {

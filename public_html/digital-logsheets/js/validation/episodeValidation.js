@@ -20,7 +20,7 @@
 
 function setupEpisodeValidation(episodeEarlyStartLimit, episodeLateStartLimit,
                                 prerecordEarlyDaysLimit, prerecordLateDaysLimit) {
-    console.log('prerecord limits: ', prerecordEarlyDaysLimit, prerecordLateDaysLimit);
+
     setStartDateTimeBounds(episodeEarlyStartLimit, episodeLateStartLimit);
     adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLimit);
 }
