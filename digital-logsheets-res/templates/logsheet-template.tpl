@@ -20,11 +20,12 @@ Pre-recorded? {$episode.prerecorded}  Date? {$episode.prerecordDate} <br/> <br/>
             <td>{$segment.startTime}</td>
             <td>{$segment.duration}</td>
 
-            {if {$segment.category} == 2 || {$segment.category} == 3}}
+
+            {if $segment.category == 2 || $segment.category == 3}
                 <td>{$segment.name}</td>
                 <td>{$segment.album}</td>
                 <td>{$segment.artist}</td>
-            {elseif {$segment.category} == 5}
+            {elseif $segment.category == 5}
                 <td colspan="3">{$segment.adNumber}</td>
             {else}
                 <td colspan="3">{$segment.name}</td>
