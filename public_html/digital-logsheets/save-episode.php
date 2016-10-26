@@ -30,7 +30,7 @@ $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
 $programId = intval($_POST['program']);
 
-$programmers = $_POST['programmers'];
+$programmer = $_POST['programmer'];
 $prerecord = isset($_POST['prerecord']);
 $prerecordDate = $_POST['prerecord_date'];
 
@@ -50,7 +50,7 @@ try {
 
     $episodeObject->setPlaylist(new Playlist($db, $playlistId));
     $episodeObject->setProgram(new Program($db, $programId));
-    $episodeObject->setProgrammer($programmers);
+    $episodeObject->setProgrammer($programmer);
 
     $episodeStartTime = getDateTimeFromDateString($episodeStartTime);
     $episodeObject->setStartTime($episodeStartTime);
@@ -72,8 +72,10 @@ try {
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
     if ($doEpisodeErrorsExist) {
         error_log("Errors exist in episode: " . print_r($episodeErrors, true));
-        // TODO: handle episode errors present
-        echo('Error in episode!');
+        $episodeErrorsAsQuery = http_build_query(array('formErrors' => $episodeErrors->getAllErrors()));
+
+        header('Location: new-logsheet.php?' . $episodeErrorsAsQuery);
+        exit();
 
     } else {
         error_log("Epsiode is valid!");

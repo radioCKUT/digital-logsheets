@@ -31,6 +31,9 @@ require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
     $smarty = new Smarty;
 
     session_start();
+
+$formErrors = $_GET['formErrors'];
+
     
     //database interactions
     try {
@@ -59,6 +62,10 @@ require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
 
         $prerecordDateLateDaysLimit = EpisodeValidator::getPrerecordDateLateDaysLimit();
         $smarty->assign("prerecordDateLateDaysLimit", $prerecordDateLateDaysLimit);
+
+        if (isset($formErrors)) {
+            $smarty->assign("formErrors", $formErrors);
+        }
 
         // display it
         echo $smarty->fetch('../../digital-logsheets-res/templates/new-logsheet.tpl');
