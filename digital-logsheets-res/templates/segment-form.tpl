@@ -1,5 +1,4 @@
 <form id="logsheet{$idSuffix}" role="form" method="post" data-toggle="validator">
-    <h5>Episode ID: {$episode.id|json_encode}</h5>
 
     <div id="segments">
         <div class="form-group row time_group">

@@ -17,7 +17,11 @@
 
     <!-- Boostrap JS -->
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+    <script type="text/javascript">
+        function getEpisodeStartTime() {
+            return {$episode.startTime|json_encode};
+        }
+    </script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <script type="text/javascript" src="js/validation/markErrors.js"></script>
@@ -47,6 +51,8 @@
             $('form').sisyphus();
         }
 
+
+
         function setFormOnSubmitBehaviour() {
             var episode = {$episode|json_encode};
 
@@ -74,21 +80,8 @@
 
             $('#finalize')
                     .on('submit', function(e) {
-                        var addedSegmentsTable = $('#added_segments');
-                        addedSegmentsTable = addedSegmentsTable.children('tbody');
-                        var segmentRows = addedSegmentsTable.children();
-
-                        var segmentData = [];
-
-                        segmentRows.each(function (i) {
-                            segmentData[i] = $(this).data("segment");
-                        });
-
-                        var episodeStartTime = {$episode.startTime|json_encode};
-
-                        if (!verifyPlaylistEpisodeAlignment(segmentData, episodeStartTime)) {
+                        if (!verifyPlaylistEpisodeAlignment()) {
                             e.preventDefault();
-
                         }
                     });
         }
@@ -98,6 +91,13 @@
 <div class="container-fluid">
     <div class="col-md-8">
         <h3>Add Segments</h3>
+
+        <h5>Episode Information:</h5>
+        Program:  {$episode.program} <br/>
+        Start Date/Time: {$episode.startDatetime} <br/>
+        End Date/Time: {$episode.endDatetime} <br/> <br/>
+
+
         {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix=''}
         {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix='_edit'}
 
@@ -108,12 +108,26 @@
     </div>
 
     <div class="col-md-4">
+        <span id="playlist_not_aligned_help_text" class="help-text{if !isset($formErrors.noAlignmentWithEpisodeStart)} help_text_hidden{/if}">The earliest segment must align with the episode start date/time.</span>
+
         <div class="panel panel-default">
-            <!-- Default panel contents -->
             <div class="panel-heading">Episode Segments</div>
 
-            <!-- Table -->
             <table class="table table-hover" id="added_segments">
+                <colgroup>
+                    <col />
+                    <col id="start_time_column"/>
+                    <col />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
             </table>
         </div>
     </div>

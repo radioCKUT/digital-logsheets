@@ -69,7 +69,6 @@ try {
     if ($doEpisodeErrorsExist) {
         error_log("Errors exist in episode: " . print_r($episodeErrors, true));
         $episodeErrorsAsQuery = http_build_query(array('formErrors' => $episodeErrors->getAllErrors()));
-
         header('Location: new-logsheet.php?' . $episodeErrorsAsQuery);
         exit();
 

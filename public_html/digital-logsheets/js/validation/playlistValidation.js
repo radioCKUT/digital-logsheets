@@ -18,9 +18,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+function fetchSegmentsData() {
+    var addedSegmentsTable = $('#added_segments').children('tbody');
+    var segmentRows = addedSegmentsTable.children();
 
-function verifyPlaylistEpisodeAlignment(segments, episodeStartTime) {
+    var segmentData = [];
 
+    segmentRows.each(function (i) {
+        segmentData[i] = $(this).data("segment");
+    });
+
+    return segmentData;
+}
+
+
+function verifyPlaylistEpisodeAlignment() {
+    var segments = fetchSegmentsData();
+    var episodeStartTime = getEpisodeStartTime();
     var segmentTimeAlignWithEpisodeStart = false;
 
     segments.forEach(function (segment) {

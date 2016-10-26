@@ -31,6 +31,8 @@
 
     session_start();
 
+$formErrors = $_GET['formErrors'];
+
     //database interactions
     try {
         //connect to database
@@ -46,6 +48,10 @@
         $episode = new Episode($db, $episodeId);
         $episodeArray = $episode->getObjectAsArray();
         $smarty->assign("episode", $episodeArray);
+
+        if (isset($formErrors)) {
+            $smarty->assign("formErrors", $formErrors);
+        }
 
         //close database connection
         $db = NULL;

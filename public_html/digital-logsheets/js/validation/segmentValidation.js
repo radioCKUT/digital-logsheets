@@ -75,7 +75,7 @@ function verifySegmentStartTime(segmentTime, episode) {
         return true;
 
     } else {
-        markSegmentTimeError();
+        markSegmentTimeIncorrect();
         return false;
     }
 }

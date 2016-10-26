@@ -164,7 +164,7 @@
         }
 
         /**
-         * @return Programmer
+         * @return String
          */
         public function getProgrammer() {
             return $this->programmer;

@@ -53,7 +53,8 @@ try {
 
     if ($playlistErrors->doErrorsExist()) {
         error_log('Playlist invalid!');
-        echo ('Playlist invalid!');
+        $playlistErrorsAsQuery = http_build_query(array('formErrors' => $playlistErrors->getAllErrors()));
+        header('Location: add-segments.php?' . $playlistErrorsAsQuery);
         exit();
     }
 

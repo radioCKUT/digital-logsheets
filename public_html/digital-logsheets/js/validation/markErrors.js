@@ -21,7 +21,7 @@
 const SEGMENT_NOT_IN_EPISODE_ERROR_MSG = "Segment must fall within episode.";
 const SEGMENT_TIME_HELP_BLOCK_ID = "segment_time_help_block";
 
-function markSegmentTimeError() {
+function markSegmentTimeIncorrect() {
     var segmentTimeFormGroup = $('.time_group');
     markFieldError(segmentTimeFormGroup, SEGMENT_TIME_HELP_BLOCK_ID, SEGMENT_NOT_IN_EPISODE_ERROR_MSG)
 }
@@ -32,12 +32,13 @@ function markSegmentTimeCorrect() {
 }
 
 function markFirstSegmentNotAtEpisodeStart() {
-    console.log('in mark first segment error');
     $('#start_time_column').addClass('red');
+    $('#playlist_not_aligned_help_text').removeClass('help_text_hidden');
 }
 
 function markFirstSegmentAtEpisodeStart() {
     $('#start_time_column').removeClass('red');
+    $('#playlist_not_aligned_help_text').addClass('help_text_hidden');
 }
 
 

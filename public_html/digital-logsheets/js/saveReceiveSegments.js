@@ -61,8 +61,7 @@ function receiveSegmentsSuccess(data) {
         resetCategoryButtons();
 
         var addedSegments = $('#added_segments');
-        addedSegments.empty();
-        addedSegments.append($('<colgroup> <col /> <col id="start_time_column"/> <col /> </colgroup><thead><tr>' + '<th>' + 'Time' + '</th>' +'<th>' + 'Name' + '</th>' + '</tr></thead><tbody>'));
+        addedSegments.find("tbody").empty();
 
         $.each(data, function(i, e) {
             var segment_id = data[i].id;
@@ -84,8 +83,10 @@ function receiveSegmentsSuccess(data) {
             addedSegments.append(segmentRow);
         });
 
-        addedSegments.append($('</tbody>'));
 
+        if (!$('#playlist_not_aligned_help_text').hasClass("help_text_hidden")) {
+            verifyPlaylistEpisodeAlignment();
+        }
     }
 }
 
