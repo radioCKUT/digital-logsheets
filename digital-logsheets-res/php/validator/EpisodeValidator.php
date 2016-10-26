@@ -88,6 +88,14 @@ class EpisodeValidator {
         return self::PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS;
     }
 
+    public static function getMinimumEpisodeLengthInHours() {
+        return self::EPISODE_MIN_LENGTH_HOURS;
+    }
+
+    public static function getMaximumEpisodeLengthInHours() {
+        return self::EPISODE_MAX_LENGTH_HOURS;
+    }
+
 
 
 

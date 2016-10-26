@@ -68,6 +68,9 @@
                 <div class="col-md-4 col-sm-6">
                     <label for="program" class="control-label">Program:</label>
                     <select class="form-control program" name="program" id="program"></select>
+                    {if $formErrors.missingProgram}
+                        <span class="help-text">Please enter a program.</span>
+                    {/if}
                 </div>
             </div>
 
@@ -76,6 +79,13 @@
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
                            name="start_datetime" id="start_datetime" required>
+                    {if $formErrors.missingStartTime}
+                        <span class="help-text">Please enter a start date/time.</span>
+                    {elseif $formErrors.airDateTooFarInPast}
+                        <span class="help-text">Start date/time must be after {$episodeStartEarlyLimit}.</span>
+                    {elseif $formErrors.airDateTooFarInFuture}
+                        <span class="help-text">Start date/time must be before {$episodeStartLateLimit}.</span>
+                    {/if}
                 </div>
             </div>
 
@@ -85,6 +95,13 @@
                     <input class="form-control" type="number"
                            step="0.5" min="0.5" max="6.0"
                            name="episode_duration" id="episode_duration" required>
+                    {if $formErrors.missingDuration}
+                        <span class="help-text">Please enter a start date/time.</span>
+                    {elseif $formErrors.tooShort}
+                        <span class="help-text">Episode must be at least {$minimumEpisodeLength} hours long</span>
+                    {elseif $formErrors.tooLong}
+                        <span class="help-text">Episode must be less than {$maximumEpisodeLength} hours long</span>
+                    {/if}
                 </div>
             </div>
 
@@ -99,6 +116,13 @@
                                name="prerecord_date" id="prerecord_date"
                                aria-label="Prerecord date" disabled>
                     </div>
+                    {if $formErrors.missingPrerecordDate}
+                        <span class="help-text">If this episode is prerecorded, it must have a prerecord date.</span>
+                    {elseif $formErrors.prerecordDateInPast}
+                        <span class="help-text">Prerecord date must be within the {$prerecordDateEarlyDaysLimit} days before the air date.</span>
+                    {elseif $formErrors.prerecordDateInFuture}
+                        <span class="help-text">Prerecord date must be within the {$prerecordDateLateDaysLimit} days after the air date.</span>
+                    {/if}
                 </div>
             </div>
 

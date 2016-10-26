@@ -59,9 +59,13 @@ $formErrors = $_GET['formErrors'];
 
         $prerecordDateEarlyDaysLimit = EpisodeValidator::getPrerecordDateEarlyDaysLimit();
         $smarty->assign("prerecordDateEarlyDaysLimit", $prerecordDateEarlyDaysLimit);
-
         $prerecordDateLateDaysLimit = EpisodeValidator::getPrerecordDateLateDaysLimit();
         $smarty->assign("prerecordDateLateDaysLimit", $prerecordDateLateDaysLimit);
+
+        $minimumEpisodeLength = EpisodeValidator::getMinimumEpisodeLengthInHours();
+        $smarty->assign("minimumEpisodeLength", $minimumEpisodeLength);
+        $maximumEpisodeLength = EpisodeValidator::getMaximumEpisodeLengthInHours();
+        $smarty->assign("maximumEpisodeLength", $maximumEpisodeLength);
 
         if (isset($formErrors)) {
             $smarty->assign("formErrors", $formErrors);
