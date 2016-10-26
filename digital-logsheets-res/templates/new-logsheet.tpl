@@ -64,14 +64,14 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row{if $formErrors.missingProgram} has-error{/if}">
                 <div class="col-md-4 col-sm-6">
                     <label for="program" class="control-label">Program:</label>
                     <select class="form-control program" name="program" id="program"></select>
                 </div>
             </div>
 
-            <div class="form-group row start_datetime_group">
+            <div class="form-group row start_datetime_group{if $formErrors.missingStartTime || $formErrors.airDateTooFarInPast || $formErrors.airDateTooFarInFuture} has-error{/if}">
                 <div class="col-md-3 col-sm-5">
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
@@ -79,7 +79,7 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row{if $formErrors.missingDuration || $formErrors.tooShort || $formErrors.tooLong} has-error{/if}">
                 <div class="col-md-2 col-sm-4">
                     <label for="episode_duration" class="control-label">Duration (in hours):</label>
                     <input class="form-control" type="number"
@@ -88,7 +88,7 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row{if $formErrors.missingPrerecordDate || $formErrors.prerecordDateInPast || $formErrors.prerecordDateInFuture} has-error{/if}">
                 <div class="col-md-2 col-sm-4">
                     <label for="prerecord_date" id="prerecord_date_label" class="control-label">Prerecord Date:</label>
                     <div class="input-group">
