@@ -43,12 +43,8 @@ session_start();
 try {
     $db = connectToDatabase();
 
-    $programmerId = 1; //TODO change programmerId once settled how programmers will be stored
-    $playlistId = managePlaylistEntries::createNewPlaylist($db);
-
     $episodeObject = new Episode($db, null);
 
-    $episodeObject->setPlaylist(new Playlist($db, $playlistId));
     $episodeObject->setProgram(new Program($db, $programId));
     $episodeObject->setProgrammer($programmer);
 
@@ -79,6 +75,9 @@ try {
 
     } else {
         error_log("Epsiode is valid!");
+        $playlistId = managePlaylistEntries::createNewPlaylist($db);
+        $episodeObject->setPlaylist(new Playlist($db, $playlistId));
+
         $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
         $_SESSION["episodeId"] = intval($episodeId);
         header('Location: add-segments.php');
