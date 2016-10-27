@@ -208,7 +208,6 @@ class EpisodeValidator {
                 $errorsContainer->markPrerecordDateMissing();
 
             } else {
-
                 $daysSincePrerecordDate = $this->getDayDifferenceFromDate($episodeStartDate, $prerecordDate);
 
                 if ($daysSincePrerecordDate > self::PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS) {
@@ -228,13 +227,16 @@ class EpisodeValidator {
      */
     private function getDayDifferenceFromDate($fromDate, $toDate) {
         $timeSinceFromDateInterval = $fromDate->diff($toDate);
-        $entireDaysSinceFromDate = $timeSinceFromDateInterval->format('%R%a');
+        
+        $positiveOrNegativeInterval = $timeSinceFromDateInterval->format('%R');
+        $entireDaysSinceFromDate = $timeSinceFromDateInterval->format('%a');
         $hoursSinceFromDate = $timeSinceFromDateInterval->format('%h');
         $minutesSinceFromDate = $timeSinceFromDateInterval->format('%i');
 
-        $daysSinceFromDate = intval($entireDaysSinceFromDate) +
-            intval($hoursSinceFromDate) / 24 +
-            intval($minutesSinceFromDate) / (24 * 60);
+        $daysSinceFromDate = intval($positiveOrNegativeInterval . '1')
+            * (intval($entireDaysSinceFromDate)
+                + intval($hoursSinceFromDate) / 24
+                + intval($minutesSinceFromDate) / (24 * 60));
 
         return $daysSinceFromDate;
     }
