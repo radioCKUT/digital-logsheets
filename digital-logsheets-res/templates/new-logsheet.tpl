@@ -25,6 +25,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
 
+    <link href="css/custom.css" rel="stylesheet"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <script src="js/validation/episodeValidation.js"></script>
     <script src="js/ui/prerecord.js"></script>
@@ -54,58 +55,104 @@
         <h4>Episode Metadata</h4>
 
 
-            <div class="form-group row{if $formErrors.missingProgrammer} has-error{/if}">
+            {if $formErrors.programmerError}
+                {assign var="programmerError" value=true}
+            {else}
+                {assign var="programmerError" value=false}
+            {/if}
+
+            <div class="form-group row{if $programmerError} has-error{/if}">
                 <div class="col-md-6 col-sm-8">
                     <label for="programmer" class="control-label">Programmer(s):</label>
                     <input class="form-control" type="text" name="programmer" id="programmer" required>
-                    {if $formErrors.missingProgrammer}
-                        <span class="help-text">Please enter a programmer name.</span>
-                    {/if}
+                    <span class="help-block{if !$programmerError} hidden{/if}">
+                        Please enter a programmer name.
+                    </span>
                 </div>
             </div>
 
-            <div class="form-group row{if $formErrors.missingProgram} has-error{/if}">
+
+
+
+            {if $formErrors.missingProgram}
+                {assign var="programError" value=true}
+            {else}
+                {assign var="programError" value=false}
+            {/if}
+
+            <div class="form-group row{if $programError} has-error{/if}">
                 <div class="col-md-4 col-sm-6">
                     <label for="program" class="control-label">Program:</label>
                     <select class="form-control program" name="program" id="program"></select>
-                    {if $formErrors.missingProgram}
-                        <span class="help-text">Please enter a program.</span>
-                    {/if}
+                    <span class="help-block{if !$programError} hidden{/if}">
+                        Please enter a program.
+                    </span>
                 </div>
             </div>
 
-            <div class="form-group row start_datetime_group{if $formErrors.missingStartTime || $formErrors.airDateTooFarInPast || $formErrors.airDateTooFarInFuture} has-error{/if}">
+
+
+
+            {if $formErrors.missingStartTime || $formErrors.airDateTooFarInPast || $formErrors.airDateTooFarInFuture}
+                {assign var="startDatetimeError" value=true}
+            {else}
+                {assign var="startDatetimeError" value=false}
+            {/if}
+
+            <div class="form-group row start_datetime_group{if $startDatetimeError} has-error{/if}">
                 <div class="col-md-3 col-sm-5">
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
                            name="start_datetime" id="start_datetime" required>
+                    <span class="help-block{if !$startDatetimeError} hidden{/if}">
                     {if $formErrors.missingStartTime}
-                        <span class="help-text">Please enter a start date/time.</span>
+                        Please enter a start date/time.
                     {elseif $formErrors.airDateTooFarInPast}
-                        <span class="help-text">Start date/time must be after {$episodeStartEarlyLimit}.</span>
+                        Start date/time must be after {$episodeStartEarlyLimit}.
                     {elseif $formErrors.airDateTooFarInFuture}
-                        <span class="help-text">Start date/time must be before {$episodeStartLateLimit}.</span>
+                        Start date/time must be before {$episodeStartLateLimit}.
                     {/if}
+                    </span>
                 </div>
             </div>
 
-            <div class="form-group row{if $formErrors.missingDuration || $formErrors.tooShort || $formErrors.tooLong} has-error{/if}">
+
+
+
+            {if $formErrors.missingDuration || $formErrors.tooShort || $formErrors.tooLong}
+                {assign var="durationError" value=true}
+            {else}
+                {assign var="durationError" value=false}
+            {/if}
+
+            <div class="form-group row{if $durationError} has-error{/if}">
                 <div class="col-md-2 col-sm-4">
                     <label for="episode_duration" class="control-label">Duration (in hours):</label>
                     <input class="form-control" type="number"
                            step="0.5" min="0.5" max="6.0"
                            name="episode_duration" id="episode_duration" required>
+                    <span class="help-block{if !$durationError} hidden{/if}">
                     {if $formErrors.missingDuration}
-                        <span class="help-text">Please enter a start date/time.</span>
+                        Please enter a start date/time.
                     {elseif $formErrors.tooShort}
-                        <span class="help-text">Episode must be at least {$minimumEpisodeLength} hours long</span>
+                        Episode must be at least {$minimumEpisodeLength} hours long
                     {elseif $formErrors.tooLong}
-                        <span class="help-text">Episode must be less than {$maximumEpisodeLength} hours long</span>
+                        Episode must be less than {$maximumEpisodeLength} hours long
                     {/if}
+                    </span>
                 </div>
             </div>
 
-            <div class="form-group row{if $formErrors.missingPrerecordDate || $formErrors.prerecordDateInPast || $formErrors.prerecordDateInFuture} has-error{/if}">
+
+
+
+            {if $formErrors.missingPrerecordDate || $formErrors.prerecordDateInPast || $formErrors.prerecordDateInFuture}
+                {assign var="prerecordError" value=true}
+            {else}
+                {assign var="prerecordError" value=false}
+            {/if}
+
+            <div class="form-group row{if $prerecordError} has-error{/if}">
                 <div class="col-md-2 col-sm-4">
                     <label for="prerecord_date" id="prerecord_date_label" class="control-label">Prerecord Date:</label>
                     <div class="input-group">
@@ -116,13 +163,15 @@
                                name="prerecord_date" id="prerecord_date"
                                aria-label="Prerecord date" disabled>
                     </div>
+                    <span class="help-block{if !$prerecordError} hidden{/if}">
                     {if $formErrors.missingPrerecordDate}
-                        <span class="help-text">If this episode is prerecorded, it must have a prerecord date.</span>
+                        If this episode is prerecorded, it must have a prerecord date.
                     {elseif $formErrors.prerecordDateInPast}
-                        <span class="help-text">Prerecord date must be within the {$prerecordDateEarlyDaysLimit} days before the air date.</span>
+                        Prerecord date must be within the {$prerecordDateEarlyDaysLimit} days before the air date.
                     {elseif $formErrors.prerecordDateInFuture}
-                        <span class="help-text">Prerecord date must be within the {$prerecordDateLateDaysLimit} days after the air date.</span>
+                        Prerecord date must be within the {$prerecordDateLateDaysLimit} days after the air date.
                     {/if}
+                    </span>
                 </div>
             </div>
 
