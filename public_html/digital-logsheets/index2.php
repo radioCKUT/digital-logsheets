@@ -8,8 +8,6 @@
     // create object
     $smarty = new Smarty;
 	
-	
-    
     //database interactions
     try {
         //open database connection

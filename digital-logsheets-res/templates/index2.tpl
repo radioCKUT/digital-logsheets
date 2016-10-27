@@ -30,42 +30,57 @@
 
     <script type="text/javascript">
 
-        function init() {
-            var data = {$programs};
-            var $programSelect = $(".program");
+        function filterLogsheetListByTime() {
 
-            $programSelect.select2({
-                data: data
-            });
-
-            $programSelect.on("change", function (e) {
-                updateFilteredLogsheetList();
-            } );
-        }
-
-        function updateFilteredLogsheetList() {
-            var programNameFilterList = $(".program").select2('data').map(function (index, element) {
-                console.log(index.text);
-                return index.text;
-            });
-
-            var startDateFilter = $( "#startDateFilter" ).val();
-            var endDateFilter = $( "#endDateFilter" ).val();
-
-            var episodes = {$episodes|json_encode};
-
-            filterLogsheetList(episodes, programNameFilterList, startDateFilter, endDateFilter);
+            var date_search = $( "#date_search" ).val();
+			var time_search = $( "#time_search" ).val();
+			console.log(date_search + " " + time_search);
+			
+			if (date_search != "" && time_search != ""){
+                            
+            if (window.XMLHttpRequest)
+			  {
+			  xmlhttp_login=new XMLHttpRequest();
+			  }
+			else
+			  {
+			  xmlhttp_login=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlhttp_login.onreadystatechange=function()
+			  {
+			  if (xmlhttp_login.readyState==4 && xmlhttp_login.status==200)
+			    {
+					document.getElementById("logsheets").innerHTML = xmlhttp_login.responseText;
+			    }
+			  }
+			xmlhttp_login.open("GET","server_filter_time.php?date_search="+date_search+"&time_search="+time_search,true);
+			xmlhttp_login.send();
+            } else {
+				alert("Please fill all required field.");
+            }
         }
 
     </script>
 </head>
-<body onload="init()">
+<body>
 
 <div class="container-fluid">
-	<h1>Episodes</h1>
+
+	<div class="row">
+	<h1 style="float: left;">Episodes</h1>
+	<div class="col-lg-6" style="padding-top: 20px;">
+    <div class="input-group">
+      <input type="date" id="date_search">
+	  <input type="time" id="time_search">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="filterLogsheetListByTime()">Search</button>
+      </span>
+    </div><!-- /input-group -->
+	</div><!-- /.col-lg-6 -->
+	</div>
 	
     <div class="logsheets">
-	<table class="table">
+	<table class="table" id="logsheets">
         {foreach $episodes as $episode}
 		<tr>
             <td><a href="view-episode-segment.php?episode_id={$episode.id}">{$episode.program} - {$episode.startDate}</a></td>
