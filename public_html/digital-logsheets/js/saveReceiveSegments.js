@@ -84,7 +84,7 @@ function receiveSegmentsSuccess(data) {
         });
 
 
-        if (!$('#playlist_not_aligned_help_text').hasClass("help_text_hidden")) {
+        if (!$('#playlist_not_aligned_help_text').hasClass("hidden")) {
             verifyPlaylistEpisodeAlignment();
         }
     }

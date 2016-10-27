@@ -25,8 +25,3 @@
 .red {
     background-color: rgba(255, 0, 0, 1);
 }
-
-.help_text_hidden {
-    display: none;
-    visibility: hidden;
-}

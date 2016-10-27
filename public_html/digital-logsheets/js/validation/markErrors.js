@@ -33,12 +33,12 @@ function markSegmentTimeCorrect() {
 
 function markFirstSegmentNotAtEpisodeStart() {
     $('#start_time_column').addClass('red');
-    $('#playlist_not_aligned_help_text').removeClass('help_text_hidden');
+    $('#playlist_not_aligned_help_text').removeClass('hidden');
 }
 
 function markFirstSegmentAtEpisodeStart() {
     $('#start_time_column').removeClass('red');
-    $('#playlist_not_aligned_help_text').addClass('help_text_hidden');
+    $('#playlist_not_aligned_help_text').addClass('hidden');
 }
 
 

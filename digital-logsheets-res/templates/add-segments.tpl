@@ -108,7 +108,9 @@
     </div>
 
     <div class="col-md-4">
-        <span id="playlist_not_aligned_help_text" class="help-text{if !isset($formErrors.noAlignmentWithEpisodeStart)} help_text_hidden{/if}">The earliest segment must align with the episode start date/time.</span>
+        <span id="playlist_not_aligned_help_text" class="help-block{if !isset($formErrors.noAlignmentWithEpisodeStart)} hidden{/if}">
+            The earliest segment must align with the episode start date/time.
+        </span>
 
         <div class="panel panel-default">
             <div class="panel-heading">Episode Segments</div>
