@@ -48,7 +48,7 @@ try {
     $episodeObject->setProgram(new Program($db, $programId));
     $episodeObject->setProgrammer($programmer);
 
-    $episodeStartTime = getDateTimeFromDateString($episodeStartTime);
+    $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
     $episodeObject->setStartTime($episodeStartTime);
 
     if ($episodeStartTime != null) {
@@ -90,6 +90,17 @@ try {
 }
 
 function getDateTimeFromDateString($dateString) {
+    $d = DateTime::createFromFormat('Y-m-d', $dateString);
+
+    if ($d && $d->format('Y-m-d') === $dateString) {
+        return new DateTime($dateString, new DateTimeZone('America/Montreal'));
+
+    } else {
+        return null;
+    }
+}
+
+function getDateTimeFromDateTimeString($dateString) {
     $d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
 
     if ($d && $d->format('Y-m-d\TH:i') === $dateString) {
