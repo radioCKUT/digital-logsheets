@@ -198,13 +198,17 @@ class EpisodeValidator {
 
         if ($prerecord) {
             $prerecordDate = $this->episode->getPrerecordDate();
+            $episodeStartDate = $this->episode->getStartTime();
+
+            if (is_null($episodeStartDate)) {
+                return;
+            }
 
             if (is_null($prerecordDate)) {
                 $errorsContainer->markPrerecordDateMissing();
 
             } else {
 
-                $episodeStartDate = $this->episode->getStartTime();
                 $daysSincePrerecordDate = $this->getDayDifferenceFromDate($episodeStartDate, $prerecordDate);
 
                 if ($daysSincePrerecordDate > self::PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS) {
