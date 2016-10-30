@@ -45,12 +45,14 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
 
 function verifySegmentStartTime(timeGroup, episode) {
 
-    var segmentTimeField = timeGroup.find('.segment_time')
+    var segmentTimeField = timeGroup.find('.segment_time');
     var segmentTime = segmentTimeField.val();
 
+    var helpBlock =  timeGroup.find('.segment_time_help_text');
+
     if (segmentTime == '') {
-        markSegmentTimeCorrect();
-        return;
+        markFieldCorrect(timeGroup, helpBlock);
+        return false;
     }
 
     var segmentDatetime = new Date("January 1, " + segmentTime);
@@ -74,14 +76,14 @@ function verifySegmentStartTime(timeGroup, episode) {
         isSegmentInEpisode = episodeSpanningTwoCalendarDays(segmentTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes);
     }
 
-    var helpBlock =  timeGroup.find('.segment_time_help_text');
+
 
     if (isSegmentInEpisode) {
-        markSegmentTimeCorrect(helpBlock);
+        markFieldCorrect(timeGroup, helpBlock);
         return true;
 
     } else {
-        markSegmentTimeIncorrect(helpBlock);
+        markSegmentTimeIncorrect(timeGroup, helpBlock);
         return false;
     }
 }

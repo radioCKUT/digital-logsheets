@@ -71,3 +71,35 @@ function getDateOffset(daysOffsetFromDate, date) {
     todayWithOffset = yyyy + '-' + mm + '-' + dd;
     return todayWithOffset;
 }
+
+
+
+
+
+
+
+
+function verifyProgrammer() {
+    var programmerGroup = $('#programmer_group');
+    var programmerInput = programmerGroup.find('#programmer').val();
+    var helpBlock = $('#programmer_help_block');
+
+    if (programmerInput != '') {
+        markFieldCorrect(programmerGroup, helpBlock);
+    } else {
+        markFieldError(programmerGroup, helpBlock);
+    }
+}
+
+function verifyProgram() {
+    var programGroup = $('#program_group');
+    var programInput = programGroup.find('#program').val();
+    console.log('programInput', programInput);
+    var helpBlock = $('#program_help_block');
+
+    if (programInput != '') {
+        markFieldCorrect(programGroup, helpBlock);
+    } else {
+        markFieldError(programGroup, helpBlock);
+    }
+}

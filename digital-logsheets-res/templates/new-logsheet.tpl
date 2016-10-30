@@ -25,6 +25,7 @@
 
     <link href="css/custom.css" rel="stylesheet"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="js/validation/markErrors.js"></script>
     <script src="js/validation/episodeValidation.js"></script>
     <script src="js/ui/prerecord.js"></script>
     <script src="js/ui/categoryButton.js"></script>
@@ -33,12 +34,20 @@
             setupEpisodeValidation({$episodeStartEarlyLimit|json_encode}, {$episodeStartLateLimit|json_encode},
                     {$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
 
-            $('#start_datetime').change(function () {
+            $('#start_datetime').change(function() {
                 adjustPrerecordDateBounds({$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
             });
 
+            $('#programmer').focusout(function() {
+                verifyProgrammer();
+            });
+
+            $('#program').focusout(function() {
+                verifyProgram();
+            });
+            
+
             var data = {$programs};
-            console.log('data', data);
 
             $(".program").select2({
                 data: data
