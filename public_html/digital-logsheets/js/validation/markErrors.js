@@ -18,17 +18,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const SEGMENT_NOT_IN_EPISODE_ERROR_MSG = "Segment must fall within episode.";
-const SEGMENT_TIME_HELP_BLOCK_ID = "segment_time_help_block";
 
-function markSegmentTimeIncorrect() {
+function markSegmentTimeIncorrect(helpBlock) {
     var segmentTimeFormGroup = $('.time_group');
-    markFieldError(segmentTimeFormGroup, SEGMENT_TIME_HELP_BLOCK_ID, SEGMENT_NOT_IN_EPISODE_ERROR_MSG)
+    markFieldError(segmentTimeFormGroup, helpBlock)
 }
 
-function markSegmentTimeCorrect() {
+function markSegmentTimeCorrect(helpBlock) {
     var segmentTimeFormGroup = $('.time_group');
-    markFieldCorrect(segmentTimeFormGroup, SEGMENT_TIME_HELP_BLOCK_ID);
+    markFieldCorrect(segmentTimeFormGroup, helpBlock);
 }
 
 function markFirstSegmentNotAtEpisodeStart() {
@@ -45,14 +43,12 @@ function markFirstSegmentAtEpisodeStart() {
 
 
 
-function markFieldError(formGroup, helpBlockId, message) {
+function markFieldError(formGroup, helpBlock) {
     formGroup.addClass("has-error");
-    if ($('#' + helpBlockId).length === 0) {
-        formGroup.append('<span id="' + helpBlockId + '" class="help-block">' + message + '</span>');
-    }
+    helpBlock.removeClass("hidden");
 }
 
-function markFieldCorrect(formGroup, helpBlockId) {
+function markFieldCorrect(formGroup, helpBlock) {
     formGroup.removeClass("has-error");
-    $('#' + helpBlockId).remove();
+    helpBlock.addClass("hidden");
 }

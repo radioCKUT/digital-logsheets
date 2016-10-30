@@ -43,7 +43,11 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
 
 
 
-function verifySegmentStartTime(segmentTime, episode) {
+function verifySegmentStartTime(timeGroup, episode) {
+
+    var segmentTimeField = timeGroup.find('.segment_time')
+    var segmentTime = segmentTimeField.val();
+
     if (segmentTime == '') {
         markSegmentTimeCorrect();
         return;
@@ -70,12 +74,14 @@ function verifySegmentStartTime(segmentTime, episode) {
         isSegmentInEpisode = episodeSpanningTwoCalendarDays(segmentTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes);
     }
 
+    var helpBlock =  timeGroup.find('.segment_time_help_text');
+
     if (isSegmentInEpisode) {
-        markSegmentTimeCorrect();
+        markSegmentTimeCorrect(helpBlock);
         return true;
 
     } else {
-        markSegmentTimeIncorrect();
+        markSegmentTimeIncorrect(helpBlock);
         return false;
     }
 }

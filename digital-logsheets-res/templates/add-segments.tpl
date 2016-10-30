@@ -38,19 +38,9 @@
         function init() {
             getEpisodeSegments();
             setFormOnSubmitBehaviour();
-
-            var segmentTimeInput = $('.segment-time');
-
-            segmentTimeInput
-                    .focusout(function() {
-                        verifySegmentStartTime(segmentTimeInput.val(),
-                                {$episode|json_encode});
-                    });
-
-
+            setFocusOutBehaviour();
             $('form').sisyphus();
         }
-
 
 
         function setFormOnSubmitBehaviour() {
@@ -58,9 +48,10 @@
 
             $('#logsheet').on('submit', function(e) {
                 e.preventDefault();
+                var logsheetForm = $(e.delegateTarget);
+                var timeGroup = logsheetForm.find('.time_group');
 
-                var segmentTime = $('.segment-time').val();
-                if (verifySegmentStartTime(segmentTime, episode)) {
+                if (verifySegmentStartTime(timeGroup, episode)) {
                     createSegment();
                 }
             });
@@ -69,9 +60,10 @@
 
             logsheetEdit.on('submit', function(e) {
                 e.preventDefault();
+                var logsheetForm = $(e.delegateTarget);
+                var timeGroup = logsheetForm.find('.time_group');
 
-                var segmentTime = $('.segment-time').val();
-                if (verifySegmentStartTime(segmentTime, episode)) {
+                if (verifySegmentStartTime(timeGroup, episode)) {
                     editEpisodeSegment();
                 }
             });
@@ -83,6 +75,19 @@
                         if (!verifyPlaylistEpisodeAlignment()) {
                             e.preventDefault();
                         }
+                    });
+        }
+
+        function setFocusOutBehaviour() {
+            var segmentTimeInput = $('.segment_time');
+
+            segmentTimeInput
+                    .focusout(function(e) {
+                        var segmentTimeField = $(e.delegateTarget);
+                        var timeGroup = segmentTimeField.parent().parent();
+
+                        verifySegmentStartTime(timeGroup,
+                                {$episode|json_encode});
                     });
         }
     </script>
