@@ -11,10 +11,6 @@
     <!-- Bootstrap theme -->
     <link href="http://getbootstrap.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 
-    <!-- Select2 -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-    <link href="css/select2-bootstrap.css" rel="stylesheet"/>
-
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
@@ -22,7 +18,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
     <!-- Select2 -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+    <link href="css/select2-bootstrap.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.js"></script>
 
 
     <link href="css/custom.css" rel="stylesheet"/>
@@ -40,6 +38,7 @@
             });
 
             var data = {$programs};
+            console.log('data', data);
 
             $(".program").select2({
                 data: data
@@ -61,11 +60,11 @@
                 {assign var="programmerError" value=false}
             {/if}
 
-            <div class="form-group row{if $programmerError} has-error{/if}">
+            <div id="programmer_group" class="form-group programmer_group row{if $programmerError} has-error{/if}">
                 <div class="col-md-6 col-sm-8">
                     <label for="programmer" class="control-label">Programmer(s):</label>
                     <input class="form-control" type="text" name="programmer" id="programmer" required>
-                    <span class="help-block{if !$programmerError} hidden{/if}">
+                    <span id="programmer_help_block" class="help-block{if !$programmerError} hidden{/if}">
                         Please enter a programmer name.
                     </span>
                 </div>
@@ -80,11 +79,11 @@
                 {assign var="programError" value=false}
             {/if}
 
-            <div class="form-group row{if $programError} has-error{/if}">
+            <div id="program_group" class="form-group row{if $programError} has-error{/if}">
                 <div class="col-md-4 col-sm-6">
                     <label for="program" class="control-label">Program:</label>
                     <select class="form-control program" name="program" id="program"></select>
-                    <span class="help-block{if !$programError} hidden{/if}">
+                    <span id="program_help_block" class="help-block{if !$programError} hidden{/if}">
                         Please enter a program.
                     </span>
                 </div>
