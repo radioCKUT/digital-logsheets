@@ -50,10 +50,21 @@ function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLim
 
 function setStartDateTimeBounds(earlyLimit, lateLimit) {
     var startDateTime = $('#start_datetime');
-    var earlyLimitWithT = earlyLimit.replace(' ', 'T');
-    var lateLimitWithT = lateLimit.replace(' ', 'T');
-    startDateTime.prop('min', earlyLimitWithT);
-    startDateTime.prop('max', lateLimitWithT);
+
+    const milliSecsInMinute = 1000 * 60;
+
+    var earlyLimitDate = new Date(earlyLimit);
+    var roundedEarlyLimitInMillisecs = Math.round(earlyLimitDate.getTime() / milliSecsInMinute) * milliSecsInMinute;
+    var roundedEarlyLimitDate = new Date(roundedEarlyLimitInMillisecs);
+    var roundedEarlyLimitDateAsString = roundedEarlyLimitDate.toISOString().split('.')[0];
+
+    var lateLimitDate = new Date(lateLimit);
+    var roundedLateLimitInMillisecs = Math.round(lateLimitDate.getTime() / milliSecsInMinute) * milliSecsInMinute;
+    var roundedLateLimitDate = new Date(roundedLateLimitInMillisecs);
+    var roundedLateLimitDateAsString = roundedLateLimitDate.toISOString().split('.')[0];
+
+    startDateTime.prop('min', roundedEarlyLimitDateAsString);
+    startDateTime.prop('max', roundedLateLimitDateAsString);
 }
 
 function getDateOffset(daysOffsetFromDate, date) {
@@ -84,7 +95,7 @@ function getDateOffset(daysOffsetFromDate, date) {
 function verifyProgrammer() {
     var programmerGroup = $('#programmer_group');
     var programmerInput = programmerGroup.find('#programmer').val();
-    var helpBlock = $('#programmer_help_block');
+    var helpBlock = programmerGroup.find('#programmer_help_block');
 
     if (programmerInput != '') {
         markFieldCorrect(programmerGroup, helpBlock);
@@ -96,12 +107,46 @@ function verifyProgrammer() {
 function verifyProgram() {
     var programGroup = $('#program_group');
     var programInput = programGroup.find('#program').val();
-    console.log('programInput', programInput);
-    var helpBlock = $('#program_help_block');
+    var helpBlock = programGroup.find('#program_help_block');
 
     if (programInput != '') {
         markFieldCorrect(programGroup, helpBlock);
     } else {
         markFieldError(programGroup, helpBlock);
     }
+}
+
+function verifyEpisodeStartDatetime() {
+    var startDatetimeGroup = $('.start_datetime_group');
+    var startDatetimeInputField = startDatetimeGroup.find('#start_datetime');
+    var startDatetimeInput = startDatetimeInputField.val();
+    var helpBlock = startDatetimeGroup.find('#start_datetime_help_block');
+
+    // check for two kinds of date format, based on browser used
+    var isInputADate = moment(startDatetimeInput, "YYYY-MM-DDTHH:mm", true).isValid();
+    isInputADate = isInputADate || moment(startDatetimeInput, "YYYY-MM-DDTHH:mm:ss", true).isValid();
+
+    if (isInputADate) {
+        var earlyLimit = startDatetimeInputField.attr("min");
+        var earlyLimitMillisecs = new Date(earlyLimit).getTime();
+
+        var lateLimit = startDatetimeInputField.attr("max");
+        var lateLimitMillisecs = new Date(lateLimit).getTime();
+
+        var startDatetimeMillisecs = new Date(startDatetimeInput).getTime();
+
+        if (startDatetimeMillisecs < earlyLimitMillisecs) {
+            markEpisodeStartDatetimeTooFarInPast(startDatetimeGroup, helpBlock);
+
+        } else if (startDatetimeMillisecs > lateLimitMillisecs) {
+            markEpisodeStartDatetimeTooFarInFuture(startDatetimeGroup, helpBlock);
+
+        } else {
+            markEpisodeStartDatetimeCorrect(startDatetimeGroup, helpBlock);
+        }
+
+    } else {
+        markEpisodeStartDatetimeMissing(startDatetimeGroup, helpBlock);
+    }
+
 }

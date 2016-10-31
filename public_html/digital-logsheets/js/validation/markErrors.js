@@ -29,6 +29,58 @@ function markSegmentTimeCorrect(helpBlock) {
     markFieldCorrect(segmentTimeFormGroup, helpBlock);
 }
 
+function markEpisodeStartDatetimeCorrect(group, helpBlock) {
+    var datetimeMissingMessage = $('#missing_start_time_message');
+    datetimeMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#air_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#air_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldCorrect(group, helpBlock);
+}
+
+function markEpisodeStartDatetimeMissing(group, helpBlock) {
+    var datetimeMissingMessage = $('#missing_start_time_message');
+    datetimeMissingMessage.removeClass("hidden");
+
+    var tooFarInPastMessage = $('#air_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#air_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markEpisodeStartDatetimeTooFarInPast(group, helpBlock) {
+    var datetimeMissingMessage = $('#missing_start_time_message');
+    datetimeMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#air_date_too_far_in_past_message');
+    tooFarInPastMessage.removeClass("hidden");
+
+    var tooFarInFutureMessage = $('#air_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markEpisodeStartDatetimeTooFarInFuture(group, helpBlock) {
+    var datetimeMissingMessage = $('#missing_start_time_message');
+    datetimeMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#air_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#air_date_too_far_in_future_message');
+    tooFarInFutureMessage.removeClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
 function markFirstSegmentNotAtEpisodeStart() {
     $('#start_time_column').addClass('red');
     $('#playlist_not_aligned_help_text').removeClass('hidden');

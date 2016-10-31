@@ -36,6 +36,8 @@
 
             $('#start_datetime').change(function() {
                 adjustPrerecordDateBounds({$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
+            }).focusout(function() {
+                verifyEpisodeStartDatetime();
             });
 
             $('#programmer').focusout(function() {
@@ -45,7 +47,7 @@
             $('#program').focusout(function() {
                 verifyProgram();
             });
-            
+
 
             var data = {$programs};
 
@@ -111,15 +113,17 @@
                 <div class="col-md-3 col-sm-5">
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
-                           name="start_datetime" id="start_datetime" required>
-                    <span class="help-block{if !$startDatetimeError} hidden{/if}">
-                    {if $formErrors.missingStartTime}
-                        Please enter a start date/time.
-                    {elseif $formErrors.airDateTooFarInPast}
-                        Start date/time must be after {$episodeStartEarlyLimit}.
-                    {elseif $formErrors.airDateTooFarInFuture}
-                        Start date/time must be before {$episodeStartLateLimit}.
-                    {/if}
+                           name="start_datetime" id="start_datetime" step="60" required>
+                    <span id="start_datetime_help_block" class="help-block{if !$startDatetimeError} hidden{/if}">
+                        <span id="missing_start_time_message" class="{if !$formErrors.missingStartTime}hidden{/if}">
+                            Please enter a valid start date/time.
+                        </span>
+                        <span id="air_date_too_far_in_past_message" class="{if !$formErrors.airDateTooFarInPast}hidden{/if}">
+                            Start date/time must be after {$episodeStartEarlyLimit}.
+                        </span>
+                        <span id="air_date_too_far_in_future_message" class="{if !$formErrors.airDateTooFarInFuture}hidden{/if}">
+                            Start date/time must be before {$episodeStartLateLimit}.
+                        </span>
                     </span>
                 </div>
             </div>
