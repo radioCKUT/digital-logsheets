@@ -50,8 +50,10 @@ function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLim
 
 function setStartDateTimeBounds(earlyLimit, lateLimit) {
     var startDateTime = $('#start_datetime');
-    startDateTime.prop('min', earlyLimit);
-    startDateTime.prop('max', lateLimit);
+    var earlyLimitWithT = earlyLimit.replace(' ', 'T');
+    var lateLimitWithT = lateLimit.replace(' ', 'T');
+    startDateTime.prop('min', earlyLimitWithT);
+    startDateTime.prop('max', lateLimitWithT);
 }
 
 function getDateOffset(daysOffsetFromDate, date) {
