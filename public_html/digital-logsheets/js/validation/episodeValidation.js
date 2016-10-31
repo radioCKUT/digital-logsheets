@@ -18,11 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function setupEpisodeValidation(episodeEarlyStartLimit, episodeLateStartLimit,
-                                prerecordEarlyDaysLimit, prerecordLateDaysLimit) {
+function setupEpisodeValidation(validationBounds) {
 
-    setStartDateTimeBounds(episodeEarlyStartLimit, episodeLateStartLimit);
-    adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLimit);
+    setStartDateTimeBounds(validationBounds.episodeStartEarlyLimit, validationBounds.episodeStartLateLimit);
+    adjustPrerecordDateBounds(validationBounds.prerecordEarlyDaysLimit, validationBounds.prerecordLateDaysLimit);
+    setDurationBounds(validationBounds.minDuration, validationBounds.maxDuration);
+
 }
 
 function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLimit) {
@@ -48,11 +49,18 @@ function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLim
     prerecordDateInput.prop('max', upperBound);
 }
 
+function setDurationBounds(minDuration, maxDuration) {
+    var durationField = $('#episode_duration');
+    durationField.prop('min', minDuration);
+    durationField.prop('max', maxDuration);
+}
+
 function setStartDateTimeBounds(earlyLimit, lateLimit) {
     var startDateTime = $('#start_datetime');
 
     const milliSecsInMinute = 1000 * 60;
 
+    console.log('earlyLimit', earlyLimit);
     var earlyLimitDate = new Date(earlyLimit);
     var roundedEarlyLimitInMillisecs = Math.round(earlyLimitDate.getTime() / milliSecsInMinute) * milliSecsInMinute;
     var roundedEarlyLimitDate = new Date(roundedEarlyLimitInMillisecs);
@@ -117,7 +125,7 @@ function verifyProgram() {
 }
 
 function verifyEpisodeStartDatetime() {
-    var startDatetimeGroup = $('.start_datetime_group');
+    var startDatetimeGroup = $('#start_datetime_group');
     var startDatetimeInputField = startDatetimeGroup.find('#start_datetime');
     var startDatetimeInput = startDatetimeInputField.val();
     var helpBlock = startDatetimeGroup.find('#start_datetime_help_block');
@@ -148,5 +156,32 @@ function verifyEpisodeStartDatetime() {
     } else {
         markEpisodeStartDatetimeMissing(startDatetimeGroup, helpBlock);
     }
+}
 
+function verifyEpisodeDuration() {
+    var durationGroup = $('#duration_group');
+    var durationField = durationGroup.find('#episode_duration');
+    var duration = durationField.val();
+    duration = +duration; //Coerce to a number for comparison purposes.
+    var helpBlock = durationGroup.find('#duration_help_block');
+
+    if (duration === '') {
+        markEpisodeDurationMissing(durationGroup, helpBlock);
+        return;
+    }
+
+    var minDuration = durationField.attr('min');
+    minDuration = +minDuration;
+    var maxDuration = durationField.attr('max');
+    maxDuration = +maxDuration;
+
+    if (duration < minDuration) {
+        markEpisodeDurationTooShort(durationGroup, helpBlock);
+
+    } else if (duration > maxDuration) {
+        markEpisodeDurationTooLong(durationGroup, helpBlock);
+
+    } else {
+        markEpisodeDurationCorrect(durationGroup, helpBlock);
+    }
 }

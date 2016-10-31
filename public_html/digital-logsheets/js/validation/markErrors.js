@@ -81,6 +81,58 @@ function markEpisodeStartDatetimeTooFarInFuture(group, helpBlock) {
     markFieldError(group, helpBlock);
 }
 
+function markEpisodeDurationCorrect(group, helpBlock) {
+    var durationMissingMessage = $('#missing_duration_message');
+    durationMissingMessage.addClass("hidden");
+
+    var tooShortMessage = $('#too_short_message');
+    tooShortMessage.addClass("hidden");
+
+    var tooLongMessage = $('#too_long_message');
+    tooLongMessage.addClass("hidden");
+
+    markFieldCorrect(group, helpBlock);
+}
+
+function markEpisodeDurationMissing(group, helpBlock) {
+    var durationMissingMessage = $('#missing_duration_message');
+    durationMissingMessage.removeClass("hidden");
+
+    var tooShortMessage = $('#too_short_message');
+    tooShortMessage.addClass("hidden");
+
+    var tooLongMessage = $('#too_long_message');
+    tooLongMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markEpisodeDurationTooShort(group, helpBlock) {
+    var durationMissingMessage = $('#missing_duration_message');
+    durationMissingMessage.addClass("hidden");
+
+    var tooShortMessage = $('#too_short_message');
+    tooShortMessage.removeClass("hidden");
+
+    var tooLongMessage = $('#too_long_message');
+    tooLongMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markEpisodeDurationTooLong(group, helpBlock) {
+    var durationMissingMessage = $('#missing_duration_message');
+    durationMissingMessage.addClass("hidden");
+
+    var tooShortMessage = $('#too_short_message');
+    tooShortMessage.addClass("hidden");
+
+    var tooLongMessage = $('#too_long_message');
+    tooLongMessage.removeClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
 function markFirstSegmentNotAtEpisodeStart() {
     $('#start_time_column').addClass('red');
     $('#playlist_not_aligned_help_text').removeClass('hidden');

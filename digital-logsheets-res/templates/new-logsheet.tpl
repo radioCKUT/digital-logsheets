@@ -31,8 +31,14 @@
     <script src="js/ui/categoryButton.js"></script>
     <script type="text/javascript">
         function init() {
-            setupEpisodeValidation({$episodeStartEarlyLimit|json_encode}, {$episodeStartLateLimit|json_encode},
-                    {$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
+            setupEpisodeValidation({
+                episodeStartEarlyLimit: {$episodeStartEarlyLimit|json_encode},
+                episodeStartLateLimit: {$episodeStartLateLimit|json_encode},
+                prerecordDateEarlyDaysLimit: {$prerecordDateEarlyDaysLimit},
+                prerecordDateLateDaysLimit:  {$prerecordDateLateDaysLimit},
+                minDuration: {$minDuration},
+                maxDuration: {$maxDuration}
+            });
 
             $('#start_datetime').change(function() {
                 adjustPrerecordDateBounds({$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
@@ -46,6 +52,10 @@
 
             $('#program').focusout(function() {
                 verifyProgram();
+            });
+
+            $('#episode_duration').focusout(function() {
+                verifyEpisodeDuration();
             });
 
 
@@ -109,7 +119,7 @@
                 {assign var="startDatetimeError" value=false}
             {/if}
 
-            <div class="form-group row start_datetime_group{if $startDatetimeError} has-error{/if}">
+            <div id="start_datetime_group" class="form-group row{if $startDatetimeError} has-error{/if}">
                 <div class="col-md-3 col-sm-5">
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
@@ -137,20 +147,22 @@
                 {assign var="durationError" value=false}
             {/if}
 
-            <div class="form-group row{if $durationError} has-error{/if}">
+            <div id="duration_group" class="form-group row{if $durationError} has-error{/if}">
                 <div class="col-md-2 col-sm-4">
                     <label for="episode_duration" class="control-label">Duration (in hours):</label>
                     <input class="form-control" type="number"
-                           step="0.5" min="0.5" max="6.0"
-                           name="episode_duration" id="episode_duration" required>
-                    <span class="help-block{if !$durationError} hidden{/if}">
-                    {if $formErrors.missingDuration}
-                        Please enter a start date/time.
-                    {elseif $formErrors.tooShort}
-                        Episode must be at least {$minimumEpisodeLength} hours long
-                    {elseif $formErrors.tooLong}
-                        Episode must be less than {$maximumEpisodeLength} hours long
-                    {/if}
+                           step="0.5" name="episode_duration"
+                           id="episode_duration" required>
+                    <span id="duration_help_block" class="help-block{if !$durationError} hidden{/if}">
+                        <span id="missing_duration_message" class="{if !$formErrors.missingDuration}hidden{/if}">
+                            Please enter a duration.
+                        </span>
+                        <span id="too_short_message" class="{if $formErrors.tooShort}hidden{/if}">
+                            Episode must be at least {$minDuration} hours long
+                        </span>
+                        <span id="too_long_message" class="{if $formErrors.tooLong}hidden{/if}">
+                            Episode must be less than {$maxDuration} hours long
+                        </span>
                     </span>
                 </div>
             </div>
