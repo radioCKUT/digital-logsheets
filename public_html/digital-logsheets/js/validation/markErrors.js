@@ -19,16 +19,6 @@
  */
 
 
-function markSegmentTimeIncorrect(helpBlock) {
-    var segmentTimeFormGroup = $('.time_group');
-    markFieldError(segmentTimeFormGroup, helpBlock)
-}
-
-function markSegmentTimeCorrect(helpBlock) {
-    var segmentTimeFormGroup = $('.time_group');
-    markFieldCorrect(segmentTimeFormGroup, helpBlock);
-}
-
 function markEpisodeStartDatetimeCorrect(group, helpBlock) {
     var datetimeMissingMessage = $('#missing_start_time_message');
     datetimeMissingMessage.addClass("hidden");
@@ -129,6 +119,58 @@ function markEpisodeDurationTooLong(group, helpBlock) {
 
     var tooLongMessage = $('#too_long_message');
     tooLongMessage.removeClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markPrerecordDateCorrect(group, helpBlock) {
+    var prerecordDateMissingMessage = $('#missing_prerecord_date_message');
+    prerecordDateMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#prerecord_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#prerecord_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldCorrect(group, helpBlock);
+}
+
+function markPrerecordDateMissing(group, helpBlock) {
+    var prerecordDateMissingMessage = $('#missing_prerecord_date_message');
+    prerecordDateMissingMessage.removeClass("hidden");
+
+    var tooFarInPastMessage = $('#prerecord_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#prerecord_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markPrerecordDateTooFarInPast(group, helpBlock) {
+    var prerecordDateMissingMessage = $('#missing_prerecord_date_message');
+    prerecordDateMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#prerecord_date_too_far_in_past_message');
+    tooFarInPastMessage.removeClass("hidden");
+
+    var tooFarInFutureMessage = $('#prerecord_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markPrerecordDateTooFarInFuture(group, helpBlock) {
+    var prerecordDateMissingMessage = $('#missing_prerecord_date_message');
+    prerecordDateMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#prerecord_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#prerecord_date_too_far_in_future_message');
+    tooFarInFutureMessage.removeClass("hidden");
 
     markFieldError(group, helpBlock);
 }

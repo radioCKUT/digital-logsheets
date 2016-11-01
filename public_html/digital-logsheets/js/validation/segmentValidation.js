@@ -83,7 +83,7 @@ function verifySegmentStartTime(timeGroup, episode) {
         return true;
 
     } else {
-        markSegmentTimeIncorrect(timeGroup, helpBlock);
+        markFieldError(timeGroup, helpBlock);
         return false;
     }
 }

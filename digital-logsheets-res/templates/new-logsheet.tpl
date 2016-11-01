@@ -58,6 +58,10 @@
                 verifyEpisodeDuration();
             });
 
+            $('#prerecord_date').focusout(function() {
+                verifyPrerecordDate();
+            });
+
 
             var data = {$programs};
 
@@ -176,7 +180,7 @@
                 {assign var="prerecordError" value=false}
             {/if}
 
-            <div class="form-group row{if $prerecordError} has-error{/if}">
+            <div id="prerecord_group" class="form-group row{if $prerecordError} has-error{/if}">
                 <div class="col-md-2 col-sm-4">
                     <label for="prerecord_date" id="prerecord_date_label" class="control-label">Prerecord Date:</label>
                     <div class="input-group">
@@ -187,14 +191,16 @@
                                name="prerecord_date" id="prerecord_date"
                                aria-label="Prerecord date" disabled>
                     </div>
-                    <span class="help-block{if !$prerecordError} hidden{/if}">
-                    {if $formErrors.missingPrerecordDate}
-                        If this episode is prerecorded, it must have a prerecord date.
-                    {elseif $formErrors.prerecordDateInPast}
-                        Prerecord date must be within the {$prerecordDateEarlyDaysLimit} days before the air date.
-                    {elseif $formErrors.prerecordDateInFuture}
-                        Prerecord date must be within the {$prerecordDateLateDaysLimit} days after the air date.
-                    {/if}
+                    <span id="prerecord_help_block" class="help-block{if !$prerecordError} hidden{/if}">
+                        <span id="missing_prerecord_date_message" class="{if !$formErrors.missingPrerecordDate} hidden{/if}">
+                            If this episode is prerecorded, it must have a valid prerecord date.
+                        </span>
+                        <span id="prerecord_date_too_far_in_past_message" class="{if !$formErrors.prerecordDateInPast} hidden{/if}">
+                            Prerecord date must be within the {$prerecordDateEarlyDaysLimit} days before the air date.
+                        </span>
+                        <span id="prerecord_date_too_far_in_future_message" class="{if !$formErrors.prerecordDateInFuture} hidden{/if}">
+                            Prerecord date must be within the {$prerecordDateLateDaysLimit} days after the air date.
+                        </span>
                     </span>
                 </div>
             </div>

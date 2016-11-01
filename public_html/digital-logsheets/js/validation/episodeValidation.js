@@ -29,6 +29,11 @@ function setupEpisodeValidation(validationBounds) {
 function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLimit) {
     var episodeStartInput = $('#start_datetime');
     var episodeStartVal = episodeStartInput.val();
+
+    if (!_isEpisodeStartDatetimeValid(episodeStartVal)) {
+        return;
+    }
+
     episodeStartVal = episodeStartVal.replace('T', ' '); //So HTML input may be parsed by moment.js
     var episodeStartDate = Date.parse(episodeStartVal);
 
@@ -130,9 +135,8 @@ function verifyEpisodeStartDatetime() {
     var startDatetimeInput = startDatetimeInputField.val();
     var helpBlock = startDatetimeGroup.find('#start_datetime_help_block');
 
-    // check for two kinds of date format, based on browser used
-    var isInputADate = moment(startDatetimeInput, "YYYY-MM-DDTHH:mm", true).isValid();
-    isInputADate = isInputADate || moment(startDatetimeInput, "YYYY-MM-DDTHH:mm:ss", true).isValid();
+
+    var isInputADate = _isEpisodeStartDatetimeValid(startDatetimeInput);
 
     if (isInputADate) {
         var earlyLimit = startDatetimeInputField.attr("min");
@@ -184,4 +188,43 @@ function verifyEpisodeDuration() {
     } else {
         markEpisodeDurationCorrect(durationGroup, helpBlock);
     }
+}
+
+function verifyPrerecordDate() {
+    var prerecordGroup = $('#prerecord_group');
+    var prerecordDateField = prerecordGroup.find('#prerecord_date');
+    var prerecordDate = prerecordDateField.val();
+    var helpBlock = $('#prerecord_help_block');
+
+    var isInputADate = moment(prerecordDate, "YYYY-MM-DD", true).isValid();
+    console.log('isInputADate', isInputADate);
+
+    if (isInputADate) {
+        var earlyLimit = prerecordDateField.attr("min");
+        var earlyLimitMillisecs = new Date(earlyLimit).getTime();
+
+        var lateLimit = prerecordDateField.attr("max");
+        var lateLimitMillisecs = new Date(lateLimit).getTime();
+
+        var startDatetimeMillisecs = new Date(prerecordDate).getTime();
+
+        if (startDatetimeMillisecs < earlyLimitMillisecs) {
+            markPrerecordDateTooFarInPast(prerecordGroup, helpBlock);
+
+        } else if (startDatetimeMillisecs > lateLimitMillisecs) {
+            markPrerecordDateTooFarInFuture(prerecordGroup, helpBlock);
+
+        } else {
+            markPrerecordDateCorrect(prerecordGroup, helpBlock);
+        }
+
+    } else {
+        markPrerecordDateMissing(prerecordGroup, helpBlock);
+    }
+}
+
+function _isEpisodeStartDatetimeValid(startDatetimeInput) {
+    // check for two kinds of date format, based on browser used
+    return moment(startDatetimeInput, "YYYY-MM-DDTHH:mm", true).isValid() ||
+        moment(startDatetimeInput, "YYYY-MM-DDTHH:mm:ss", true).isValid();
 }
