@@ -112,8 +112,10 @@ function verifyProgrammer() {
 
     if (programmerInput != '') {
         markFieldCorrect(programmerGroup, helpBlock);
+        return true;
     } else {
         markFieldError(programmerGroup, helpBlock);
+        return false;
     }
 }
 
@@ -124,8 +126,10 @@ function verifyProgram() {
 
     if (programInput != '') {
         markFieldCorrect(programGroup, helpBlock);
+        return true;
     } else {
         markFieldError(programGroup, helpBlock);
+        return false;
     }
 }
 
@@ -149,16 +153,20 @@ function verifyEpisodeStartDatetime() {
 
         if (startDatetimeMillisecs < earlyLimitMillisecs) {
             markEpisodeStartDatetimeTooFarInPast(startDatetimeGroup, helpBlock);
+            return false;
 
         } else if (startDatetimeMillisecs > lateLimitMillisecs) {
             markEpisodeStartDatetimeTooFarInFuture(startDatetimeGroup, helpBlock);
+            return false;
 
         } else {
             markEpisodeStartDatetimeCorrect(startDatetimeGroup, helpBlock);
+            return true;
         }
 
     } else {
         markEpisodeStartDatetimeMissing(startDatetimeGroup, helpBlock);
+        return false;
     }
 }
 
@@ -171,7 +179,7 @@ function verifyEpisodeDuration() {
 
     if (duration === '') {
         markEpisodeDurationMissing(durationGroup, helpBlock);
-        return;
+        return false;
     }
 
     var minDuration = durationField.attr('min');
@@ -181,23 +189,33 @@ function verifyEpisodeDuration() {
 
     if (duration < minDuration) {
         markEpisodeDurationTooShort(durationGroup, helpBlock);
+        return false;
 
     } else if (duration > maxDuration) {
         markEpisodeDurationTooLong(durationGroup, helpBlock);
+        return false;
 
     } else {
         markEpisodeDurationCorrect(durationGroup, helpBlock);
+        return true;
     }
 }
 
 function verifyPrerecordDate() {
     var prerecordGroup = $('#prerecord_group');
+
+    var isPrerecord = prerecordGroup.find('#prerecord').is(":checked");
+    var helpBlock = prerecordGroup.find('#prerecord_help_block');
+
+    if (!isPrerecord) {
+        markPrerecordDateCorrect(prerecordGroup, helpBlock);
+        return true;
+    }
+
     var prerecordDateField = prerecordGroup.find('#prerecord_date');
     var prerecordDate = prerecordDateField.val();
-    var helpBlock = $('#prerecord_help_block');
 
     var isInputADate = moment(prerecordDate, "YYYY-MM-DD", true).isValid();
-    console.log('isInputADate', isInputADate);
 
     if (isInputADate) {
         var earlyLimit = prerecordDateField.attr("min");
@@ -210,16 +228,20 @@ function verifyPrerecordDate() {
 
         if (startDatetimeMillisecs < earlyLimitMillisecs) {
             markPrerecordDateTooFarInPast(prerecordGroup, helpBlock);
+            return false;
 
         } else if (startDatetimeMillisecs > lateLimitMillisecs) {
             markPrerecordDateTooFarInFuture(prerecordGroup, helpBlock);
+            return false;
 
         } else {
             markPrerecordDateCorrect(prerecordGroup, helpBlock);
+            return true;
         }
 
     } else {
         markPrerecordDateMissing(prerecordGroup, helpBlock);
+        return false;
     }
 }
 

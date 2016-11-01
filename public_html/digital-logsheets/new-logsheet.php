@@ -39,7 +39,7 @@ $formErrors = $_GET['formErrors'];
     try {
         //connect to database
         $db = connectToDatabase();
-        
+
         $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
         $smarty->assign("categories", $categories);
 
@@ -67,14 +67,12 @@ $formErrors = $_GET['formErrors'];
         $maximumEpisodeLength = EpisodeValidator::getMaxEpisodeLengthInHours();
         $smarty->assign("maxDuration", $maximumEpisodeLength);
 
-
-
         if (isset($formErrors)) {
             $smarty->assign("formErrors", $formErrors);
         }
 
-        // display it
         echo $smarty->fetch('../../digital-logsheets-res/templates/new-logsheet.tpl');
+
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }

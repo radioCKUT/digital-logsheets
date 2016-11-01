@@ -40,12 +40,6 @@
                 maxDuration: {$maxDuration}
             });
 
-            $('#start_datetime').change(function() {
-                adjustPrerecordDateBounds({$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
-            }).focusout(function() {
-                verifyEpisodeStartDatetime();
-            });
-
             $('#programmer').focusout(function() {
                 verifyProgrammer();
             });
@@ -54,12 +48,29 @@
                 verifyProgram();
             });
 
+            $('#start_datetime').change(function() {
+                adjustPrerecordDateBounds({$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
+            }).focusout(function() {
+                verifyEpisodeStartDatetime();
+            });
+
             $('#episode_duration').focusout(function() {
                 verifyEpisodeDuration();
             });
 
             $('#prerecord_date').focusout(function() {
                 verifyPrerecordDate();
+            });
+
+            $('#logsheet').submit(function (e) {
+                if (!verifyProgrammer() ||
+                    !verifyProgram() ||
+                    !verifyEpisodeStartDatetime() ||
+                    !verifyEpisodeDuration() ||
+                    !verifyPrerecordDate()) {
+
+                    e.preventDefault();
+                }
             });
 
 
