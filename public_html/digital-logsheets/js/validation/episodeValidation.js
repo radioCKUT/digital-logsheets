@@ -21,7 +21,7 @@
 function setupEpisodeValidation(validationBounds) {
 
     setStartDateTimeBounds(validationBounds.episodeStartEarlyLimit, validationBounds.episodeStartLateLimit);
-    adjustPrerecordDateBounds(validationBounds.prerecordEarlyDaysLimit, validationBounds.prerecordLateDaysLimit);
+    adjustPrerecordDateBounds(validationBounds.prerecordDateEarlyDaysLimit, validationBounds.prerecordDateLateDaysLimit);
     setDurationBounds(validationBounds.minDuration, validationBounds.maxDuration);
 
 }
