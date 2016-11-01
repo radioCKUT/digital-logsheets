@@ -165,9 +165,8 @@
             <div id="duration_group" class="form-group row{if $durationError} has-error{/if}">
                 <div class="col-md-2 col-sm-4">
                     <label for="episode_duration" class="control-label">Duration (in hours):</label>
-                    <input class="form-control" type="number"
-                           step="0.5" name="episode_duration"
-                           id="episode_duration" required>
+                    <input class="form-control" type="number" step="0.25"
+                           name="episode_duration" id="episode_duration" required>
                     <span id="duration_help_block" class="help-block{if !$durationError} hidden{/if}">
                         <span id="missing_duration_message" class="{if !$formErrors.missingDuration}hidden{/if}">
                             Please enter a duration.
