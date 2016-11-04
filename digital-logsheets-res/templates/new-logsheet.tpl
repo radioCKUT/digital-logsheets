@@ -209,7 +209,8 @@
                     </span>
                         <input class="form-control" type="date"
                                name="prerecord_date" id="prerecord_date"
-                               aria-label="Prerecord date" disabled>
+                               aria-label="Prerecord date"
+                               value="{$formSubmission.prerecordDate}" disabled>
                     </div>
                     <span id="prerecord_help_block" class="help-block{if !$prerecordError} hidden{/if}">
                         <span id="missing_prerecord_date_message" class="{if !$formErrors.missingPrerecordDate} hidden{/if}">
