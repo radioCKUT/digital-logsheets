@@ -67,13 +67,24 @@ try {
 
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
     if ($doEpisodeErrorsExist) {
-        error_log("Errors exist in episode: " . print_r($episodeErrors, true));
-        $episodeErrorsAsQuery = http_build_query(array('formErrors' => $episodeErrors->getAllErrors()));
+        error_log("Errors exist in episode: " . print_r($episodeErrors, true) . print_r($episodeObject->getObjectAsArray(), true));
+
+        $formErrors = $episodeErrors->getAllErrors();
+
+        $formSubmission = $episodeObject->getObjectAsArray();
+        $formSubmission['duration'] = $episodeDurationHours;
+        $formSubmission['programId'] = $programId;
+
+        $episodeErrorsAsQuery = http_build_query(array(
+            'formErrors' => $formErrors,
+            'formSubmission' => $formSubmission
+        ));
+
         header('Location: new-logsheet.php?' . $episodeErrorsAsQuery);
         exit();
 
     } else {
-        error_log("Epsiode is valid!");
+        error_log("Episode is valid!");
         $playlistId = managePlaylistEntries::createNewPlaylist($db);
         $episodeObject->setPlaylist(new Playlist($db, $playlistId));
 

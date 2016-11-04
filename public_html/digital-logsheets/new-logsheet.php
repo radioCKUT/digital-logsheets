@@ -33,6 +33,7 @@ require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
     session_start();
 
 $formErrors = $_GET['formErrors'];
+$formSubmission = $_GET['formSubmission'];
 
     
     //database interactions
@@ -69,6 +70,10 @@ $formErrors = $_GET['formErrors'];
 
         if (isset($formErrors)) {
             $smarty->assign("formErrors", $formErrors);
+        }
+
+        if (isset($formSubmission)) {
+            $smarty->assign("formSubmission", $formSubmission);
         }
 
         echo $smarty->fetch('../../digital-logsheets-res/templates/new-logsheet.tpl');

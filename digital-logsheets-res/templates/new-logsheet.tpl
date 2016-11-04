@@ -89,17 +89,22 @@
     <form id="logsheet" role="form" action="save-episode.php" method="post">
         <h4>Episode Metadata</h4>
 
+        {$formSubmission}
 
-            {if $formErrors.programmerError}
+
+            {if $formErrors.missingProgrammer}
                 {assign var="programmerError" value=true}
             {else}
                 {assign var="programmerError" value=false}
             {/if}
 
+
             <div id="programmer_group" class="form-group programmer_group row{if $programmerError} has-error{/if}">
                 <div class="col-md-6 col-sm-8">
                     <label for="programmer" class="control-label">Programmer(s):</label>
-                    <input class="form-control" type="text" name="programmer" id="programmer" required>
+                    <input class="form-control" type="text"
+                           name="programmer" id="programmer"
+                           value="{$formSubmission.programmer}" required>
                     <span id="programmer_help_block" class="help-block{if !$programmerError} hidden{/if}">
                         Please enter a programmer name.
                     </span>
@@ -118,7 +123,11 @@
             <div id="program_group" class="form-group row{if $programError} has-error{/if}">
                 <div class="col-md-4 col-sm-6">
                     <label for="program" class="control-label">Program:</label>
-                    <select class="form-control program" name="program" id="program"></select>
+                    <select class="form-control program" name="program" id="program">
+                        {if isset($formSubmission.program)}
+                            <option value="{$formSubmission.programId}" selected="selected">{$formSubmission.program}</option>
+                        {/if}
+                    </select>
                     <span id="program_help_block" class="help-block{if !$programError} hidden{/if}">
                         Please enter a program.
                     </span>
@@ -138,7 +147,8 @@
                 <div class="col-md-3 col-sm-5">
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
-                           name="start_datetime" id="start_datetime" step="60" required>
+                           name="start_datetime" id="start_datetime" step="60"
+                           value="" required>
                     <span id="start_datetime_help_block" class="help-block{if !$startDatetimeError} hidden{/if}">
                         <span id="missing_start_time_message" class="{if !$formErrors.missingStartTime}hidden{/if}">
                             Please enter a valid start date/time.
@@ -162,11 +172,13 @@
                 {assign var="durationError" value=false}
             {/if}
 
+
             <div id="duration_group" class="form-group row{if $durationError} has-error{/if}">
                 <div class="col-md-2 col-sm-4">
                     <label for="episode_duration" class="control-label">Duration (in hours):</label>
-                    <input class="form-control" type="number" step="0.25"
-                           name="episode_duration" id="episode_duration" required>
+                    <input class="form-control" type="number" step="any"
+                           name="episode_duration" id="episode_duration"
+                           value="{$formSubmission.duration}" required>
                     <span id="duration_help_block" class="help-block{if !$durationError} hidden{/if}">
                         <span id="missing_duration_message" class="{if !$formErrors.missingDuration}hidden{/if}">
                             Please enter a duration.
