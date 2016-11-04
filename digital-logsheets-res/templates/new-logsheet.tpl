@@ -89,9 +89,6 @@
     <form id="logsheet" role="form" action="save-episode.php" method="post">
         <h4>Episode Metadata</h4>
 
-        {$formSubmission}
-
-
             {if $formErrors.missingProgrammer}
                 {assign var="programmerError" value=true}
             {else}
@@ -148,7 +145,7 @@
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
                            name="start_datetime" id="start_datetime" step="60"
-                           value="" required>
+                           value="{$formSubmission.htmlStartDatetime}" required>
                     <span id="start_datetime_help_block" class="help-block{if !$startDatetimeError} hidden{/if}">
                         <span id="missing_start_time_message" class="{if !$formErrors.missingStartTime}hidden{/if}">
                             Please enter a valid start date/time.

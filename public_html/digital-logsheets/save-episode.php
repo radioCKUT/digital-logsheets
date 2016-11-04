@@ -74,6 +74,7 @@ try {
         $formSubmission = $episodeObject->getObjectAsArray();
         $formSubmission['duration'] = $episodeDurationHours;
         $formSubmission['programId'] = $programId;
+        $formSubmission['htmlStartDatetime'] = $episodeObject->getStartTime()->format('Y-m-d\TG:i');
 
         $episodeErrorsAsQuery = http_build_query(array(
             'formErrors' => $formErrors,
