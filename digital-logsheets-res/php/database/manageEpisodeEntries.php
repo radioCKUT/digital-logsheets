@@ -104,8 +104,8 @@ include_once("readFromDatabase.php");
                 self::NOTES_COLUMN_NAME,
                 self::IS_DRAFT_COLUMN_NAME);
 
-            $startDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getStartTime());
-            $endDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getEndTime());
+            $startDateTimeObject = formatDatetimeStringForDatabaseWrite($episodeObject->getStartTime());
+            $endDateTimeObject = formatDatetimeStringForDatabaseWrite($episodeObject->getEndTime());
             $prerecordDateTimeObject = formatDateStringForDatabaseWrite($episodeObject->getPrerecordDate());
 
             $values = array($episodeObject->getPlaylist()->getId(),

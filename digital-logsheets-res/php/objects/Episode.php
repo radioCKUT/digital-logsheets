@@ -48,9 +48,19 @@
          */
         private $episodeEndTime;
 
+        /**
+         * @var boolean
+         */
         private $isPrerecord;
+
+        /**
+         * @var DateTime
+         */
         private $prerecordDate;
 
+        /**
+         * @var String
+         */
         private $notes;
         
         public function __construct($db, $componentId) {

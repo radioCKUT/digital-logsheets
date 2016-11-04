@@ -111,7 +111,8 @@ function getDateTimeFromDateString($dateString) {
     $d = DateTime::createFromFormat('Y-m-d', $dateString);
 
     if ($d && $d->format('Y-m-d') === $dateString) {
-        return new DateTime($dateString, new DateTimeZone('America/Montreal'));
+
+        return new DateTime($dateString);
 
     } else {
         return null;

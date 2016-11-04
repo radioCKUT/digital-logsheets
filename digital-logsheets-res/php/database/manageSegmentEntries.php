@@ -139,7 +139,7 @@ include_once("readFromDatabase.php");
          */
         private static function processSegmentForWrite($segmentObject)
         {
-            $startDateString = formatDateStringForDatabaseWrite($segmentObject->getStartTime());
+            $startDateString = formatDatetimeStringForDatabaseWrite($segmentObject->getStartTime());
 
             $columnNames = array(self::START_TIME_COLUMN_NAME,
                 self::DURATION_COLUMN_NAME,
