@@ -228,7 +228,7 @@
 
             <div class="form-group">
                 <label for="notes" class="control-label">Notes:</label>
-                <textarea class="form-control" name="notes" id="notes"></textarea>
+                <textarea class="form-control" name="notes" id="notes">{$formSubmission.notes}</textarea>
             </div>
 
             <input type="submit" value="Add Segments">

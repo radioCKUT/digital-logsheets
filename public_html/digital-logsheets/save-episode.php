@@ -79,6 +79,7 @@ try {
             'duration' => $episodeDurationHours,
             'prerecord' => $prerecord,
             'prerecordDate' => formatDateForHTML($episodeObject->getPrerecordDate()),
+            'notes' => $notes
         );
 
         $episodeErrorsAsQuery = http_build_query(array(
