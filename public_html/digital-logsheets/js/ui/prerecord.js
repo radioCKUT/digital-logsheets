@@ -19,22 +19,22 @@
  */
 
 $(document).ready(function () {
-    var prerecord_input = $("#prerecord");
-    prerecord_input.change(checkPrerecordInput);
-    checkPrerecordInput();
+    var prerecordInput = $("#prerecord");
+    prerecordInput.change(checkPrerecordInput);
+    checkPrerecordInput(null, prerecordInput[0]);
 });
 
-function checkPrerecordInput() {
-    var prerecord_date = $("#prerecord_date");
-    var prerecord_date_label = $("#prerecord_date_label");
+function checkPrerecordInput(e, element) {
+    var prerecordInput = e ? this : element;
+    var prerecordDate = $("#prerecord_date");
 
-    if (this.checked) {
-        prerecord_date.prop('required', true);
-        prerecord_date.prop('disabled', false);
+    if (prerecordInput.checked) {
+        prerecordDate.prop('required', true);
+        prerecordDate.prop('disabled', false);
 
     } else {
-        prerecord_date.prop('required', false);
-        prerecord_date.prop('disabled', true);
+        prerecordDate.prop('required', false);
+        prerecordDate.prop('disabled', true);
     }
 }
 
