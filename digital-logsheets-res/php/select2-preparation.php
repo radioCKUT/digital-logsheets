@@ -25,15 +25,15 @@ function getSelect2ProgramsList($db) {
     $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
 
     $programsArrayForSelect2 = array();
-    $programsCounter = 0;
-    for ($i = 1; $i < count($programs); $i++) {
+    $programIndex = 0;
+    while ($programIndex < count($programs)) {
 
-        while (is_null($programs[$programsCounter])) {
-            $programsCounter++;
+        while (is_null($programs[$programIndex])) {
+            $programIndex++;
         }
 
-        $programsArrayForSelect2[$i] = array("id" => $i, "text" => $programs[$programsCounter]);
-        $programsCounter++;
+        $programsArrayForSelect2[$programIndex] = array("id" => $programIndex, "text" => $programs[$programIndex]);
+        $programIndex++;
     }
 
     $programs = json_encode(array_values($programsArrayForSelect2));
