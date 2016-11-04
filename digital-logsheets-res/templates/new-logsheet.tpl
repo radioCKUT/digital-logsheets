@@ -204,7 +204,8 @@
                     <label for="prerecord_date" id="prerecord_date_label" class="control-label">Prerecord Date:</label>
                     <div class="input-group">
                     <span class="input-group-addon">
-                        <input type="checkbox" id="prerecord" title="Was episode prerecorded?" aria-label="Was episode prerecorded?">
+                        <input type="checkbox" id="prerecord" title="Was episode prerecorded?" name="prerecord"
+                               aria-label="Was episode prerecorded?"{if $formSubmission.prerecord} checked{/if}>
                     </span>
                         <input class="form-control" type="date"
                                name="prerecord_date" id="prerecord_date"
