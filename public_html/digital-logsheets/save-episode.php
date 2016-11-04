@@ -71,10 +71,15 @@ try {
 
         $formErrors = $episodeErrors->getAllErrors();
 
-        $formSubmission = $episodeObject->getObjectAsArray();
-        $formSubmission['duration'] = $episodeDurationHours;
-        $formSubmission['programId'] = $programId;
-        $formSubmission['htmlStartDatetime'] = $episodeObject->getStartTime()->format('Y-m-d\TG:i');
+        $formSubmission = array(
+            'programmer' => $programmer,
+            'programId' => $programId,
+            'programName' => $episodeObject->getProgram()->getName(),
+            'startDatetime' => formatDateForHTML($episodeObject->getStartTime()),
+            'duration' => $episodeDurationHours,
+            'prerecord' => $episodeObject->isPrerecord(),
+            'prerecordDate' => formatDateForHTML($episodeObject->getPrerecordDate())
+        );
 
         $episodeErrorsAsQuery = http_build_query(array(
             'formErrors' => $formErrors,
@@ -135,4 +140,14 @@ function computeEpisodeEndTime($episodeStartTime, $episodeDurationHours) {
     $episodeEndTime->add($episodeDurationDateInterval);
 
     return $episodeEndTime;
+}
+
+/**
+ * @param DateTime $datetime
+ * @return String
+ */
+function formatDateForHTML($datetime) {
+    if (!is_null($datetime)) {
+        return $datetime->format('Y-m-d\TG:i');
+    }
 }

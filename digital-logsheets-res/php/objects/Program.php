@@ -22,6 +22,9 @@
 include_once(__DIR__ . "/../database/manageProgramEntries.php");
     class Program extends LogsheetComponent{
 
+        /**
+         * @var String
+         */
         private $name;
 
         public function __construct($db, $componentId) {

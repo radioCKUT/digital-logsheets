@@ -121,8 +121,8 @@
                 <div class="col-md-4 col-sm-6">
                     <label for="program" class="control-label">Program:</label>
                     <select class="form-control program" name="program" id="program">
-                        {if isset($formSubmission.program)}
-                            <option value="{$formSubmission.programId}" selected="selected">{$formSubmission.program}</option>
+                        {if isset($formSubmission.programName)}
+                            <option value="{$formSubmission.programId}" selected="selected">{$formSubmission.programName}</option>
                         {/if}
                     </select>
                     <span id="program_help_block" class="help-block{if !$programError} hidden{/if}">
@@ -145,7 +145,7 @@
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
                            name="start_datetime" id="start_datetime" step="60"
-                           value="{$formSubmission.htmlStartDatetime}" required>
+                           value="{$formSubmission.startDatetime}" required>
                     <span id="start_datetime_help_block" class="help-block{if !$startDatetimeError} hidden{/if}">
                         <span id="missing_start_time_message" class="{if !$formErrors.missingStartTime}hidden{/if}">
                             Please enter a valid start date/time.
