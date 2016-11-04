@@ -42,7 +42,7 @@ $editSegment = isset($_POST['is_existing_segment']);
 $segmentId = $_POST['segment_id'];
 
 if (!isset($episodeId) || $episodeId <= 0) {
-    outputErrorResponse("Invalid episode ID");
+    outputErrorResponse("Invalid episode ID", $editSegment);
 }
 
 try {
@@ -115,7 +115,7 @@ try {
         $segmentErrors = $segmentValidator->isSegmentValidForEdit();
 
         if ($segmentErrors->doErrorsExist()) {
-            outputErrorResponse($segmentErrors->getAllErrors());
+            outputErrorResponse($segmentErrors->getAllErrors(), $editSegment);
 
         } else {
             manageSegmentEntries::editSegmentInDatabase($db, $segment);
@@ -125,7 +125,7 @@ try {
         $segmentErrors = $segmentValidator->isSegmentValidForDraftSave();
 
         if ($segmentErrors->doErrorsExist()) {
-            outputErrorResponse($segmentErrors->getAllErrors());
+            outputErrorResponse($segmentErrors->getAllErrors(), $editSegment);
 
         } else {
             error_log('save new segment to db');
@@ -142,7 +142,7 @@ try {
 
 } catch(PDOException $e) {
     $db = null;
-    outputErrorResponse($e->getMessage());
+    outputErrorResponse($e->getMessage(), $editSegment);
 }
 
 
@@ -151,8 +151,11 @@ function outputSuccessResponse($data) {
     outputResponse($data);
 }
 
-function outputErrorResponse($errorMessage) {
-    $errorArray = array("error" => $errorMessage);
+function outputErrorResponse($errorMessage, $wasEditing) {
+    $errorArray = array(
+        "error" => $errorMessage,
+        "wasEditing" => $wasEditing);
+
     outputResponse($errorArray);
 }
 

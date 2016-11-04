@@ -51,9 +51,25 @@ function receiveSegmentsError(jqhxr, textStatus, errorThrown) {
 
 function receiveSegmentsSuccess(data) {
     if (data.hasOwnProperty("error")) {
-        console.error("error in data " + data.error);
-        //TODO error handling
 
+        var errors = data.error;
+        var idSuffix = data.wasEditing ? "_edit" : "";
+
+        if (errors.missingName) {
+            markFieldError($('#name_group' + idSuffix), $('#name_help_block' + idSuffix));
+        }
+
+        if (errors.missingAuthor) {
+            markFieldError($('#author_group' + idSuffix), $('#author_help_block' + idSuffix));
+        }
+
+        if (errors.missingAlbum) {
+            markFieldError($('#album_group' + idSuffix), $('#album_help_block' + idSuffix));
+        }
+
+        if (errors.missingAdNumber) {
+            markFieldError($('#ad_number_group' + idSuffix), $('#ad_number_help_block' + idSuffix));
+        }
     } else {
         hideEditForm();
         $('#logsheet').trigger("reset");
