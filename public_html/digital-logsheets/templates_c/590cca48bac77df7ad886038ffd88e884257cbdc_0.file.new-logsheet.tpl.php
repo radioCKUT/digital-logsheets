@@ -1,3 +1,33 @@
+<?php /* Smarty version 3.1.27, created on 2016-11-04 16:09:12
+         compiled from "C:\xampp\digital-logsheets-res\templates\new-logsheet.tpl" */ ?>
+<?php
+/*%%SmartyHeaderCode:18475581ca498166e04_97169949%%*/
+if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    '590cca48bac77df7ad886038ffd88e884257cbdc' => 
+    array (
+      0 => 'C:\\xampp\\digital-logsheets-res\\templates\\new-logsheet.tpl',
+      1 => 1478271828,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '18475581ca498166e04_97169949',
+  'variables' => 
+  array (
+    'programs' => 0,
+  ),
+  'has_nocache_code' => false,
+  'version' => '3.1.27',
+  'unifunc' => 'content_581ca4981b7ca5_46745687',
+),false);
+/*/%%SmartyHeaderCode%%*/
+if ($_valid && !is_callable('content_581ca4981b7ca5_46745687')) {
+function content_581ca4981b7ca5_46745687 ($_smarty_tpl) {
+
+$_smarty_tpl->properties['nocache_hash'] = '18475581ca498166e04_97169949';
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -16,24 +46,40 @@
     <link href="css/select2-bootstrap.css" rel="stylesheet"/>
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <?php echo '<script'; ?>
+ src="https://code.jquery.com/jquery-1.11.3.min.js"><?php echo '</script'; ?>
+>
 
     <!-- Boostrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <?php echo '<script'; ?>
+ src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"><?php echo '</script'; ?>
+>
 
     <!-- Select2 -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+    <?php echo '<script'; ?>
+ src="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"><?php echo '</script'; ?>
+>
 
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script src="js/htmlValidation/episodeValidation.js"></script>
-    <script src="js/ui/prerecord.js"></script>
-    <script src="js/ui/categoryButton.js"></script>
-    <script type="text/javascript">
+    <?php echo '<script'; ?>
+ type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/htmlValidation/episodeValidation.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/ui/prerecord.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="js/ui/categoryButton.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript">
 	var episodeId =0;
 	
         function init() {
-            var data = {$programs};
+            var data = <?php echo $_smarty_tpl->tpl_vars['programs']->value;?>
+;
 
             $(".program").select2({
                 data: data
@@ -99,7 +145,8 @@
 			xmlhttp.open("GET","server_submit_draft_episode.php?episodeId="+episodeId,true);
 			xmlhttp.send();
 		}
-    </script>
+    <?php echo '</script'; ?>
+>
 </head>
 
 <body onload="init()">
@@ -114,25 +161,12 @@
                 <input class="form-control" type="text" name="programmers" id="programmers" required oninput=saveDraft() onpropertychange=saveDraft()>
             </div>
         </div>
-			{if $formErrors.missingProgram}
-                {assign var="programError" value=true}
-            {else}
-                {assign var="programError" value=false}
-            {/if}
-
-            <div id="program_group" class="form-group row{if $programError} has-error{/if}">
-                <div class="col-md-4 col-sm-6">
-                    <label for="program" class="control-label">Program:</label>
-                    <select class="form-control program" name="program" id="program" oninput=saveDraft() onpropertychange=saveDraft()>
-                        {if isset($formSubmission.programName)}
-                            <option value="{$formSubmission.programId}" selected="selected">{$formSubmission.programName}</option>
-                        {/if}
-                    </select>
-                    <span id="program_help_block" class="help-block{if !$programError} hidden{/if}">
-                        Please enter a program.
-                    </span>
-                </div>
+        <div class="form-group row">
+            <div class="col-md-4 col-sm-6">
+                <label for="program" class="control-label">Program:</label>
+                <select class="form-control program" name="program" id="program" oninput=saveDraft() onpropertychange=saveDraft()></select>
             </div>
+        </div>
         <div class="form-group row">
             <div class="col-md-3 col-sm-5">
                 <label for="start_datetime" class="control-label">Start Date/Time:</label>
@@ -165,4 +199,6 @@
     </form>
 </div>
 </body>
-</html>
+</html><?php }
+}
+?>

@@ -9,7 +9,7 @@ $h=0;
 $result = mysql_query("SELECT * FROM episode") or die();
 $number = mysql_num_rows($result);
 if ($number > 0) {
-   	while ($row =  mysql_fetch_array($result)){
+   	while ($row = mysql_fetch_array($result)){
 		$start_time = new DateTime($row['start_time']);
 		$end_time = new DateTime($row['end_time']);
 		if ($start_time < $time && $end_time > $time){

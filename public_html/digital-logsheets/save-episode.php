@@ -1,165 +1,56 @@
 <?php
-/**
- * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
- * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 include_once('../../digital-logsheets-res/php/database/connectToDatabase.php');
 include_once("../../digital-logsheets-res/php/database/manageEpisodeEntries.php");
 include_once("../../digital-logsheets-res/php/database/managePlaylistEntries.php");
 include_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
-require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
-require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
 
 $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
-$programId = intval($_POST['program']);
+$programId = $_POST['program'];
 
-$programmer = $_POST['programmer'];
 $prerecord = isset($_POST['prerecord']);
-$prerecordDate = $_POST['prerecord_date'];
+$prerecord_date = $_POST['prerecord_date'];
 
 $episodeStartTime = $_POST['start_datetime'];
-$episodeDurationHours = $_POST['episode_duration'];
-$notes = $_POST['notes'];
+$episodeDuration = $_POST['episode_duration'];
+$comment = $_POST['comment'];
 
 session_start();
 
 try {
     $db = connectToDatabase();
 
+    $programmerId = 1; //TODO change programmerId once settled how programmers will be stored
+    $playlistId = managePlaylistEntries::createNewPlaylist($db);
+
+    $episodeStartTime = new DateTime($episodeStartTime, new DateTimeZone('America/Montreal'));
+
+    $episode_end_time = clone $episodeStartTime;
+    $episodeDurationMins = ($episodeDuration*60);
+    $episodeDurationDateInterval = new DateInterval('PT' . $episodeDurationMins . 'M');
+    $episode_end_time->add($episodeDurationDateInterval);
+
     $episodeObject = new Episode($db, null);
 
+    $episodeObject->setPlaylist(new Playlist($db, $playlistId));
     $episodeObject->setProgram(new Program($db, $programId));
-    $episodeObject->setProgrammer($programmer);
-
-    $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
+    $episodeObject->setProgrammer(new Programmer($db, $programmerId));
     $episodeObject->setStartTime($episodeStartTime);
-
-    if ($episodeStartTime != null) {
-        $episodeEndTime = computeEpisodeEndTime($episodeStartTime, $episodeDurationHours);
-        $episodeObject->setEndTime($episodeEndTime);
-    }
-
+    $episodeObject->setEndTime($episode_end_time);
     $episodeObject->setIsPrerecord($prerecord);
-    $prerecordDate = getDateTimeFromDateString($prerecordDate);
-    $episodeObject->setPrerecordDate($prerecordDate);
+    $episodeObject->setPrerecordDate($prerecord_date);
+    $episodeObject->setComment($comment);
 
-    $episodeObject->setNotes($notes);
+    $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
 
-    $episodeValidator = new EpisodeValidator($episodeObject);
-    $episodeErrors = $episodeValidator->checkDraftSaveValidity($episodeDurationHours);
+    $_SESSION["episodeId"] = $episodeId;
 
-    $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
-    if ($doEpisodeErrorsExist) {
-        error_log("Errors exist in episode: " . print_r($episodeErrors, true) . print_r($episodeObject->getObjectAsArray(), true));
+    error_log("session episode Id: " . $_SESSION["episodeId"]);
 
-        $formErrors = $episodeErrors->getAllErrors();
-
-        $formSubmission = array(
-            'programmer' => $programmer,
-            'programId' => $programId,
-            'programName' => $episodeObject->getProgram()->getName(),
-            'startDatetime' => formatDatetimeForHTML($episodeObject->getStartTime()),
-            'duration' => $episodeDurationHours,
-            'prerecord' => $prerecord,
-            'prerecordDate' => formatDateForHTML($episodeObject->getPrerecordDate()),
-            'notes' => $notes
-        );
-
-        $episodeErrorsAsQuery = http_build_query(array(
-            'formErrors' => $formErrors,
-            'formSubmission' => $formSubmission
-        ));
-
-        header('Location: new-logsheet.php?' . $episodeErrorsAsQuery);
-        exit();
-
-    } else {
-        error_log("Episode is valid!");
-        $playlistId = managePlaylistEntries::createNewPlaylist($db);
-        $episodeObject->setPlaylist(new Playlist($db, $playlistId));
-
-        $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
-        $_SESSION["episodeId"] = intval($episodeId);
-        header('Location: add-segments.php');
-    }
-
-
+    header('Location: add-segments.php');
 
 } catch(PDOException $e) {
     error_log('Error while saving an episode: ' . $e->getMessage());
     //TODO: error handling
 }
 
-function getDateTimeFromDateString($dateString) {
-    $d = DateTime::createFromFormat('Y-m-d', $dateString);
-
-    if ($d && $d->format('Y-m-d') === $dateString) {
-
-        return new DateTime($dateString);
-
-    } else {
-        return null;
-    }
-}
-
-function getDateTimeFromDateTimeString($dateString) {
-    $d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
-
-    if ($d && $d->format('Y-m-d\TH:i') === $dateString) {
-        return new DateTime($dateString, new DateTimeZone('America/Montreal'));
-
-    } else {
-        return null;
-    }
-}
-
-/**
- * @param DateTime $episodeStartTime
- * @param int $episodeDurationHours
- * @return mixed
- */
-function computeEpisodeEndTime($episodeStartTime, $episodeDurationHours) {
-    $episodeEndTime = clone $episodeStartTime;
-    $episodeDurationMins = ($episodeDurationHours * 60);
-    $episodeDurationDateInterval = new DateInterval('PT' . $episodeDurationMins . 'M');
-    $episodeEndTime->add($episodeDurationDateInterval);
-
-    return $episodeEndTime;
-}
-
-/**
- * @param DateTime $datetime
- * @return String
- */
-function formatDatetimeForHTML($datetime) {
-    if (!is_null($datetime)) {
-        return $datetime->format('Y-m-d\TG:i');
-    }
-}
-
-/**
- * @param DateTime $datetime
- * @return String
- */
-function formatDateForHTML($datetime) {
-    if (!is_null($datetime)) {
-        return $datetime->format('Y-m-d');
-    }
-}

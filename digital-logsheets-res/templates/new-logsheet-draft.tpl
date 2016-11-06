@@ -30,7 +30,16 @@
     <script src="js/ui/prerecord.js"></script>
     <script src="js/ui/categoryButton.js"></script>
     <script type="text/javascript">
-	var episodeId =0;
+	
+	var episodeId = {$episodeId};
+	var program = {$program};
+	var programmer = {$programmer|json_encode};
+	var end_time = {$end_time|json_encode};
+	var start_time = {$start_time|json_encode};
+	var duration = {$duration};
+	var prerecord = {$prerecord};
+	var prerecord_date = {$prerecord_date|json_encode};
+	var comment = {$comment|json_encode};
 	
         function init() {
             var data = {$programs};
@@ -38,9 +47,26 @@
             $(".program").select2({
                 data: data
             });
+			
+			$( "#programmers" ).val(programmer);
+			$( "#program" ).val(program);
+			if (start_time != "0"){
+				$( "#start_datetime" ).val(start_time);
+			}
+			if (duration != 0){
+				$( "#episode_duration" ).val(duration);
+			}
+			if (prerecord == 1){
+				$('#prerecord').prop('checked', true);
+			}
+			if (prerecord_date != "0"){
+				$( "#prerecord_date" ).val(prerecord_date);
+			}
+			$( "#notes" ).val(comment);
+			
+			console.log(episodeId);
         }
 		
-		var same_episode = 0;
 		function saveDraft(){
 		    var programmer = $( "#programmers" ).val();
 			var program = $( "#program" ).find(":selected").val();
@@ -54,7 +80,6 @@
 				var prerecord_date = "NULL";
 			}
 			var notes = $( "#notes" ).val();
-			//console.log(same_episode);
 			
             if (window.XMLHttpRequest)
 			  {
@@ -68,15 +93,15 @@
 			  {
 			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 			    {
-					episodeId = xmlhttp.responseText;
-					if (same_episode == 0){
-						same_episode++;
-					}
+					//document.getElementById("logsheets").innerHTML = xmlhttp_login.responseText;
+					console.log(xmlhttp.responseText);
+					console.log(episodeId);
 			    }
 			  }
-			xmlhttp.open("GET","server_save_draft_episode.php?programmer="+programmer+"&program="+program+"&notes="+notes+"&same_episode="+same_episode
+			xmlhttp.open("GET","server_save_draft_episode_draft.php?programmer="+programmer+"&program="+program+"&notes="+notes+"&episodeId="+episodeId
 			+"&start_datetime="+start_datetime+"&episode_duration="+episode_duration+"&prerecord="+prerecord+"&prerecord_date="+prerecord_date,true);
 			xmlhttp.send();
+			
 		}
 		
 		function submitDraft(){
@@ -114,11 +139,6 @@
                 <input class="form-control" type="text" name="programmers" id="programmers" required oninput=saveDraft() onpropertychange=saveDraft()>
             </div>
         </div>
-			{if $formErrors.missingProgram}
-                {assign var="programError" value=true}
-            {else}
-                {assign var="programError" value=false}
-            {/if}
 
             <div id="program_group" class="form-group row{if $programError} has-error{/if}">
                 <div class="col-md-4 col-sm-6">

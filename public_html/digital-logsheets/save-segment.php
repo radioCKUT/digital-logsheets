@@ -1,28 +1,9 @@
 <?php
-/**
- * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
- * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/objects/Episode.php");
-require_once("../../digital-logsheets-res/php/validator/SegmentValidator.php");
-require_once("../../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
+require("../../digital-logsheets-res/php/validator/SegmentValidator.php");
+require("../../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
 
 $episodeId = $_POST['episode_id'];
 
@@ -33,7 +14,6 @@ $author = $_POST['author'];
 $album = $_POST['album'];
 $category = $_POST['category'];
 
-$stationIdGiven = isset($_POST['station_id']);
 $canCon = isset($_POST['can_con']);
 $newRelease = isset($_POST['new_release']);
 $frenchVocalMusic = isset($_POST['french_vocal_music']);
@@ -48,7 +28,8 @@ if (!isset($episodeId) || $episodeId <= 0) {
 try {
     $db = connectToDatabase();
 
-    $episode = new Episode($db, intval($episodeId));
+    $episode = new Episode($db, $episodeId);
+
     $episodeStartDateTime = $episode->getStartTime();
 
     $segmentTime = addDateToSegmentStartTime($episodeStartDateTime, $segmentTime);
@@ -60,7 +41,6 @@ try {
     $segment->setPlaylistId($playlistId);
     $segment->setDuration(null);
     $segment->setStartTime($segmentTime);
-    $segment->setStationIdGiven($stationIdGiven);
 
     switch ($category) {
         case 2:
@@ -107,30 +87,19 @@ try {
             break;
     }
 
-    $segmentValidator = new SegmentValidator($segment, $episode);
+    $errorsContainer = $segment->isValidForDraftSave($episode);
+
+    if ($errorsContainer->doErrorsExist()) {
+        $errorsList = $errorsContainer->getAllErrors();
+        outputErrorResponse(json_encode($errorsList));
+    };
 
     if ($editSegment) {
         $segment->setId($segmentId);
-
-        $segmentErrors = $segmentValidator->isSegmentValidForEdit();
-
-        if ($segmentErrors->doErrorsExist()) {
-            outputErrorResponse($segmentErrors->getAllErrors());
-
-        } else {
-            manageSegmentEntries::editSegmentInDatabase($db, $segment);
-        }
+        manageSegmentEntries::editSegmentInDatabase($db, $segment);
 
     } else {
-        $segmentErrors = $segmentValidator->isSegmentValidForDraftSave();
-
-        if ($segmentErrors->doErrorsExist()) {
-            outputErrorResponse($segmentErrors->getAllErrors());
-
-        } else {
-            error_log('save new segment to db');
-            manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
-        }
+        manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
     }
 
     $episode = new Episode($db, $episodeId);
