@@ -31,12 +31,16 @@ require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
     $smarty = new Smarty;
 
     session_start();
+
+$formErrors = $_GET['formErrors'];
+$formSubmission = $_GET['formSubmission'];
+
     
     //database interactions
     try {
         //connect to database
         $db = connectToDatabase();
-        
+
         $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
         $smarty->assign("categories", $categories);
 
@@ -56,12 +60,24 @@ require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
 
         $prerecordDateEarlyDaysLimit = EpisodeValidator::getPrerecordDateEarlyDaysLimit();
         $smarty->assign("prerecordDateEarlyDaysLimit", $prerecordDateEarlyDaysLimit);
-
         $prerecordDateLateDaysLimit = EpisodeValidator::getPrerecordDateLateDaysLimit();
         $smarty->assign("prerecordDateLateDaysLimit", $prerecordDateLateDaysLimit);
 
-        // display it
+        $minimumEpisodeLength = EpisodeValidator::getMinEpisodeLengthInHours();
+        $smarty->assign("minDuration", $minimumEpisodeLength);
+        $maximumEpisodeLength = EpisodeValidator::getMaxEpisodeLengthInHours();
+        $smarty->assign("maxDuration", $maximumEpisodeLength);
+
+        if (isset($formErrors)) {
+            $smarty->assign("formErrors", $formErrors);
+        }
+
+        if (isset($formSubmission)) {
+            $smarty->assign("formSubmission", $formSubmission);
+        }
+
         echo $smarty->fetch('../../digital-logsheets-res/templates/new-logsheet.tpl');
+
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }

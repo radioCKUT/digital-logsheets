@@ -18,16 +18,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function setupEpisodeValidation(episodeEarlyStartLimit, episodeLateStartLimit,
-                                prerecordEarlyDaysLimit, prerecordLateDaysLimit) {
-    console.log('prerecord limits: ', prerecordEarlyDaysLimit, prerecordLateDaysLimit);
-    setStartDateTimeBounds(episodeEarlyStartLimit, episodeLateStartLimit);
-    adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLimit);
+function setupEpisodeValidation(validationBounds) {
+
+    setStartDateTimeBounds(validationBounds.episodeStartEarlyLimit, validationBounds.episodeStartLateLimit);
+    adjustPrerecordDateBounds(validationBounds.prerecordDateEarlyDaysLimit, validationBounds.prerecordDateLateDaysLimit);
+    setDurationBounds(validationBounds.minDuration, validationBounds.maxDuration);
+
 }
 
 function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLimit) {
     var episodeStartInput = $('#start_datetime');
     var episodeStartVal = episodeStartInput.val();
+
+    if (!_isEpisodeStartDatetimeValid(episodeStartVal)) {
+        return;
+    }
+
     episodeStartVal = episodeStartVal.replace('T', ' '); //So HTML input may be parsed by moment.js
     var episodeStartDate = Date.parse(episodeStartVal);
 
@@ -48,10 +54,30 @@ function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLim
     prerecordDateInput.prop('max', upperBound);
 }
 
+function setDurationBounds(minDuration, maxDuration) {
+    var durationField = $('#episode_duration');
+    durationField.prop('min', minDuration);
+    durationField.prop('max', maxDuration);
+}
+
 function setStartDateTimeBounds(earlyLimit, lateLimit) {
     var startDateTime = $('#start_datetime');
-    startDateTime.prop('min', earlyLimit);
-    startDateTime.prop('max', lateLimit);
+
+    const milliSecsInMinute = 1000 * 60;
+
+    console.log('earlyLimit', earlyLimit);
+    var earlyLimitDate = new Date(earlyLimit);
+    var roundedEarlyLimitInMillisecs = Math.round(earlyLimitDate.getTime() / milliSecsInMinute) * milliSecsInMinute;
+    var roundedEarlyLimitDate = new Date(roundedEarlyLimitInMillisecs);
+    var roundedEarlyLimitDateAsString = roundedEarlyLimitDate.toISOString().split('.')[0];
+
+    var lateLimitDate = new Date(lateLimit);
+    var roundedLateLimitInMillisecs = Math.round(lateLimitDate.getTime() / milliSecsInMinute) * milliSecsInMinute;
+    var roundedLateLimitDate = new Date(roundedLateLimitInMillisecs);
+    var roundedLateLimitDateAsString = roundedLateLimitDate.toISOString().split('.')[0];
+
+    startDateTime.prop('min', roundedEarlyLimitDateAsString);
+    startDateTime.prop('max', roundedLateLimitDateAsString);
 }
 
 function getDateOffset(daysOffsetFromDate, date) {
@@ -70,4 +96,157 @@ function getDateOffset(daysOffsetFromDate, date) {
 
     todayWithOffset = yyyy + '-' + mm + '-' + dd;
     return todayWithOffset;
+}
+
+
+
+
+
+
+
+
+function verifyProgrammer() {
+    var programmerGroup = $('#programmer_group');
+    var programmerInput = programmerGroup.find('#programmer').val();
+    var helpBlock = programmerGroup.find('#programmer_help_block');
+
+    if (programmerInput != '') {
+        markFieldCorrect(programmerGroup, helpBlock);
+        return true;
+    } else {
+        markFieldError(programmerGroup, helpBlock);
+        return false;
+    }
+}
+
+function verifyProgram() {
+    var programGroup = $('#program_group');
+    var programInput = programGroup.find('#program').val();
+    var helpBlock = programGroup.find('#program_help_block');
+
+    if (programInput != '') {
+        markFieldCorrect(programGroup, helpBlock);
+        return true;
+    } else {
+        markFieldError(programGroup, helpBlock);
+        return false;
+    }
+}
+
+function verifyEpisodeStartDatetime() {
+    var startDatetimeGroup = $('#start_datetime_group');
+    var startDatetimeInputField = startDatetimeGroup.find('#start_datetime');
+    var startDatetimeInput = startDatetimeInputField.val();
+    var helpBlock = startDatetimeGroup.find('#start_datetime_help_block');
+
+
+    var isInputADate = _isEpisodeStartDatetimeValid(startDatetimeInput);
+
+    if (isInputADate) {
+        var earlyLimit = startDatetimeInputField.attr("min");
+        var earlyLimitMillisecs = new Date(earlyLimit).getTime();
+
+        var lateLimit = startDatetimeInputField.attr("max");
+        var lateLimitMillisecs = new Date(lateLimit).getTime();
+
+        var startDatetimeMillisecs = new Date(startDatetimeInput).getTime();
+
+        if (startDatetimeMillisecs < earlyLimitMillisecs) {
+            markEpisodeStartDatetimeTooFarInPast(startDatetimeGroup, helpBlock);
+            return false;
+
+        } else if (startDatetimeMillisecs > lateLimitMillisecs) {
+            markEpisodeStartDatetimeTooFarInFuture(startDatetimeGroup, helpBlock);
+            return false;
+
+        } else {
+            markEpisodeStartDatetimeCorrect(startDatetimeGroup, helpBlock);
+            return true;
+        }
+
+    } else {
+        markEpisodeStartDatetimeMissing(startDatetimeGroup, helpBlock);
+        return false;
+    }
+}
+
+function verifyEpisodeDuration() {
+    var durationGroup = $('#duration_group');
+    var durationField = durationGroup.find('#episode_duration');
+    var duration = durationField.val();
+    duration = +duration; //Coerce to a number for comparison purposes.
+    var helpBlock = durationGroup.find('#duration_help_block');
+
+    if (duration === '') {
+        markEpisodeDurationMissing(durationGroup, helpBlock);
+        return false;
+    }
+
+    var minDuration = durationField.attr('min');
+    minDuration = +minDuration;
+    var maxDuration = durationField.attr('max');
+    maxDuration = +maxDuration;
+
+    if (duration < minDuration) {
+        markEpisodeDurationTooShort(durationGroup, helpBlock);
+        return false;
+
+    } else if (duration > maxDuration) {
+        markEpisodeDurationTooLong(durationGroup, helpBlock);
+        return false;
+
+    } else {
+        markEpisodeDurationCorrect(durationGroup, helpBlock);
+        return true;
+    }
+}
+
+function verifyPrerecordDate() {
+    var prerecordGroup = $('#prerecord_group');
+
+    var isPrerecord = prerecordGroup.find('#prerecord').is(":checked");
+    var helpBlock = prerecordGroup.find('#prerecord_help_block');
+
+    if (!isPrerecord) {
+        markPrerecordDateCorrect(prerecordGroup, helpBlock);
+        return true;
+    }
+
+    var prerecordDateField = prerecordGroup.find('#prerecord_date');
+    var prerecordDate = prerecordDateField.val();
+
+    var isInputADate = moment(prerecordDate, "YYYY-MM-DD", true).isValid();
+
+    if (isInputADate) {
+        var earlyLimit = prerecordDateField.attr("min");
+        var earlyLimitMillisecs = new Date(earlyLimit).getTime();
+
+        var lateLimit = prerecordDateField.attr("max");
+        var lateLimitMillisecs = new Date(lateLimit).getTime();
+
+        var startDatetimeMillisecs = new Date(prerecordDate).getTime();
+
+        if (startDatetimeMillisecs < earlyLimitMillisecs) {
+            markPrerecordDateTooFarInPast(prerecordGroup, helpBlock);
+            return false;
+
+        } else if (startDatetimeMillisecs > lateLimitMillisecs) {
+            markPrerecordDateTooFarInFuture(prerecordGroup, helpBlock);
+            return false;
+
+        } else {
+            markPrerecordDateCorrect(prerecordGroup, helpBlock);
+            return true;
+        }
+
+    } else {
+        markPrerecordDateMissing(prerecordGroup, helpBlock);
+        return false;
+    }
+}
+
+function _isEpisodeStartDatetimeValid(startDatetimeInput) {
+    // check for two kinds of date format, based on browser used
+    return moment(startDatetimeInput, "YYYY-MM-DDTHH:mm", true).isValid() ||
+        moment(startDatetimeInput, "YYYY-MM-DDTHH:mm:ss", true).isValid();
 }

@@ -30,6 +30,7 @@ $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
 $programId = intval($_POST['program']);
 
+$programmer = $_POST['programmer'];
 $prerecord = isset($_POST['prerecord']);
 $prerecordDate = $_POST['prerecord_date'];
 
@@ -42,16 +43,12 @@ session_start();
 try {
     $db = connectToDatabase();
 
-    $programmerId = 1; //TODO change programmerId once settled how programmers will be stored
-    $playlistId = managePlaylistEntries::createNewPlaylist($db);
-
     $episodeObject = new Episode($db, null);
 
-    $episodeObject->setPlaylist(new Playlist($db, $playlistId));
     $episodeObject->setProgram(new Program($db, $programId));
-    $episodeObject->setProgrammer(new Programmer($db, $programmerId));
+    $episodeObject->setProgrammer($programmer);
 
-    $episodeStartTime = getDateTimeFromDateString($episodeStartTime);
+    $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
     $episodeObject->setStartTime($episodeStartTime);
 
     if ($episodeStartTime != null) {
@@ -70,12 +67,34 @@ try {
 
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
     if ($doEpisodeErrorsExist) {
-        error_log("Errors exist in episode: " . print_r($episodeErrors, true));
-        // TODO: handle episode errors present
-        echo('Error in episode!');
+        error_log("Errors exist in episode: " . print_r($episodeErrors, true) . print_r($episodeObject->getObjectAsArray(), true));
+
+        $formErrors = $episodeErrors->getAllErrors();
+
+        $formSubmission = array(
+            'programmer' => $programmer,
+            'programId' => $programId,
+            'programName' => $episodeObject->getProgram()->getName(),
+            'startDatetime' => formatDatetimeForHTML($episodeObject->getStartTime()),
+            'duration' => $episodeDurationHours,
+            'prerecord' => $prerecord,
+            'prerecordDate' => formatDateForHTML($episodeObject->getPrerecordDate()),
+            'notes' => $notes
+        );
+
+        $episodeErrorsAsQuery = http_build_query(array(
+            'formErrors' => $formErrors,
+            'formSubmission' => $formSubmission
+        ));
+
+        header('Location: new-logsheet.php?' . $episodeErrorsAsQuery);
+        exit();
 
     } else {
-        error_log("Epsiode is valid!");
+        error_log("Episode is valid!");
+        $playlistId = managePlaylistEntries::createNewPlaylist($db);
+        $episodeObject->setPlaylist(new Playlist($db, $playlistId));
+
         $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
         $_SESSION["episodeId"] = intval($episodeId);
         header('Location: add-segments.php');
@@ -89,6 +108,18 @@ try {
 }
 
 function getDateTimeFromDateString($dateString) {
+    $d = DateTime::createFromFormat('Y-m-d', $dateString);
+
+    if ($d && $d->format('Y-m-d') === $dateString) {
+
+        return new DateTime($dateString);
+
+    } else {
+        return null;
+    }
+}
+
+function getDateTimeFromDateTimeString($dateString) {
     $d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
 
     if ($d && $d->format('Y-m-d\TH:i') === $dateString) {
@@ -111,4 +142,24 @@ function computeEpisodeEndTime($episodeStartTime, $episodeDurationHours) {
     $episodeEndTime->add($episodeDurationDateInterval);
 
     return $episodeEndTime;
+}
+
+/**
+ * @param DateTime $datetime
+ * @return String
+ */
+function formatDatetimeForHTML($datetime) {
+    if (!is_null($datetime)) {
+        return $datetime->format('Y-m-d\TG:i');
+    }
+}
+
+/**
+ * @param DateTime $datetime
+ * @return String
+ */
+function formatDateForHTML($datetime) {
+    if (!is_null($datetime)) {
+        return $datetime->format('Y-m-d');
+    }
 }

@@ -19,8 +19,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Programmer extends LogsheetComponent{
-        
-        
+class SavePlaylistErrors extends ErrorsContainer {
+
+    public function __construct() {
+        $this->errors = [
+            'noAlignmentWithEpisodeStart' => false
+        ];
     }
-?>
+
+    public function markNoAlignmentWithEpisodeStart() {
+        $this->errors['noAlignmentWithEpisodeStart'] = true;
+    }
+}

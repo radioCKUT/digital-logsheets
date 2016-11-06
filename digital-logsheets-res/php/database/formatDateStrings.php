@@ -19,17 +19,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 /**
  * @param DateTime $dateTimeObject
- * @return DateTime
+ * @return String
  */
 function formatDateStringForDatabaseWrite($dateTimeObject) {
+    if ($dateTimeObject) {
+        return $dateTimeObject->format("Y-m-d");
 
+    } else {
+        return null;
+    }
+}
+/**
+ * @param DateTime $dateTimeObject
+ * @return String
+ */
+function formatDatetimeStringForDatabaseWrite($dateTimeObject) {
     if ($dateTimeObject) {
         $dateTimeObject->setTimezone(new DateTimeZone('UTC'));
-        $dateTimeObject = $dateTimeObject->format("Y-m-d H:i:s");
-
-        return $dateTimeObject;
+        return $dateTimeObject->format("Y-m-d H:i:s");
 
     } else {
         return null;
@@ -41,7 +51,6 @@ function formatDateStringForDatabaseWrite($dateTimeObject) {
  * @return DateTime
  */
 function formatDateStringFromDatabase($dateString) {
-
     $startDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
     $startDateTime->setTimezone(new DateTimeZone('America/Montreal'));
 

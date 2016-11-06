@@ -28,9 +28,10 @@
 
 require_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
 require_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
-require_once("../../digital-logsheets-res/php/objects/Episode.php");
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
+require_once("../../digital-logsheets-res/php/validator/PlaylistValidator.php");
+require_once("../../digital-logsheets-res/php/validator/errorContainers/SavePlaylistErrors.php");
 
 // create object
 $smarty = new Smarty;
@@ -46,6 +47,17 @@ try {
     $episodeId = $_SESSION['episodeId'];
 
     $episode = new Episode($db, $episodeId);
+
+    $playlistValidator = new PlaylistValidator($episode);
+    $playlistErrors = $playlistValidator->checkFinalSaveValidity();
+
+    if ($playlistErrors->doErrorsExist()) {
+        error_log('Playlist invalid!');
+        $playlistErrorsAsQuery = http_build_query(array('formErrors' => $playlistErrors->getAllErrors()));
+        header('Location: add-segments.php?' . $playlistErrorsAsQuery);
+        exit();
+    }
+
     $segments = $episode->getSegments();
     $episodeEndTime = $episode->getEndTime();
 
@@ -77,6 +89,11 @@ try {
     echo 'ERROR: ' . $e->getMessage();
 }
 
+/**
+ * @param Segment[] $segments
+ * @param DateTime $episodeEndTime
+ * @return mixed
+ */
 function computeSegmentDurations($segments, $episodeEndTime) {
     $segmentCount = count($segments);
 
@@ -97,10 +114,7 @@ function computeSegmentDurations($segments, $episodeEndTime) {
             $duration = $episodeEndTimeStamp - $currentSegmentStartTimeStamp;
         }
 
-        error_log("duration: " . $duration);
-
-        $durationMinutes = $duration/60;
-        error_log("duration minutes: " . $durationMinutes);
+        $durationMinutes = $duration / 60;
         $currentSegment->setDuration($durationMinutes);
     }
 

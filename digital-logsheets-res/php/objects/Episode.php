@@ -33,6 +33,10 @@
          * @var Playlist
          */
         private $playlist;
+
+        /**
+         * @var String
+         */
         private $programmer;
 
         /**
@@ -44,9 +48,19 @@
          */
         private $episodeEndTime;
 
+        /**
+         * @var boolean
+         */
         private $isPrerecord;
+
+        /**
+         * @var DateTime
+         */
         private $prerecordDate;
 
+        /**
+         * @var String
+         */
         private $notes;
         
         public function __construct($db, $componentId) {
@@ -160,7 +174,7 @@
         }
 
         /**
-         * @return Programmer
+         * @return String
          */
         public function getProgrammer() {
             return $this->programmer;

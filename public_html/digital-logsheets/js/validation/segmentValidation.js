@@ -42,6 +42,52 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
 
 
 
+
+function verifySegmentStartTime(timeGroup, episode) {
+
+    var segmentTimeField = timeGroup.find('.segment_time');
+    var segmentTime = segmentTimeField.val();
+
+    var helpBlock =  timeGroup.find('.segment_time_help_text');
+
+    if (segmentTime == '') {
+        markFieldCorrect(timeGroup, helpBlock);
+        return false;
+    }
+
+    var segmentDatetime = new Date("January 1, " + segmentTime);
+
+    var episodeStartDatetime = new Date(episode.startDatetime);
+    var episodeEndDatetime = new Date(episode.endDatetime);
+
+    var segmentTimeInMinutes = getTimeInMinutesSinceMidnight(segmentDatetime);
+    var episodeStartTimeInMinutes = getTimeInMinutesSinceMidnight(episodeStartDatetime);
+    var episodeStartDay = episodeStartDatetime.getDay();
+
+    var episodeEndTimeInMinutes = getTimeInMinutesSinceMidnight(episodeEndDatetime);
+    var episodeEndDay = episodeEndDatetime.getDay();
+
+    var isSegmentInEpisode;
+
+    if (episodeStartDay == episodeEndDay) {
+        isSegmentInEpisode = episodeSpanningOneCalendarDay(segmentTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes);
+
+    } else {
+        isSegmentInEpisode = episodeSpanningTwoCalendarDays(segmentTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes);
+    }
+
+
+
+    if (isSegmentInEpisode) {
+        markFieldCorrect(timeGroup, helpBlock);
+        return true;
+
+    } else {
+        markFieldError(timeGroup, helpBlock);
+        return false;
+    }
+}
+
 function getTimeInMinutesSinceMidnight(dateTime) {
     return (dateTime.getHours() * 60) + dateTime.getMinutes();
 }
@@ -66,34 +112,4 @@ function isInEpisodesSecondCalendarDay(segmentStartTimeInMinutes, episodeStartTi
 function episodeSpanningTwoCalendarDays(segmentStartTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes) {
     return (isInEpisodesFirstCalendarDay(segmentStartTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes)
     || isInEpisodesSecondCalendarDay(segmentStartTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes));
-}
-
-function verifySegmentStartTime(segmentTime, episode) {
-    var segmentDatetime = new Date("January 1, " + segmentTime);
-
-    var episodeStartDatetime = new Date(episode.startDatetime);
-    var episodeEndDatetime = new Date(episode.endDatetime);
-
-    var segmentTimeInMinutes = getTimeInMinutesSinceMidnight(segmentDatetime);
-    var episodeStartTimeInMinutes = getTimeInMinutesSinceMidnight(episodeStartDatetime);
-    var episodeStartDay = episodeStartDatetime.getDay();
-
-    var episodeEndTimeInMinutes = getTimeInMinutesSinceMidnight(episodeEndDatetime);
-    var episodeEndDay = episodeEndDatetime.getDay();
-
-    var isSegmentInEpisode;
-
-    if (episodeStartDay == episodeEndDay) {
-        isSegmentInEpisode = episodeSpanningOneCalendarDay(segmentTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes);
-
-    } else {
-        isSegmentInEpisode = episodeSpanningTwoCalendarDays(segmentTimeInMinutes, episodeStartTimeInMinutes, episodeEndTimeInMinutes);
-    }
-
-    if (isSegmentInEpisode) {
-        markSegmentTimeCorrect();
-
-    } else {
-        markSegmentTimeError();
-    }
 }

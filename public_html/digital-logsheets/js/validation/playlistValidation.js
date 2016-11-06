@@ -18,28 +18,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function deleteEpisodeSegment(id) {
-    $.ajax({
-        type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/delete-segment.php",
-        data: { segment_id : id },
-        success: deleteSuccessCallback,
-        error: deleteErrorCallback
-    })
+function fetchSegmentsData() {
+    var addedSegmentsTable = $('#added_segments').children('tbody');
+    var segmentRows = addedSegmentsTable.children();
+
+    var segmentData = [];
+
+    segmentRows.each(function (i) {
+        segmentData[i] = $(this).data("segment");
+    });
+
+    return segmentData;
 }
 
-function deleteSuccessCallback(data) {
-    console.log("success callback");
 
-    if (!data.hasOwnProperty("error")) {
-        getEpisodeSegments();
+function verifyPlaylistEpisodeAlignment() {
+    var segments = fetchSegmentsData();
+    var episodeStartTime = getEpisodeStartTime();
+    var segmentTimeAlignWithEpisodeStart = false;
+
+    segments.forEach(function (segment) {
+        var segmentStartTime = segment.startTime;
+
+        if (segmentStartTime == episodeStartTime) {
+            segmentTimeAlignWithEpisodeStart = true;
+            return false;
+        }
+    });
+
+
+    if (segmentTimeAlignWithEpisodeStart) {
+        markFirstSegmentAtEpisodeStart();
+        return true;
+
     } else {
-        console.error("error in data " + data.error);
-        //TODO error handling
+        markFirstSegmentNotAtEpisodeStart();
+        return false;
     }
-}
-
-function deleteErrorCallback(jqhxr, textStatus, errorThrown) {
-    alert("Add segment fail! status: " + textStatus + " error thrown: " + errorThrown);
-    //TODO: proper error handling
 }

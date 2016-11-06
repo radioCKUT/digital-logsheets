@@ -18,27 +18,183 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const SEGMENT_NOT_IN_EPISODE_ERROR_MSG = "Segment must fall within episode.";
-const SEGMENT_TIME_HELP_BLOCK_ID = "segment_time_help_block";
 
-function markSegmentTimeError() {
-    var segmentTimeFormGroup = $('.time_group');
-    markFieldError(segmentTimeFormGroup, SEGMENT_TIME_HELP_BLOCK_ID, SEGMENT_NOT_IN_EPISODE_ERROR_MSG)
+function markEpisodeStartDatetimeCorrect(group, helpBlock) {
+    var datetimeMissingMessage = $('#missing_start_time_message');
+    datetimeMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#air_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#air_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldCorrect(group, helpBlock);
 }
 
-function markSegmentTimeCorrect() {
-    var segmentTimeFormGroup = $('.time_group');
-    markFieldCorrect(segmentTimeFormGroup, SEGMENT_TIME_HELP_BLOCK_ID);
+function markEpisodeStartDatetimeMissing(group, helpBlock) {
+    var datetimeMissingMessage = $('#missing_start_time_message');
+    datetimeMissingMessage.removeClass("hidden");
+
+    var tooFarInPastMessage = $('#air_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#air_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
 }
 
-function markFieldError(formGroup, helpBlockId, message) {
+function markEpisodeStartDatetimeTooFarInPast(group, helpBlock) {
+    var datetimeMissingMessage = $('#missing_start_time_message');
+    datetimeMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#air_date_too_far_in_past_message');
+    tooFarInPastMessage.removeClass("hidden");
+
+    var tooFarInFutureMessage = $('#air_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markEpisodeStartDatetimeTooFarInFuture(group, helpBlock) {
+    var datetimeMissingMessage = $('#missing_start_time_message');
+    datetimeMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#air_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#air_date_too_far_in_future_message');
+    tooFarInFutureMessage.removeClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markEpisodeDurationCorrect(group, helpBlock) {
+    var durationMissingMessage = $('#missing_duration_message');
+    durationMissingMessage.addClass("hidden");
+
+    var tooShortMessage = $('#too_short_message');
+    tooShortMessage.addClass("hidden");
+
+    var tooLongMessage = $('#too_long_message');
+    tooLongMessage.addClass("hidden");
+
+    markFieldCorrect(group, helpBlock);
+}
+
+function markEpisodeDurationMissing(group, helpBlock) {
+    var durationMissingMessage = $('#missing_duration_message');
+    durationMissingMessage.removeClass("hidden");
+
+    var tooShortMessage = $('#too_short_message');
+    tooShortMessage.addClass("hidden");
+
+    var tooLongMessage = $('#too_long_message');
+    tooLongMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markEpisodeDurationTooShort(group, helpBlock) {
+    var durationMissingMessage = $('#missing_duration_message');
+    durationMissingMessage.addClass("hidden");
+
+    var tooShortMessage = $('#too_short_message');
+    tooShortMessage.removeClass("hidden");
+
+    var tooLongMessage = $('#too_long_message');
+    tooLongMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markEpisodeDurationTooLong(group, helpBlock) {
+    var durationMissingMessage = $('#missing_duration_message');
+    durationMissingMessage.addClass("hidden");
+
+    var tooShortMessage = $('#too_short_message');
+    tooShortMessage.addClass("hidden");
+
+    var tooLongMessage = $('#too_long_message');
+    tooLongMessage.removeClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markPrerecordDateCorrect(group, helpBlock) {
+    var prerecordDateMissingMessage = $('#missing_prerecord_date_message');
+    prerecordDateMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#prerecord_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#prerecord_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldCorrect(group, helpBlock);
+}
+
+function markPrerecordDateMissing(group, helpBlock) {
+    var prerecordDateMissingMessage = $('#missing_prerecord_date_message');
+    prerecordDateMissingMessage.removeClass("hidden");
+
+    var tooFarInPastMessage = $('#prerecord_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#prerecord_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markPrerecordDateTooFarInPast(group, helpBlock) {
+    var prerecordDateMissingMessage = $('#missing_prerecord_date_message');
+    prerecordDateMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#prerecord_date_too_far_in_past_message');
+    tooFarInPastMessage.removeClass("hidden");
+
+    var tooFarInFutureMessage = $('#prerecord_date_too_far_in_future_message');
+    tooFarInFutureMessage.addClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markPrerecordDateTooFarInFuture(group, helpBlock) {
+    var prerecordDateMissingMessage = $('#missing_prerecord_date_message');
+    prerecordDateMissingMessage.addClass("hidden");
+
+    var tooFarInPastMessage = $('#prerecord_date_too_far_in_past_message');
+    tooFarInPastMessage.addClass("hidden");
+
+    var tooFarInFutureMessage = $('#prerecord_date_too_far_in_future_message');
+    tooFarInFutureMessage.removeClass("hidden");
+
+    markFieldError(group, helpBlock);
+}
+
+function markFirstSegmentNotAtEpisodeStart() {
+    $('#start_time_column').addClass('red');
+    $('#playlist_not_aligned_help_text').removeClass('hidden');
+}
+
+function markFirstSegmentAtEpisodeStart() {
+    $('#start_time_column').removeClass('red');
+    $('#playlist_not_aligned_help_text').addClass('hidden');
+}
+
+
+
+
+
+function markFieldError(formGroup, helpBlock) {
     formGroup.addClass("has-error");
-    if ($('#' + helpBlockId).length === 0) {
-        formGroup.append('<span id="' + helpBlockId + '" class="help-block">' + message + '</span>');
-    }
+    helpBlock.removeClass("hidden");
 }
 
-function markFieldCorrect(formGroup, helpBlockId) {
+function markFieldCorrect(formGroup, helpBlock) {
     formGroup.removeClass("has-error");
-    $('#' + helpBlockId).remove();
+    helpBlock.addClass("hidden");
 }

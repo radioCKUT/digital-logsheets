@@ -57,6 +57,15 @@ class EpisodeValidator {
         return $errorsContainer;
     }
 
+    public function checkFinalSaveValidity() {
+        $errorsContainer = new SaveEpisodeErrors();
+
+        $this->areRequiredFieldsPresent($errorsContainer);
+        $this->isEpisodeLengthValid($errorsContainer);
+        $this->isEpisodeAirDateValid($errorsContainer);
+        $this->isEpisodePrerecordDateValid($errorsContainer);
+    }
+
     public static function getEpisodeEarlyLimit() {
         $episodeEarlyLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
         $episodeEarlyLimit->sub(new DateInterval('P' . self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS . 'D'));
@@ -77,6 +86,14 @@ class EpisodeValidator {
 
     public static function getPrerecordDateLateDaysLimit() {
         return self::PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS;
+    }
+
+    public static function getMinEpisodeLengthInHours() {
+        return self::EPISODE_MIN_LENGTH_HOURS;
+    }
+
+    public static function getMaxEpisodeLengthInHours() {
+        return self::EPISODE_MAX_LENGTH_HOURS;
     }
 
 
@@ -181,13 +198,16 @@ class EpisodeValidator {
 
         if ($prerecord) {
             $prerecordDate = $this->episode->getPrerecordDate();
+            $episodeStartDate = $this->episode->getStartTime();
+
+            if (is_null($episodeStartDate)) {
+                return;
+            }
 
             if (is_null($prerecordDate)) {
                 $errorsContainer->markPrerecordDateMissing();
 
             } else {
-
-                $episodeStartDate = $this->episode->getStartTime();
                 $daysSincePrerecordDate = $this->getDayDifferenceFromDate($episodeStartDate, $prerecordDate);
 
                 if ($daysSincePrerecordDate > self::PRERECORD_AFTER_CURRENT_DATE_LIMIT_DAYS) {
@@ -207,13 +227,16 @@ class EpisodeValidator {
      */
     private function getDayDifferenceFromDate($fromDate, $toDate) {
         $timeSinceFromDateInterval = $fromDate->diff($toDate);
-        $entireDaysSinceFromDate = $timeSinceFromDateInterval->format('%R%a');
+        
+        $positiveOrNegativeInterval = $timeSinceFromDateInterval->format('%R');
+        $entireDaysSinceFromDate = $timeSinceFromDateInterval->format('%a');
         $hoursSinceFromDate = $timeSinceFromDateInterval->format('%h');
         $minutesSinceFromDate = $timeSinceFromDateInterval->format('%i');
 
-        $daysSinceFromDate = intval($entireDaysSinceFromDate) +
-            intval($hoursSinceFromDate) / 24 +
-            intval($minutesSinceFromDate) / (24 * 60);
+        $daysSinceFromDate = intval($positiveOrNegativeInterval . '1')
+            * (intval($entireDaysSinceFromDate)
+                + intval($hoursSinceFromDate) / 24
+                + intval($minutesSinceFromDate) / (24 * 60));
 
         return $daysSinceFromDate;
     }
