@@ -1,17 +1,16 @@
 <form id="logsheet{$idSuffix}" role="form" method="post" data-toggle="validator">
+    <h5>Episode ID: {$episode.id|json_encode}</h5>
 
     <div id="segments">
-        <div id="time_group{$idSuffix}" class="form-group row time_group">
+        <div class="form-group row">
             <div class="col-md-3">
                 <label for="segment_time{$idSuffix}" class="control-label">Time:</label>
-                <input name="segment_time" class="form-control segment_time"
-                       type="time" id="segment_time{$idSuffix}" required>
-                <span id="segment_time_help_text{$idSuffix}" class="segment_time_help_text help-block hidden">
-                    Segment must fall within episode.
-                </span>
+                <input name="segment_time" class="form-control segment-time"
+                       data-remote="validation/segment-time.php"
+                       data-error="Segment start time must fall within episode start and end times"
+                       type="time" id="segment_time{$idSuffix}" required >
             </div>
         </div>
-
         <div class="form-group">
             <label for="category" class="control-label">Category:</label>
             <div class="btn-group category" data-toggle="buttons">
@@ -26,44 +25,36 @@
                 <label class="btn btn-primary" onclick="setupCat5Fields()">
                     <input type="radio" name="category" class="category5" autocomplete="off" value="5">5</label></div>
         </div>
-
         <div class="form-group row ad_number_group" style="display:none;">
             <div class="col-md-3">
                 <label for="ad_number_input{$idSuffix}" class="control-label ad_number_label">Ad Number:</label>
-                <input class="form-control" type="number" min="1" step="1" max="300" name="ad_number" id="ad_number_input{$idSuffix}">
+                <input class="form-control" type="number" min="1" step="1" max="300" name="ad_number" id="ad_number_input{$idSuffix}" >
             </div>
         </div>
-
         <div class="form-group row name_group" style="display:none;">
             <div class="col-md-9">
                 <label for="name_input{$idSuffix}" class="control-label name_label">Name:</label>
-                <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}" required>
+                <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}" required >
             </div>
         </div>
-
-        <label class="checkbox-inline station_id_group" style="display:none;">
-            <input type="checkbox" name="station_id" value="" id="station_id{$idSuffix}">Station ID Given</label>
-
         <div class="form-group row author_group" style="display:none;">
             <div class="col-md-9">
                 <label for="author_input{$idSuffix}" class="control-label">Author:</label>
-                <input class="form-control author_input" type="text" name="author" id="author_input{$idSuffix}">
+                <input class="form-control author_input" type="text" name="author" id="author_input{$idSuffix}" >
             </div>
         </div>
-
         <div class="form-group row album_group" style="display:none;">
             <div class="col-md-9">
                 <label for="album_input{$idSuffix}" class="control-label">Album:</label>
-                <input class="form-control album_input" type="text" name="album" id="album_input{$idSuffix}">
+                <input class="form-control album_input" type="text" name="album" id="album_input{$idSuffix}" >
             </div>
         </div>
-
         <label class="checkbox-inline can_con_group" style="display:none;">
-            <input type="checkbox" name="can_con" value="" id="can_con{$idSuffix}">CC</label>
+            <input type="checkbox" name="can_con" value="" id="can_con{$idSuffix}" >CC</label>
         <label class="checkbox-inline new_release_group" style="display:none;">
-            <input type="checkbox" name="new_release" value="" id="new_release{$idSuffix}">NR</label>
+            <input type="checkbox" name="new_release" value="" id="new_release{$idSuffix}" >NR</label>
         <label class="checkbox-inline french_vocal_music_group" style="display:none;">
-            <input type="checkbox" name="french_vocal_music" value="" id="french_vocal_music{$idSuffix}">FV</label>
+            <input type="checkbox" name="french_vocal_music" value="" id="french_vocal_music{$idSuffix}" >FV</label>
 
         <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
         <hr>

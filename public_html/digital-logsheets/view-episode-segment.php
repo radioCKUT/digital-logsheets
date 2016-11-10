@@ -33,7 +33,7 @@ require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
 
 
             // display it
-            echo $smarty->fetch('../../digital-logsheets-res/templates/view-episode-logsheet.tpl');
+            echo $smarty->fetch('../../digital-logsheets-res/templates/view-episode-segment.tpl');
         } catch(PDOException $e) {
             echo 'ERROR: ' . $e->getMessage();
         }

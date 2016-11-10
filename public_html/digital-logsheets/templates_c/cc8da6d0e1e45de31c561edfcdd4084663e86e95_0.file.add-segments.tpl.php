@@ -1,3 +1,33 @@
+<?php /* Smarty version 3.1.27, created on 2016-11-04 12:30:37
+         compiled from "C:\xampp\digital-logsheets-res\templates\add-segments.tpl" */ ?>
+<?php
+/*%%SmartyHeaderCode:3820581c715da149c2_98009420%%*/
+if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    'cc8da6d0e1e45de31c561edfcdd4084663e86e95' => 
+    array (
+      0 => 'C:\\xampp\\digital-logsheets-res\\templates\\add-segments.tpl',
+      1 => 1478246539,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '3820581c715da149c2_98009420',
+  'variables' => 
+  array (
+    'episode' => 0,
+  ),
+  'has_nocache_code' => false,
+  'version' => '3.1.27',
+  'unifunc' => 'content_581c715da769d8_49129965',
+),false);
+/*/%%SmartyHeaderCode%%*/
+if ($_valid && !is_callable('content_581c715da769d8_49129965')) {
+function content_581c715da769d8_49129965 ($_smarty_tpl) {
+
+$_smarty_tpl->properties['nocache_hash'] = '3820581c715da149c2_98009420';
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -13,22 +43,45 @@
     <link href="css/custom.css" rel="stylesheet">
 
     <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"><?php echo '</script'; ?>
+>
 
     <!-- Boostrap JS -->
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"><?php echo '</script'; ?>
+>
 
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script type="text/javascript" src="js/htmlValidation/segmentValidation.js"></script>
-    <script type="text/javascript" src="js/deleteSegment.js"></script>
-    <script type="text/javascript" src="js/editSegment.js"></script>
-    <script type="text/javascript" src="js/ui/segmentOptionsMenu.js"></script>
-    <script type="text/javascript" src="js/saveReceiveSegments.js"></script>
-    <script type="text/javascript" src="js/ui/categoryButton.js"></script>
-    <script type="text/javascript" src="js/lib/sisyphus.min.js"></script>
-    <script type="text/javascript" src="js/lib/validator.min.js"></script>
-    <script type="text/javascript">
+    <?php echo '<script'; ?>
+ type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/htmlValidation/segmentValidation.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/deleteSegment.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/editSegment.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/ui/segmentOptionsMenu.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/saveReceiveSegments.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/ui/categoryButton.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/lib/sisyphus.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/lib/validator.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript">
         function startStoringFormEntries() {
             $('#logsheet').on('submit', function(e) {
                 e.preventDefault();
@@ -87,17 +140,23 @@
 			xmlhttp.send();
 			
 		}
-    </script>
+    <?php echo '</script'; ?>
+>
 </head>
 <body onload="startStoringFormEntries()">
 <div class="container-fluid">
     <div class="col-md-8">
         <h3>Add Segments</h3>
-        {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix=''}
-        {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix='_edit'}
+        <?php echo $_smarty_tpl->getSubTemplate ('../../digital-logsheets-res/templates/segment-form.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('idSuffix'=>''), 0);
+?>
+
+        <?php echo $_smarty_tpl->getSubTemplate ('../../digital-logsheets-res/templates/segment-form.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('idSuffix'=>'_edit'), 0);
+?>
+
 
         <form id="finalize" role="form" action="review-logsheet.php" method="post" onsubmit="">
-            <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
+            <input type="hidden" name="episode_id" value=<?php echo json_encode($_smarty_tpl->tpl_vars['episode']->value['id']);?>
+>
             <input type="submit" value="Submit All">
         </form>
     </div>
@@ -114,4 +173,6 @@
     </div>
 </div>
 </body>
-</html>
+</html><?php }
+}
+?>

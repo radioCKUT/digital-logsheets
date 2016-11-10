@@ -7,7 +7,7 @@
     
     // create object
     $smarty = new Smarty;
-    
+	
     //database interactions
     try {
         //open database connection
@@ -39,7 +39,9 @@
         $smarty->assign("programs", $programs);
 
         // display it
-        echo $smarty->fetch('../../digital-logsheets-res/templates/index.tpl');
+        echo $smarty->fetch('../../digital-logsheets-res/templates/index2.tpl');
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }
+	
+	
