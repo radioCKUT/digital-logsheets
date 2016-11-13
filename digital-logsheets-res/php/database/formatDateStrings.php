@@ -50,7 +50,7 @@ function formatDatetimeStringForDatabaseWrite($dateTimeObject) {
  * @param string $dateString
  * @return DateTime
  */
-function formatDateStringFromDatabase($dateString) {
+function formatDateTimeStringFromDatabase($dateString) {
     $startDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
     $startDateTime->setTimezone(new DateTimeZone('America/Montreal'));
 

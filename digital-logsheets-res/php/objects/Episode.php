@@ -241,6 +241,10 @@
             return $this->prerecordDate;
         }
 
+        public function isDraft() {
+            return $this->isDraft;
+        }
+
         /**
          * @return mixed
          */

@@ -86,7 +86,7 @@ include_once("readFromDatabase.php");
             $segmentObject->setIsFrenchVocalMusic($segmentFrenchVocalMusic);
 
             $dbStartTimeString = $databaseResult[self::START_TIME_COLUMN_NAME];
-            $startDateTime = formatDateStringFromDatabase($dbStartTimeString);
+            $startDateTime = formatDateTimeStringFromDatabase($dbStartTimeString);
             $segmentObject->setStartTime($startDateTime);
         }
 
@@ -99,8 +99,6 @@ include_once("readFromDatabase.php");
         public static function editExistingSegmentDuration($dbConn, $segmentObject) {
             $columnNames = array(self::DURATION_COLUMN_NAME);
             $values = array($segmentObject->getDuration());
-
-            error_log("segment duration: " . $segmentObject->getDuration());
 
             writeToDatabase::editDatabaseEntry($dbConn, $segmentObject->getId(), self::TABLE_NAME, $columnNames, $values);
         }

@@ -60,14 +60,15 @@ include_once("readFromDatabase.php");
             $episodeObject->setProgrammer($programmer);
 
             $startTimeString = $databaseResults[self::START_TIME_COLUMN_NAME];
-            $startDateTime = formatDateStringFromDatabase($startTimeString);
+            $startDateTime = formatDateTimeStringFromDatabase($startTimeString);
             $episodeObject->setStartTime($startDateTime);
 
             $endTimeString = $databaseResults[self::END_TIME_COLUMN_NAME];
-            $endDateTime = formatDateStringFromDatabase($endTimeString);
+            $endDateTime = formatDateTimeStringFromDatabase($endTimeString);
             $episodeObject->setEndTime($endDateTime);
 
             $prerecordDate = $databaseResults[self::PRERECORD_COLUMN_NAME];
+            $prerecordDate = new DateTime($prerecordDate);
             $episodeObject->setPrerecordDate($prerecordDate);
 
             $isPrerecord = $databaseResults[self::IS_PRERECORD_COLUMN_NAME];
