@@ -31,7 +31,7 @@
 
     session_start();
 
-$formErrors = $_GET['formErrors'];
+    $formErrors = $_GET['formErrors'];
 
     //database interactions
     try {
@@ -43,6 +43,9 @@ $formErrors = $_GET['formErrors'];
 
         $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
         $smarty->assign("programs", $programs);
+
+        $smarty->assign("minAdNumber", SegmentValidator::MIN_AD_NUMBER);
+        $smarty->assign("maxAdNumber", SegmentValidator::MAX_AD_NUMBER);
 
         $episodeId = $_SESSION['episodeId'];
         $episode = new Episode($db, $episodeId);

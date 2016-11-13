@@ -30,7 +30,7 @@
         <div id="ad_number_group{$idSuffix}" class="form-group row ad_number_group" style="display:none;">
             <div class="col-md-3">
                 <label for="ad_number_input{$idSuffix}" class="control-label ad_number_label">Ad Number:</label>
-                <input class="form-control" type="number" min="1" step="1" max="300" name="ad_number" id="ad_number_input{$idSuffix}">
+                <input class="form-control" type="number" min="{$minAdNumber}" step="1" max="{$maxAdNumber}" name="ad_number" id="ad_number_input{$idSuffix}">
                 <span id="ad_number_help_block{$idSuffix}" class="help-block hidden">Please enter a valid ad number.</span>
             </div>
         </div>
