@@ -62,6 +62,11 @@
          * @var String
          */
         private $notes;
+
+        /**
+         * @var boolean
+         */
+        private $isDraft;
         
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
@@ -111,6 +116,14 @@
         public function setNotes($notes)
         {
             $this->notes = $notes;
+        }
+
+        public function setIsDraft($isDraft) {
+            if (!$isDraft) {
+                $this->isDraft = false;
+            } else {
+                $this->isDraft = true;
+            }
         }
 
         public function jsonSerialize() {

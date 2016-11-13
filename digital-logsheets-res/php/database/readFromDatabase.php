@@ -61,6 +61,14 @@ class readFromDatabase
             }
         }
 
+    /**
+     * @param PDO $dbConn
+     * @param String[] $columnNames If value is null, return all columns.
+     * @param String $tableName
+     * @param String[] $filterColumns
+     * @param array $filterValues
+     * @return null
+     */
         public static function readFilteredColumnFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues)
         {
 

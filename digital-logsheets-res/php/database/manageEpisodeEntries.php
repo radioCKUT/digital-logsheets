@@ -47,8 +47,7 @@ include_once("readFromDatabase.php");
          * @param Episode $episodeObject
          */
         public static function getEpisodeAttributesFromDatabase($dbConn, $episodeId, $episodeObject) {
-            $databaseResults = readFromDatabase::readFilteredColumnFromTable($dbConn, array(self::PROGRAM_COLUMN_NAME, self::PLAYLIST_COLUMN_NAME,
-                self::PROGRAMMER_COLUMN_NAME, self::START_TIME_COLUMN_NAME, self::END_TIME_COLUMN_NAME), self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($episodeId));
+            $databaseResults = readFromDatabase::readFilteredColumnFromTable($dbConn, null, self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($episodeId));
             $databaseResults = $databaseResults[0];
 
             $programId = $databaseResults[self::PROGRAM_COLUMN_NAME];
@@ -68,8 +67,17 @@ include_once("readFromDatabase.php");
             $endDateTime = formatDateStringFromDatabase($endTimeString);
             $episodeObject->setEndTime($endDateTime);
 
+            $prerecordDate = $databaseResults[self::PRERECORD_COLUMN_NAME];
+            $episodeObject->setPrerecordDate($prerecordDate);
+
+            $isPrerecord = $databaseResults[self::IS_PRERECORD_COLUMN_NAME];
+            $episodeObject->setIsPrerecord($isPrerecord);
+
             $notes = $databaseResults[self::NOTES_COLUMN_NAME];
             $episodeObject->setNotes($notes);
+
+            $isDraft = $databaseResults[self::IS_DRAFT_COLUMN_NAME];
+            $episodeObject->setIsDraft($isDraft);
         }
 
         public static function getAllEpisodesFromDatabase($dbConn) {
@@ -124,8 +132,6 @@ include_once("readFromDatabase.php");
         public static function turnOffEpisodeDraftStatus($dbConn, $episodeObject) {
             $columnNames = array(self::IS_DRAFT_COLUMN_NAME);
             $values = array("false");
-
-            error_log("turnOffEpisodeDraftStatus values[0]: " . $values[0]);
 
             return writeToDatabase::editDatabaseEntry($dbConn, $episodeObject->getId(), self::TABLE_NAME, $columnNames, $values);
         }
