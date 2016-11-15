@@ -36,6 +36,9 @@ class SegmentValidator {
      */
     private $episode;
 
+    const MAX_AD_NUMBER = 150;
+    const MIN_AD_NUMBER = 0;
+
     public function __construct($segment, $episode) {
         $this->segment = $segment;
         $this->episode = $episode;
@@ -155,9 +158,16 @@ class SegmentValidator {
     private function isAdNumberValid($errors) {
         $adNumber = $this->segment->getAdNumber();
 
-        if (!ValidatorUtility::doesFieldExist($adNumber) ||
-            !ValidatorUtility::isInteger($adNumber)) {
+        if (ValidatorUtility::doesFieldExist($adNumber) &&
+            ValidatorUtility::isInteger($adNumber)) {
 
+
+            if ($adNumber < self::MIN_AD_NUMBER &&
+                $adNumber > self::MAX_AD_NUMBER) {
+                $errors->markAdNubmerInvalid();
+            }
+
+        } else {
             $errors->markAdNumberMissing();
         }
     }

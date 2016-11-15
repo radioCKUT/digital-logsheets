@@ -33,7 +33,8 @@ require_once('ErrorsContainer.php');
                 'missingAdNumber' => false,
                 'missingStartTime' => false,
                 'startTimeInvalidFormat' => false,
-                'outOfEpisodeBounds' => false
+                'outOfEpisodeBounds' => false,
+                'invalidAdNumber' => false
             ];
         }
 
@@ -59,6 +60,10 @@ require_once('ErrorsContainer.php');
 
         public function markAdNumberMissing() {
             $this->errors['missingAdNumber'] = true;
+        }
+
+        public function markAdNubmerInvalid() {
+            $this->errors['invalidAdNumber'] = true;
         }
 
         public function markStartTimeMissing() {

@@ -25,28 +25,39 @@
                 <label class="btn btn-primary" onclick="setupCat5Fields()">
                     <input type="radio" name="category" class="category5" autocomplete="off" value="5">5</label></div>
         </div>
-        <div class="form-group row ad_number_group" style="display:none;">
+
+        <div id="ad_number_group{$idSuffix}" class="form-group row ad_number_group" style="display:none;">
             <div class="col-md-3">
                 <label for="ad_number_input{$idSuffix}" class="control-label ad_number_label">Ad Number:</label>
-                <input class="form-control" type="number" min="1" step="1" max="300" name="ad_number" id="ad_number_input{$idSuffix}" >
+                <input class="form-control" type="number" min="{$minAdNumber}" step="1" max="{$maxAdNumber}" name="ad_number" id="ad_number_input{$idSuffix}">
+                <span id="ad_number_help_block{$idSuffix}" class="help-block hidden">Please enter a valid ad number.</span>
             </div>
         </div>
-        <div class="form-group row name_group" style="display:none;">
+
+        <div id="name_group{$idSuffix}" class="form-group row name_group" style="display:none;">
             <div class="col-md-9">
                 <label for="name_input{$idSuffix}" class="control-label name_label">Name:</label>
-                <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}" required >
+                <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}" required>
+                <span id="name_help_block{$idSuffix}" class="help-block hidden">Please enter a description.</span>
             </div>
         </div>
-        <div class="form-group row author_group" style="display:none;">
+
+        <label class="checkbox-inline station_id_group" style="display:none;">
+            <input type="checkbox" name="station_id" value="" id="station_id{$idSuffix}">Station ID Given</label>
+
+        <div id="author_group{$idSuffix}" class="form-group row author_group" style="display:none;">
             <div class="col-md-9">
                 <label for="author_input{$idSuffix}" class="control-label">Author:</label>
-                <input class="form-control author_input" type="text" name="author" id="author_input{$idSuffix}" >
+                <input class="form-control author_input" type="text" name="author" id="author_input{$idSuffix}">
+                <span id="author_help_block{$idSuffix}" class="help-block hidden">Please enter a valid author.</span>
             </div>
         </div>
-        <div class="form-group row album_group" style="display:none;">
+
+        <div id="album_group{$idSuffix}" class="form-group row album_group" style="display:none;">
             <div class="col-md-9">
                 <label for="album_input{$idSuffix}" class="control-label">Album:</label>
-                <input class="form-control album_input" type="text" name="album" id="album_input{$idSuffix}" >
+                <input class="form-control album_input" type="text" name="album" id="album_input{$idSuffix}">
+                <span id="album_help_block{$idSuffix}" class="help-block hidden">Please enter a valid artist.</span>
             </div>
         </div>
         <label class="checkbox-inline can_con_group" style="display:none;">

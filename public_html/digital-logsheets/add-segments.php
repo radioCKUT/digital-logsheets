@@ -11,6 +11,8 @@
 
     session_start();
 
+    $formErrors = $_GET['formErrors'];
+
     //database interactions
     try {
         //connect to database
@@ -19,13 +21,10 @@
         $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
         $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
 
-		if (isset($_GET["episode_id"])){
-			$episodeId = $_GET["episode_id"];
-			$_SESSION['episodeId'] = $_GET["episode_id"];
-		} else {
-			$episodeId = $_SESSION['episodeId'];
-		}
-		
+        $smarty->assign("minAdNumber", SegmentValidator::MIN_AD_NUMBER);
+        $smarty->assign("maxAdNumber", SegmentValidator::MAX_AD_NUMBER);
+
+        $episodeId = $_SESSION['episodeId'];
         $episode = new Episode($db, $episodeId);
         $episodeArray = $episode->getObjectAsArray();
 
