@@ -17,82 +17,90 @@
 
     <!-- Boostrap JS -->
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+    <script type="text/javascript">
+        function getEpisodeStartTime() {
+            return {$episode.startTime|json_encode};
+        }
+    </script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script type="text/javascript" src="js/htmlValidation/segmentValidation.js"></script>
+    <script type="text/javascript" src="js/validation/markErrors.js"></script>
+    <script type="text/javascript" src="js/validation/segmentValidation.js"></script>
+    <script type="text/javascript" src="js/validation/playlistValidation.js"></script>
     <script type="text/javascript" src="js/deleteSegment.js"></script>
     <script type="text/javascript" src="js/editSegment.js"></script>
     <script type="text/javascript" src="js/ui/segmentOptionsMenu.js"></script>
     <script type="text/javascript" src="js/saveReceiveSegments.js"></script>
     <script type="text/javascript" src="js/ui/categoryButton.js"></script>
-    <script type="text/javascript" src="js/lib/sisyphus.min.js"></script>
-    <script type="text/javascript" src="js/lib/validator.min.js"></script>
     <script type="text/javascript">
-        function startStoringFormEntries() {
+
+        function init() {
+            getEpisodeSegments();
+            setFormOnSubmitBehaviour();
+            setFocusOutBehaviour();
+        }
+
+
+        function setFormOnSubmitBehaviour() {
+            var episode = {$episode|json_encode};
+
             $('#logsheet').on('submit', function(e) {
                 e.preventDefault();
-                createSegment();
+                var logsheetForm = $(e.delegateTarget);
+                var timeGroup = logsheetForm.find('.time_group');
+
+                if (verifySegmentStartTime(timeGroup, episode)) {
+                    createSegment();
+                }
             });
 
             var logsheetEdit = $('#logsheet_edit');
 
             logsheetEdit.on('submit', function(e) {
                 e.preventDefault();
-                editEpisodeSegment();
+                var logsheetForm = $(e.delegateTarget);
+                var timeGroup = logsheetForm.find('.time_group');
+
+                if (verifySegmentStartTime(timeGroup, episode)) {
+                    editEpisodeSegment();
+                }
             });
 
-            getEpisodeSegments();
             logsheetEdit.hide();
-            $('form').sisyphus();
+
+            $('#finalize')
+                    .on('submit', function(e) {
+                        if (!verifyPlaylistEpisodeAlignment()) {
+                            e.preventDefault();
+                        }
+                    });
         }
-		
-		function saveDraft(episode_id){
-		    var segment_time = $( "#segment_time" ).val();
-			var ad_number_input = $( "#ad_number_input" ).val();
-			var name_input = $( "#name_input" ).val();
-			var author_input = $( "#author_input" ).val();
-			var album_input = $( "#album_input" ).val();
-			var can_con = $( "#can_con" ).val();
-			var new_release = $( "#new_release" ).val();
-			var french_vocal_music = $( "#french_vocal_music" ).val();
-			
-			var category = document.getElementsByName('category');
-			var category_value;
-			for(var i = 0; i < category.length; i++){
-				if(category[i].checked){
-					category_value = category[i].value;
-				}
-			}
-                
-            if (window.XMLHttpRequest)
-			  {
-			  xmlhttp=new XMLHttpRequest();
-			  }
-			else
-			  {
-			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-			  }
-			xmlhttp.onreadystatechange=function()
-			  {
-			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			    {
-					//document.getElementById("logsheets").innerHTML = xmlhttp.responseText;
-					console.log(xmlhttp.responseText);
-			    }
-			  }
-			xmlhttp.open("GET","server_save_draft_segment.php?segment_time="+segment_time+"&ad_number_input="+ad_number_input
-			+"&name_input="+name_input+"&author_input="+author_input+"&album_input="+album_input+"&can_con="+can_con
-			+"&new_release="+new_release+"&french_vocal_music="+french_vocal_music+"&category_value="+category_value+"&episode_id="+episode_id,true);
-			xmlhttp.send();
-			
-		}
+
+        function setFocusOutBehaviour() {
+            var segmentTimeInput = $('.segment_time');
+
+            segmentTimeInput
+                    .focusout(function(e) {
+                        var segmentTimeField = $(e.delegateTarget);
+                        var timeGroup = segmentTimeField.parent().parent();
+
+                        verifySegmentStartTime(timeGroup,
+                                {$episode|json_encode});
+                    });
+        }
     </script>
 </head>
-<body onload="startStoringFormEntries()">
+<body onload="init()">
 <div class="container-fluid">
     <div class="col-md-8">
         <h3>Add Segments</h3>
+
+        <h5>Episode Information:</h5>
+        Program:  {$episode.program} <br/>
+        Start Date/Time: {$episode.startDatetime} <br/>
+        End Date/Time: {$episode.endDatetime} <br/> <br/>
+
+
         {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix=''}
         {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix='_edit'}
 
@@ -103,12 +111,28 @@
     </div>
 
     <div class="col-md-4">
+        <span id="playlist_not_aligned_help_text" class="help-block{if !isset($formErrors.noAlignmentWithEpisodeStart)} hidden{/if}">
+            The earliest segment must align with the episode start date/time.
+        </span>
+
         <div class="panel panel-default">
-            <!-- Default panel contents -->
             <div class="panel-heading">Episode Segments</div>
 
-            <!-- Table -->
             <table class="table table-hover" id="added_segments">
+                <colgroup>
+                    <col />
+                    <col id="start_time_column"/>
+                    <col />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
             </table>
         </div>
     </div>
