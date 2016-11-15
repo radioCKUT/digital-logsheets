@@ -34,6 +34,7 @@ require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
 
 $formErrors = $_GET['formErrors'];
 $formSubmission = $_GET['formSubmission'];
+$draftEpisodeId = $_GET['draftEpisodeId'];
 
     
     //database interactions
@@ -46,9 +47,6 @@ $formSubmission = $_GET['formSubmission'];
 
         $programs = getSelect2ProgramsList($db);
         $smarty->assign("programs", $programs);
-        
-        //close database connection
-        $db = NULL;
 
         $episodeStartEarlyLimitDatetime = EpisodeValidator::getEpisodeEarlyLimit();
         $episodeStartEarlyLimit = $episodeStartEarlyLimitDatetime->format("Y-m-d H:i:s");
@@ -74,7 +72,16 @@ $formSubmission = $_GET['formSubmission'];
 
         if (isset($formSubmission)) {
             $smarty->assign("formSubmission", $formSubmission);
+
+        } else if (isset($draftEpisodeId)) {
+            $draftEpisode = new Episode($db, $draftEpisodeId);
+            $draftEpisodeArray = $draftEpisode->getObjectAsArray();
+            $smarty->assign("formSubmission", $draftEpisodeArray);
         }
+
+
+        //close database connection
+        $db = NULL;
 
         echo $smarty->fetch('../../digital-logsheets-res/templates/new-logsheet.tpl');
 
