@@ -39,3 +39,43 @@ function getSelect2ProgramsList($db) {
     $programs = json_encode(array_values($programsArrayForSelect2));
     return $programs;
 }
+
+/**
+ * @param Episode $episode
+ * @param int $duration
+ * @return array
+ */
+function getFormSubmissionArray($episode, $duration) {
+
+    return array(
+        'programmer' => $episode->getProgrammer(),
+        'programId' => $episode->getProgram()->getId(),
+        'programName' => $episode->getProgram()->getName(),
+        'startDatetime' => formatDatetimeForHTML($episode->getStartTime()),
+        'duration' => $duration,
+        'endDatetime' => formatDatetimeForHTML($episode->getEndTime()),
+        'prerecord' => $episode->isPrerecord(),
+        'prerecordDate' => formatDateForHTML($episode->getPrerecordDate()),
+        'notes' => $episode->getNotes()
+    );
+}
+
+/**
+ * @param DateTime $datetime
+ * @return String
+ */
+function formatDatetimeForHTML($datetime) {
+    if (!is_null($datetime)) {
+        return $datetime->format('Y-m-d\TH:i');
+    }
+}
+
+/**
+ * @param DateTime $datetime
+ * @return String
+ */
+function formatDateForHTML($datetime) {
+    if (!is_null($datetime)) {
+        return $datetime->format('Y-m-d');
+    }
+}

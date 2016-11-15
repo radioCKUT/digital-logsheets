@@ -25,6 +25,7 @@ include_once("../../digital-logsheets-res/php/database/managePlaylistEntries.php
 include_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
 require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
+require_once("../../digital-logsheets-res/php/DataPreparationForUI.php");
 
 $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
@@ -71,16 +72,7 @@ try {
 
         $formErrors = $episodeErrors->getAllErrors();
 
-        $formSubmission = array(
-            'programmer' => $programmer,
-            'programId' => $programId,
-            'programName' => $episodeObject->getProgram()->getName(),
-            'startDatetime' => formatDatetimeForHTML($episodeObject->getStartTime()),
-            'duration' => $episodeDurationHours,
-            'prerecord' => $prerecord,
-            'prerecordDate' => formatDateForHTML($episodeObject->getPrerecordDate()),
-            'notes' => $notes
-        );
+        $formSubmission = getFormSubmissionArray($episodeObject, $episodeDurationHours);
 
         $episodeErrorsAsQuery = http_build_query(array(
             'formErrors' => $formErrors,
@@ -144,22 +136,5 @@ function computeEpisodeEndTime($episodeStartTime, $episodeDurationHours) {
     return $episodeEndTime;
 }
 
-/**
- * @param DateTime $datetime
- * @return String
- */
-function formatDatetimeForHTML($datetime) {
-    if (!is_null($datetime)) {
-        return $datetime->format('Y-m-d\TG:i');
-    }
-}
 
-/**
- * @param DateTime $datetime
- * @return String
- */
-function formatDateForHTML($datetime) {
-    if (!is_null($datetime)) {
-        return $datetime->format('Y-m-d');
-    }
-}
+

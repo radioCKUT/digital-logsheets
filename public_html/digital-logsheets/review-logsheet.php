@@ -19,13 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Created by PhpStorm.
- * User: Evan
- * Date: 2016-03-24
- * Time: 7:40 PM
- */
-
 require_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
 require_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");

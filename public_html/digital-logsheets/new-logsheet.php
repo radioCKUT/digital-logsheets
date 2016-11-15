@@ -24,7 +24,7 @@
     require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
     require_once("../../digital-logsheets-res/php/database/manageCategoryEntries.php");
     require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
-    require_once("../../digital-logsheets-res/php/select2-preparation.php");
+    require_once("../../digital-logsheets-res/php/DataPreparationForUI.php");
 require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
     
     // create object
@@ -75,7 +75,7 @@ $draftEpisodeId = $_GET['draftEpisodeId'];
 
         } else if (isset($draftEpisodeId)) {
             $draftEpisode = new Episode($db, $draftEpisodeId);
-            $draftEpisodeArray = $draftEpisode->getObjectAsArray();
+            $draftEpisodeArray = getFormSubmissionArray($draftEpisode, null);
             $smarty->assign("formSubmission", $draftEpisodeArray);
         }
 
