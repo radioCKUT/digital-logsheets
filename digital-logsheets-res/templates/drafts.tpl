@@ -24,7 +24,7 @@
 <table class='table'>
     {foreach from=$drafts item=draft}
         <tr>
-            <td><a href="new-logsheet.php?episode_id="{$draft.episodeId}>{$draft.program}: {$draft.startTime} - {$draft.endTime}</a></td>
+            <td><a href="new-logsheet.php?draftEpisodeId={$draft.id|json_encode}">{$draft.program}: {$draft.startTime} - {$draft.endTime}</a></td>
         </tr>
     {/foreach}
 </table>
