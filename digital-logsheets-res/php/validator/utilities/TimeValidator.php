@@ -21,7 +21,7 @@
 
 class TimeValidator {
 
-        const MINUTES_IN_DAY = 24 * 60;
+        const MINUTES_IN_DAY = 1440; // 24 * 60
 
         public static function isTimeInValidFormat($time) {
             $dateTime = DateTime::createFromFormat('H:i', $time);
