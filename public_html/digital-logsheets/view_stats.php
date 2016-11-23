@@ -39,6 +39,7 @@
 			var time_start = $( "#time_start" ).val();
 			var date_end = $( "#date_end" ).val();
 			var time_end = $( "#time_end" ).val();
+			var ad_num = $( "#ad_num" ).val();
 			
 			if (date_start != "" && time_start != "" && date_end != "" && time_end != ""){
                             
@@ -57,7 +58,7 @@
 					document.getElementById("segments").innerHTML = xmlhttp_login.responseText;
 			    }
 			  }
-			xmlhttp_login.open("GET","server_filter_stat.php?date_start="+date_start+"&time_start="+time_start+"&date_end="+date_end+"&time_end="+time_end,true);
+			xmlhttp_login.open("GET","server_filter_stat.php?date_start="+date_start+"&time_start="+time_start+"&date_end="+date_end+"&time_end="+time_end+"&ad_num="+ad_num,true);
 			xmlhttp_login.send();
             } else {
 				alert("Please fill all required field.");
@@ -76,6 +77,7 @@
 	  <input type="time" id="time_start">
 	  To <input type="date" id="date_end">
 	  <input type="time" id="time_end">
+	  Advertisement number: <input type="text" name="ad_num" id="ad_num">
     </div><!-- /input-group -->
 	</div><!-- /.col-lg-6 -->
 	<span class="input-group-btn" style="float: left;">
