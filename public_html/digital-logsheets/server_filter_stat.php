@@ -95,8 +95,7 @@ while ($row = mysql_fetch_array($result)){
 				}
 				if ($k == 0){
 					$album_names[] = $row['album'];
-					$author_names[] = $row['author'];
-					$album_numbers[] = $j;
+					$album_numbers[] = array("album_name"=>$row['album'], "author_name"=>$row['author'], "album_number"=>$j);
 				}
 			}
 		}
@@ -166,10 +165,24 @@ echo 'Canadian content duration as a percentage of total airtime in Category 5: 
 echo 'Canadian content duration as a percentage of total airtime in Category 6: ('.$can_time_6.' / '.$total_time_6.') '.$percent_6.'%<br>';
 
 echo '<br><br>';
+$sortArray = array(); 
+foreach($album_numbers as $array){ 
+    foreach($array as $key=>$value){ 
+        if(!isset($sortArray[$key])){ 
+            $sortArray[$key] = array(); 
+        } 
+        $sortArray[$key][] = $value; 
+    } 
+} 
+$orderby = "album_number"; //change this to whatever key you want from the array 
+array_multisort($sortArray[$orderby],SORT_DESC,$album_numbers); 
 $l = 0;
-foreach ($album_names as $album_name){
-	echo $album_name.' by '.$author_names[$l].' is played '.$album_numbers[$l].' times.<br>';
+foreach($album_numbers as $album_number) {
+	echo $album_number['album_name'].' by '.$album_number['author_name'].' is played '.$album_number['album_number'].' times.<br>';
 	$l++;
+	if ($l > 29){//show top 30 elements in the array
+		break;
+	}
 }
 
 echo '<br><br>'.$ad;
