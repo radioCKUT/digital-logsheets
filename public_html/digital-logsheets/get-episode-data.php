@@ -43,9 +43,9 @@ try {
 
     $episode = new Episode($db, $episodeId);
     $segmentList = $episode->getSegments();
+    $segmentList = json_encode($segmentList);
 
     $db = null;
-
     outputSuccessResponse($segmentList);
 
 } catch(PDOException $e) {
