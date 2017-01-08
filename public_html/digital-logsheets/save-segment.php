@@ -42,7 +42,7 @@ $editSegment = isset($_POST['is_existing_segment']);
 $segmentId = $_POST['segment_id'];
 
 if (!isset($episodeId) || $episodeId <= 0) {
-    outputErrorResponse("Invalid episode ID", $editSegment);
+    outputErrorResponse("Invalid episode ID");
 }
 
 try {
@@ -128,13 +128,13 @@ try {
             outputErrorResponse($segmentErrors->getAllErrors());
 
         } else {
-            error_log('save new segment to db');
             manageSegmentEntries::saveNewSegmentToDatabase($db, $segment);
         }
     }
 
     $episode = new Episode($db, $episodeId);
     $segmentList = $episode->getSegments();
+    $segmentList = json_encode($segmentList);
 
     $db = null;
 
