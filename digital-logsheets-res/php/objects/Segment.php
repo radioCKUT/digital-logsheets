@@ -127,7 +127,8 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
                 'newRelease' => $this->isNewRelease(),
                 'frenchVocalMusic' => $this->isFrenchVocalMusic(),
                 'adNumber' => $this->getAdNumber(),
-                'playlistId' => $this->getPlaylistId()
+                'playlistId' => $this->getPlaylistId(),
+                'stationIdGiven' => $this->wasStationIdGiven()
             ];
         }
 
@@ -147,7 +148,8 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
                 'newRelease' => $this->isNewRelease() ? "Yes" : "No",
                 'frenchVocalMusic' => $this->isFrenchVocalMusic() ? "Yes" : "No",
                 'adNumber' => $this->getAdNumber(),
-                'playlistId' => $this->getPlaylistId()
+                'playlistId' => $this->getPlaylistId(),
+                'stationIdGiven' => $this->wasStationIdGiven() ? "Yes" : "No"
             ];
         }
 
@@ -170,6 +172,10 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
 
         public function getDuration() {
             return $this->duration;
+        }
+
+        public function getEndTime() {
+
         }
 
         /**
