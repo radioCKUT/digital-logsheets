@@ -47,15 +47,17 @@ function prepareFormForEdit(eventObject) {
             break;
     }
 
-    $('#segment_time_edit').attr("value", segment_object.start_time);
+
+    $('#segment_time_edit').attr("value", segment_object.startTime);
     $('#name_input_edit').attr("value", segment_object.name);
     $('#author_input_edit').attr("value", segment_object.author);
     $('#album_input_edit').attr("value", segment_object.album);
-    $('#ad_number_input_edit').attr("value", segment_object.ad_number);
+    $('#ad_number_input_edit').attr("value", segment_object.adNumber);
 
-    $('#can_con_edit').prop("checked", segment_object.can_con);
-    $('#new_release_edit').prop("checked", segment_object.new_release);
-    $('#french_vocal_music_edit').prop("checked", segment_object.french_vocal_music);
+    $('#can_con_edit').prop("checked", segment_object.canCon);
+    $('#new_release_edit').prop("checked", segment_object.newRelease);
+    $('#french_vocal_music_edit').prop("checked", segment_object.frenchVocalMusic);
+    $('#station_id_edit').prop("checked", segment_object.stationIdGiven);
 
     $('#segment_id_edit').attr("value", segment_object.id);
 }
