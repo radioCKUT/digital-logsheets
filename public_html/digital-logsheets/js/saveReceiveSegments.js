@@ -78,11 +78,13 @@ function receiveSegmentsSuccess(data) {
 
         var addedSegments = $('#added_segments');
         addedSegments.find("tbody").empty();
+        data = JSON.parse(data);
 
         $.each(data, function(i, e) {
-            var segment_id = data[i].id;
-            var name = data[i].name;
-            var start_time = data[i].startTime;
+            var segment = data[i];
+            var segment_id = segment.id;
+            var name = segment.name;
+            var start_time = segment.startTime;
 
             var delete_button = generateDeleteButton(segment_id);
             var edit_button = generateEditButton(segment_id);
