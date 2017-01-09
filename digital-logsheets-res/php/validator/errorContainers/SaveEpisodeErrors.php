@@ -9,7 +9,7 @@ class SaveEpisodeErrors extends ErrorsContainer {
             'missingProgram' => false,
             'missingProgrammer' => false,
             'missingStartTime' => false,
-            'missingDuration' => false,
+            'missingEndTime' => false,
             'tooLong' => false,
             'tooShort' => false,
             'airDateTooFarInPast' => false,
@@ -32,8 +32,8 @@ class SaveEpisodeErrors extends ErrorsContainer {
         $this->errors['missingStartTime'] = true;
     }
 
-    public function markDurationMissing() {
-        $this->errors['missingDuration'] = true;
+    public function markEndTimeMissing() {
+        $this->errors['missingEndTime'] = true;
     }
 
     public function markTooLong() {

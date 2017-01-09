@@ -36,6 +36,7 @@ $prerecord = isset($_POST['prerecord']);
 $prerecordDate = $_POST['prerecord_date'];
 
 $episodeStartTime = $_POST['start_datetime'];
+$episodeEndTime = $_POST['end_datetime'];
 $episodeDurationHours = $_POST['episode_duration'];
 $notes = $_POST['notes'];
 
@@ -52,10 +53,12 @@ try {
     $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
     $episodeObject->setStartTime($episodeStartTime);
 
-    if ($episodeStartTime != null) {
+    /*if ($episodeStartTime != null) {
         $episodeEndTime = computeEpisodeEndTime($episodeStartTime, $episodeDurationHours);
         $episodeObject->setEndTime($episodeEndTime);
-    }
+    }*/
+    $episodeEndTime = getDateTimeFromDateString($episodeEndTime);
+    $episodeObject->setEndTime($episodeEndTime);
 
     $episodeObject->setIsPrerecord($prerecord);
     $prerecordDate = getDateTimeFromDateString($prerecordDate);

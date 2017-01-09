@@ -42,12 +42,8 @@ class EpisodeValidator {
         $this->episode = $episode;
     }
 
-    public function checkDraftSaveValidity($durationHours) {
+    public function checkDraftSaveValidity() {
         $errorsContainer = new SaveEpisodeErrors();
-
-        if (!is_numeric($durationHours)) {
-            $errorsContainer->markDurationMissing();
-        }
 
         $this->areRequiredFieldsPresent($errorsContainer);
         $this->isEpisodeLengthValid($errorsContainer);
@@ -115,12 +111,11 @@ class EpisodeValidator {
         if (!ValidatorUtility::doesFieldExist($startTime)) {
             $errorsContainer->markStartTimeMissing();
 
-        } else {
-            $endTime = $this->episode->getEndTime();
-            if (!ValidatorUtility::doesFieldExist($endTime)) {
-                //TODO: is it enough to check end time as proxy for duration?
-                $errorsContainer->markDurationMissing();
-            }
+        }
+
+        $endTime = $this->episode->getEndTime();
+        if (!ValidatorUtility::doesFieldExist($endTime)) {
+            $errorsContainer->markEndTimeMissing();
         }
     }
 
