@@ -182,10 +182,10 @@
                             <span id="missing_end_datetime_message" class="{if !$formErrors.missingEndTime}hidden{/if}">
                                 Please enter a valid end date/time.
                             </span>
-                            <span id="too_short_message" class="{if $formErrors.tooShort}hidden{/if}">
+                            <span id="too_short_message" class="{if !$formErrors.tooShort}hidden{/if}">
                                 Episodes must be at least {$minDuration} hours long.
                             </span>
-                            <span id="too_long_message" class="{if $formErrors.tooLong}hidden{/if}">
+                            <span id="too_long_message" class="{if !$formErrors.tooLong}hidden{/if}">
                                 Episodes must be less than {$maxDuration} hours long.
                             </span>
                         </span>
