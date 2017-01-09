@@ -55,17 +55,19 @@ function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLim
 }
 
 function adjustEndDatetimeBounds(minDuration, maxDuration) {
-    var endDatetimeField = $('#end_datetime');
-    var endDateTime = _getDateFromField(endDatetimeField);
+    var startDatetimeField = $('#start_datetime');
+    var startDateTime = _getDateFromField(startDatetimeField);
 
-    var earliestEnd = endDateTime.clone();
+    var endDatetimeField = $('#end_datetime');
+
+    var earliestEnd = startDateTime.clone();
     earliestEnd = earliestEnd.add(minDuration, 'hours');
-    var earliestEndString = earliestEnd.format('YYYY-MM-DD HH:mm:ss');
+    var earliestEndString = earliestEnd.format('YYYY-MM-DDTHH:mm:ss');
     endDatetimeField.prop('min', earliestEndString);
 
-    var latestEnd = endDateTime.clone();
+    var latestEnd = startDateTime.clone();
     latestEnd = latestEnd.add(maxDuration, 'hours');
-    var latestEndString = latestEnd.format('YYYY-MM-DD HH:mm:ss');
+    var latestEndString = latestEnd.format('YYYY-MM-DDTHH:mm:ss');
     endDatetimeField.prop('max', latestEndString);
 }
 
