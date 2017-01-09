@@ -172,7 +172,7 @@ function verifyEpisodeStartDatetime() {
     }
 }
 
-function verifyEpisodeEndDateTime() {
+function verifyEpisodeEndDatetime() {
 
     var startDateTimeField = $('#start_datetime');
     var startDateTime = _getDateFromField(startDateTimeField);
@@ -192,7 +192,7 @@ function verifyEpisodeEndDateTime() {
     minDuration = +minDuration;
 
     var earliestEnd = startDateTime.clone();
-    earliestEnd = earliestEnd.add(minDuration);
+    earliestEnd = earliestEnd.add(minDuration, 'hours');
     if (endDateTime.isBefore(earliestEnd)) {
         markEpisodeDurationTooShort(endDateTimeGroup, helpBlock);
         return false;
@@ -203,7 +203,7 @@ function verifyEpisodeEndDateTime() {
     maxDuration = +maxDuration;
 
     var latestEnd = startDateTime.clone();
-    latestEnd = latestEnd.add(maxDuration);
+    latestEnd = latestEnd.add(maxDuration, 'hours');
     if (endDateTime.isAfter(latestEnd)) {
         markEpisodeDurationTooLong(endDateTimeGroup, helpBlock);
         return false;
