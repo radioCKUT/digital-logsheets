@@ -30,7 +30,7 @@ function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLim
     var episodeStartInput = $('#start_datetime');
     var episodeStartVal = episodeStartInput.val();
 
-    if (!_isEpisodeStartDatetimeValid(episodeStartVal)) {
+    if (!_isDateTimeValid(episodeStartVal)) {
         return;
     }
 
@@ -54,10 +54,29 @@ function adjustPrerecordDateBounds(prerecordEarlyDaysLimit, prerecordLateDaysLim
     prerecordDateInput.prop('max', upperBound);
 }
 
+function adjustEndDatetimeBounds(minDuration, maxDuration) {
+    var startDatetimeField = $('#start_datetime');
+    var startDateTime = _getDateFromField(startDatetimeField);
+
+    var endDatetimeField = $('#end_datetime');
+
+    var earliestEnd = startDateTime.clone();
+    earliestEnd = earliestEnd.add(minDuration, 'hours');
+    var earliestEndString = earliestEnd.format('YYYY-MM-DDTHH:mm:ss');
+    endDatetimeField.prop('min', earliestEndString);
+
+    var latestEnd = startDateTime.clone();
+    latestEnd = latestEnd.add(maxDuration, 'hours');
+    var latestEndString = latestEnd.format('YYYY-MM-DDTHH:mm:ss');
+    endDatetimeField.prop('max', latestEndString);
+}
+
 function setDurationBounds(minDuration, maxDuration) {
-    var durationField = $('#episode_duration');
-    durationField.prop('min', minDuration);
-    durationField.prop('max', maxDuration);
+    var endDateTimeField = $('#end_datetime');
+
+    endDateTimeField.data('minDuration', minDuration);
+    endDateTimeField.data('maxDuration', maxDuration);
+
 }
 
 function setStartDateTimeBounds(earlyLimit, lateLimit) {
@@ -140,7 +159,7 @@ function verifyEpisodeStartDatetime() {
     var helpBlock = startDatetimeGroup.find('#start_datetime_help_block');
 
 
-    var isInputADate = _isEpisodeStartDatetimeValid(startDatetimeInput);
+    var isInputADate = _isDateTimeValid(startDatetimeInput);
 
     if (isInputADate) {
         var earlyLimit = startDatetimeInputField.attr("min");
@@ -170,36 +189,47 @@ function verifyEpisodeStartDatetime() {
     }
 }
 
-function verifyEpisodeDuration() {
-    var durationGroup = $('#duration_group');
-    var durationField = durationGroup.find('#episode_duration');
-    var duration = durationField.val();
-    duration = +duration; //Coerce to a number for comparison purposes.
-    var helpBlock = durationGroup.find('#duration_help_block');
+function verifyEpisodeEndDatetime() {
 
-    if (duration === '') {
-        markEpisodeDurationMissing(durationGroup, helpBlock);
+    var startDateTimeField = $('#start_datetime');
+    var startDateTime = _getDateFromField(startDateTimeField);
+
+    var endDateTimeGroup = $('#end_datetime_group');
+    var endDateTimeField = endDateTimeGroup.find('#end_datetime');
+    var endDateTime = _getDateFromField(endDateTimeField);
+
+    var helpBlock = $('#end_datetime_help_block');
+
+    if (!_isDateTimeValid(endDateTime)) {
+        markEndDateTimeMissing(endDateTimeGroup, helpBlock);
         return false;
     }
 
-    var minDuration = durationField.attr('min');
+    var minDuration = endDateTimeField.data('minDuration');
     minDuration = +minDuration;
-    var maxDuration = durationField.attr('max');
+
+    var earliestEnd = startDateTime.clone();
+    earliestEnd = earliestEnd.add(minDuration, 'hours');
+    if (endDateTime.isBefore(earliestEnd)) {
+        markEpisodeDurationTooShort(endDateTimeGroup, helpBlock);
+        return false;
+    }
+
+
+    var maxDuration = endDateTimeField.data('maxDuration');
     maxDuration = +maxDuration;
 
-    if (duration < minDuration) {
-        markEpisodeDurationTooShort(durationGroup, helpBlock);
+    var latestEnd = startDateTime.clone();
+    latestEnd = latestEnd.add(maxDuration, 'hours');
+    if (endDateTime.isAfter(latestEnd)) {
+        markEpisodeDurationTooLong(endDateTimeGroup, helpBlock);
         return false;
-
-    } else if (duration > maxDuration) {
-        markEpisodeDurationTooLong(durationGroup, helpBlock);
-        return false;
-
-    } else {
-        markEpisodeDurationCorrect(durationGroup, helpBlock);
-        return true;
     }
+
+    markEndDateTimeCorrect(endDateTimeGroup, helpBlock);
+    return true;
 }
+
 
 function verifyPrerecordDate() {
     var prerecordGroup = $('#prerecord_group');
@@ -245,8 +275,13 @@ function verifyPrerecordDate() {
     }
 }
 
-function _isEpisodeStartDatetimeValid(startDatetimeInput) {
+function _isDateTimeValid(startDatetimeInput) {
     // check for two kinds of date format, based on browser used
     return moment(startDatetimeInput, "YYYY-MM-DDTHH:mm", true).isValid() ||
         moment(startDatetimeInput, "YYYY-MM-DDTHH:mm:ss", true).isValid();
+}
+
+function _getDateFromField(field) {
+    var dateString = field.val();
+    return moment(dateString);
 }

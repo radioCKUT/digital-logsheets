@@ -71,8 +71,8 @@ function markEpisodeStartDatetimeTooFarInFuture(group, helpBlock) {
     markFieldError(group, helpBlock);
 }
 
-function markEpisodeDurationCorrect(group, helpBlock) {
-    var durationMissingMessage = $('#missing_duration_message');
+function markEndDateTimeCorrect(group, helpBlock) {
+    var durationMissingMessage = $('#missing_end_datetime_message');
     durationMissingMessage.addClass("hidden");
 
     var tooShortMessage = $('#too_short_message');
@@ -84,8 +84,8 @@ function markEpisodeDurationCorrect(group, helpBlock) {
     markFieldCorrect(group, helpBlock);
 }
 
-function markEpisodeDurationMissing(group, helpBlock) {
-    var durationMissingMessage = $('#missing_duration_message');
+function markEndDateTimeMissing(group, helpBlock) {
+    var durationMissingMessage = $('#missing_end_datetime_message');
     durationMissingMessage.removeClass("hidden");
 
     var tooShortMessage = $('#too_short_message');
@@ -98,7 +98,7 @@ function markEpisodeDurationMissing(group, helpBlock) {
 }
 
 function markEpisodeDurationTooShort(group, helpBlock) {
-    var durationMissingMessage = $('#missing_duration_message');
+    var durationMissingMessage = $('#missing_end_datetime_message');
     durationMissingMessage.addClass("hidden");
 
     var tooShortMessage = $('#too_short_message');
@@ -111,7 +111,7 @@ function markEpisodeDurationTooShort(group, helpBlock) {
 }
 
 function markEpisodeDurationTooLong(group, helpBlock) {
-    var durationMissingMessage = $('#missing_duration_message');
+    var durationMissingMessage = $('#missing_end_datetime_message');
     durationMissingMessage.addClass("hidden");
 
     var tooShortMessage = $('#too_short_message');

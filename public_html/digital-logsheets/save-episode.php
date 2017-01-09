@@ -36,7 +36,7 @@ $prerecord = isset($_POST['prerecord']);
 $prerecordDate = $_POST['prerecord_date'];
 
 $episodeStartTime = $_POST['start_datetime'];
-$episodeDurationHours = $_POST['episode_duration'];
+$episodeEndTime = $_POST['end_datetime'];
 $notes = $_POST['notes'];
 
 session_start();
@@ -52,10 +52,8 @@ try {
     $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
     $episodeObject->setStartTime($episodeStartTime);
 
-    if ($episodeStartTime != null) {
-        $episodeEndTime = computeEpisodeEndTime($episodeStartTime, $episodeDurationHours);
-        $episodeObject->setEndTime($episodeEndTime);
-    }
+    $episodeEndTime = getDateTimeFromDateTimeString($episodeEndTime);
+    $episodeObject->setEndTime($episodeEndTime);
 
     $episodeObject->setIsPrerecord($prerecord);
     $prerecordDate = getDateTimeFromDateString($prerecordDate);
@@ -64,7 +62,7 @@ try {
     $episodeObject->setNotes($notes);
 
     $episodeValidator = new EpisodeValidator($episodeObject);
-    $episodeErrors = $episodeValidator->checkDraftSaveValidity($episodeDurationHours);
+    $episodeErrors = $episodeValidator->checkDraftSaveValidity();
 
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
     if ($doEpisodeErrorsExist) {
