@@ -67,7 +67,7 @@ try {
     $episodeObject->setNotes($notes);
 
     $episodeValidator = new EpisodeValidator($episodeObject);
-    $episodeErrors = $episodeValidator->checkDraftSaveValidity($episodeDurationHours);
+    $episodeErrors = $episodeValidator->checkDraftSaveValidity();
 
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
     if ($doEpisodeErrorsExist) {
