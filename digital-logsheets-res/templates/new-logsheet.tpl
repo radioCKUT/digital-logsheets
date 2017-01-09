@@ -191,6 +191,27 @@
             </div>
 
 
+            <div id="end_datetime_group" class="form-group row{if $endDateTimeError} has-error{/if}">
+                <div class="col-md-2 col-sm-4">
+                    <label for="episode_end_datetime" class="control-label">End Date/Time:</label>
+                    <input class="form-control" type="number" step="any"
+                           name="episode_end_datetime" id="episode_end_datetime"
+                           value="{$formSubmission.duration}" required>
+                    <span id="end_datetime_help_block" class="help-block{if !$endDateTimeError} hidden{/if}">
+                            <span id="missing_duration_message" class="{if !$formErrors.missingEndTime}hidden{/if}">
+                                Please enter a valid end date/time.
+                            </span>
+                            <span id="too_short_message" class="{if $formErrors.tooShort}hidden{/if}">
+                                Episodes must be at least {$minDuration} hours long.
+                            </span>
+                            <span id="too_long_message" class="{if $formErrors.tooLong}hidden{/if}">
+                                Episodes must be less than {$maxDuration} hours long.
+                            </span>
+                        </span>
+                </div>
+            </div>
+
+
 
 
             {if $formErrors.missingPrerecordDate || $formErrors.prerecordDateInPast || $formErrors.prerecordDateInFuture}
