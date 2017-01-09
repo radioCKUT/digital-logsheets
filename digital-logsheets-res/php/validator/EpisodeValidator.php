@@ -150,10 +150,12 @@ class EpisodeValidator {
 
         if ($episodeIntervalDaysComponent != false && $episodeIntervalDaysComponent > 0) {
             $episodeLengthInHours =  ($episodeIntervalDaysComponent * 24) +
-                $episodeIntervalHoursComponent + ($episodeIntervalMinutesComponent / 60);
+                $episodeIntervalHoursComponent +
+                ($episodeIntervalMinutesComponent / 60);
 
         } else {
-            $episodeLengthInHours = $episodeIntervalHoursComponent + ($episodeIntervalMinutesComponent / 60);
+            $episodeLengthInHours = $episodeIntervalHoursComponent +
+                ($episodeIntervalMinutesComponent / 60);
         }
 
         if ($episodeLengthInHours > self::EPISODE_MAX_LENGTH_HOURS) {
