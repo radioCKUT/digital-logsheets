@@ -49,13 +49,16 @@
             });
 
             $('#start_datetime').change(function() {
-                adjustPrerecordDateBounds({$prerecordDateEarlyDaysLimit|json_encode}, {$prerecordDateLateDaysLimit|json_encode});
+                adjustPrerecordDateBounds({$prerecordDateEarlyDaysLimit|json_encode},
+                        {$prerecordDateLateDaysLimit|json_encode});
+                adjustEndDatetimeBounds({$minDuration}, {$maxDuration});
+
             }).focusout(function() {
                 verifyEpisodeStartDatetime();
             });
 
             $('#end_datetime').focusout(function() {
-                verifyEpisodeEndDateTime();
+                verifyEpisodeEndDatetime();
             });
 
             $('#prerecord_date').focusout(function() {
@@ -66,7 +69,7 @@
                 if (!verifyProgrammer() ||
                     !verifyProgram() ||
                     !verifyEpisodeStartDatetime() ||
-                    !verifyEpisodeEndDateTime() ||
+                    !verifyEpisodeEndDatetime() ||
                     !verifyPrerecordDate()) {
 
                     e.preventDefault();
@@ -163,39 +166,17 @@
 
 
 
-            {if $formErrors.missingDuration || $formErrors.tooShort || $formErrors.tooLong}
-                {assign var="durationError" value=true}
+            {if $formErrors.missingEndTime || $formErrors.tooShort || $formErrors.tooLong}
+                {assign var="endDateTimeError" value=true}
             {else}
-                {assign var="durationError" value=false}
+                {assign var="endDateTimeError" value=false}
             {/if}
 
-
-            <div id="duration_group" class="form-group row{if $durationError} has-error{/if}">
-                <div class="col-md-2 col-sm-4">
-                    <label for="episode_duration" class="control-label">Duration (in hours):</label>
-                    <input class="form-control" type="number" step="any"
-                           name="episode_duration" id="episode_duration"
-                           value="{$formSubmission.duration}" required>
-                    <span id="duration_help_block" class="help-block{if !$durationError} hidden{/if}">
-                        <span id="missing_duration_message" class="{if !$formErrors.missingDuration}hidden{/if}">
-                            Please enter a duration.
-                        </span>
-                        <span id="too_short_message" class="{if $formErrors.tooShort}hidden{/if}">
-                            Episode must be at least {$minDuration} hours long
-                        </span>
-                        <span id="too_long_message" class="{if $formErrors.tooLong}hidden{/if}">
-                            Episode must be less than {$maxDuration} hours long
-                        </span>
-                    </span>
-                </div>
-            </div>
-
-
             <div id="end_datetime_group" class="form-group row{if $endDateTimeError} has-error{/if}">
-                <div class="col-md-2 col-sm-4">
-                    <label for="episode_end_datetime" class="control-label">End Date/Time:</label>
-                    <input class="form-control" type="number" step="any"
-                           name="end_datetime" id="end_datetime"
+                <div class="col-md-3 col-sm-5">
+                    <label for="end_datetime" class="control-label">End Date/Time:</label>
+                    <input class="form-control" type="datetime-local"
+                           name="end_datetime" id="end_datetime" step="60"
                            value="{$formSubmission.endDateTime}" required>
                     <span id="end_datetime_help_block" class="help-block{if !$endDateTimeError} hidden{/if}">
                             <span id="missing_end_datetime_message" class="{if !$formErrors.missingEndTime}hidden{/if}">
