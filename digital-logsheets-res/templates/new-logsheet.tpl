@@ -54,8 +54,8 @@
                 verifyEpisodeStartDatetime();
             });
 
-            $('#episode_duration').focusout(function() {
-                verifyEpisodeDuration();
+            $('#end_datetime').focusout(function() {
+                verifyEpisodeEndDateTime();
             });
 
             $('#prerecord_date').focusout(function() {
@@ -66,7 +66,7 @@
                 if (!verifyProgrammer() ||
                     !verifyProgram() ||
                     !verifyEpisodeStartDatetime() ||
-                    !verifyEpisodeDuration() ||
+                    !verifyEpisodeEndDateTime() ||
                     !verifyPrerecordDate()) {
 
                     e.preventDefault();
@@ -195,10 +195,10 @@
                 <div class="col-md-2 col-sm-4">
                     <label for="episode_end_datetime" class="control-label">End Date/Time:</label>
                     <input class="form-control" type="number" step="any"
-                           name="episode_end_datetime" id="episode_end_datetime"
-                           value="{$formSubmission.duration}" required>
+                           name="end_datetime" id="end_datetime"
+                           value="{$formSubmission.endDateTime}" required>
                     <span id="end_datetime_help_block" class="help-block{if !$endDateTimeError} hidden{/if}">
-                            <span id="missing_duration_message" class="{if !$formErrors.missingEndTime}hidden{/if}">
+                            <span id="missing_end_datetime_message" class="{if !$formErrors.missingEndTime}hidden{/if}">
                                 Please enter a valid end date/time.
                             </span>
                             <span id="too_short_message" class="{if $formErrors.tooShort}hidden{/if}">
