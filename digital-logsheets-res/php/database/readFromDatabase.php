@@ -92,9 +92,19 @@ class readFromDatabase
             }
         }
 
-        public static function readAllColumnsBetweenTwoValues($dbConn, $columnNames, $tableName, $filterColumn, $lowestValue, $highestValue) {
 
-            $sqlQueryString = self::getEntireColumnsQueryString($columnNames, $tableName);
+    /**
+     * @param PDO $dbConn
+     * @param $columnNames
+     * @param $tableName
+     * @param $filterColumn
+     * @param $lowestValue
+     * @param $highestValue
+     * @return null
+     */
+        public static function readAllColumnsBetweenTwoValues($dbConn, $tableName, $filterColumn, $lowestValue, $highestValue) {
+
+            $sqlQueryString = self::getEntireColumnsQueryString(null, $tableName);
 
             $sqlQueryString .= "\n WHERE " . $filterColumn . ">=" . $lowestValue;
             $sqlQueryString .= "\n WHERE " . $filterColumn . "<=" . $highestValue;
