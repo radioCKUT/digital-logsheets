@@ -110,8 +110,7 @@ include_once("readFromDatabase.php");
          *
          * @return int
          */
-        public static function saveNewSegmentToDatabase($dbConn, $segmentObject)
-        {
+        public static function saveNewSegmentToDatabase($dbConn, $segmentObject) {
             list($columnNames, $values) = self::processSegmentForWrite($segmentObject);
             $segmentId = writeToDatabase::writeEntryToDatabase($dbConn, self::TABLE_NAME, $columnNames, $values);
 
@@ -135,8 +134,7 @@ include_once("readFromDatabase.php");
          * @param Segment $segmentObject
          * @return array
          */
-        private static function processSegmentForWrite($segmentObject)
-        {
+        private static function processSegmentForWrite($segmentObject) {
             $startDateString = formatDatetimeStringForDatabaseWrite($segmentObject->getStartTime());
 
             $columnNames = array(self::START_TIME_COLUMN_NAME,
@@ -166,8 +164,7 @@ include_once("readFromDatabase.php");
             return array($columnNames, $values);
         }
 
-        public static function deleteSegmentFromDatabase($dbConn, $segmentId)
-        {
+        public static function deleteSegmentFromDatabase($dbConn, $segmentId) {
             writeToDatabase::deleteDatabaseEntry($dbConn, $segmentId, self::TABLE_NAME);
         }
 
@@ -176,8 +173,7 @@ include_once("readFromDatabase.php");
          * @param $episodeId
          * @return Segment[]
          */
-        public static function getAllSegmentsForEpisodeId($dbConn, $episodeId)
-        {
+        public static function getAllSegmentsForEpisodeId($dbConn, $episodeId) {
             $episode = new Episode($dbConn, $episodeId);
             $playlistId = $episode->getPlaylistId();
 
