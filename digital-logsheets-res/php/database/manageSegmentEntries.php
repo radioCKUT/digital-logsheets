@@ -60,9 +60,18 @@ include_once("readFromDatabase.php");
             return self::populateSegmentObject($dbResult, $segmentObject);
         }
 
+        /**
+         * @param PDO $dbConn
+         * @param DateTime $earliestDateTime
+         * @param DateTime $latestDateTime
+         * @return array
+         */
         public static function getAllSegmentsBetweenTwoStartDateTimes($dbConn, $earliestDateTime, $latestDateTime) {
+            $earliestDateTimeString = formatDateStringForDatabaseWrite($earliestDateTime);
+            $latestDateTimeString = formatDateStringForDatabaseWrite($latestDateTime);
+
             $dbResults = readFromDatabase::readAllColumnsBetweenTwoValues(
-                $dbConn, self::TABLE_NAME, self::START_TIME_COLUMN_NAME, $earliestDateTime, $latestDateTime);
+                $dbConn, self::TABLE_NAME, self::START_TIME_COLUMN_NAME, $earliestDateTimeString, $latestDateTimeString);
 
             $segments = array();
 

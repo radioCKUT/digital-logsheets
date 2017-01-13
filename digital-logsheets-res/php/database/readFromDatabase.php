@@ -106,8 +106,7 @@ class readFromDatabase
 
             $sqlQueryString = self::getEntireColumnsQueryString(null, $tableName);
 
-            $sqlQueryString .= "\n WHERE " . $filterColumn . ">=" . $lowestValue;
-            $sqlQueryString .= "\n WHERE " . $filterColumn . "<=" . $highestValue;
+            $sqlQueryString .= "\n WHERE " . $filterColumn . " between '" . $lowestValue . "' and '" . $highestValue . "'";
 
             try {
                 $sqlQueryStmt = $dbConn->prepare($sqlQueryString);

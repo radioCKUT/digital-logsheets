@@ -32,6 +32,8 @@
     try {
         //open database connection
         $db = connectToDatabase();
+
+
         $archive = new Archive($db);
         $episodesArchive = $archive->getArchive();
 
