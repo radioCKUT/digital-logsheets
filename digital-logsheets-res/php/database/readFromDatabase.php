@@ -92,6 +92,23 @@ class readFromDatabase
             }
         }
 
+        public static function readAllColumnsBetweenTwoValues($dbConn, $columnNames, $tableName, $filterColumn, $lowestValue, $highestValue) {
+
+            $sqlQueryString = self::getEntireColumnsQueryString($columnNames, $tableName);
+
+            $sqlQueryString .= "\n WHERE " . $filterColumn . ">=" . $lowestValue;
+            $sqlQueryString .= "\n WHERE " . $filterColumn . "<=" . $highestValue;
+
+            try {
+                $sqlQueryStmt = $dbConn->prepare($sqlQueryString);
+                return self::readFromDatabaseWithStatement($sqlQueryStmt);
+
+            } catch (Exception $e) {
+                error_log("Read columns (between two values) failed: " . $e);
+                return null;
+            }
+        }
+
         public static function readFirstMatchingEntryFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues)
         {
             try {
