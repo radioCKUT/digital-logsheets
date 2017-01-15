@@ -23,7 +23,7 @@ function generateDeleteButton(segment_id) {
         .click(function(eventObject) {
             deleteEpisodeSegment(segment_id);
         })
-        .text("Delete");
+        .append('<a href="#">Delete</a>');
 }
 
 function generateEditButton(segment_id) {
@@ -31,5 +31,5 @@ function generateEditButton(segment_id) {
         .click(function(eventObject) {
             prepareFormForEdit(eventObject);
         })
-        .text("Edit");
+        .append('<a href="#">Edit</a>');
 }
