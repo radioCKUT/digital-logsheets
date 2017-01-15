@@ -50,44 +50,75 @@ include_once("readFromDatabase.php");
          *
          * @param Segment $segmentObject
          *
+         * @return Segment
+         *
          */
         public static function getSegmentAttributesFromDatabase($dbConn, $segmentId, $segmentObject) {
-            $databaseResult = readFromDatabase::readFilteredColumnFromTable($dbConn, null, self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($segmentId));
-            $databaseResult = $databaseResult[0];
+            $dbResult = readFromDatabase::readFilteredColumnFromTable($dbConn, null, self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($segmentId));
+            $dbResult = $dbResult[0];
 
-            $segmentName = $databaseResult[self::SEGMENT_NAME_COLUMN_NAME];
+            return self::populateSegmentObject($dbResult, $segmentObject);
+        }
+
+        /**
+         * @param PDO $dbConn
+         * @param DateTime $earliestDateTime
+         * @param DateTime $latestDateTime
+         * @return array
+         */
+        public static function getAllSegmentsBetweenTwoStartDateTimes($dbConn, $earliestDateTime, $latestDateTime) {
+            $earliestDateTimeString = formatDateStringForDatabaseWrite($earliestDateTime);
+            $latestDateTimeString = formatDateStringForDatabaseWrite($latestDateTime);
+
+            $dbResults = readFromDatabase::readAllColumnsBetweenTwoValues(
+                $dbConn, self::TABLE_NAME, self::START_TIME_COLUMN_NAME, $earliestDateTimeString, $latestDateTimeString);
+
+            $segments = array();
+
+            foreach ($dbResults as $dbResult) {
+                $segmentFromDbResult = self::populateSegmentObject($dbResult, new Segment($dbConn, null));
+                array_push($segments, $segmentFromDbResult);
+            }
+
+            return $segments;
+        }
+
+        private static function populateSegmentObject($dbResult, $segmentObject) {
+            $segmentName = $dbResult[self::SEGMENT_NAME_COLUMN_NAME];
             $segmentObject->setName($segmentName);
 
-            $segmentAlbum = $databaseResult[self::ALBUM_COLUMN_NAME];
+            $segmentAlbum = $dbResult[self::ALBUM_COLUMN_NAME];
             $segmentObject->setAlbum($segmentAlbum);
 
-            $segmentAuthor = $databaseResult[self::AUTHOR_COLUMN_NAME];
+            $segmentAuthor = $dbResult[self::AUTHOR_COLUMN_NAME];
             $segmentObject->setAuthor($segmentAuthor);
 
-            $segmentCategory = $databaseResult[self::CATEGORY_COLUMN_NAME];
+            $segmentCategory = $dbResult[self::CATEGORY_COLUMN_NAME];
             $segmentObject->setCategory($segmentCategory);
 
-            $segmentDuration = $databaseResult[self::DURATION_COLUMN_NAME];
+            $segmentDuration = $dbResult[self::DURATION_COLUMN_NAME];
             $segmentObject->setDuration($segmentDuration);
 
-            $segmentAdNumber = $databaseResult[self::AD_NUMBER_COLUMN_NAME];
+            $segmentAdNumber = $dbResult[self::AD_NUMBER_COLUMN_NAME];
             $segmentObject->setAdNumber($segmentAdNumber);
 
-            $segmentStationIdGiven = $databaseResult[self::STATION_ID_COLUMN_NAME];
+            $segmentStationIdGiven = $dbResult[self::STATION_ID_COLUMN_NAME];
             $segmentObject->setStationIdGiven($segmentStationIdGiven);
 
-            $segmentCanCon = $databaseResult[self::CAN_CON_COLUMN_NAME];
+            $segmentCanCon = $dbResult[self::CAN_CON_COLUMN_NAME];
             $segmentObject->setIsCanCon($segmentCanCon);
 
-            $segmentNewRelease = $databaseResult[self::NEW_RELEASE_COLUMN_NAME];
+            $segmentNewRelease = $dbResult[self::NEW_RELEASE_COLUMN_NAME];
             $segmentObject->setIsNewRelease($segmentNewRelease);
 
-            $segmentFrenchVocalMusic = $databaseResult[self::FRENCH_VOCAL_MUSIC_COLUMN_NAME];
+            $segmentFrenchVocalMusic = $dbResult[self::FRENCH_VOCAL_MUSIC_COLUMN_NAME];
             $segmentObject->setIsFrenchVocalMusic($segmentFrenchVocalMusic);
 
-            $dbStartTimeString = $databaseResult[self::START_TIME_COLUMN_NAME];
+            $dbStartTimeString = $dbResult[self::START_TIME_COLUMN_NAME];
             $startDateTime = formatDateTimeStringFromDatabase($dbStartTimeString);
             $segmentObject->setStartTime($startDateTime);
+
+            return $segmentObject;
         }
 
         /**
@@ -110,8 +141,7 @@ include_once("readFromDatabase.php");
          *
          * @return int
          */
-        public static function saveNewSegmentToDatabase($dbConn, $segmentObject)
-        {
+        public static function saveNewSegmentToDatabase($dbConn, $segmentObject) {
             list($columnNames, $values) = self::processSegmentForWrite($segmentObject);
             $segmentId = writeToDatabase::writeEntryToDatabase($dbConn, self::TABLE_NAME, $columnNames, $values);
 
@@ -135,8 +165,7 @@ include_once("readFromDatabase.php");
          * @param Segment $segmentObject
          * @return array
          */
-        private static function processSegmentForWrite($segmentObject)
-        {
+        private static function processSegmentForWrite($segmentObject) {
             $startDateString = formatDatetimeStringForDatabaseWrite($segmentObject->getStartTime());
 
             $columnNames = array(self::START_TIME_COLUMN_NAME,
@@ -166,8 +195,7 @@ include_once("readFromDatabase.php");
             return array($columnNames, $values);
         }
 
-        public static function deleteSegmentFromDatabase($dbConn, $segmentId)
-        {
+        public static function deleteSegmentFromDatabase($dbConn, $segmentId) {
             writeToDatabase::deleteDatabaseEntry($dbConn, $segmentId, self::TABLE_NAME);
         }
 
@@ -176,8 +204,7 @@ include_once("readFromDatabase.php");
          * @param $episodeId
          * @return Segment[]
          */
-        public static function getAllSegmentsForEpisodeId($dbConn, $episodeId)
-        {
+        public static function getAllSegmentsForEpisodeId($dbConn, $episodeId) {
             $episode = new Episode($dbConn, $episodeId);
             $playlistId = $episode->getPlaylistId();
 

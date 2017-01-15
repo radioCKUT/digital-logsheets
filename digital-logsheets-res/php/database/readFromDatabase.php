@@ -92,6 +92,32 @@ class readFromDatabase
             }
         }
 
+
+    /**
+     * @param PDO $dbConn
+     * @param $columnNames
+     * @param $tableName
+     * @param $filterColumn
+     * @param $lowestValue
+     * @param $highestValue
+     * @return null
+     */
+        public static function readAllColumnsBetweenTwoValues($dbConn, $tableName, $filterColumn, $lowestValue, $highestValue) {
+
+            $sqlQueryString = self::getEntireColumnsQueryString(null, $tableName);
+
+            $sqlQueryString .= "\n WHERE " . $filterColumn . " between '" . $lowestValue . "' and '" . $highestValue . "'";
+
+            try {
+                $sqlQueryStmt = $dbConn->prepare($sqlQueryString);
+                return self::readFromDatabaseWithStatement($sqlQueryStmt);
+
+            } catch (Exception $e) {
+                error_log("Read columns (between two values) failed: " . $e);
+                return null;
+            }
+        }
+
         public static function readFirstMatchingEntryFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues)
         {
             try {
