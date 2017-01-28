@@ -14,7 +14,7 @@
 
         <div class="form-group">
             <label for="category" class="control-label">Category:</label>
-            <div class="btn-group" class="category" id="category" data-toggle="buttons">
+            <div class="btn-group" class="category" id="category" data-toggle="buttons"> {*Need double class attribute for Bootstrap tooltip to work correctly*}
                 <label class="btn btn-primary" onclick="setupCat1Fields()" data-toggle="tooltip" data-placement="bottom" title="All Spoken Word">
                     <input type="radio" name="category" class="category1" autocomplete="off" required value="1">1</label>
                 <label class="btn btn-primary" onclick="setupCat2Fields()" data-toggle="tooltip" data-placement="bottom" title="General Music">
