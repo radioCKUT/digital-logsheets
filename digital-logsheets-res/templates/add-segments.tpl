@@ -38,6 +38,7 @@
             getEpisodeSegments();
             setFormOnSubmitBehaviour();
             setFocusOutBehaviour();
+            $('[data-toggle="tooltip"]').tooltip();
         }
 
 
@@ -93,6 +94,7 @@
 <body onload="init()">
 <div class="container-fluid">
     <div class="col-md-8">
+
         <h3>Add Segments</h3>
 
         <h5>Episode Information:</h5>
