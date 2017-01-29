@@ -38,6 +38,7 @@
             getEpisodeSegments();
             setFormOnSubmitBehaviour();
             setFocusOutBehaviour();
+            setConfirmModalBehaviour();
         }
 
 
@@ -88,6 +89,25 @@
                                 {$episode|json_encode});
                     });
         }
+
+        function setConfirmModalBehaviour() {
+            $('#confirmDeleteModal')
+                .on('show.bs.modal', function (e) {
+                    var deleteSegmentLink = $(e.relatedTarget);
+                    var deleteSegmentRow = deleteSegmentLink.closest("tr");
+
+                    var segmentToDelete = deleteSegmentRow.data("segment");
+                    var segmentIdToDelete = segmentToDelete.id;
+
+                    var confirmDeleteButton = $("#confirmDeleteButton");
+
+                    confirmDeleteButton.click(function (e) {
+                        e.preventDefault();
+                        deleteEpisodeSegment(segmentIdToDelete);
+                        $('#confirmDeleteModal').modal('hide');
+                    });
+                });
+        }
     </script>
 </head>
 <body onload="init()">
@@ -134,6 +154,24 @@
 
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="confirmDeleteModalLabel">Warning</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this segment?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="confirmDeleteButton" onClick="">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+            </div>
         </div>
     </div>
 </div>

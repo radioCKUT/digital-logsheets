@@ -19,11 +19,9 @@
  */
 
 function generateDeleteButton(segment_id) {
-    return $(document.createElement("li"))
-        .click(function(eventObject) {
-            deleteEpisodeSegment(segment_id);
-        })
-        .append('<a href="#">Delete</a>');
+    var li =  $(document.createElement("li"));
+    li.append('<a href="#" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>');
+    return li;
 }
 
 function generateEditButton(segment_id) {
