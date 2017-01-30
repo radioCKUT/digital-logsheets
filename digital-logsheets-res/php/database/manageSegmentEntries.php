@@ -73,15 +73,22 @@ include_once("readFromDatabase.php");
             $dbResults = readFromDatabase::readAllColumnsBetweenTwoValues(
                 $dbConn, self::TABLE_NAME, self::START_TIME_COLUMN_NAME, $earliestDateTimeString, $latestDateTimeString);
 
-            $segments = array();
-
-            foreach ($dbResults as $dbResult) {
-                $segmentFromDbResult = self::populateSegmentObject($dbResult, new Segment($dbConn, null));
-                array_push($segments, $segmentFromDbResult);
-            }
-
-            return $segments;
+            return self::getSegmentsFromDbResults($dbConn, $dbResults);
         }
+
+        public static function getAllSegmentsWithAdNumber($dbConn, $adNumber) {
+            $dbResults = readFromDatabase::readFilteredColumnFromTable($dbConn, null, self::TABLE_NAME, array(self::AD_NUMBER_COLUMN_NAME), array($adNumber));
+
+            return self::getSegmentsFromDbResults($dbConn, $dbResults);
+        }
+
+        public static function getAllSegmentsWithAlbumName($dbConn, $albumName) {
+            $dbResults = readFromDatabase::readFilteredColumnFromTable($dbConn, null, self::TABLE_NAME, array(self::ALBUM_COLUMN_NAME), array($albumName));
+
+            return self::getSegmentsFromDbResults($dbConn, $dbResults);
+        }
+
+
 
         private static function populateSegmentObject($dbResult, $segmentObject) {
             $segmentName = $dbResult[self::SEGMENT_NAME_COLUMN_NAME];
@@ -209,6 +216,22 @@ include_once("readFromDatabase.php");
             $playlistId = $episode->getPlaylistId();
 
             $segments = managePlaylistEntries::getPlaylistSegmentsFromDatabase($dbConn, $playlistId);
+
+            return $segments;
+        }
+
+        /**
+         * @param $dbConn
+         * @param $dbResults
+         * @return array
+         */
+        private static function getSegmentsFromDbResults($dbConn, $dbResults) {
+            $segments = array();
+
+            foreach ($dbResults as $dbResult) {
+                $segmentFromDbResult = self::populateSegmentObject($dbResult, new Segment($dbConn, null));
+                array_push($segments, $segmentFromDbResult);
+            }
 
             return $segments;
         }
