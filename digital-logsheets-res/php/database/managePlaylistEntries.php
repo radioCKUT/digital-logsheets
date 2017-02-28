@@ -21,7 +21,7 @@
 
 include_once("readFromDatabase.php");
     include_once("writeToDatabase.php");
-    include_once(__DIR__ . "/../objects/logsheetClasses.php");
+    include_once(__DIR__ . "../objects/logsheetClasses.php");
 
     class managePlaylistEntries {
 

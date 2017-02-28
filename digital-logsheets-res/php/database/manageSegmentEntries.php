@@ -22,7 +22,7 @@
 include_once("readFromDatabase.php");
     include_once("writeToDatabase.php");
     include_once("managePlaylistEntries.php");
-    include_once(__DIR__ . "/../objects/Segment.php");
+    include_once(__DIR__ . "../objects/Segment.php");
 
     class manageSegmentEntries {
 

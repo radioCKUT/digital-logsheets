@@ -19,8 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once(__DIR__ . "/../database/manageCategoryEntries.php");
-    include_once(__DIR__ . "/../validator/CategoryValidator.php");
+include_once(__DIR__ . "../database/manageCategoryEntries.php");
+    include_once(__DIR__ . "../validator/CategoryValidator.php");
     class Category extends LogsheetComponent {
 
         private $name;
