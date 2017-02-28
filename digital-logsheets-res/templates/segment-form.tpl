@@ -14,17 +14,18 @@
 
         <div class="form-group">
             <label for="category" class="control-label">Category:</label>
-            <div class="btn-group category" data-toggle="buttons">
-                <label class="btn btn-primary" onclick="setupCat1Fields()">
+            <div class="btn-group" class="category" id="category" data-toggle="buttons"> {*Need double class attribute for Bootstrap tooltip to work correctly*}
+                <label class="btn btn-primary" onclick="setupCat1Fields()" data-toggle="tooltip" data-placement="bottom" title="All Spoken Word">
                     <input type="radio" name="category" class="category1" autocomplete="off" required value="1">1</label>
-                <label class="btn btn-primary" onclick="setupCat2Fields()">
+                <label class="btn btn-primary" onclick="setupCat2Fields()" data-toggle="tooltip" data-placement="bottom" title="General Music">
                     <input type="radio" name="category" class="category2" autocomplete="off" value="2">2</label>
-                <label class="btn btn-primary" onclick="setupCat3Fields()">
+                <label class="btn btn-primary" onclick="setupCat3Fields()" data-toggle="tooltip" data-placement="bottom" title="Jazz, Classical, and Traditional Music">
                     <input type="radio" name="category" class="category3" autocomplete="off" value="3">3</label>
-                <label class="btn btn-primary" onclick="setupCat4Fields()">
+                <label class="btn btn-primary" onclick="setupCat4Fields()" data-toggle="tooltip" data-placement="bottom" title="Musical Productions (ID's, etc.)">
                     <input type="radio" name="category" class="category4" autocomplete="off" value="4">4</label>
-                <label class="btn btn-primary" onclick="setupCat5Fields()">
-                    <input type="radio" name="category" class="category5" autocomplete="off" value="5">5</label></div>
+                <label class="btn btn-primary" onclick="setupCat5Fields()" data-toggle="tooltip" data-placement="bottom" title="Ads, Promos">
+                    <input type="radio" name="category" class="category5" autocomplete="off" value="5">5</label>
+            </div>
         </div>
 
         <div class="form-group row ad_number_group" style="display:none;">
