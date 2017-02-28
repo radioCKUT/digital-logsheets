@@ -20,8 +20,8 @@
  */
 
     //TODO: Error checking...
-    require_once(__DIR__ . "/../database/manageEpisodeEntries.php");
-    require_once(__DIR__ . "/LogsheetComponent.php");
+    require_once(__DIR__ . "../database/manageEpisodeEntries.php");
+    require_once(__DIR__ . "LogsheetComponent.php");
 
     class Episode extends LogsheetComponent {
 
