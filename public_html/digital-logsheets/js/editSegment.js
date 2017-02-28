@@ -19,7 +19,7 @@
  */
 
 function prepareFormForEdit(eventObject) {
-    var tableRow = $(eventObject.target).parent().parent().parent().parent();
+    var tableRow = $(eventObject.target).closest("tr");
     var segment_object = $(tableRow).data("segment");
 
     showEditForm();
