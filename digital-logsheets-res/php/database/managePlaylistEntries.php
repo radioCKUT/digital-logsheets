@@ -46,7 +46,7 @@ include_once("readFromDatabase.php");
                 }
             }
 
-            usort($segments, "sortSegmentsByStartTime");
+            usort($segments, array("managePlaylistEntries", "sortSegmentsByStartTime"));
 
             return $segments;
         }
