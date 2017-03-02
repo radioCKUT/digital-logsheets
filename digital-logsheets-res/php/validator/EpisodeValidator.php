@@ -64,16 +64,16 @@ class EpisodeValidator {
 
     public static function getEpisodeEarlyLimit() {
         $episodeEarlyLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
-        $episodeEarlyLimit->sub(new DateInterval('P' . self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS . 'D'));
+        $episodeEarlyLimit->modify('-' . self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS . ' days');
 
         return $episodeEarlyLimit;
     }
 
     public static function getEpisodeLateLimit() {
-        $episodeEarlyLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
-        $episodeEarlyLimit->add(new DateInterval('P' . self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS . 'D'));
+        $episodeLateLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
+        $episodeLateLimit->modify('+' . self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS . ' days');
 
-        return $episodeEarlyLimit;
+        return $episodeLateLimit;
     }
 
     public static function getPrerecordDateEarlyDaysLimit() {
