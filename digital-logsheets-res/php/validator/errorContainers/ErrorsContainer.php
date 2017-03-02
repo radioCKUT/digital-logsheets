@@ -20,7 +20,7 @@
  */
 
 class ErrorsContainer {
-        protected $errors = [];
+        protected $errors = array();
 
         public function getAllErrors() {
             return $this->errors;

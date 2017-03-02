@@ -24,7 +24,7 @@ require_once('ErrorsContainer.php');
     class SaveSegmentErrors extends ErrorsContainer {
 
         public function __constructor() {
-            $this->errors = [
+            $this->errors = array(
                 'missingCategory' => false,
                 'categoryInvalidFormat' => false,
                 'missingAlbum' => false,
@@ -35,7 +35,7 @@ require_once('ErrorsContainer.php');
                 'startTimeInvalidFormat' => false,
                 'outOfEpisodeBounds' => false,
                 'invalidAdNumber' => false
-            ];
+            );
         }
 
         public function markCategoryMissing() {
