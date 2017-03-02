@@ -24,7 +24,7 @@ require_once('ErrorsContainer.php');
 class SaveEpisodeErrors extends ErrorsContainer {
 
     public function __constructor() {
-        $this->errors = [
+        $this->errors = array(
             'missingProgram' => false,
             'missingProgrammer' => false,
             'missingStartTime' => false,
@@ -36,7 +36,7 @@ class SaveEpisodeErrors extends ErrorsContainer {
             'missingPrerecordDate' => false,
             'prerecordDateInFuture' => false,
             'prerecordDateTooFarInPast' => false
-        ];
+        );
     }
 
     public function markProgramMissing() {

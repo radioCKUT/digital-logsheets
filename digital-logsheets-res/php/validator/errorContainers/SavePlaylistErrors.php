@@ -22,9 +22,9 @@
 class SavePlaylistErrors extends ErrorsContainer {
 
     public function __construct() {
-        $this->errors = [
+        $this->errors = array(
             'noAlignmentWithEpisodeStart' => false
-        ];
+        );
     }
 
     public function markNoAlignmentWithEpisodeStart() {
