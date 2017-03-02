@@ -22,7 +22,7 @@
 include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
     include_once(dirname(__FILE__) . "/../validator/SegmentValidator.php");
 
-    class Segment extends LogsheetComponent implements JsonSerializable {
+    class Segment extends LogsheetComponent {
 
         private $name;
         private $author;
@@ -109,27 +109,6 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
 
         public function setPlaylistId($playlistId) {
             $this->playlistId = $playlistId;
-        }
-
-        public function jsonSerialize() {
-            $startDateTime = $this->getStartTime();
-            $startTimeString = $startDateTime->format('H:i');
-
-            return array(
-                'id' => $this->getId(),
-                'startTime' => $startTimeString,
-                'name' => $this->getName(),
-                'album' => $this->getAlbum(),
-                'author' => $this->getAuthor(),
-                'duration' => $this->getDuration(),
-                'category' => $this->getCategory(),
-                'canCon' => $this->isCanCon(),
-                'newRelease' => $this->isNewRelease(),
-                'frenchVocalMusic' => $this->isFrenchVocalMusic(),
-                'adNumber' => $this->getAdNumber(),
-                'playlistId' => $this->getPlaylistId(),
-                'stationIdGiven' => $this->wasStationIdGiven()
-            );
         }
 
         public function getObjectAsArray() {
