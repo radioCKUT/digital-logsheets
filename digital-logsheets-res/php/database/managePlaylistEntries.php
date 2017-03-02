@@ -51,6 +51,11 @@ include_once("readFromDatabase.php");
             return $segments;
         }
 
+        /**
+         * @param Segment $a
+         * @param Segment $b
+         * @return bool
+         */
         public static function sortSegmentsByStartTime($a, $b) {
             return ($a->getStartTime() > $b->getStartTime());
         }

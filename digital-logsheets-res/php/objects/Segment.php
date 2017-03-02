@@ -115,7 +115,7 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
             $startDateTime = $this->getStartTime();
             $startTimeString = $startDateTime->format('H:i');
 
-            return [
+            return array(
                 'id' => $this->getId(),
                 'startTime' => $startTimeString,
                 'name' => $this->getName(),
@@ -129,14 +129,14 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
                 'adNumber' => $this->getAdNumber(),
                 'playlistId' => $this->getPlaylistId(),
                 'stationIdGiven' => $this->wasStationIdGiven()
-            ];
+            );
         }
 
         public function getObjectAsArray() {
             $startDateTime = $this->getStartTime();
             $startTimeString = $startDateTime->format('H:i');
 
-            return [
+            return array(
                 'id' => $this->getId(),
                 'startTime' => $startTimeString,
                 'name' => $this->getName(),
@@ -150,7 +150,7 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
                 'adNumber' => $this->getAdNumber(),
                 'playlistId' => $this->getPlaylistId(),
                 'stationIdGiven' => $this->wasStationIdGiven() ? "Yes" : "No"
-            ];
+            );
         }
 
         
