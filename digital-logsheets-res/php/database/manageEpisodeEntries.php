@@ -22,7 +22,7 @@
 include_once("readFromDatabase.php");
     include_once("writeToDatabase.php");
     include_once("formatDateStrings.php");
-    include_once(__DIR__ . "/../objects/logsheetClasses.php");
+    include_once(dirname(__FILE__) . "/../objects/logsheetClasses.php");
 
 
     class manageEpisodeEntries {

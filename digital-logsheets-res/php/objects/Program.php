@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once(__DIR__ . "/../database/manageProgramEntries.php");
+include_once(dirname(__FILE__) . "/../database/manageProgramEntries.php");
     class Program extends LogsheetComponent{
 
         /**

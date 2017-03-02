@@ -21,7 +21,7 @@
 
 include_once("readFromDatabase.php");
     include_once("writeToDatabase.php");
-    include_once(__DIR__ . "/../objects/logsheetClasses.php");
+    include_once(dirname(__FILE__) . "/../objects/logsheetClasses.php");
 
     class managePlaylistEntries {
 
@@ -46,11 +46,13 @@ include_once("readFromDatabase.php");
                 }
             }
 
-            usort($segments, function ($a, $b) {
-                return ($a->getStartTime() > $b->getStartTime());
-            });
+            usort($segments, "sortSegmentsByStartTime");
 
             return $segments;
+        }
+
+        public static function sortSegmentsByStartTime($a, $b) {
+            return ($a->getStartTime() > $b->getStartTime());
         }
 
         public static function createNewPlaylist($dbConn){

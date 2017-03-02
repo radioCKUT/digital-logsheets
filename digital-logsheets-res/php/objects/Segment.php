@@ -19,10 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once(__DIR__ . "/../database/manageSegmentEntries.php");
-    include_once(__DIR__ . "/../validator/SegmentValidator.php");
+include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
+    include_once(dirname(__FILE__) . "/../validator/SegmentValidator.php");
 
-    class Segment extends LogsheetComponent implements JsonSerializable{
+    class Segment extends LogsheetComponent implements JsonSerializable {
 
         private $name;
         private $author;

@@ -19,7 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once(__DIR__ . "/../database/manageEpisodeEntries.php");
+require_once("Episode.php");
+require_once(dirname(__FILE__) . "/../database/manageEpisodeEntries.php");
     class Archive {
 
         private $db;
