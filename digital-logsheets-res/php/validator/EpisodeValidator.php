@@ -141,22 +141,9 @@ class EpisodeValidator {
             return;
         }
 
-        $episodeInterval = $endTime->diff($startTime);
-
-        $episodeLengthInHours = null;
-        $episodeIntervalDaysComponent = $episodeInterval->days;
-        $episodeIntervalHoursComponent = $episodeInterval->h;
-        $episodeIntervalMinutesComponent = $episodeInterval->i;
-
-        if ($episodeIntervalDaysComponent != false && $episodeIntervalDaysComponent > 0) {
-            $episodeLengthInHours =  ($episodeIntervalDaysComponent * 24) +
-                $episodeIntervalHoursComponent +
-                ($episodeIntervalMinutesComponent / 60);
-
-        } else {
-            $episodeLengthInHours = $episodeIntervalHoursComponent +
-                ($episodeIntervalMinutesComponent / 60);
-        }
+        $startTime = $startTime->format('U');
+        $endTime = $endTime->format('U');
+        $episodeLengthInHours = ($endTime - $startTime) / (60*60);
 
         if ($episodeLengthInHours > self::EPISODE_MAX_LENGTH_HOURS) {
             $errorsContainer->markTooLong();
@@ -223,17 +210,10 @@ class EpisodeValidator {
      * @return int
      */
     private function getDayDifferenceFromDate($fromDate, $toDate) {
-        $timeSinceFromDateInterval = $fromDate->diff($toDate);
-        
-        $positiveOrNegativeInterval = $timeSinceFromDateInterval->format('%R');
-        $entireDaysSinceFromDate = $timeSinceFromDateInterval->format('%a');
-        $hoursSinceFromDate = $timeSinceFromDateInterval->format('%h');
-        $minutesSinceFromDate = $timeSinceFromDateInterval->format('%i');
+        $fromDateInMillisecs = $fromDate->format('U');
+        $toDateInMillisecs = $toDate->format('U');
 
-        $daysSinceFromDate = intval($positiveOrNegativeInterval . '1')
-            * (intval($entireDaysSinceFromDate)
-                + intval($hoursSinceFromDate) / 24
-                + intval($minutesSinceFromDate) / (24 * 60));
+        $daysSinceFromDate = ($fromDateInMillisecs - $toDateInMillisecs) / (60*60*24);
 
         return $daysSinceFromDate;
     }
