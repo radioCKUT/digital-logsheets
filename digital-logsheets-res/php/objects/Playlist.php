@@ -39,6 +39,21 @@ require_once(dirname(__FILE__) . "/../database/managePlaylistEntries.php");
         public function getSegments() {
             return $this->segments;
         }
+
+        /**
+         * @return String $jsonSegmentsArray
+         */
+        public function getSegmentsAsJSON() {
+
+            $jsonSegmentsArray = array();
+
+            foreach ($this->segments as $segment) {
+                $jsonSegment = $segment->getObjectAsArray();
+                $jsonSegmentsArray[] = $jsonSegment;
+            }
+
+            return json_encode($jsonSegmentsArray);
+        }
         
     }
 ?>

@@ -123,12 +123,12 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
                 'author' => $this->getAuthor(),
                 'duration' => $this->getDuration(),
                 'category' => $this->getCategory(),
-                'canCon' => $this->isCanCon() ? "Yes" : "No",
-                'newRelease' => $this->isNewRelease() ? "Yes" : "No",
-                'frenchVocalMusic' => $this->isFrenchVocalMusic() ? "Yes" : "No",
+                'canCon' => $this->isCanCon() ? true : false,
+                'newRelease' => $this->isNewRelease() ? true : false,
+                'frenchVocalMusic' => $this->isFrenchVocalMusic() ? true : false,
                 'adNumber' => $this->getAdNumber(),
                 'playlistId' => $this->getPlaylistId(),
-                'stationIdGiven' => $this->wasStationIdGiven() ? "Yes" : "No"
+                'stationIdGiven' => $this->wasStationIdGiven() ? true : false
             );
         }
 

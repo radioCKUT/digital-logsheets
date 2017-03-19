@@ -41,14 +41,10 @@ if (!isset($episodeId) || $episodeId <= 0) {
 try {
     $db = connectToDatabase();
 
-    error_log("Episode id in get-episode-data: " . $episodeId);
     $episode = new Episode($db, $episodeId);
-    $segmentList = $episode->getSegments();
-    error_log("segment list before JSON: " . print_r($segmentList, true));
-    $segmentList = Segment::segmentArrayToJson($segmentList);
-
-    error_log("segment list after JSON: " . print_r($segmentList, true));
-
+    $playlist = $episode->getPlaylist();
+    $segmentList = $playlist->getSegmentsAsJSON();
+    
     $db = null;
     outputSuccessResponse($segmentList);
 
