@@ -19,11 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
-require_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
-require_once("../../digital-logsheets-res/php/objects/Episode.php");
-require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
-require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
+require_once("../digital-logsheets-res/smarty/libs/Smarty.class.php");
+require_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
+require_once("../digital-logsheets-res/php/objects/Episode.php");
+require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
+require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 
    $episodeId = $_GET["episode_id"];
 
@@ -52,7 +52,7 @@ require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
 
 
             // display it
-            echo $smarty->fetch('../../digital-logsheets-res/templates/view-episode-logsheet.tpl');
+            echo $smarty->fetch('../digital-logsheets-res/templates/view-episode-logsheet.tpl');
         } catch(PDOException $e) {
             echo 'ERROR: ' . $e->getMessage();
         }

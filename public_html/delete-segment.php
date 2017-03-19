@@ -19,8 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
-require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
+require_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
+require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
 
 $segmentId = $_POST['segment_id'];
 

@@ -19,13 +19,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once('../../digital-logsheets-res/php/database/connectToDatabase.php');
-include_once("../../digital-logsheets-res/php/database/manageEpisodeEntries.php");
-include_once("../../digital-logsheets-res/php/database/managePlaylistEntries.php");
-include_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
-require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
-require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
-require_once("../../digital-logsheets-res/php/DataPreparationForUI.php");
+include_once('../digital-logsheets-res/php/database/connectToDatabase.php');
+include_once("../digital-logsheets-res/php/database/manageEpisodeEntries.php");
+include_once("../digital-logsheets-res/php/database/managePlaylistEntries.php");
+include_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
+require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
+require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
+require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
 
 $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
@@ -98,7 +98,8 @@ try {
 }
 
 function getDateTimeFromDateString($dateString) {
-    $d = DateTime::createFromFormat('Y-m-d', $dateString);
+    $d = new DateTime($dateString);
+    //$d = DateTime::createFromFormat('Y-m-d', $dateString);
 
     if ($d && $d->format('Y-m-d') === $dateString) {
 
@@ -110,7 +111,8 @@ function getDateTimeFromDateString($dateString) {
 }
 
 function getDateTimeFromDateTimeString($dateString) {
-    $d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
+    $d = new DateTime($dateString);
+    //$d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
 
     if ($d && $d->format('Y-m-d\TH:i') === $dateString) {
         return new DateTime($dateString, new DateTimeZone('America/Montreal'));

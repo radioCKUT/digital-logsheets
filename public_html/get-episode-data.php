@@ -19,8 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
-require_once("../../digital-logsheets-res/php/objects/Episode.php");
+require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
+require_once("../digital-logsheets-res/php/objects/Episode.php");
 
 $episodeId = $_POST['episode_id'];
 
@@ -41,16 +41,19 @@ if (!isset($episodeId) || $episodeId <= 0) {
 try {
     $db = connectToDatabase();
 
+    error_log("Episode id in get-episode-data: " . $episodeId);
     $episode = new Episode($db, $episodeId);
     $segmentList = $episode->getSegments();
-    $segmentList = json_encode($segmentList);
+    error_log("segment list before JSON: " . print_r($segmentList, true));
+    $segmentList = Segment::segmentArrayToJson($segmentList);
+
+    error_log("segment list after JSON: " . print_r($segmentList, true));
 
     $db = null;
     outputSuccessResponse($segmentList);
 
 } catch(PDOException $e) {
     $db = null;
-    error_log("get_segments error: " . $e->getMessage());
     outputErrorResponse($e->getMessage());
 }
 
@@ -75,7 +78,6 @@ function outputResponse($response) {
 function addDateToSegmentStartTime($episodeStartDate, $episodeStartTime, $segmentTime) {
 
     $dateToUse = $episodeStartDate;
-    error_log("segmentTime: " . $segmentTime . " episodeStartTime " . $episodeStartTime);
 
     if (strtotime($segmentTime) < strtotime($episodeStartTime)) {
         $episodeStartDateTimestamp = strtotime($episodeStartDate);
