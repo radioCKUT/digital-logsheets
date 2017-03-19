@@ -61,6 +61,28 @@ function getFormSubmissionArray($episode, $duration) {
 }
 
 /**
+ * @param Episode episode
+ */
+function getSegmentListWithErrors($episode) {
+    $segments = $episode->getSegments();
+    $segmentsWithErrorContainers = array();
+
+    foreach ($segments as $segment) {
+        $validator = new SegmentValidator($segment, $episode);
+        $errors = $validator->isSegmentValidForDraftSave();
+
+        $segmentWithError = array(
+            'segment' => $segment->getObjectAsArray(),
+            'errors' => $errors
+        );
+
+        $segmentsWithErrorContainers[] = $segmentWithError;
+    }
+
+    return json_encode($segmentsWithErrorContainers);
+}
+
+/**
  * @param DateTime $datetime
  * @return String
  */

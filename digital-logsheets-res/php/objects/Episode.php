@@ -216,6 +216,10 @@
             return $this->playlist != null ? $this->playlist->getSegments() : null;
         }
 
+        public function getSegmentsAsJSON() {
+            return $this->playlist != null ? $this->playlist->getSegmentsAsJSON() : null;
+        }
+
         public function getPlaylistId() {
             return $this->playlist != null ? $this->playlist->getId() : null;
         }
