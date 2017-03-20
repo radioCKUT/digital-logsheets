@@ -89,15 +89,28 @@ include_once("readFromDatabase.php");
         }
 
 
-
+        /**
+         * @param $dbResult
+         * @param Segment $segmentObject
+         * @return mixed
+         */
         private static function populateSegmentObject($dbResult, $segmentObject) {
             $segmentName = $dbResult[self::SEGMENT_NAME_COLUMN_NAME];
+            if (is_null($segmentName)) {
+                $segmentName = '';
+            }
             $segmentObject->setName($segmentName);
 
             $segmentAlbum = $dbResult[self::ALBUM_COLUMN_NAME];
+            if (is_null($segmentAlbum)) {
+                $segmentAlbum = '';
+            }
             $segmentObject->setAlbum($segmentAlbum);
 
             $segmentAuthor = $dbResult[self::AUTHOR_COLUMN_NAME];
+            if (is_null($segmentAuthor)) {
+                $segmentAuthor = '';
+            }
             $segmentObject->setAuthor($segmentAuthor);
 
             $segmentCategory = $dbResult[self::CATEGORY_COLUMN_NAME];
@@ -187,13 +200,18 @@ include_once("readFromDatabase.php");
                 self::NEW_RELEASE_COLUMN_NAME,
                 self::FRENCH_VOCAL_MUSIC_COLUMN_NAME);
 
+            $adNumber = $segmentObject->getAdNumber();
+            if ($adNumber == '') {
+                $adNumber = null;
+            }
+
             $values = array($startDateString,
                 $segmentObject->getDuration(),
                 $segmentObject->getName(),
                 $segmentObject->getAuthor(),
                 $segmentObject->getAlbum(),
                 $segmentObject->getCategory(),
-                $segmentObject->getAdNumber(),
+                $adNumber,
                 $segmentObject->wasStationIdGiven(),
                 $segmentObject->isCanCon(),
                 $segmentObject->isNewRelease(),
