@@ -122,6 +122,7 @@ try {
             manageSegmentEntries::editSegmentInDatabase($db, $segment);
         }
 
+
     } else {
         $segmentErrors = $segmentValidator->isSegmentValidForDraftSave();
 
@@ -175,9 +176,10 @@ function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
     $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
 
     if (!TimeValidator::isTimeInValidFormat($segmentTime)) {
-        $errorsContainer = new SaveSegmentErrors();
+        /*$errorsContainer = new SaveSegmentErrors();
         $errorsContainer->markStartTimeInvalidFormat();
-        outputErrorResponse($errorsContainer->getAllErrors());
+        outputErrorResponse($errorsContainer->getAllErrors());*/
+        return null;
     }
 
     if (strtotime($segmentTime) < strtotime($episodeStartTimeString)) {
