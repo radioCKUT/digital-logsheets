@@ -89,12 +89,26 @@ function receiveSegmentsSuccess(data) {
             var start_time = segment.startTime;
 
             var errors = segmentAndErrors.errors;
+            var isSegmentErroneous = false;
+
+            var errorsKeys = Object.keys(errors);
+
+            for (var errorsIndex = 0; errorsIndex < errorsKeys.length; errorsIndex++) {
+                if (errors[errorsKeys[errorsIndex]]) {
+                    isSegmentErroneous = true;
+                    break;
+                }
+            }
+
 
             var options_button = generateOptionsButton();
             var delete_button = generateDeleteButton(segment_id);
             var edit_button = generateEditButton(segment_id);
 
-            var segmentRow = $(document.createElement("tr"))
+            var tableRowElem = isSegmentErroneous ? "<tr class='erroneous_segment'>" : "<tr>";
+
+
+            var segmentRow = $(tableRowElem)
                 .data("segment", segment)
                 .data("errors", errors)
                 .append($('<td class="vert-align">' + start_time + '</td>'))

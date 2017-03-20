@@ -70,7 +70,7 @@ function getSegmentListWithErrors($episode) {
 
     foreach ($segments as $segment) {
         $validator = new SegmentValidator($segment, $episode);
-        $errors = $validator->isSegmentValidForDraftSave();
+        $errors = $validator->isSegmentValidForFinalSave();
 
         $segmentWithError = array(
             'segment' => $segment->getObjectAsArray(),
