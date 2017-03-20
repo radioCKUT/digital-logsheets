@@ -48,7 +48,7 @@ function verifySegmentStartTime(timeGroup, episode) {
     var segmentTimeField = timeGroup.find('.segment_time');
     var segmentTime = segmentTimeField.val();
 
-    var helpBlock =  timeGroup.find('.segment_time_help_text');
+    var helpBlock =  timeGroup.find('.segment_time_out_of_bounds_help_text');
 
     if (segmentTime == '') {
         markFieldCorrect(timeGroup, helpBlock);

@@ -6,13 +6,16 @@
                 <label for="segment_time{$idSuffix}" class="control-label">Time:</label>
                 <input name="segment_time" class="form-control segment_time"
                        type="time" id="segment_time{$idSuffix}">
-                <span id="segment_time_help_text{$idSuffix}" class="segment_time_help_text help-block hidden">
+                <span id="segment_time_out_of_bounds_help_text{$idSuffix}" class="segment_time_help_text help-block hidden">
                     Segment must fall within episode.
+                </span>
+                <span id="missing_segment_time_help_block{$idSuffix}" class="help-block hidden">
+                    Please enter a segment time.
                 </span>
             </div>
         </div>
 
-        <div class="form-group">
+        <div id="category_group{$idSuffix}" class="form-group category_group">
             <label for="category" class="control-label">Category:</label>
             <div class="btn-group" class="category" id="category" data-toggle="buttons"> {*Need double class attribute for Bootstrap tooltip to work correctly*}
                 <label class="btn btn-primary"
@@ -49,41 +52,57 @@
                        title="Ads, Promos">
                     <input type="radio" name="category" class="category5" autocomplete="off" value="5">5
                 </label>
+
+                <span id="category_help_block{$idSuffix}" class="help-block hidden">
+                    Please select a category.
+                </span>
             </div>
         </div>
 
-        <div class="form-group row ad_number_group" style="display:none;">
+        <div id="ad_number_group{$idSuffix}" class="form-group row ad_number_group" style="display:none;">
             <div class="col-md-3">
                 <label for="ad_number_input{$idSuffix}" class="control-label ad_number_label">Ad Number:</label>
                 <input class="form-control" type="number" min="1" step="1" max="300" name="ad_number" id="ad_number_input{$idSuffix}">
 
-                {*<span id="ad_number_help_block" class="help-block hidden">
-                    Please enter an ad number.
-                </span>*}
+                <span id="ad_number_help_block{$idSuffix}" class="help-block hidden">
+                    Please enter a valid ad number.
+                </span>
             </div>
         </div>
 
-        <div class="form-group row name_group" style="display:none;">
+        <div id="name_group{$idSuffix}" class="form-group row name_group" style="display:none;">
             <div class="col-md-9">
                 <label for="name_input{$idSuffix}" class="control-label name_label">Title:</label>
                 <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}">
+
+                <span id="name_help_block{$idSuffix}" class="help-block hidden">
+                    Please enter a name.
+                </span>
             </div>
         </div>
 
         <label class="checkbox-inline station_id_group" style="display:none;">
             <input type="checkbox" name="station_id" value="" id="station_id{$idSuffix}">Station ID Given</label>
 
-        <div class="form-group row author_group" style="display:none;">
+        <div id="author_group{$idSuffix}" class="form-group row author_group" style="display:none;">
             <div class="col-md-9">
                 <label for="author_input{$idSuffix}" class="control-label">Artist:</label>
                 <input class="form-control author_input" type="text" name="author" id="author_input{$idSuffix}">
+
+                <span id="author_help_block{$idSuffix}" class="help-block hidden">
+                    Please enter an author.
+                </span>
             </div>
         </div>
 
-        <div class="form-group row album_group" style="display:none;">
+        <div id="album_group{$idSuffix}" class="form-group row album_group" style="display:none;">
             <div class="col-md-9">
                 <label for="album_input{$idSuffix}" class="control-label">Album:</label>
                 <input class="form-control album_input" type="text" name="album" id="album_input{$idSuffix}">
+
+                <span id="album_help_block{$idSuffix}" class="help-block hidden">
+                    Please enter an album.
+                </span>
             </div>
         </div>
 

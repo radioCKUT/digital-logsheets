@@ -60,6 +60,39 @@ function prepareFormForEdit(eventObject) {
     $('#station_id_edit').prop("checked", segment_object.stationIdGiven);
 
     $('#segment_id_edit').attr("value", segment_object.id);
+
+
+
+
+    var errors = $(tableRow).data("errors");
+
+    if (errors.missingCategory || errors.categoryInvalidFormat) {
+        markFieldError($('.category_group_edit'), $('#category_help_block_edit'));
+    }
+
+    if (errors.missingAlbum) {
+        markFieldError($('.album_group_edit'), $('#album_help_block_edit'));
+    }
+
+    if (errors.missingAuthor) {
+        markFieldError($('.author_group_edit'), $('#author_help_block_edit'));
+    }
+
+    if (errors.missingName) {
+        markFieldError($('.name_group_edit'), $('#name_help_block_edit'));
+    }
+
+    if (errors.missingAdNumber || errors.invalidAdNumber) {
+        markFieldError($('.ad_number_group_edit'), $('#ad_number_help_block_edit'));
+    }
+
+    if (errors.missingStartTime || errors.startTimeInvalidFormat) {
+        markFieldError($('.time_group_edit'), $('#missing_segment_time_help_block_edit'));
+    } else if (errors.outOfEpisodeBounds) {
+        markFieldError($('.time_group_edit'), $('#segment_time_out_of_bounds_help_text_edit'));
+    }
+
+
 }
 
 function showEditForm() {
