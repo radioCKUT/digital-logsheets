@@ -78,25 +78,30 @@ function receiveSegmentsSuccess(data) {
 
         var addedSegments = $('#added_segments');
         addedSegments.find("tbody").empty();
-        console.error("segment received before initial parse", data);
         data = JSON.parse(data);
-        console.error("segment received after initial parse", data);
 
         $.each(data, function(i, e) {
-            var segment = data[i];
+            var segmentAndErrors = data[i];
+
+            var segment = segmentAndErrors.segment;
             var segment_id = segment.id;
             var name = segment.name;
             var start_time = segment.startTime;
 
+            var errors = segmentAndErrors.errors;
+
+            var options_button = generateOptionsButton();
             var delete_button = generateDeleteButton(segment_id);
             var edit_button = generateEditButton(segment_id);
 
             var segmentRow = $(document.createElement("tr"))
-                .data("segment", data[i])
-                .append($('<td class="vert-align">' + start_time + '</td>')).append($('<td class="vert-align">' + name + '</td>')).append($('<td class="vert-align">')
+                .data("segment", segment)
+                .data("errors", errors)
+                .append($('<td class="vert-align">' + start_time + '</td>'))
+                .append($('<td class="vert-align">' + name + '</td>'))
+                .append($('<td class="vert-align">')
                 .append($('<div class="dropdown">')
-                    .append($('<button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">')
-                        .append($('<span class="glyphicon glyphicon-option-vertical" aria-hidden="true">')))
+                    .append(options_button)
                     .append($('<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">')
                         .append(edit_button).append(delete_button))));
 
