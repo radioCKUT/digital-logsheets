@@ -65,7 +65,7 @@
 
         <div class="form-group row name_group" style="display:none;">
             <div class="col-md-9">
-                <label for="name_input{$idSuffix}" class="control-label name_label">Name:</label>
+                <label for="name_input{$idSuffix}" class="control-label name_label">Title:</label>
                 <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}">
             </div>
         </div>
@@ -75,7 +75,7 @@
 
         <div class="form-group row author_group" style="display:none;">
             <div class="col-md-9">
-                <label for="author_input{$idSuffix}" class="control-label">Author:</label>
+                <label for="author_input{$idSuffix}" class="control-label">Artist:</label>
                 <input class="form-control author_input" type="text" name="author" id="author_input{$idSuffix}">
             </div>
         </div>
