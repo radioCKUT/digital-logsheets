@@ -83,7 +83,13 @@ try {
             $segment->setIsCanCon(null);
             $segment->setIsNewRelease(null);
             $segment->setIsFrenchVocalMusic(null);
-            $segment->setAdNumber($adNumber);
+
+            if ($adNumber == "") {
+                $segment->setAdNumber(null);
+            } else {
+                $segment->setAdNumber($adNumber);
+            }
+
             break;
 
         case 4:
