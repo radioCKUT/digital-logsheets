@@ -1,11 +1,11 @@
-<form id="logsheet{$idSuffix}" role="form" method="post" data-toggle="validator">
+<form id="logsheet{$idSuffix}" role="form" method="post" data-toggle="validator" novalidate>
 
     <div id="segments">
         <div id="time_group{$idSuffix}" class="form-group row time_group">
             <div class="col-md-3">
                 <label for="segment_time{$idSuffix}" class="control-label">Time:</label>
                 <input name="segment_time" class="form-control segment_time"
-                       type="time" id="segment_time{$idSuffix}" required>
+                       type="time" id="segment_time{$idSuffix}">
                 <span id="segment_time_help_text{$idSuffix}" class="segment_time_help_text help-block hidden">
                     Segment must fall within episode.
                 </span>
@@ -38,7 +38,7 @@
         <div class="form-group row name_group" style="display:none;">
             <div class="col-md-9">
                 <label for="name_input{$idSuffix}" class="control-label name_label">Name:</label>
-                <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}" required>
+                <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}">
             </div>
         </div>
 
