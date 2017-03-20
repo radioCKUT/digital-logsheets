@@ -50,8 +50,6 @@ class SegmentValidator {
     public function isSegmentValidForDraftSave() {
         $errors = new SaveSegmentErrors();
 
-
-
         return $errors;
     }
 

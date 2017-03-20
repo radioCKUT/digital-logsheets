@@ -62,6 +62,7 @@ function getFormSubmissionArray($episode, $duration) {
 
 /**
  * @param Episode episode
+ * @return String
  */
 function getSegmentListWithErrors($episode) {
     $segments = $episode->getSegments();
@@ -73,7 +74,7 @@ function getSegmentListWithErrors($episode) {
 
         $segmentWithError = array(
             'segment' => $segment->getObjectAsArray(),
-            'errors' => $errors
+            'errors' => $errors->getAllErrors()
         );
 
         $segmentsWithErrorContainers[] = $segmentWithError;
