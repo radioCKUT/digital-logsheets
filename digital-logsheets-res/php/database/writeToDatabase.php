@@ -59,7 +59,15 @@ class writeToDatabase {
 
                 $query = "UPDATE " . $tableName . " SET ";
                     for ($i = 0; $i < count($columnNames); $i++) {
-                        $query .= $columnNames[$i] . "=" . "'" . $valuesToWrite[$i] . "'";
+                        $query .= $columnNames[$i] . "=";
+
+                        $valueToWrite = $valuesToWrite[$i];
+                        if (is_null($valuesToWrite[$i])) {
+                            $query .= "NULL";
+                        } else {
+                            $query .= "'" . $valuesToWrite[$i] . "'";
+                        }
+
 
                         if ($i < count($columnNames) - 1) {
                             $query .= ", \n";
