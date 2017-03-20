@@ -15,16 +15,40 @@
         <div class="form-group">
             <label for="category" class="control-label">Category:</label>
             <div class="btn-group" class="category" id="category" data-toggle="buttons"> {*Need double class attribute for Bootstrap tooltip to work correctly*}
-                <label class="btn btn-primary" onclick="setupCat1Fields()" data-toggle="tooltip" data-placement="bottom" title="All Spoken Word">
-                    <input type="radio" name="category" class="category1" autocomplete="off" required value="1">1</label>
-                <label class="btn btn-primary" onclick="setupCat2Fields()" data-toggle="tooltip" data-placement="bottom" title="General Music">
-                    <input type="radio" name="category" class="category2" autocomplete="off" value="2">2</label>
-                <label class="btn btn-primary" onclick="setupCat3Fields()" data-toggle="tooltip" data-placement="bottom" title="Jazz, Classical, and Traditional Music">
-                    <input type="radio" name="category" class="category3" autocomplete="off" value="3">3</label>
-                <label class="btn btn-primary" onclick="setupCat4Fields()" data-toggle="tooltip" data-placement="bottom" title="Musical Productions (ID's, etc.)">
-                    <input type="radio" name="category" class="category4" autocomplete="off" value="4">4</label>
-                <label class="btn btn-primary" onclick="setupCat5Fields()" data-toggle="tooltip" data-placement="bottom" title="Ads, Promos">
-                    <input type="radio" name="category" class="category5" autocomplete="off" value="5">5</label>
+                <label class="btn btn-primary"
+                       onclick="setupCat1Fields({if $idSuffix == '_edit'} true {else} false {/if})"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="All Spoken Word">
+                    <input type="radio" name="category" class="category1" autocomplete="off" required value="1">1
+                </label>
+
+                <label class="btn btn-primary"
+                       onclick="setupCat2Fields({if $idSuffix == '_edit'} true {else} false {/if})"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="General Music">
+                    <input type="radio" name="category" class="category2" autocomplete="off" value="2">2
+                </label>
+
+                <label class="btn btn-primary"
+                       onclick="setupCat3Fields({if $idSuffix == '_edit'} true {else} false {/if})"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="Jazz, Classical, and Traditional Music">
+                    <input type="radio" name="category" class="category3" autocomplete="off" value="3">3
+                </label>
+
+                <label class="btn btn-primary"
+                       onclick="setupCat4Fields({if $idSuffix == '_edit'} true {else} false {/if})"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="Musical Productions (ID's, etc.)">
+                    <input type="radio" name="category" class="category4" autocomplete="off" value="4">4
+                </label>
+
+                <label class="btn btn-primary"
+                       onclick="setupCat5Fields({if $idSuffix == '_edit'} true {else} false {/if})"
+                       data-toggle="tooltip"  data-placement="bottom"
+                       title="Ads, Promos">
+                    <input type="radio" name="category" class="category5" autocomplete="off" value="5">5
+                </label>
             </div>
         </div>
 
@@ -32,6 +56,10 @@
             <div class="col-md-3">
                 <label for="ad_number_input{$idSuffix}" class="control-label ad_number_label">Ad Number:</label>
                 <input class="form-control" type="number" min="1" step="1" max="300" name="ad_number" id="ad_number_input{$idSuffix}">
+
+                {*<span id="ad_number_help_block" class="help-block hidden">
+                    Please enter an ad number.
+                </span>*}
             </div>
         </div>
 

@@ -27,23 +27,23 @@ function prepareFormForEdit(eventObject) {
     switch (segment_object.category) {
         case 1:
             $('.category1').closest('.btn').button('toggle');
-            setupCat1Fields();
+            setupCat1Fields(false);
             break;
         case 2:
             $('.category2').closest('.btn').button('toggle');
-            setupCat2Fields();
+            setupCat2Fields(false);
             break;
         case 3:
             $('.category3').closest('.btn').button('toggle');
-            setupCat3Fields();
+            setupCat3Fields(false);
             break;
         case 4:
             $('.category4').closest('.btn').button('toggle');
-            setupCat4Fields();
+            setupCat4Fields(false);
             break;
         case 5:
             $('.category5').closest('.btn').button('toggle');
-            setupCat5Fields();
+            setupCat5Fields(false);
             break;
     }
 
@@ -97,14 +97,14 @@ function cancelEdit() {
     resetAllFields();
 
     if ($('.category1').parent().hasClass("active")) {
-        setupCat1Fields()
+        setupCat1Fields(true)
     } else if ($('.category2').parent().hasClass("active")) {
-        setupCat2Fields()
+        setupCat2Fields(true)
     } else if ($('.category3').parent().hasClass("active")) {
-        setupCat3Fields()
+        setupCat3Fields(true)
     } else if ($('.category4').parent().hasClass("active")) {
-        setupCat4Fields()
+        setupCat4Fields(true)
     } else if ($('.category5').parent().hasClass("active")) {
-        setupCat5Fields()
+        setupCat5Fields(true)
     }
 }
