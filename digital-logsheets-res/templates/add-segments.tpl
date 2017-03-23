@@ -149,6 +149,10 @@
             The earliest segment must align with the episode start date/time.
         </span>
 
+        <span id="segment_errors_exist_help_text" class="help-block hidden">
+            Errors exist in the segments below. Please correct them before submitting.
+        </span>
+
         <div class="panel panel-default">
             <div class="panel-heading">Episode Segments</div>
 
