@@ -74,7 +74,19 @@
                     .on('submit', function(e) {
                         if (!verifyPlaylistEpisodeAlignment()) {
                             e.preventDefault();
+
                         }
+
+                        $('#added_segments').find('tbody').find('tr').each(function (i, segment) {
+                            segment = $(segment);
+                            var errors = segment.data("errors");
+
+                            if (isSegmentErroneous(errors)) {
+                                markErroneousSegmentsExist();
+                                e.preventDefault();
+                                return false;
+                            }
+                        });
                     });
         }
 

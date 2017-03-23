@@ -49,6 +49,9 @@ function receiveSegmentsError(jqhxr, textStatus, errorThrown) {
     // TODO: proper error notification
 }
 
+
+
+
 function receiveSegmentsSuccess(data) {
     if (data.hasOwnProperty("error")) {
 
@@ -89,23 +92,11 @@ function receiveSegmentsSuccess(data) {
             var start_time = segment.startTime;
 
             var errors = segmentAndErrors.errors;
-            var isSegmentErroneous = false;
-
-            var errorsKeys = Object.keys(errors);
-
-            for (var errorsIndex = 0; errorsIndex < errorsKeys.length; errorsIndex++) {
-                if (errors[errorsKeys[errorsIndex]]) {
-                    isSegmentErroneous = true;
-                    break;
-                }
-            }
-
+            var tableRowElem = isSegmentErroneous(errors) ? "<tr class='erroneous_segment'>" : "<tr>";
 
             var options_button = generateOptionsButton();
             var delete_button = generateDeleteButton(segment_id);
             var edit_button = generateEditButton(segment_id);
-
-            var tableRowElem = isSegmentErroneous ? "<tr class='erroneous_segment'>" : "<tr>";
 
 
             var segmentRow = $(tableRowElem)

@@ -39,6 +39,18 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
 }
 
 
+function isSegmentErroneous(errors) {
+    var errorsKeys = Object.keys(errors);
+
+    for (var errorsIndex = 0; errorsIndex < errorsKeys.length; errorsIndex++) {
+        if (errors[errorsKeys[errorsIndex]]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 
 
 

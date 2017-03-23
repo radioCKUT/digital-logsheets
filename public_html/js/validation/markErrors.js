@@ -188,6 +188,18 @@ function markFirstSegmentAtEpisodeStart() {
 
 
 
+function markErroneousSegmentsExist() {
+    console.error('in mark Erroneous');
+    $('#segment_errors_exist_help_text').removeClass('hidden');
+}
+
+function markNoErroneousSegmentsExist() {
+    $('#segment_errors_exist_help_text').addClass('hidden');
+}
+
+
+
+
 
 function markFieldError(formGroup, helpBlock) {
     formGroup.addClass("has-error");
