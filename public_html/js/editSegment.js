@@ -68,28 +68,56 @@ function prepareFormForEdit(eventObject) {
 
     if (errors.missingCategory || errors.categoryInvalidFormat) {
         markFieldError($('.category_group_edit'), $('#category_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.category_group_edit'), $('#category_help_block_edit'))
     }
 
     if (errors.missingAlbum) {
         markFieldError($('.album_group_edit'), $('#album_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.album_group_edit'), $('#album_help_block_edit'));
     }
 
     if (errors.missingAuthor) {
         markFieldError($('.author_group_edit'), $('#author_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.author_group_edit'), $('#author_help_block_edit'));
     }
 
     if (errors.missingName) {
         markFieldError($('.name_group_edit'), $('#name_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.name_group_edit'), $('#name_help_block_edit'));
     }
 
     if (errors.missingAdNumber || errors.invalidAdNumber) {
         markFieldError($('.ad_number_group_edit'), $('#ad_number_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.ad_number_group_edit'), $('#ad_number_help_block_edit'))
     }
 
+
+
+
+    var timeGroupEdit = $('.time_group_edit');
+
     if (errors.missingStartTime || errors.startTimeInvalidFormat) {
-        markFieldError($('.time_group_edit'), $('#missing_segment_time_help_block_edit'));
+        markFieldCorrect(timeGroupEdit, $('#segment_time_out_of_bounds_help_text_edit'));
+        markFieldError(timeGroupEdit, $('#missing_segment_time_help_block_edit'));
+
+
     } else if (errors.outOfEpisodeBounds) {
-        markFieldError($('.time_group_edit'), $('#segment_time_out_of_bounds_help_text_edit'));
+        markFieldCorrect(timeGroupEdit, $('#missing_segment_time_help_block_edit'));
+        markFieldError(timeGroupEdit, $('#segment_time_out_of_bounds_help_text_edit'));
+
+    } else {
+        markFieldCorrect(timeGroupEdit, $('#missing_segment_time_help_block_edit'));
+        markFieldCorrect(timeGroupEdit, $('#segment_time_out_of_bounds_help_text_edit'))
     }
 
 
