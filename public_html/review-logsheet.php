@@ -45,11 +45,29 @@ try {
     $playlistErrors = $playlistValidator->checkFinalSaveValidity();
 
     if ($playlistErrors->doErrorsExist()) {
-        error_log('Playlist invalid!');
         $playlistErrorsAsQuery = http_build_query(array('formErrors' => $playlistErrors->getAllErrors()));
         header('Location: add-segments.php?' . $playlistErrorsAsQuery);
         exit();
     }
+
+/*    $episodeValidator = new EpisodeValidator($episode);
+    $episodeErrors = $episodeValidator->checkFinalSaveValidity();*/
+
+    $segments = $episode->getSegments();
+    foreach ($segment as $segments) {
+        $segmentValidator = new SegmentValidator($segment, $episode);
+        $segmentErrors = $segmentValidator->isSegmentValidForFinalSave();
+
+        if ($segmentErrors->doErrorsExist()) {
+            $formErrorsArray = array('formErrors' => array('erroneousSegmentsExist' => true));
+            $errorAsQuery = http_build_query($formErrorsArray);
+            header('Location: add-segments.php?' . $errorAsQuery);
+            exit();
+        }
+    }
+
+
+
 
     $segments = $episode->getSegments();
     $episodeEndTime = $episode->getEndTime();
