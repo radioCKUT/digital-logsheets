@@ -41,25 +41,13 @@ $notes = $_POST['notes'];
 
 session_start();
 
+
+
 try {
     $db = connectToDatabase();
 
-    $episodeObject = new Episode($db, null);
-
-    $episodeObject->setProgram(new Program($db, $programId));
-    $episodeObject->setProgrammer($programmer);
-
-    $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
-    $episodeObject->setStartTime($episodeStartTime);
-
-    $episodeEndTime = getDateTimeFromDateTimeString($episodeEndTime);
-    $episodeObject->setEndTime($episodeEndTime);
-
-    $episodeObject->setIsPrerecord($prerecord);
-    $prerecordDate = getDateTimeFromDateString($prerecordDate);
-    $episodeObject->setPrerecordDate($prerecordDate);
-
-    $episodeObject->setNotes($notes);
+    $episodeObject = fillEpisodeObject($db, $programId, $programmer, $episodeStartTime,
+        $episodeEndTime, $prerecord, $prerecordDate, $notes);
 
     $episodeValidator = new EpisodeValidator($episodeObject);
     $episodeErrors = $episodeValidator->checkDraftSaveValidity();
@@ -70,7 +58,7 @@ try {
 
         $formErrors = $episodeErrors->getAllErrors();
 
-        $formSubmission = getFormSubmissionArray($episodeObject, $episodeDurationHours);
+        $formSubmission = getFormSubmissionArray($episodeObject);
 
         $episodeErrorsAsQuery = http_build_query(array(
             'formErrors' => $formErrors,
@@ -110,6 +98,39 @@ function getDateTimeFromDateString($dateString) {
     }
 }
 
+
+
+/**
+ * @param $db
+ * @param $programId
+ * @param $programmer
+ * @param $episodeStartTime
+ * @param $episodeEndTime
+ * @param $prerecord
+ * @param $prerecordDate
+ * @param $notes
+ * @return Episode
+ */
+function fillEpisodeObject($db, $programId, $programmer, $episodeStartTime, $episodeEndTime, $prerecord, $prerecordDate, $notes) {
+    $episodeObject = new Episode($db, null);
+
+    $episodeObject->setProgram(new Program($db, $programId));
+    $episodeObject->setProgrammer($programmer);
+
+    $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
+    $episodeObject->setStartTime($episodeStartTime);
+
+    $episodeEndTime = getDateTimeFromDateTimeString($episodeEndTime);
+    $episodeObject->setEndTime($episodeEndTime);
+
+    $episodeObject->setIsPrerecord($prerecord);
+    $prerecordDate = getDateTimeFromDateString($prerecordDate);
+    $episodeObject->setPrerecordDate($prerecordDate);
+
+    $episodeObject->setNotes($notes);
+    return $episodeObject;
+}
+
 function getDateTimeFromDateTimeString($dateString) {
     $d = new DateTime($dateString);
     //$d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
@@ -135,6 +156,8 @@ function computeEpisodeEndTime($episodeStartTime, $episodeDurationHours) {
 
     return $episodeEndTime;
 }
+
+
 
 
 

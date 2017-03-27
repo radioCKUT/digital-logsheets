@@ -45,14 +45,13 @@ function getSelect2ProgramsList($db) {
  * @param int $duration
  * @return array
  */
-function getFormSubmissionArray($episode, $duration) {
+function getFormSubmissionArray($episode) {
 
     return array(
         'programmer' => $episode->getProgrammer(),
         'programId' => $episode->getProgram()->getId(),
         'programName' => $episode->getProgram()->getName(),
         'startDatetime' => formatDatetimeForHTML($episode->getStartTime()),
-        'duration' => $duration,
         'endDatetime' => formatDatetimeForHTML($episode->getEndTime()),
         'prerecord' => $episode->isPrerecord(),
         'prerecordDate' => formatDateForHTML($episode->getPrerecordDate()),

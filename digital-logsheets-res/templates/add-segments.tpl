@@ -147,7 +147,7 @@
 
         <form action="new-logsheet.php" method="get">
             <input type="hidden" name="draftEpisodeId" value="{$episode.id}"/>
-            <input type="submit" value="Back to Add Segments"/>
+            <input type="submit" value="Back to Review Episode"/>
         </form>
     </div>
 
