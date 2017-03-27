@@ -156,8 +156,8 @@
             The earliest segment must align with the episode start date/time.
         </span>
 
-        <span id="segment_errors_exist_help_text" class="help-block hidden">
-            Errors exist in the segments below. Please correct them before submitting.
+        <span id="segment_errors_exist_help_text" class="help-block{if !isset($formErrors.erroneousSegmentsExist)} hidden{/if}">
+            Errors exist in the highlighted segments below. Please correct them before proceeding to the final review.
         </span>
 
         <div class="panel panel-default">
