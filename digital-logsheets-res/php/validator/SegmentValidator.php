@@ -66,10 +66,8 @@ class SegmentValidator {
         $this->isStartTimeDataAValidTime($errors);
         $this->isStartTimeWithinEpisodeBounds($errors);
         $this->areRequiredCategoryFieldsPresent($errors);
-        // TODO: check for Segment duration
 
         return $errors;
-
     }
 
     /**
