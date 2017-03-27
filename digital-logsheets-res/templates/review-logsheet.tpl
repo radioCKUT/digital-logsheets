@@ -36,6 +36,10 @@
         <input type="submit"/>
     </form>
 
+    <form action="add-segments.php">
+        <input type="submit" name="Back to Add Segments"/>
+    </form>
+
 </div>
 
 

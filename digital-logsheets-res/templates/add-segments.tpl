@@ -142,7 +142,12 @@
 
         <form id="finalize" role="form" action="review-logsheet.php" method="post" onsubmit="">
             <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
-            <input type="submit" value="Submit All">
+            <input type="submit" value="Final Review">
+        </form>
+
+        <form action="new-logsheet.php" method="get">
+            <input type="hidden" name="draftEpisodeId" value="{$episode.id}"/>
+            <input type="submit" value="Back to Add Segments"/>
         </form>
     </div>
 
