@@ -62,7 +62,7 @@ include_once("readFromDatabase.php");
 
             if (($aStartTime == null && $bStartTime == null) || $aStartTime == $bStartTime) {
                 return ($a->getId() > $b->getId());
-                
+
             } else {
                 return ($aStartTime > $bStartTime);
             }
