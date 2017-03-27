@@ -77,6 +77,7 @@ $draftEpisodeId = $_GET['draftEpisodeId'];
             $draftEpisode = new Episode($db, $draftEpisodeId);
             $draftEpisodeArray = getFormSubmissionArray($draftEpisode);
             $smarty->assign("formSubmission", $draftEpisodeArray);
+            $smarty->assign("existingEpisode", $draftEpisodeId);
         }
 
 

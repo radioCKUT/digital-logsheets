@@ -92,6 +92,10 @@
     <form id="logsheet" role="form" action="save-episode.php" method="post">
         <h4>Episode Metadata</h4>
 
+        {if $existingEpisode}
+            <input type="hidden" name="existingEpisode" value="{$existingEpisode}"/>
+        {/if}
+
             {if $formErrors.missingProgrammer}
                 {assign var="programmerError" value=true}
             {else}
