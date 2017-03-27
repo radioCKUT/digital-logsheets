@@ -54,7 +54,8 @@ try {
     $episodeErrors = $episodeValidator->checkFinalSaveValidity();*/
 
     $segments = $episode->getSegments();
-    foreach ($segment as $segments) {
+
+    foreach ($segments as $segment) {
         $segmentValidator = new SegmentValidator($segment, $episode);
         $segmentErrors = $segmentValidator->isSegmentValidForFinalSave();
 
