@@ -51,9 +51,9 @@
                 var logsheetForm = $(e.delegateTarget);
                 var timeGroup = logsheetForm.find('.time_group');
 
-                if (verifySegmentStartTime(timeGroup, episode)) {
+                //if (verifySegmentStartTime(timeGroup, episode)) {
                     createSegment();
-                }
+                //}
             });
 
             var logsheetEdit = $('#logsheet_edit');
@@ -63,9 +63,9 @@
                 var logsheetForm = $(e.delegateTarget);
                 var timeGroup = logsheetForm.find('.time_group');
 
-                if (verifySegmentStartTime(timeGroup, episode)) {
+                //if (verifySegmentStartTime(timeGroup, episode)) {
                     editEpisodeSegment();
-                }
+                //}
             });
 
             logsheetEdit.hide();
@@ -86,6 +86,8 @@
                                 e.preventDefault();
                                 return false;
                             }
+
+                            markNoErroneousSegmentsExist();
                         });
                     });
         }
