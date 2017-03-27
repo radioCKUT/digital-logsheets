@@ -29,3 +29,11 @@
 .erroneous_segment {
     background-color: orange;
 }
+
+.forward_form {
+    float: right;
+}
+
+.backward_form {
+    float: left;
+}

@@ -140,16 +140,21 @@
         {include file='./segment-form.tpl' idSuffix=''}
         {include file='./segment-form.tpl' idSuffix='_edit'}
 
-        <form id="finalize" role="form" action="review-logsheet.php" method="post" onsubmit="">
+        <br />
+
+        <form id="finalize" class="forward_form" role="form" action="review-logsheet.php" method="post" onsubmit="">
             <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
             <input type="submit" value="Final Review">
         </form>
 
-        <form action="new-logsheet.php" method="get">
+        <form class="backward_form" action="new-logsheet.php" method="get">
             <input type="hidden" name="draftEpisodeId" value="{$episode.id}"/>
-            <input type="submit" value="Back to Review Episode"/>
+            <input type="submit" value="Back to Episode Metadata"/>
         </form>
     </div>
+
+    <br />
+    <br />
 
     <div class="col-md-4">
         <span id="playlist_not_aligned_help_text" class="help-block{if !isset($formErrors.noAlignmentWithEpisodeStart)} hidden{/if}">

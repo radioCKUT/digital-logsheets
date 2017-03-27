@@ -32,12 +32,12 @@
 
     {include './logsheet-template.tpl'}
 
-    <form action="save-submission.php">
+    <form class="forward_form" action="save-submission.php">
         <input type="submit"/>
     </form>
 
-    <form action="add-segments.php">
-        <input type="submit" name="Back to Add Segments"/>
+    <form class="backward_form" action="add-segments.php">
+        <input type="submit" value="Back to Add Segments"/>
     </form>
 
 </div>
