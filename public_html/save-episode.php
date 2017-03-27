@@ -27,8 +27,7 @@ require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
 require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
 
-$firstName = $_POST['first_name'];
-$lastName = $_POST['last_name'];
+
 $programId = intval($_POST['program']);
 
 $programmer = $_POST['programmer'];
@@ -39,6 +38,9 @@ $episodeStartTime = $_POST['start_datetime'];
 $episodeEndTime = $_POST['end_datetime'];
 $notes = $_POST['notes'];
 
+$isExistingEpisode = isset($_POST['existingEpisode']);
+$existingEpisodeId = $_POST['existingEpisode'];
+
 session_start();
 
 
@@ -46,13 +48,22 @@ session_start();
 try {
     $db = connectToDatabase();
 
-    $episodeObject = fillEpisodeObject($db, $programId, $programmer, $episodeStartTime,
-        $episodeEndTime, $prerecord, $prerecordDate, $notes);
+    if ($isExistingEpisode) {
+        $episodeObject = new Episode($db, $existingEpisodeId);
+    } else {
+        $episodeObject = new Episode($db, null);
+    }
+
+    $episodeObject = fillEpisodeObject($db, $episodeObject, $programId, $programmer,
+        $episodeStartTime, $episodeEndTime, $prerecord, $prerecordDate, $notes);
+
+    error_log("episode object: " . print_r($episodeObject, true));
 
     $episodeValidator = new EpisodeValidator($episodeObject);
     $episodeErrors = $episodeValidator->checkDraftSaveValidity();
 
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
+
     if ($doEpisodeErrorsExist) {
         error_log("Errors exist in episode: " . print_r($episodeErrors, true) . print_r($episodeObject->getObjectAsArray(), true));
 
@@ -68,8 +79,11 @@ try {
         header('Location: new-logsheet.php?' . $episodeErrorsAsQuery);
         exit();
 
+    } else if ($isExistingEpisode) {
+        manageEpisodeEntries::editEpisode($db, $episodeObject);
+        header('Location: add-segments.php');
+
     } else {
-        error_log("Episode is valid!");
         $playlistId = managePlaylistEntries::createNewPlaylist($db);
         $episodeObject->setPlaylist(new Playlist($db, $playlistId));
 
@@ -102,6 +116,7 @@ function getDateTimeFromDateString($dateString) {
 
 /**
  * @param $db
+ * @param Episode $episodeObject
  * @param $programId
  * @param $programmer
  * @param $episodeStartTime
@@ -111,8 +126,7 @@ function getDateTimeFromDateString($dateString) {
  * @param $notes
  * @return Episode
  */
-function fillEpisodeObject($db, $programId, $programmer, $episodeStartTime, $episodeEndTime, $prerecord, $prerecordDate, $notes) {
-    $episodeObject = new Episode($db, null);
+function fillEpisodeObject($db, $episodeObject, $programId, $programmer, $episodeStartTime, $episodeEndTime, $prerecord, $prerecordDate, $notes) {
 
     $episodeObject->setProgram(new Program($db, $programId));
     $episodeObject->setProgrammer($programmer);
