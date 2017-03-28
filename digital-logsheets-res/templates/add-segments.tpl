@@ -127,7 +127,7 @@
 </head>
 <body onload="init()">
 <div class="container-fluid">
-    <div class="col-md-8">
+    <div class="col-md-7">
 
         <h3>Add Segments</h3>
 
@@ -156,7 +156,7 @@
     <br />
     <br />
 
-    <div class="col-md-4">
+    <div class="col-md-5">
         <span id="playlist_not_aligned_help_text" class="help-block{if !isset($formErrors.noAlignmentWithEpisodeStart)} hidden{/if}">
             The earliest segment must align with the episode start date/time.
         </span>
@@ -170,14 +170,16 @@
 
             <table class="table table-hover" id="added_segments">
                 <colgroup>
-                    <col />
-                    <col id="start_time_column"/>
+                    <col id="start_time_column" />
+                    <col span="3"/>
                     <col />
                 </colgroup>
                 <thead>
                     <tr>
                         <th>Time</th>
-                        <th>Name</th>
+                        <th colspan="3">Description</th>
+                        <th>Category</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

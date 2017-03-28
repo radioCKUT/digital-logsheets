@@ -18,6 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+const MAX_STRING_LENGTH = 10;
+
 function getEpisodeSegments() {
     $.ajax({
         type: "POST",
@@ -49,6 +51,13 @@ function receiveSegmentsError(jqhxr, textStatus, errorThrown) {
     // TODO: proper error notification
 }
 
+function getAbbreviatedString(str) {
+    if (str && str.length > MAX_STRING_LENGTH) {
+        return str.substring(0, MAX_STRING_LENGTH) + '...';
+    }
+
+    return str;
+}
 
 
 
@@ -88,8 +97,13 @@ function receiveSegmentsSuccess(data) {
 
             var segment = segmentAndErrors.segment;
             var segment_id = segment.id;
-            var name = segment.name;
             var start_time = segment.startTime;
+
+            var name = getAbbreviatedString(segment.name);
+            var album = getAbbreviatedString(segment.album);
+            var author = getAbbreviatedString(segment.author);
+
+
 
             var errors = segmentAndErrors.errors;
             var tableRowElem = isSegmentErroneous(errors) ? "<tr class='erroneous_segment'>" : "<tr>";
@@ -102,10 +116,23 @@ function receiveSegmentsSuccess(data) {
             var segmentRow = $(tableRowElem)
                 .data("segment", segment)
                 .data("errors", errors)
-                .append($('<td class="vert-align">' + start_time + '</td>'))
-                .append($('<td class="vert-align">' + name + '</td>'))
+                .append($('<td class="vert-align">' + start_time + '</td>'));
+
+            if (segment.category == 2 || segment.category == 3) {
+                segmentRow.append($('<td class="vert-align">' + name + '</td>'))
+                    .append($('<td class="vert-align">' + album + '</td>'))
+                    .append($('<td class="vert-align">' + author + '</td>'));
+
+            } else if (segment.category == 5) {
+                segmentRow.append($('<td class="vert-align" colspan="3">' + 'Ad #' + segment.adNumber + '</td>'));
+
+            } else {
+                segmentRow.append($('<td class="vert-align" colspan="3">' + name + '</td>'));
+            }
+
+            segmentRow.append($('<td class="vert-align">' + segment.category + '</td>'))
                 .append($('<td class="vert-align">')
-                .append($('<div class="dropdown">')
+                    .append($('<div class="dropdown">')
                     .append(options_button)
                     .append($('<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">')
                         .append(edit_button).append(delete_button))));
