@@ -20,11 +20,11 @@
  */
 
     //----INCLUDE FILES----
-    include_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
-    include_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
-    include_once("../../digital-logsheets-res/php/database/manageCategoryEntries.php");
-    include_once("../../digital-logsheets-res/php/database/manageProgramEntries.php");
-    require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
+    include_once("../digital-logsheets-res/smarty/libs/Smarty.class.php");
+    include_once("../digital-logsheets-res/php/database/connectToDatabase.php");
+    include_once("../digital-logsheets-res/php/database/manageCategoryEntries.php");
+    include_once("../digital-logsheets-res/php/database/manageProgramEntries.php");
+    require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 
     // create object
     $smarty = new Smarty;
@@ -56,7 +56,7 @@ $formErrors = $_GET['formErrors'];
         //close database connection
         $db = NULL;
 
-        echo $smarty->fetch('../../digital-logsheets-res/templates/add-segments.tpl');
+        echo $smarty->fetch('../digital-logsheets-res/templates/add-segments.tpl');
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }

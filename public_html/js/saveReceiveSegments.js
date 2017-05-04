@@ -78,7 +78,9 @@ function receiveSegmentsSuccess(data) {
 
         var addedSegments = $('#added_segments');
         addedSegments.find("tbody").empty();
+        console.error("segment received before initial parse", data);
         data = JSON.parse(data);
+        console.error("segment received after initial parse", data);
 
         $.each(data, function(i, e) {
             var segment = data[i];

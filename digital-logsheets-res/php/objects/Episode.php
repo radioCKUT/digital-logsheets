@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
  */
 
     //TODO: Error checking...
-    require_once(__DIR__ . "../database/manageEpisodeEntries.php");
-    require_once(__DIR__ . "LogsheetComponent.php");
+    require_once(dirname(__FILE__) . "/../database/manageEpisodeEntries.php");
+    require_once("LogsheetComponent.php");
 
     class Episode extends LogsheetComponent {
 
@@ -127,31 +127,7 @@
         }
 
         public function jsonSerialize() {
-            $startDate = $this->getStartTime();
-            $startDateString = $this->prepareDateForSerialize($startDate);
-            $startTimeString = $this->prepareTimeForSerialize($startDate);
-            $startDatetimeString = $this->prepareDateTimeForSerialize($startDate);
-
-            $endDate = $this->getEndTime();
-            $endTimeString = $this->prepareTimeForSerialize($endDate);
-            $endDatetimeString = $this->prepareDateTimeForSerialize($endDate);
-
-            $prerecordDate = $this->getPrerecordDate();
-            $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
-
-            return [
-                'id' => $this->getId(),
-                'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
-                'playlist' => $this->getPlaylistId(),
-                'startDate' => $startDateString,
-                'startTime' => $startTimeString,
-                'endTime' => $endTimeString,
-                'startDatetime' => $startDatetimeString,
-                'endDatetime' => $endDatetimeString,
-                'prerecorded' => $this->isPrerecord() ? "Yes" : "No",
-                'prerecordDate' => $prerecordDateString,
-                'segments' => $this->getSegments()
-            ];
+            return json_encode($this->getObjectAsArray());
         }
 
         /**
@@ -183,7 +159,31 @@
         }
 
         public function getObjectAsArray() {
-            return $this->jsonSerialize();
+            $startDate = $this->getStartTime();
+            $startDateString = $this->prepareDateForSerialize($startDate);
+            $startTimeString = $this->prepareTimeForSerialize($startDate);
+            $startDatetimeString = $this->prepareDateTimeForSerialize($startDate);
+
+            $endDate = $this->getEndTime();
+            $endTimeString = $this->prepareTimeForSerialize($endDate);
+            $endDatetimeString = $this->prepareDateTimeForSerialize($endDate);
+
+            $prerecordDate = $this->getPrerecordDate();
+            $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
+
+            return array(
+                'id' => $this->getId(),
+                'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
+                'playlist' => $this->getPlaylistId(),
+                'startDate' => $startDateString,
+                'startTime' => $startTimeString,
+                'endTime' => $endTimeString,
+                'startDatetime' => $startDatetimeString,
+                'endDatetime' => $endDatetimeString,
+                'prerecorded' => $this->isPrerecord() ? "Yes" : "No",
+                'prerecordDate' => $prerecordDateString,
+                'segments' => $this->getSegments()
+            );
         }
 
         /**

@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once(__DIR__ . "../database/manageSegmentEntries.php");
-    include_once(__DIR__ . "../validator/SegmentValidator.php");
+include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
+    include_once(dirname(__FILE__) . "/../validator/SegmentValidator.php");
 
-    class Segment extends LogsheetComponent implements JsonSerializable{
+    class Segment extends LogsheetComponent {
 
         private $name;
         private $author;
@@ -111,32 +111,11 @@ include_once(__DIR__ . "../database/manageSegmentEntries.php");
             $this->playlistId = $playlistId;
         }
 
-        public function jsonSerialize() {
-            $startDateTime = $this->getStartTime();
-            $startTimeString = $startDateTime->format('H:i');
-
-            return [
-                'id' => $this->getId(),
-                'startTime' => $startTimeString,
-                'name' => $this->getName(),
-                'album' => $this->getAlbum(),
-                'author' => $this->getAuthor(),
-                'duration' => $this->getDuration(),
-                'category' => $this->getCategory(),
-                'canCon' => $this->isCanCon(),
-                'newRelease' => $this->isNewRelease(),
-                'frenchVocalMusic' => $this->isFrenchVocalMusic(),
-                'adNumber' => $this->getAdNumber(),
-                'playlistId' => $this->getPlaylistId(),
-                'stationIdGiven' => $this->wasStationIdGiven()
-            ];
-        }
-
         public function getObjectAsArray() {
             $startDateTime = $this->getStartTime();
             $startTimeString = $startDateTime->format('H:i');
 
-            return [
+            return array(
                 'id' => $this->getId(),
                 'startTime' => $startTimeString,
                 'name' => $this->getName(),
@@ -144,13 +123,13 @@ include_once(__DIR__ . "../database/manageSegmentEntries.php");
                 'author' => $this->getAuthor(),
                 'duration' => $this->getDuration(),
                 'category' => $this->getCategory(),
-                'canCon' => $this->isCanCon() ? "Yes" : "No",
-                'newRelease' => $this->isNewRelease() ? "Yes" : "No",
-                'frenchVocalMusic' => $this->isFrenchVocalMusic() ? "Yes" : "No",
+                'canCon' => $this->isCanCon() ? true : false,
+                'newRelease' => $this->isNewRelease() ? true : false,
+                'frenchVocalMusic' => $this->isFrenchVocalMusic() ? true : false,
                 'adNumber' => $this->getAdNumber(),
                 'playlistId' => $this->getPlaylistId(),
-                'stationIdGiven' => $this->wasStationIdGiven() ? "Yes" : "No"
-            ];
+                'stationIdGiven' => $this->wasStationIdGiven() ? true : false
+            );
         }
 
         

@@ -19,12 +19,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
-require_once("../../digital-logsheets-res/php/database/manageSegmentEntries.php");
-require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
-require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
-require_once("../../digital-logsheets-res/php/validator/PlaylistValidator.php");
-require_once("../../digital-logsheets-res/php/validator/errorContainers/SavePlaylistErrors.php");
+require_once("../digital-logsheets-res/smarty/libs/Smarty.class.php");
+require_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
+require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
+require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
+require_once("../digital-logsheets-res/php/validator/PlaylistValidator.php");
+require_once("../digital-logsheets-res/php/validator/errorContainers/SavePlaylistErrors.php");
 
 // create object
 $smarty = new Smarty;
@@ -77,7 +77,7 @@ try {
 
 
     // display it
-    echo $smarty->fetch('../../digital-logsheets-res/templates/review-logsheet.tpl');
+    echo $smarty->fetch('../digital-logsheets-res/templates/review-logsheet.tpl');
 } catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }

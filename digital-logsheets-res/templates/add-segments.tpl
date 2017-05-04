@@ -123,8 +123,8 @@
         End Date/Time: {$episode.endDatetime} <br/> <br/>
 
 
-        {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix=''}
-        {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix='_edit'}
+        {include file='./segment-form.tpl' idSuffix=''}
+        {include file='./segment-form.tpl' idSuffix='_edit'}
 
         <form id="finalize" role="form" action="review-logsheet.php" method="post" onsubmit="">
             <input type="hidden" name="episode_id" value={$episode.id|json_encode}>

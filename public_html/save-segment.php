@@ -19,10 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
-require_once("../../digital-logsheets-res/php/objects/Episode.php");
-require_once("../../digital-logsheets-res/php/validator/SegmentValidator.php");
-require_once("../../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
+require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
+require_once("../digital-logsheets-res/php/objects/Episode.php");
+require_once("../digital-logsheets-res/php/validator/SegmentValidator.php");
+require_once("../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
 
 $episodeId = $_POST['episode_id'];
 

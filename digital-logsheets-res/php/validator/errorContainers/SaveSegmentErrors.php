@@ -1,9 +1,9 @@
 <?php
 /**
- * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
+ * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.    
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ require_once('ErrorsContainer.php');
     class SaveSegmentErrors extends ErrorsContainer {
 
         public function __constructor() {
-            $this->errors = [
+            $this->errors = array(
                 'missingCategory' => false,
                 'categoryInvalidFormat' => false,
                 'missingAlbum' => false,
@@ -35,7 +35,7 @@ require_once('ErrorsContainer.php');
                 'startTimeInvalidFormat' => false,
                 'outOfEpisodeBounds' => false,
                 'invalidAdNumber' => false
-            ];
+            );
         }
 
         public function markCategoryMissing() {

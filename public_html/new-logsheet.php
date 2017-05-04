@@ -20,12 +20,12 @@
  */
 
     //----INCLUDE FILES----
-    require_once("../../digital-logsheets-res/smarty/libs/Smarty.class.php");
-    require_once("../../digital-logsheets-res/php/database/connectToDatabase.php");
-    require_once("../../digital-logsheets-res/php/database/manageCategoryEntries.php");
-    require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
-    require_once("../../digital-logsheets-res/php/DataPreparationForUI.php");
-require_once("../../digital-logsheets-res/php/validator/EpisodeValidator.php");
+    require_once("../digital-logsheets-res/smarty/libs/Smarty.class.php");
+    require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
+    require_once("../digital-logsheets-res/php/database/manageCategoryEntries.php");
+    require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
+    require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
+require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
     
     // create object
     $smarty = new Smarty;
@@ -83,7 +83,7 @@ $draftEpisodeId = $_GET['draftEpisodeId'];
         //close database connection
         $db = NULL;
 
-        echo $smarty->fetch('../../digital-logsheets-res/templates/new-logsheet.tpl');
+        echo $smarty->fetch('../digital-logsheets-res/templates/new-logsheet.tpl');
 
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();

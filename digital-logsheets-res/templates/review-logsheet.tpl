@@ -30,7 +30,7 @@
 <div class="container-fluid">
     <h1>Review Submission</h1>
 
-    {include '../../digital-logsheets-res/templates/logsheet-template.tpl'}
+    {include './logsheet-template.tpl'}
 
     <form action="save-submission.php">
         <input type="submit"/>

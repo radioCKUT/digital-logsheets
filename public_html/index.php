@@ -20,10 +20,10 @@
  */
 
     //----INCLUDE FILES----
-    include('../../digital-logsheets-res/smarty/libs/Smarty.class.php');
-    include("../../digital-logsheets-res/php/database/connectToDatabase.php");
-    require_once("../../digital-logsheets-res/php/objects/logsheetClasses.php");
-    require_once("../../digital-logsheets-res/php/DataPreparationForUI.php");
+    include('../digital-logsheets-res/smarty/libs/Smarty.class.php');
+    include("../digital-logsheets-res/php/database/connectToDatabase.php");
+    require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
+    require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
     
     // create object
     $smarty = new Smarty;
@@ -44,10 +44,12 @@
             $segments = $episode->getPlaylist()->getSegments();
             
             //create the playlist for each episode
-            foreach($segments as $segment) {
-                $playlist[$segment->getId()] = $segment->getObjectAsArray();
+            if (is_array($segments) || is_object($segments)) {
+                foreach($segments as $segment) {
+                    $playlist[$segment->getId()] = $segment->getObjectAsArray();
+                }
             }
-            
+
             //create an array to store each episode's data
             $episodes[$episode->getId()] = $episode->getObjectAsArray();
         }
@@ -61,7 +63,7 @@
         $smarty->assign("programs", $programs);
 
         // display it
-        echo $smarty->fetch('../../digital-logsheets-res/templates/index.tpl');
+        echo $smarty->fetch('../digital-logsheets-res/templates/index.tpl');
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }

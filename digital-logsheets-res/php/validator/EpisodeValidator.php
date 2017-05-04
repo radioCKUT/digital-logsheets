@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,16 +64,16 @@ class EpisodeValidator {
 
     public static function getEpisodeEarlyLimit() {
         $episodeEarlyLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
-        $episodeEarlyLimit->sub(new DateInterval('P' . self::AIR_BEFORE_CURRENT_DATE_LIMIT_DAYS . 'D'));
+        $episodeEarlyLimit->modify('-' . self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS . ' days');
 
         return $episodeEarlyLimit;
     }
 
     public static function getEpisodeLateLimit() {
-        $episodeEarlyLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
-        $episodeEarlyLimit->add(new DateInterval('P' . self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS . 'D'));
+        $episodeLateLimit = new DateTime('now', new DateTimeZone('America/Montreal'));
+        $episodeLateLimit->modify('+' . self::AIR_AFTER_CURRENT_DATE_LIMIT_DAYS . ' days');
 
-        return $episodeEarlyLimit;
+        return $episodeLateLimit;
     }
 
     public static function getPrerecordDateEarlyDaysLimit() {
@@ -141,22 +141,9 @@ class EpisodeValidator {
             return;
         }
 
-        $episodeInterval = $endTime->diff($startTime);
-
-        $episodeLengthInHours = null;
-        $episodeIntervalDaysComponent = $episodeInterval->days;
-        $episodeIntervalHoursComponent = $episodeInterval->h;
-        $episodeIntervalMinutesComponent = $episodeInterval->i;
-
-        if ($episodeIntervalDaysComponent != false && $episodeIntervalDaysComponent > 0) {
-            $episodeLengthInHours =  ($episodeIntervalDaysComponent * 24) +
-                $episodeIntervalHoursComponent +
-                ($episodeIntervalMinutesComponent / 60);
-
-        } else {
-            $episodeLengthInHours = $episodeIntervalHoursComponent +
-                ($episodeIntervalMinutesComponent / 60);
-        }
+        $startTime = $startTime->format('U');
+        $endTime = $endTime->format('U');
+        $episodeLengthInHours = ($endTime - $startTime) / (60*60);
 
         if ($episodeLengthInHours > self::EPISODE_MAX_LENGTH_HOURS) {
             $errorsContainer->markTooLong();
@@ -223,17 +210,10 @@ class EpisodeValidator {
      * @return int
      */
     private function getDayDifferenceFromDate($fromDate, $toDate) {
-        $timeSinceFromDateInterval = $fromDate->diff($toDate);
-        
-        $positiveOrNegativeInterval = $timeSinceFromDateInterval->format('%R');
-        $entireDaysSinceFromDate = $timeSinceFromDateInterval->format('%a');
-        $hoursSinceFromDate = $timeSinceFromDateInterval->format('%h');
-        $minutesSinceFromDate = $timeSinceFromDateInterval->format('%i');
+        $fromDateInMillisecs = $fromDate->format('U');
+        $toDateInMillisecs = $toDate->format('U');
 
-        $daysSinceFromDate = intval($positiveOrNegativeInterval . '1')
-            * (intval($entireDaysSinceFromDate)
-                + intval($hoursSinceFromDate) / 24
-                + intval($minutesSinceFromDate) / (24 * 60));
+        $daysSinceFromDate = ($fromDateInMillisecs - $toDateInMillisecs) / (60*60*24);
 
         return $daysSinceFromDate;
     }
