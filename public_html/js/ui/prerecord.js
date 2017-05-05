@@ -1,9 +1,8 @@
-<?php
-/**
+/*
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2017  Evan Vassallo
- * Copyright (C) 2016-2017  James Wang
+ * Copyright (C) 2015-2016  Evan Vassallo
+ * Copyright (C) 2016  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,30 +18,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('utilities/ValidatorUtility.php');
+$(document).ready(function () {
+    var prerecordInput = $("#prerecord");
+    prerecordInput.change(checkPrerecordInput);
+    checkPrerecordInput(null, prerecordInput[0]);
+});
 
-    class CategoryValidator {
+function checkPrerecordInput(e, element) {
+    var prerecordInput = e ? this : element;
+    var prerecordDate = $("#prerecord_date");
 
-        private $category;
+    if (prerecordInput.checked) {
+        prerecordDate.prop('required', true);
+        prerecordDate.prop('disabled', false);
 
-        public function __construct($category) {
-            $this->category = $category;
-        }
-
-        public function isCategoryValid() {
-            if (ValidatorUtility::isInteger($this->category)) {
-                switch ($this->category) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-
-            return false;
-        }
+    } else {
+        prerecordDate.prop('required', false);
+        prerecordDate.prop('disabled', true);
     }
+}
+
+

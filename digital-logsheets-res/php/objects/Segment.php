@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once(__DIR__ . "/../database/manageSegmentEntries.php");
-    include_once(__DIR__ . "/../validator/SegmentValidator.php");
+include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
+    include_once(dirname(__FILE__) . "/../validator/SegmentValidator.php");
 
-    class Segment extends LogsheetComponent implements JsonSerializable{
+    class Segment extends LogsheetComponent {
 
         private $name;
         private $author;
@@ -36,6 +36,7 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
 
         private $category;
 
+        private $stationIdGiven;
         private $isCanCon;
         private $isNewRelease;
         private $isFrenchVocalMusic;
@@ -46,14 +47,9 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
-            if ($componentId != null) {
-                manageSegmentEntries::getSegmentAttributesFromDatabase($db, $componentId, $this);
+            if ($this->id != null) {
+                manageSegmentEntries::getSegmentAttributesFromDatabase($db, $this->id, $this);
             }
-        }
-
-        public function isValidForDraftSave($episode) {
-            $segmentValidator = new SegmentValidator($this, $episode);
-            return $segmentValidator->isSegmentValidForDraftSave();
         }
 
 
@@ -80,28 +76,30 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
         public function setCategory($category) {
             $this->category = $category;
         }
+        
+        
+        
+        public function setStationIdGiven($stationIdGiven) {
+            $this->stationIdGiven = $this->getBooleanToSet($stationIdGiven);
+        }
 
         public function setIsCanCon($isCanCon) {
-            if (!$isCanCon) {
-                $this->isCanCon = false;
-            } else {
-                $this->isCanCon = true;
-            }
+            $this->isCanCon = $this->getBooleanToSet($isCanCon);
         }
 
         public function setIsNewRelease($isNewRelease) {
-            if (!$isNewRelease) {
-                $this->isNewRelease = false;
-            } else {
-                $this->isNewRelease = true;
-            }
+            $this->isNewRelease = $this->getBooleanToSet($isNewRelease);
         }
 
         public function setIsFrenchVocalMusic($isFrenchVocalMusic) {
-            if (!$isFrenchVocalMusic) {
-                $this->isFrenchVocalMusic = false;
+            $this->isFrenchVocalMusic = $this->getBooleanToSet($isFrenchVocalMusic);
+        }
+
+        private function getBooleanToSet($boolean) {
+            if (!$boolean) {
+                return false;
             } else {
-                $this->isFrenchVocalMusic = true;
+                return true;
             }
         }
 
@@ -113,31 +111,15 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
             $this->playlistId = $playlistId;
         }
 
-        public function jsonSerialize() {
-            $startDateTime = $this->getStartTime();
-            $startTimeString = $startDateTime->format('H:i');
-
-            return [
-                'id' => $this->getId(),
-                'startTime' => $startTimeString,
-                'name' => $this->getName(),
-                'album' => $this->getAlbum(),
-                'author' => $this->getAuthor(),
-                'duration' => $this->getDuration(),
-                'category' => $this->getCategory(),
-                'canCon' => $this->isCanCon(),
-                'newRelease' => $this->isNewRelease(),
-                'frenchVocalMusic' => $this->isFrenchVocalMusic(),
-                'adNumber' => $this->getAdNumber(),
-                'playlistId' => $this->getPlaylistId()
-            ];
-        }
-
         public function getObjectAsArray() {
             $startDateTime = $this->getStartTime();
-            $startTimeString = $startDateTime->format('H:i');
+            
+            $startTimeString = "";
+            if (!is_null($startDateTime)) {
+                $startTimeString = $startDateTime->format('H:i');
+            }
 
-            return [
+            return array(
                 'id' => $this->getId(),
                 'startTime' => $startTimeString,
                 'name' => $this->getName(),
@@ -145,12 +127,13 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
                 'author' => $this->getAuthor(),
                 'duration' => $this->getDuration(),
                 'category' => $this->getCategory(),
-                'canCon' => $this->isCanCon() ? "Yes" : "No",
-                'newRelease' => $this->isNewRelease() ? "Yes" : "No",
-                'frenchVocalMusic' => $this->isFrenchVocalMusic() ? "Yes" : "No",
+                'canCon' => $this->isCanCon() ? true : false,
+                'newRelease' => $this->isNewRelease() ? true : false,
+                'frenchVocalMusic' => $this->isFrenchVocalMusic() ? true : false,
                 'adNumber' => $this->getAdNumber(),
-                'playlistId' => $this->getPlaylistId()
-            ];
+                'playlistId' => $this->getPlaylistId(),
+                'stationIdGiven' => $this->wasStationIdGiven() ? true : false
+            );
         }
 
         
@@ -174,11 +157,19 @@ include_once(__DIR__ . "/../database/manageSegmentEntries.php");
             return $this->duration;
         }
 
+        public function getEndTime() {
+
+        }
+
         /**
          * @return Category
          */
         public function getCategory() {
             return $this->category;
+        }
+
+        public function wasStationIdGiven() {
+            return $this->stationIdGiven;
         }
 
         public function isCanCon() {

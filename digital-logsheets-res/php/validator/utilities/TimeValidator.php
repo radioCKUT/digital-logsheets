@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,9 @@
  */
 
 class TimeValidator {
+
+        const MINUTES_IN_DAY = 1440; // 24 * 60
+
         public static function isTimeInValidFormat($time) {
             $dateTime = DateTime::createFromFormat('H:i', $time);
             if (!$dateTime) {
@@ -61,19 +64,31 @@ class TimeValidator {
             $episodeEndDay = $episodeEndTime->format('N');
 
             if ($episodeStartDay === $episodeEndDay) {
-                if (($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes)
-                    && ($segmentStartTimeInMinutes <= $episodeEndTimeInMinutes)) {
-                    return true;
-                }
+                return self::isSegmentInEpisodeSpanningOneCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes);
 
-            } else if (($segmentStartTimeInMinutes + MINUTES_IN_DAY >= $episodeStartTimeInMinutes
-                    && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes)
-                || ($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes
-                    && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes + MINUTES_IN_DAY)) {
-                return true;
+            } else {
+                return self::isSegmentInEpisodeSpanningTwoCalendarDays($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes);
             }
+        }
 
-            return false;
+        private static function isSegmentInEpisodeSpanningOneCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
+            return (($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes)
+                && ($segmentStartTimeInMinutes <= $episodeEndTimeInMinutes));
+        }
+
+        private static function isSegmentInEpisodeSpanningTwoCalendarDays($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
+            return (self::isSegmentInEpisodesFirstCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes)
+                || self::isSegmentInEpisodesSecondCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes));
+        }
+
+        private static function isSegmentInEpisodesFirstCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
+            return ($segmentStartTimeInMinutes >= $episodeStartTimeInMinutes
+                && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes + self::MINUTES_IN_DAY);
+        }
+
+        private static function isSegmentInEpisodesSecondCalendarDay($segmentStartTimeInMinutes, $episodeStartTimeInMinutes, $episodeEndTimeInMinutes) {
+            return ($segmentStartTimeInMinutes + self::MINUTES_IN_DAY >= $episodeStartTimeInMinutes
+                && $segmentStartTimeInMinutes <= $episodeEndTimeInMinutes);
         }
 
         /**
@@ -82,6 +97,6 @@ class TimeValidator {
          */
         private static function getTimeInMinutesSinceMidnight($dateTime) {
             //TODO: error handling
-            return (((int)$dateTime->format('H')) * 60) + (int)$dateTime->format('i');
+            return (((int) $dateTime->format('H')) * 60) + (int) $dateTime->format('i');
         }
     }

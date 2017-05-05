@@ -17,58 +17,193 @@
 
     <!-- Boostrap JS -->
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+    <script type="text/javascript">
+        function getEpisodeStartTime() {
+            return {$episode.startTime|json_encode};
+        }
+    </script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script type="text/javascript" src="js/htmlValidation/segmentValidation.js"></script>
+    <script type="text/javascript" src="js/validation/markErrors.js"></script>
+    <script type="text/javascript" src="js/validation/segmentValidation.js"></script>
+    <script type="text/javascript" src="js/validation/playlistValidation.js"></script>
     <script type="text/javascript" src="js/deleteSegment.js"></script>
     <script type="text/javascript" src="js/editSegment.js"></script>
     <script type="text/javascript" src="js/ui/segmentOptionsMenu.js"></script>
     <script type="text/javascript" src="js/saveReceiveSegments.js"></script>
     <script type="text/javascript" src="js/ui/categoryButton.js"></script>
-    <script type="text/javascript" src="js/lib/sisyphus.min.js"></script>
-    <script type="text/javascript" src="js/lib/validator.min.js"></script>
     <script type="text/javascript">
-        function startStoringFormEntries() {
+
+        function init() {
+            getEpisodeSegments();
+            setFormOnSubmitBehaviour();
+            setFocusOutBehaviour();
+            setConfirmModalBehaviour();
+            $('[data-toggle="tooltip"]').tooltip();
+        }
+
+
+        function setFormOnSubmitBehaviour() {
+            var episode = {$episode|json_encode};
+
             $('#logsheet').on('submit', function(e) {
                 e.preventDefault();
-                createSegment();
+                var logsheetForm = $(e.delegateTarget);
+                var timeGroup = logsheetForm.find('.time_group');
+
+                //if (verifySegmentStartTime(timeGroup, episode)) {
+                    createSegment();
+                //}
             });
 
             var logsheetEdit = $('#logsheet_edit');
 
             logsheetEdit.on('submit', function(e) {
                 e.preventDefault();
-                editEpisodeSegment();
+                var logsheetForm = $(e.delegateTarget);
+                var timeGroup = logsheetForm.find('.time_group');
+
+                //if (verifySegmentStartTime(timeGroup, episode)) {
+                    editEpisodeSegment();
+                //}
             });
 
-            getEpisodeSegments();
             logsheetEdit.hide();
-            $('form').sisyphus();
+
+            $('#finalize')
+                    .on('submit', function(e) {
+                        if (!verifyPlaylistEpisodeAlignment()) {
+                            e.preventDefault();
+
+                        }
+
+                        $('#added_segments').find('tbody').find('tr').each(function (i, segment) {
+                            segment = $(segment);
+                            var errors = segment.data("errors");
+
+                            if (isSegmentErroneous(errors)) {
+                                markErroneousSegmentsExist();
+                                e.preventDefault();
+                                return false;
+                            }
+
+                            markNoErroneousSegmentsExist();
+                        });
+                    });
+        }
+
+        function setFocusOutBehaviour() {
+            var segmentTimeInput = $('.segment_time');
+
+            segmentTimeInput
+                    .focusout(function(e) {
+                        var segmentTimeField = $(e.delegateTarget);
+                        var timeGroup = segmentTimeField.parent().parent();
+
+                        verifySegmentStartTime(timeGroup,
+                                {$episode|json_encode});
+                    });
+        }
+
+        function setConfirmModalBehaviour() {
+            $('#confirmDeleteModal')
+                .on('show.bs.modal', function (e) {
+                    var deleteSegmentLink = $(e.relatedTarget);
+                    var deleteSegmentRow = deleteSegmentLink.closest("tr");
+
+                    var segmentToDelete = deleteSegmentRow.data("segment");
+                    var segmentIdToDelete = segmentToDelete.id;
+
+                    var confirmDeleteButton = $("#confirmDeleteButton");
+
+                    confirmDeleteButton.click(function (e) {
+                        e.preventDefault();
+                        deleteEpisodeSegment(segmentIdToDelete);
+                        $('#confirmDeleteModal').modal('hide');
+                    });
+                });
         }
     </script>
 </head>
-<body onload="startStoringFormEntries()">
+<body onload="init()">
 <div class="container-fluid">
-    <div class="col-md-8">
-        <h3>Add Segments</h3>
-        {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix=''}
-        {include file='../../digital-logsheets-res/templates/segment-form.tpl' idSuffix='_edit'}
+    <div class="col-md-7">
 
-        <form id="finalize" role="form" action="review-logsheet.php" method="post" onsubmit="">
+        <h3>Add Segments</h3>
+
+        <h5>Episode Information:</h5>
+        Program:  {$episode.program} <br/>
+        Start Date/Time: {$episode.startDatetime} <br/>
+        End Date/Time: {$episode.endDatetime} <br/> <br/>
+
+
+        {include file='./segment-form.tpl' idSuffix=''}
+        {include file='./segment-form.tpl' idSuffix='_edit'}
+
+        <br />
+
+        <form id="finalize" class="forward_form" role="form" action="review-logsheet.php" method="post" onsubmit="">
             <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
-            <input type="submit" value="Submit All">
+            <input type="submit" value="Final Review">
+        </form>
+
+        <form class="backward_form" action="new-logsheet.php" method="get">
+            <input type="hidden" name="draftEpisodeId" value="{$episode.id}"/>
+            <input type="submit" value="Back to Episode Metadata"/>
         </form>
     </div>
 
-    <div class="col-md-4">
+    <br />
+    <br />
+
+    <div class="col-md-5">
+        <span id="playlist_not_aligned_help_text" class="help-block{if !isset($formErrors.noAlignmentWithEpisodeStart)} hidden{/if}">
+            The earliest segment must align with the episode start date/time.
+        </span>
+
+        <span id="segment_errors_exist_help_text" class="help-block{if !isset($formErrors.erroneousSegmentsExist)} hidden{/if}">
+            Errors exist in the highlighted segments below. Please correct them before proceeding to the final review.
+        </span>
+
         <div class="panel panel-default">
-            <!-- Default panel contents -->
             <div class="panel-heading">Episode Segments</div>
 
-            <!-- Table -->
             <table class="table table-hover" id="added_segments">
+                <colgroup>
+                    <col id="start_time_column" />
+                    <col span="3"/>
+                    <col />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th colspan="3">Description</th>
+                        <th>Category</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="confirmDeleteModalLabel">Warning</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this segment?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="confirmDeleteButton" onClick="">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+            </div>
         </div>
     </div>
 </div>

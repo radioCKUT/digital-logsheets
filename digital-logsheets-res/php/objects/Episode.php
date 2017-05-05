@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
  */
 
     //TODO: Error checking...
-    require_once(__DIR__ . "/../database/manageEpisodeEntries.php");
-    require_once(__DIR__ . "/LogsheetComponent.php");
+    require_once(dirname(__FILE__) . "/../database/manageEpisodeEntries.php");
+    require_once("LogsheetComponent.php");
 
     class Episode extends LogsheetComponent {
 
@@ -33,6 +33,10 @@
          * @var Playlist
          */
         private $playlist;
+
+        /**
+         * @var String
+         */
         private $programmer;
 
         /**
@@ -44,16 +48,31 @@
          */
         private $episodeEndTime;
 
+        /**
+         * @var boolean
+         */
         private $isPrerecord;
+
+        /**
+         * @var DateTime
+         */
         private $prerecordDate;
 
-        private $comment;
+        /**
+         * @var String
+         */
+        private $notes;
+
+        /**
+         * @var boolean
+         */
+        private $isDraft;
         
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
-            if ($componentId != null) {
-                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $componentId, $this);
+            if ($this->id != null) {
+                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $this->id, $this);
             }
         }
 
@@ -92,39 +111,23 @@
         }
 
         /**
-         * @param mixed $comment
+         * @param mixed $notes
          */
-        public function setComment($comment)
+        public function setNotes($notes)
         {
-            $this->comment = $comment;
+            $this->notes = $notes;
+        }
+
+        public function setIsDraft($isDraft) {
+            if (!$isDraft) {
+                $this->isDraft = false;
+            } else {
+                $this->isDraft = true;
+            }
         }
 
         public function jsonSerialize() {
-            $startDate = $this->getStartTime();
-            $startDateString = $this->prepareDateForSerialize($startDate);
-            $startTimeString = $this->prepareTimeForSerialize($startDate);
-            $startDatetimeString = $this->prepareDateTimeForSerialize($startDate);
-
-            $endDate = $this->getEndTime();
-            $endTimeString = $this->prepareTimeForSerialize($endDate);
-            $endDatetimeString = $this->prepareDateTimeForSerialize($endDate);
-
-            $prerecordDate = $this->getPrerecordDate();
-            $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
-
-            return [
-                'id' => $this->getId(),
-                'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
-                'playlist' => $this->getPlaylistId(),
-                'startDate' => $startDateString,
-                'startTime' => $startTimeString,
-                'endTime' => $endTimeString,
-                'startDatetime' => $startDatetimeString,
-                'endDatetime' => $endDatetimeString,
-                'prerecorded' => $this->isPrerecord() ? "Yes" : "No",
-                'prerecordDate' => $prerecordDateString,
-                'segments' => $this->getSegments()
-            ];
+            return json_encode($this->getObjectAsArray());
         }
 
         /**
@@ -156,11 +159,35 @@
         }
 
         public function getObjectAsArray() {
-            return $this->jsonSerialize();
+            $startDate = $this->getStartTime();
+            $startDateString = $this->prepareDateForSerialize($startDate);
+            $startTimeString = $this->prepareTimeForSerialize($startDate);
+            $startDatetimeString = $this->prepareDateTimeForSerialize($startDate);
+
+            $endDate = $this->getEndTime();
+            $endTimeString = $this->prepareTimeForSerialize($endDate);
+            $endDatetimeString = $this->prepareDateTimeForSerialize($endDate);
+
+            $prerecordDate = $this->getPrerecordDate();
+            $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
+
+            return array(
+                'id' => $this->getId(),
+                'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
+                'playlist' => $this->getPlaylistId(),
+                'startDate' => $startDateString,
+                'startTime' => $startTimeString,
+                'endTime' => $endTimeString,
+                'startDatetime' => $startDatetimeString,
+                'endDatetime' => $endDatetimeString,
+                'prerecorded' => $this->isPrerecord() ? "Yes" : "No",
+                'prerecordDate' => $prerecordDateString,
+                'segments' => $this->getSegments()
+            );
         }
 
         /**
-         * @return Programmer
+         * @return String
          */
         public function getProgrammer() {
             return $this->programmer;
@@ -189,6 +216,10 @@
             return $this->playlist != null ? $this->playlist->getSegments() : null;
         }
 
+        public function getSegmentsAsJSON() {
+            return $this->playlist != null ? $this->playlist->getSegmentsAsJSON() : null;
+        }
+
         public function getPlaylistId() {
             return $this->playlist != null ? $this->playlist->getId() : null;
         }
@@ -214,11 +245,15 @@
             return $this->prerecordDate;
         }
 
+        public function isDraft() {
+            return $this->isDraft;
+        }
+
         /**
          * @return mixed
          */
-        public function getComment()
+        public function getNotes()
         {
-            return $this->comment;
+            return $this->notes;
         }
     }

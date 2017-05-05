@@ -1,6 +1,6 @@
 <?php
 /**
- * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
+ * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.    
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
  * Copyright (C) 2016-2017  James Wang
@@ -19,25 +19,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("Episode.php");
-require_once(dirname(__FILE__) . "/../database/manageEpisodeEntries.php");
-    class Archive {
+class SavePlaylistErrors extends ErrorsContainer {
 
-        private $db;
-        /**
-         * @var Episode[]
-         */
-        private $episodes = array();
-
-        public function __construct($db) {
-            $this->db = $db;
-            $this->episodes = manageEpisodeEntries::getAllEpisodesFromDatabase($db);
-        }
-        
-        //return an array holding each row from the episode table in the database
-        public function getArchive() {
-            return $this->episodes;
-        }
-        
+    public function __construct() {
+        $this->errors = array(
+            'noAlignmentWithEpisodeStart' => false
+        );
     }
-?>
+
+    public function markNoAlignmentWithEpisodeStart() {
+        $this->errors['noAlignmentWithEpisodeStart'] = true;
+    }
+}

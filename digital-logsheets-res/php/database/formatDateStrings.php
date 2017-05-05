@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,26 +19,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 /**
  * @param DateTime $dateTimeObject
- * @return DateTime
+ * @return String
  */
 function formatDateStringForDatabaseWrite($dateTimeObject) {
+    if ($dateTimeObject) {
+        return $dateTimeObject->format("Y-m-d");
 
-    $dateTimeObject->setTimezone(new DateTimeZone('UTC'));
-    $dateTimeObject = $dateTimeObject->format("Y-m-d H:i:s");
+    } else {
+        return null;
+    }
+}
+/**
+ * @param DateTime $dateTimeObject
+ * @return String
+ */
+function formatDatetimeStringForDatabaseWrite($dateTimeObject) {
+    if (is_null($dateTimeObject)) {
+        return null;
 
-    return $dateTimeObject;
+    } else if ($dateTimeObject) {
+        $dateTimeObject->setTimezone(new DateTimeZone('UTC'));
+        return $dateTimeObject->format("Y-m-d H:i:s");
+
+    } else {
+        return null;
+    }
 }
 
 /**
  * @param string $dateString
  * @return DateTime
  */
-function formatDateStringFromDatabase($dateString) {
+function formatDateTimeStringFromDatabase($dateString) {
+    if (is_null($dateString)) {
+        return null;
 
-    $startDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
-    $startDateTime->setTimezone(new DateTimeZone('America/Montreal'));
+    } else {
+        $startDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
+        $startDateTime->setTimezone(new DateTimeZone('America/Montreal'));
 
-    return $startDateTime;
+        return $startDateTime;
+    }
 }

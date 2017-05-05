@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ class readFromDatabase
 
             return "SELECT " . $columnNamesString . " FROM " . $tableName;
         }
+
 
         private static function readFromDatabaseWithStatement($sqlQueryStmt)
         {
@@ -60,6 +61,14 @@ class readFromDatabase
             }
         }
 
+    /**
+     * @param PDO $dbConn
+     * @param String[] $columnNames If value is null, return all columns.
+     * @param String $tableName
+     * @param String[] $filterColumns
+     * @param array $filterValues
+     * @return null
+     */
         public static function readFilteredColumnFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues)
         {
 
@@ -83,10 +92,40 @@ class readFromDatabase
             }
         }
 
+
+    /**
+     * @param PDO $dbConn
+     * @param $columnNames
+     * @param $tableName
+     * @param $filterColumn
+     * @param $lowestValue
+     * @param $highestValue
+     * @return null
+     */
+        public static function readAllColumnsBetweenTwoValues($dbConn, $tableName, $filterColumn, $lowestValue, $highestValue) {
+
+            $sqlQueryString = self::getEntireColumnsQueryString(null, $tableName);
+
+            $sqlQueryString .= "\n WHERE " . $filterColumn . " between '" . $lowestValue . "' and '" . $highestValue . "'";
+
+            try {
+                $sqlQueryStmt = $dbConn->prepare($sqlQueryString);
+                return self::readFromDatabaseWithStatement($sqlQueryStmt);
+
+            } catch (Exception $e) {
+                error_log("Read columns (between two values) failed: " . $e);
+                return null;
+            }
+        }
+
         public static function readFirstMatchingEntryFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues)
         {
-            $allMatchingEntries = self::readFilteredColumnFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues);
-            return $allMatchingEntries[0][$columnNames[0]];
+            try {
+                $allMatchingEntries = self::readFilteredColumnFromTable($dbConn, $columnNames, $tableName, $filterColumns, $filterValues);
+                return $allMatchingEntries[0][$columnNames[0]];
+            } catch (Exception $e) {
+                return null;
+            }
         }
 
 

@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2017  Evan Vassallo
- * Copyright (C) 2016-2017  James Wang
+ * Copyright (C) 2015-2016  Evan Vassallo
+ * Copyright (C) 2016  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,30 +19,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('utilities/ValidatorUtility.php');
+require_once("../digital-logsheets-res/smarty/libs/Smarty.class.php");
+require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
+require_once("../digital-logsheets-res/php/database/manageEpisodeEntries.php");
+require_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
+require_once("../digital-logsheets-res/php/objects/Episode.php");
 
-    class CategoryValidator {
+session_start();
 
-        private $category;
+try {
+    //connect to database
+    $db = connectToDatabase();
 
-        public function __construct($category) {
-            $this->category = $category;
-        }
+    $episodeId = $_SESSION['episodeId'];
+    $episode = new Episode($db, $episodeId);
 
-        public function isCategoryValid() {
-            if (ValidatorUtility::isInteger($this->category)) {
-                switch ($this->category) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                        return true;
-                    default:
-                        return false;
-                }
-            }
+    manageEpisodeEntries::turnOffEpisodeDraftStatus($db, $episode);
 
-            return false;
-        }
-    }
+    unset($_SESSION['episodeId']);
+    
+    echo "Episode saved!";
+
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+

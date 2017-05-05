@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,24 @@ include_once("readFromDatabase.php");
         public static function getAllProgramsFromDatabase($dbConn) {
             $programIds = readFromDatabase::readEntireColumnFromTable($dbConn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);
 
+            return self::buildProgramObjectsFromIds($dbConn, $programIds);
+        }
+
+        public static function getProgramFromDatabase($dbConn, $programId) {
+            $programIds = readFromDatabase::readFilteredColumnFromTable($dbConn, array(self::ID_COLUMN_NAME),
+                self::TABLE_NAME, array(self::ID_COLUMN_NAME), $programId);
+
+            return self::buildProgramObjectsFromIds($dbConn, $programIds);
+        }
+
+        /**
+         * @param $dbConn
+         * @param $programIds
+         * @return array
+         */
+        private static function buildProgramObjectsFromIds($dbConn, $programIds) {
             $programs = array();
-            foreach($programIds as $programId) {
+            foreach ($programIds as $programId) {
                 $program = new Program($dbConn, $programId[self::ID_COLUMN_NAME]);
                 $programs[$program->getId()] = $program->getName();
             }

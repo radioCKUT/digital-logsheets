@@ -2,8 +2,8 @@
 /**
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
- * Copyright (C) 2015-2016  Evan Vassallo
- * Copyright (C) 2016  James Wang
+ * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
  */
 
 require_once('utilities/ValidatorUtility.php');
-require('CategoryValidator.php');
-require('utilities/TimeValidator.php');
-require('errorContainers/AddSegmentsErrors.php');
+require_once('CategoryValidator.php');
+require_once('utilities/TimeValidator.php');
+require_once('errorContainers/SaveSegmentErrors.php');
 
 class SegmentValidator {
 
@@ -36,16 +36,31 @@ class SegmentValidator {
      */
     private $episode;
 
+    const MAX_AD_NUMBER = 150;
+    const MIN_AD_NUMBER = 0;
+
     public function __construct($segment, $episode) {
         $this->segment = $segment;
         $this->episode = $episode;
     }
 
     /**
-     * @return AddSegmentsErrors
+     * @return SaveSegmentErrors $errors
      */
     public function isSegmentValidForDraftSave() {
-        $errors = new AddSegmentsErrors();
+        $errors = new SaveSegmentErrors();
+
+        return $errors;
+    }
+
+    public function isSegmentValidForEdit() {
+        $errors = new SaveSegmentErrors();
+
+        return $errors;
+    }
+
+    public function isSegmentValidForFinalSave() {
+        $errors = $this->isSegmentValidForDraftSave();
 
         $this->isCategoryValid($errors);
         $this->isStartTimeDataAValidTime($errors);
@@ -55,17 +70,8 @@ class SegmentValidator {
         return $errors;
     }
 
-    public function isSegmentValidForFinalSave() {
-        $errors = $this->isSegmentValidForDraftSave();
-
-        // TODO: check for Segment duration
-
-        return $errors;
-
-    }
-
     /**
-     * @param AddSegmentsErrors $errors
+     * @param SaveSegmentErrors $errors
      */
     private function isCategoryValid($errors) {
         $category = $this->segment->getCategory();
@@ -74,13 +80,15 @@ class SegmentValidator {
             $errors->markCategoryMissing();
         }
 
-        if (!$category->isValid()) {
+        $categoryValidator = new CategoryValidator($category);
+        
+        if (!$categoryValidator->isCategoryValid()) {
             $errors->markCategoryInvalidFormat();
         }
     }
 
     /**
-     * @param AddSegmentsErrors $errors
+     * @param SaveSegmentErrors $errors
      */
     private function isStartTimeDataAValidTime($errors) {
         $startTime = $this->segment->getStartTime();
@@ -95,7 +103,7 @@ class SegmentValidator {
     }
 
     /**
-     * @param AddSegmentsErrors $errors
+     * @param SaveSegmentErrors $errors
      */
     private function isStartTimeWithinEpisodeBounds($errors) {
         $startTime = $this->segment->getStartTime();
@@ -108,7 +116,7 @@ class SegmentValidator {
 
 
     /**
-     * @param AddSegmentsErrors $errors
+     * @param SaveSegmentErrors $errors
      * @return array
      */
     private function areRequiredCategoryFieldsPresent($errors) {
@@ -119,8 +127,8 @@ class SegmentValidator {
         $name = $this->segment->getName();
 
         switch ($category) {
-            case 1:
             case 2:
+            case 3:
                 if (!ValidatorUtility::doesFieldExist($author)) {
                     $errors->markAuthorMissing();
                 }
@@ -128,7 +136,8 @@ class SegmentValidator {
                 if (!ValidatorUtility::doesFieldExist($album)) {
                     $errors->markAlbumMissing();
                 }
-            case 3:
+
+            case 1:
             case 4:
                 if (!ValidatorUtility::doesFieldExist($name)) {
                     $errors->markNameMissing();
@@ -141,14 +150,21 @@ class SegmentValidator {
     }
 
     /**
-     * @param AddSegmentsErrors $errors
+     * @param SaveSegmentErrors $errors
      */
     private function isAdNumberValid($errors) {
         $adNumber = $this->segment->getAdNumber();
 
-        if (!ValidatorUtility::doesFieldExist($adNumber) ||
-            !ValidatorUtility::isInteger($adNumber)) {
+        if (ValidatorUtility::doesFieldExist($adNumber) &&
+            ValidatorUtility::isInteger($adNumber)) {
 
+
+            if ($adNumber < self::MIN_AD_NUMBER &&
+                $adNumber > self::MAX_AD_NUMBER) {
+                $errors->markAdNubmerInvalid();
+            }
+
+        } else {
             $errors->markAdNumberMissing();
         }
     }
