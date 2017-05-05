@@ -113,7 +113,11 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
 
         public function getObjectAsArray() {
             $startDateTime = $this->getStartTime();
-            $startTimeString = $startDateTime->format('H:i');
+            
+            $startTimeString = "";
+            if (!is_null($startDateTime)) {
+                $startTimeString = $startDateTime->format('H:i');
+            }
 
             return array(
                 'id' => $this->getId(),

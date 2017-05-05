@@ -51,9 +51,9 @@
                 var logsheetForm = $(e.delegateTarget);
                 var timeGroup = logsheetForm.find('.time_group');
 
-                if (verifySegmentStartTime(timeGroup, episode)) {
+                //if (verifySegmentStartTime(timeGroup, episode)) {
                     createSegment();
-                }
+                //}
             });
 
             var logsheetEdit = $('#logsheet_edit');
@@ -63,9 +63,9 @@
                 var logsheetForm = $(e.delegateTarget);
                 var timeGroup = logsheetForm.find('.time_group');
 
-                if (verifySegmentStartTime(timeGroup, episode)) {
+                //if (verifySegmentStartTime(timeGroup, episode)) {
                     editEpisodeSegment();
-                }
+                //}
             });
 
             logsheetEdit.hide();
@@ -74,7 +74,21 @@
                     .on('submit', function(e) {
                         if (!verifyPlaylistEpisodeAlignment()) {
                             e.preventDefault();
+
                         }
+
+                        $('#added_segments').find('tbody').find('tr').each(function (i, segment) {
+                            segment = $(segment);
+                            var errors = segment.data("errors");
+
+                            if (isSegmentErroneous(errors)) {
+                                markErroneousSegmentsExist();
+                                e.preventDefault();
+                                return false;
+                            }
+
+                            markNoErroneousSegmentsExist();
+                        });
                     });
         }
 
@@ -113,7 +127,7 @@
 </head>
 <body onload="init()">
 <div class="container-fluid">
-    <div class="col-md-8">
+    <div class="col-md-7">
 
         <h3>Add Segments</h3>
 
@@ -126,15 +140,29 @@
         {include file='./segment-form.tpl' idSuffix=''}
         {include file='./segment-form.tpl' idSuffix='_edit'}
 
-        <form id="finalize" role="form" action="review-logsheet.php" method="post" onsubmit="">
+        <br />
+
+        <form id="finalize" class="forward_form" role="form" action="review-logsheet.php" method="post" onsubmit="">
             <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
-            <input type="submit" value="Submit All">
+            <input type="submit" value="Final Review">
+        </form>
+
+        <form class="backward_form" action="new-logsheet.php" method="get">
+            <input type="hidden" name="draftEpisodeId" value="{$episode.id}"/>
+            <input type="submit" value="Back to Episode Metadata"/>
         </form>
     </div>
 
-    <div class="col-md-4">
+    <br />
+    <br />
+
+    <div class="col-md-5">
         <span id="playlist_not_aligned_help_text" class="help-block{if !isset($formErrors.noAlignmentWithEpisodeStart)} hidden{/if}">
             The earliest segment must align with the episode start date/time.
+        </span>
+
+        <span id="segment_errors_exist_help_text" class="help-block{if !isset($formErrors.erroneousSegmentsExist)} hidden{/if}">
+            Errors exist in the highlighted segments below. Please correct them before proceeding to the final review.
         </span>
 
         <div class="panel panel-default">
@@ -142,14 +170,16 @@
 
             <table class="table table-hover" id="added_segments">
                 <colgroup>
-                    <col />
-                    <col id="start_time_column"/>
+                    <col id="start_time_column" />
+                    <col span="3"/>
                     <col />
                 </colgroup>
                 <thead>
                     <tr>
                         <th>Time</th>
-                        <th>Name</th>
+                        <th colspan="3">Description</th>
+                        <th>Category</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

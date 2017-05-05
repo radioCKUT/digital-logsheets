@@ -92,6 +92,10 @@
     <form id="logsheet" role="form" action="save-episode.php" method="post">
         <h4>Episode Metadata</h4>
 
+        {if $existingEpisode}
+            <input type="hidden" name="existingEpisode" value="{$existingEpisode}"/>
+        {/if}
+
             {if $formErrors.missingProgrammer}
                 {assign var="programmerError" value=true}
             {else}
@@ -177,7 +181,7 @@
                     <label for="end_datetime" class="control-label">End Date/Time:</label>
                     <input class="form-control" type="datetime-local"
                            name="end_datetime" id="end_datetime" step="60"
-                           value="{$formSubmission.endDateTime}" required>
+                           value="{$formSubmission.endDatetime}" required>
                     <span id="end_datetime_help_block" class="help-block{if !$endDateTimeError} hidden{/if}">
                             <span id="missing_end_datetime_message" class="{if !$formErrors.missingEndTime}hidden{/if}">
                                 Please enter a valid end date/time.

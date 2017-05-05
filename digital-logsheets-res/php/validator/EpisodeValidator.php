@@ -60,6 +60,8 @@ class EpisodeValidator {
         $this->isEpisodeLengthValid($errorsContainer);
         $this->isEpisodeAirDateValid($errorsContainer);
         $this->isEpisodePrerecordDateValid($errorsContainer);
+
+        return $errorsContainer;
     }
 
     public static function getEpisodeEarlyLimit() {
@@ -213,7 +215,7 @@ class EpisodeValidator {
         $fromDateInMillisecs = $fromDate->format('U');
         $toDateInMillisecs = $toDate->format('U');
 
-        $daysSinceFromDate = ($fromDateInMillisecs - $toDateInMillisecs) / (60*60*24);
+        $daysSinceFromDate = ($toDateInMillisecs - $fromDateInMillisecs) / (60*60*24);
 
         return $daysSinceFromDate;
     }

@@ -45,19 +45,41 @@ function getSelect2ProgramsList($db) {
  * @param int $duration
  * @return array
  */
-function getFormSubmissionArray($episode, $duration) {
+function getFormSubmissionArray($episode) {
 
     return array(
         'programmer' => $episode->getProgrammer(),
         'programId' => $episode->getProgram()->getId(),
         'programName' => $episode->getProgram()->getName(),
         'startDatetime' => formatDatetimeForHTML($episode->getStartTime()),
-        'duration' => $duration,
         'endDatetime' => formatDatetimeForHTML($episode->getEndTime()),
         'prerecord' => $episode->isPrerecord(),
         'prerecordDate' => formatDateForHTML($episode->getPrerecordDate()),
         'notes' => $episode->getNotes()
     );
+}
+
+/**
+ * @param Episode episode
+ * @return String
+ */
+function getSegmentListWithErrors($episode) {
+    $segments = $episode->getSegments();
+    $segmentsWithErrorContainers = array();
+
+    foreach ($segments as $segment) {
+        $validator = new SegmentValidator($segment, $episode);
+        $errors = $validator->isSegmentValidForFinalSave();
+
+        $segmentWithError = array(
+            'segment' => $segment->getObjectAsArray(),
+            'errors' => $errors->getAllErrors()
+        );
+
+        $segmentsWithErrorContainers[] = $segmentWithError;
+    }
+
+    return json_encode($segmentsWithErrorContainers);
 }
 
 /**

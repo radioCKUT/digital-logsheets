@@ -27,23 +27,23 @@ function prepareFormForEdit(eventObject) {
     switch (segment_object.category) {
         case 1:
             $('.category1').closest('.btn').button('toggle');
-            setupCat1Fields();
+            setupCat1Fields(false);
             break;
         case 2:
             $('.category2').closest('.btn').button('toggle');
-            setupCat2Fields();
+            setupCat2Fields(false);
             break;
         case 3:
             $('.category3').closest('.btn').button('toggle');
-            setupCat3Fields();
+            setupCat3Fields(false);
             break;
         case 4:
             $('.category4').closest('.btn').button('toggle');
-            setupCat4Fields();
+            setupCat4Fields(false);
             break;
         case 5:
             $('.category5').closest('.btn').button('toggle');
-            setupCat5Fields();
+            setupCat5Fields(false);
             break;
     }
 
@@ -60,6 +60,67 @@ function prepareFormForEdit(eventObject) {
     $('#station_id_edit').prop("checked", segment_object.stationIdGiven);
 
     $('#segment_id_edit').attr("value", segment_object.id);
+
+
+
+
+    var errors = $(tableRow).data("errors");
+
+    if (errors.missingCategory || errors.categoryInvalidFormat) {
+        markFieldError($('.category_group_edit'), $('#category_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.category_group_edit'), $('#category_help_block_edit'))
+    }
+
+    if (errors.missingAlbum) {
+        markFieldError($('.album_group_edit'), $('#album_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.album_group_edit'), $('#album_help_block_edit'));
+    }
+
+    if (errors.missingAuthor) {
+        markFieldError($('.author_group_edit'), $('#author_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.author_group_edit'), $('#author_help_block_edit'));
+    }
+
+    if (errors.missingName) {
+        markFieldError($('.name_group_edit'), $('#name_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.name_group_edit'), $('#name_help_block_edit'));
+    }
+
+    if (errors.missingAdNumber || errors.invalidAdNumber) {
+        markFieldError($('.ad_number_group_edit'), $('#ad_number_help_block_edit'));
+
+    } else {
+        markFieldCorrect($('.ad_number_group_edit'), $('#ad_number_help_block_edit'))
+    }
+
+
+
+
+    var timeGroupEdit = $('.time_group_edit');
+
+    if (errors.missingStartTime || errors.startTimeInvalidFormat) {
+        markFieldCorrect(timeGroupEdit, $('#segment_time_out_of_bounds_help_text_edit'));
+        markFieldError(timeGroupEdit, $('#missing_segment_time_help_block_edit'));
+
+
+    } else if (errors.outOfEpisodeBounds) {
+        markFieldCorrect(timeGroupEdit, $('#missing_segment_time_help_block_edit'));
+        markFieldError(timeGroupEdit, $('#segment_time_out_of_bounds_help_text_edit'));
+
+    } else {
+        markFieldCorrect(timeGroupEdit, $('#missing_segment_time_help_block_edit'));
+        markFieldCorrect(timeGroupEdit, $('#segment_time_out_of_bounds_help_text_edit'))
+    }
+
+
 }
 
 function showEditForm() {
@@ -97,14 +158,14 @@ function cancelEdit() {
     resetAllFields();
 
     if ($('.category1').parent().hasClass("active")) {
-        setupCat1Fields()
+        setupCat1Fields(true)
     } else if ($('.category2').parent().hasClass("active")) {
-        setupCat2Fields()
+        setupCat2Fields(true)
     } else if ($('.category3').parent().hasClass("active")) {
-        setupCat3Fields()
+        setupCat3Fields(true)
     } else if ($('.category4').parent().hasClass("active")) {
-        setupCat4Fields()
+        setupCat4Fields(true)
     } else if ($('.category5').parent().hasClass("active")) {
-        setupCat5Fields()
+        setupCat5Fields(true)
     }
 }

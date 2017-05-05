@@ -21,6 +21,7 @@
 
 require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../digital-logsheets-res/php/objects/Episode.php");
+require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
 
 $episodeId = $_POST['episode_id'];
 
@@ -42,8 +43,7 @@ try {
     $db = connectToDatabase();
 
     $episode = new Episode($db, $episodeId);
-    $playlist = $episode->getPlaylist();
-    $segmentList = $playlist->getSegmentsAsJSON();
+    $segmentList = getSegmentListWithErrors($episode);
     
     $db = null;
     outputSuccessResponse($segmentList);

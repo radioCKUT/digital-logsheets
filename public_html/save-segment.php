@@ -23,6 +23,7 @@ require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../digital-logsheets-res/php/objects/Episode.php");
 require_once("../digital-logsheets-res/php/validator/SegmentValidator.php");
 require_once("../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
+require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
 
 $episodeId = $_POST['episode_id'];
 
@@ -82,7 +83,13 @@ try {
             $segment->setIsCanCon(null);
             $segment->setIsNewRelease(null);
             $segment->setIsFrenchVocalMusic(null);
-            $segment->setAdNumber($adNumber);
+
+            if ($adNumber == "") {
+                $segment->setAdNumber(null);
+            } else {
+                $segment->setAdNumber($adNumber);
+            }
+
             break;
 
         case 4:
@@ -121,6 +128,7 @@ try {
             manageSegmentEntries::editSegmentInDatabase($db, $segment);
         }
 
+
     } else {
         $segmentErrors = $segmentValidator->isSegmentValidForDraftSave();
 
@@ -133,8 +141,7 @@ try {
     }
 
     $episode = new Episode($db, $episodeId);
-    $segmentList = $episode->getSegments();
-    $segmentList = json_encode($segmentList);
+    $segmentList = getSegmentListWithErrors($episode);
 
     $db = null;
 
@@ -175,9 +182,10 @@ function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
     $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
 
     if (!TimeValidator::isTimeInValidFormat($segmentTime)) {
-        $errorsContainer = new SaveSegmentErrors();
+        /*$errorsContainer = new SaveSegmentErrors();
         $errorsContainer->markStartTimeInvalidFormat();
-        outputErrorResponse($errorsContainer->getAllErrors());
+        outputErrorResponse($errorsContainer->getAllErrors());*/
+        return null;
     }
 
     if (strtotime($segmentTime) < strtotime($episodeStartTimeString)) {

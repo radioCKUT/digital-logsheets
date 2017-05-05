@@ -39,6 +39,18 @@ function setupCat5HTMLValidation(adNumberInput, nameInput) {
 }
 
 
+function isSegmentErroneous(errors) {
+    var errorsKeys = Object.keys(errors);
+
+    for (var errorsIndex = 0; errorsIndex < errorsKeys.length; errorsIndex++) {
+        if (errors[errorsKeys[errorsIndex]]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 
 
 
@@ -48,7 +60,7 @@ function verifySegmentStartTime(timeGroup, episode) {
     var segmentTimeField = timeGroup.find('.segment_time');
     var segmentTime = segmentTimeField.val();
 
-    var helpBlock =  timeGroup.find('.segment_time_help_text');
+    var helpBlock =  timeGroup.find('.segment_time_out_of_bounds_help_text');
 
     if (segmentTime == '') {
         markFieldCorrect(timeGroup, helpBlock);

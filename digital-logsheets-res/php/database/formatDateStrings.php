@@ -37,7 +37,10 @@ function formatDateStringForDatabaseWrite($dateTimeObject) {
  * @return String
  */
 function formatDatetimeStringForDatabaseWrite($dateTimeObject) {
-    if ($dateTimeObject) {
+    if (is_null($dateTimeObject)) {
+        return null;
+
+    } else if ($dateTimeObject) {
         $dateTimeObject->setTimezone(new DateTimeZone('UTC'));
         return $dateTimeObject->format("Y-m-d H:i:s");
 
@@ -51,8 +54,13 @@ function formatDatetimeStringForDatabaseWrite($dateTimeObject) {
  * @return DateTime
  */
 function formatDateTimeStringFromDatabase($dateString) {
-    $startDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
-    $startDateTime->setTimezone(new DateTimeZone('America/Montreal'));
+    if (is_null($dateString)) {
+        return null;
 
-    return $startDateTime;
+    } else {
+        $startDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
+        $startDateTime->setTimezone(new DateTimeZone('America/Montreal'));
+
+        return $startDateTime;
+    }
 }

@@ -31,22 +31,26 @@ function resetAllFields() {
 }
 
 
-function setupAllFields() {
+function setupAllFields(addValidationChecks) {
     $('.name_group').show();
     $('.ad_number_group').hide();
 
     var adNumberInput = $('.ad_number_input');
     var nameInput = $('.name_input');
 
-    setupAllCatHTMLValidation(adNumberInput, nameInput);
+    if (addValidationChecks) {
+        setupAllCatHTMLValidation(adNumberInput, nameInput);
+    }
 }
 
-function setupMusicCatFields() {
+function setupMusicCatFields(addValidationChecks) {
     setupAllFields();
 
-    var albumInput = $('.album_input');
-    var authorInput = $('.author_input');
-    setupMusicCatHTMLValidation(authorInput, albumInput);
+    if (addValidationChecks) {
+        var albumInput = $('.album_input');
+        var authorInput = $('.author_input');
+        setupMusicCatHTMLValidation(authorInput, albumInput);
+    }
 
     $('.station_id_group').hide();
     $('.author_group').show();
@@ -57,12 +61,14 @@ function setupMusicCatFields() {
     $('.name_label').text("Title:");
 }
 
-function setupNonMusicCatFields() {
+function setupNonMusicCatFields(addValidationChecks) {
     setupAllFields();
 
-    var albumInput = $('.album_input');
-    var authorInput = $('.author_input');
-    setupNonMusicCatHTMLValidation(authorInput, albumInput);
+    if (addValidationChecks) {
+        var albumInput = $('.album_input');
+        var authorInput = $('.author_input');
+        setupNonMusicCatHTMLValidation(authorInput, albumInput);
+    }
 
     $('.author_group').hide();
     $('.album_group').hide();
@@ -72,36 +78,38 @@ function setupNonMusicCatFields() {
     $('.french_vocal_music_group').hide();
 }
 
-function setupCat1Fields() {
-    setupNonMusicCatFields();
+function setupCat1Fields(addValidationChecks) {
+    setupNonMusicCatFields(addValidationChecks);
 
     $('.station_id_group').show();
     $('.name_label').text("Description:");
 }
 
-function setupCat2Fields() {
-    setupMusicCatFields();
+function setupCat2Fields(addValidationChecks) {
+    setupMusicCatFields(addValidationChecks);
 }
 
-function setupCat3Fields() {
-    setupMusicCatFields();
+function setupCat3Fields(addValidationChecks) {
+    setupMusicCatFields(addValidationChecks);
 }
 
-function setupCat4Fields() {
-    setupNonMusicCatFields();
+function setupCat4Fields(addValidationChecks) {
+    setupNonMusicCatFields(addValidationChecks);
 
     $('.station_id_group').show();
     $('.name_label').text("Name:");
 }
 
-function setupCat5Fields() {
-    setupNonMusicCatFields();
+function setupCat5Fields(addValidationChecks) {
+    setupNonMusicCatFields(addValidationChecks);
     $('.name_group').hide();
     $('.station_id_group').hide();
 
     $('.ad_number_group').show();
 
-    var adNumberInput = $('.ad_number_input');
-    var nameInput = $('.name_input');
-    setupCat5HTMLValidation(adNumberInput, nameInput);
+    if (addValidationChecks) {
+        var adNumberInput = $('.ad_number_input');
+        var nameInput = $('.name_input');
+        setupCat5HTMLValidation(adNumberInput, nameInput);
+    }
 }

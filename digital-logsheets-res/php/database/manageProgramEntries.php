@@ -35,6 +35,22 @@ include_once("readFromDatabase.php");
         public static function getAllProgramsFromDatabase($dbConn) {
             $programIds = readFromDatabase::readEntireColumnFromTable($dbConn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);
 
+            return self::buildProgramObjectsFromIds($dbConn, $programIds);
+        }
+
+        public static function getProgramFromDatabase($dbConn, $programId) {
+            $programIds = readFromDatabase::readFilteredColumnFromTable($dbConn, array(self::ID_COLUMN_NAME),
+                self::TABLE_NAME, array(self::ID_COLUMN_NAME), $programId);
+
+            return self::buildProgramObjectsFromIds($dbConn, $programIds);
+        }
+
+        /**
+         * @param $dbConn
+         * @param $programIds
+         * @return array
+         */
+        private static function buildProgramObjectsFromIds($dbConn, $programIds) {
             $programs = array();
             foreach ($programIds as $programId) {
                 $program = new Program($dbConn, $programId[self::ID_COLUMN_NAME]);

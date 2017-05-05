@@ -27,8 +27,7 @@ require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
 require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
 
-$firstName = $_POST['first_name'];
-$lastName = $_POST['last_name'];
+
 $programId = intval($_POST['program']);
 
 $programmer = $_POST['programmer'];
@@ -39,38 +38,38 @@ $episodeStartTime = $_POST['start_datetime'];
 $episodeEndTime = $_POST['end_datetime'];
 $notes = $_POST['notes'];
 
+$isExistingEpisode = isset($_POST['existingEpisode']);
+$existingEpisodeId = $_POST['existingEpisode'];
+
 session_start();
+
+
 
 try {
     $db = connectToDatabase();
 
-    $episodeObject = new Episode($db, null);
+    if ($isExistingEpisode) {
+        $episodeObject = new Episode($db, $existingEpisodeId);
+    } else {
+        $episodeObject = new Episode($db, null);
+    }
 
-    $episodeObject->setProgram(new Program($db, $programId));
-    $episodeObject->setProgrammer($programmer);
+    $episodeObject = fillEpisodeObject($db, $episodeObject, $programId, $programmer,
+        $episodeStartTime, $episodeEndTime, $prerecord, $prerecordDate, $notes);
 
-    $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
-    $episodeObject->setStartTime($episodeStartTime);
-
-    $episodeEndTime = getDateTimeFromDateTimeString($episodeEndTime);
-    $episodeObject->setEndTime($episodeEndTime);
-
-    $episodeObject->setIsPrerecord($prerecord);
-    $prerecordDate = getDateTimeFromDateString($prerecordDate);
-    $episodeObject->setPrerecordDate($prerecordDate);
-
-    $episodeObject->setNotes($notes);
+    error_log("episode object: " . print_r($episodeObject, true));
 
     $episodeValidator = new EpisodeValidator($episodeObject);
     $episodeErrors = $episodeValidator->checkDraftSaveValidity();
 
     $doEpisodeErrorsExist = $episodeErrors->doErrorsExist();
+
     if ($doEpisodeErrorsExist) {
         error_log("Errors exist in episode: " . print_r($episodeErrors, true) . print_r($episodeObject->getObjectAsArray(), true));
 
         $formErrors = $episodeErrors->getAllErrors();
 
-        $formSubmission = getFormSubmissionArray($episodeObject, $episodeDurationHours);
+        $formSubmission = getFormSubmissionArray($episodeObject);
 
         $episodeErrorsAsQuery = http_build_query(array(
             'formErrors' => $formErrors,
@@ -80,8 +79,11 @@ try {
         header('Location: new-logsheet.php?' . $episodeErrorsAsQuery);
         exit();
 
+    } else if ($isExistingEpisode) {
+        manageEpisodeEntries::editEpisode($db, $episodeObject);
+        header('Location: add-segments.php');
+
     } else {
-        error_log("Episode is valid!");
         $playlistId = managePlaylistEntries::createNewPlaylist($db);
         $episodeObject->setPlaylist(new Playlist($db, $playlistId));
 
@@ -110,6 +112,39 @@ function getDateTimeFromDateString($dateString) {
     }
 }
 
+
+
+/**
+ * @param $db
+ * @param Episode $episodeObject
+ * @param $programId
+ * @param $programmer
+ * @param $episodeStartTime
+ * @param $episodeEndTime
+ * @param $prerecord
+ * @param $prerecordDate
+ * @param $notes
+ * @return Episode
+ */
+function fillEpisodeObject($db, $episodeObject, $programId, $programmer, $episodeStartTime, $episodeEndTime, $prerecord, $prerecordDate, $notes) {
+
+    $episodeObject->setProgram(new Program($db, $programId));
+    $episodeObject->setProgrammer($programmer);
+
+    $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
+    $episodeObject->setStartTime($episodeStartTime);
+
+    $episodeEndTime = getDateTimeFromDateTimeString($episodeEndTime);
+    $episodeObject->setEndTime($episodeEndTime);
+
+    $episodeObject->setIsPrerecord($prerecord);
+    $prerecordDate = getDateTimeFromDateString($prerecordDate);
+    $episodeObject->setPrerecordDate($prerecordDate);
+
+    $episodeObject->setNotes($notes);
+    return $episodeObject;
+}
+
 function getDateTimeFromDateTimeString($dateString) {
     $d = new DateTime($dateString);
     //$d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
@@ -135,6 +170,8 @@ function computeEpisodeEndTime($episodeStartTime, $episodeDurationHours) {
 
     return $episodeEndTime;
 }
+
+
 
 
 

@@ -50,11 +50,6 @@ class SegmentValidator {
     public function isSegmentValidForDraftSave() {
         $errors = new SaveSegmentErrors();
 
-        $this->isCategoryValid($errors);
-        $this->isStartTimeDataAValidTime($errors);
-        $this->isStartTimeWithinEpisodeBounds($errors);
-        $this->areRequiredCategoryFieldsPresent($errors);
-
         return $errors;
     }
 
@@ -67,10 +62,12 @@ class SegmentValidator {
     public function isSegmentValidForFinalSave() {
         $errors = $this->isSegmentValidForDraftSave();
 
-        // TODO: check for Segment duration
+        $this->isCategoryValid($errors);
+        $this->isStartTimeDataAValidTime($errors);
+        $this->isStartTimeWithinEpisodeBounds($errors);
+        $this->areRequiredCategoryFieldsPresent($errors);
 
         return $errors;
-
     }
 
     /**

@@ -24,11 +24,26 @@ class writeToDatabase {
         public static function writeEntryToDatabase($dbConn, $tableName, $columnNames, $valuesToWrite)
         {
             try {
-                $columnNamesString = "(" . implode(",", $columnNames) . ")";
-                $valuesToWriteString = "('" . implode("','", $valuesToWrite) . "')";
+                $columnNamesString = "(" . implode(", ", $columnNames) . ")";
+                $valuesToWriteString = "(";
+
+                for ($valueIndex = 0; $valueIndex < count($valuesToWrite); $valueIndex++) {
+                    $valueToWrite = $valuesToWrite[$valueIndex];
+
+                    if (is_null($valueToWrite)) {
+                        $valuesToWriteString .= "NULL";
+                    } else {
+                        $valuesToWriteString .= "'" . $valueToWrite . "'";
+                    }
+
+                    if ($valueIndex < (count($valuesToWrite) - 1)) {
+                        $valuesToWriteString .= ", \n";
+                    }
+                }
+
+                $valuesToWriteString .= ")";
 
                 $query = "INSERT INTO " . $tableName . " " . $columnNamesString . " VALUES " . $valuesToWriteString;
-
                 $dbConn->exec($query);
 
                 return $dbConn->lastInsertId();
@@ -43,8 +58,16 @@ class writeToDatabase {
             try {
 
                 $query = "UPDATE " . $tableName . " SET ";
-                    for($i = 0; $i < count($columnNames); $i++) {
-                        $query .= $columnNames[$i] . "=" . "'" . $valuesToWrite[$i] . "'";
+                    for ($i = 0; $i < count($columnNames); $i++) {
+                        $query .= $columnNames[$i] . "=";
+
+                        $valueToWrite = $valuesToWrite[$i];
+                        if (is_null($valuesToWrite[$i])) {
+                            $query .= "NULL";
+                        } else {
+                            $query .= "'" . $valuesToWrite[$i] . "'";
+                        }
+
 
                         if ($i < count($columnNames) - 1) {
                             $query .= ", \n";

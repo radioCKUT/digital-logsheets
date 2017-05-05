@@ -57,7 +57,16 @@ include_once("readFromDatabase.php");
          * @return bool
          */
         public static function sortSegmentsByStartTime($a, $b) {
-            return ($a->getStartTime() > $b->getStartTime());
+            $aStartTime = $a->getStartTime();
+            $bStartTime = $b->getStartTime();
+
+            if (($aStartTime == null && $bStartTime == null) || $aStartTime == $bStartTime) {
+                return ($a->getId() > $b->getId());
+
+            } else {
+                return ($aStartTime > $bStartTime);
+            }
+
         }
 
         public static function createNewPlaylist($dbConn){

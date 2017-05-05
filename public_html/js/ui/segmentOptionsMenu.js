@@ -18,6 +18,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+function generateOptionsButton() {
+    var button = $('<button class="btn btn-default btn-xs dropdown-toggle" type="button" ' +
+        'id="dropdownMenu1" data-toggle="dropdown" ' +
+        'aria-haspopup="true" aria-expanded="true">');
+    var dropdown = $('<span class="glyphicon glyphicon-option-vertical" aria-hidden="true">');
+
+    return button.append(dropdown);
+}
+
 function generateDeleteButton(segment_id) {
     var li =  $(document.createElement("li"));
     li.append('<a href="#" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>');

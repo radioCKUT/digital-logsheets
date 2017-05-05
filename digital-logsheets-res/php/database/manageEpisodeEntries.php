@@ -84,16 +84,14 @@ include_once("readFromDatabase.php");
         public static function getAllEpisodesFromDatabase($dbConn) {
             $episodeIds = readFromDatabase::readEntireColumnFromTable($dbConn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);
 
-            $episodes = array();
+            return self::buildEpisodeObjectsFromIds($dbConn, $episodeIds);
+        }
 
-            if(count($episodeIds)) {
-                foreach($episodeIds as $episodeRow) {
-                    $episode = new Episode($dbConn, $episodeRow[self::ID_COLUMN_NAME]);
-                    $episodes[$episode->getId()] = $episode;
-                }
-            }
+        public static function getAllDraftEpisodesFromDatabase($dbConn) {
+            $episodeIds = readFromDatabase::readFilteredColumnFromTable($dbConn, array(self::ID_COLUMN_NAME),
+                self::TABLE_NAME, array(self::IS_DRAFT_COLUMN_NAME), array(1));
 
-            return $episodes;
+            return self::buildEpisodeObjectsFromIds($dbConn, $episodeIds);
         }
 
         /**
@@ -103,6 +101,58 @@ include_once("readFromDatabase.php");
          */
         public static function saveNewEpisode($dbConn, $episodeObject) {
 
+            list($columnNames, $values) = self::processEpisodeForWrite($episodeObject);
+
+            return writeToDatabase::writeEntryToDatabase($dbConn, self::TABLE_NAME, $columnNames, $values);
+        }
+
+        /**
+         * @param PDO $dbConn
+         * @param Episode $episodeObject
+         * @return null
+         */
+        public static function editEpisode($dbConn, $episodeObject) {
+
+            list($columnNames, $values) = self::processEpisodeForWrite($episodeObject);
+
+            return writeToDatabase::editDatabaseEntry($dbConn, $episodeObject->getId(), self::TABLE_NAME, $columnNames, $values);
+        }
+
+
+
+
+
+
+        public static function turnOffEpisodeDraftStatus($dbConn, $episodeObject) {
+            $columnNames = array(self::IS_DRAFT_COLUMN_NAME);
+            $values = array("false");
+
+            return writeToDatabase::editDatabaseEntry($dbConn, $episodeObject->getId(), self::TABLE_NAME, $columnNames, $values);
+        }
+
+        /**
+         * @param $dbConn
+         * @param $episodeIds
+         * @return array
+         */
+        private static function buildEpisodeObjectsFromIds($dbConn, $episodeIds) {
+            $episodes = array();
+
+            if (count($episodeIds)) {
+                foreach ($episodeIds as $episodeRow) {
+                    $episode = new Episode($dbConn, $episodeRow[self::ID_COLUMN_NAME]);
+                    $episodes[$episode->getId()] = $episode;
+                }
+            }
+
+            return $episodes;
+        }
+
+        /**
+         * @param $episodeObject
+         * @return array
+         */
+        private static function processEpisodeForWrite($episodeObject) {
             $columnNames = array(self::PLAYLIST_COLUMN_NAME,
                 self::PROGRAM_COLUMN_NAME,
                 self::PROGRAMMER_COLUMN_NAME,
@@ -126,15 +176,7 @@ include_once("readFromDatabase.php");
                 $prerecordDateTimeObject,
                 $episodeObject->getNotes(),
                 true);
-
-            return writeToDatabase::writeEntryToDatabase($dbConn, self::TABLE_NAME, $columnNames, $values);
-        }
-
-        public static function turnOffEpisodeDraftStatus($dbConn, $episodeObject) {
-            $columnNames = array(self::IS_DRAFT_COLUMN_NAME);
-            $values = array("false");
-
-            return writeToDatabase::editDatabaseEntry($dbConn, $episodeObject->getId(), self::TABLE_NAME, $columnNames, $values);
+            return array($columnNames, $values);
         }
 
     }
