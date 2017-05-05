@@ -1,5 +1,5 @@
 /*
- * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.    
+ * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
  *
@@ -19,10 +19,19 @@
 
 const MAX_STRING_LENGTH = 10;
 
+function getBaseUrl() {
+    var url = window.location.href;
+    var lastSlashIndex = url.lastIndexOf("/");
+
+    return url.substr(0, lastSlashIndex);
+}
+
 function getEpisodeSegments() {
+    var baseUrl = getBaseUrl();
+
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/get-episode-data.php",
+        url: baseUrl + "/get-episode-data.php",
         data: $('#logsheet').serialize(),
         success: receiveSegmentsSuccess,
         error: receiveSegmentsError
@@ -35,10 +44,11 @@ function createSegment() {
 }
 
 function sendRequestToSaveSegment(dataToSend) {
+    var baseUrl = getBaseUrl();
+
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/save-segment.php",
-        dataType: "json",
+        url: baseUrl + "/save-segment.php",
         data: dataToSend,
         success: receiveSegmentsSuccess,
         error: receiveSegmentsError
