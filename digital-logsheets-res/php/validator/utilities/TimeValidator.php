@@ -23,6 +23,10 @@ class TimeValidator {
         const MINUTES_IN_DAY = 1440; // 24 * 60
 
         public static function isTimeInValidFormat($time) {
+            if ($time == "") {
+                return false;
+            }
+
             $dateTime = new DateTime($time);
 
             return !$dateTime ? false : true;

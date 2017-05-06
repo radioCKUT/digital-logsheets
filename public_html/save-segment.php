@@ -181,9 +181,6 @@ function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
     $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
 
     if (!TimeValidator::isTimeInValidFormat($segmentTime)) {
-        /*$errorsContainer = new SaveSegmentErrors();
-        $errorsContainer->markStartTimeInvalidFormat();
-        outputErrorResponse($errorsContainer->getAllErrors());*/
         return null;
     }
 
