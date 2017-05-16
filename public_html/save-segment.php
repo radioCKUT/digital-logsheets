@@ -185,7 +185,7 @@ function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
 
     if (strtotime($segmentTime) < strtotime($episodeStartTimeString)) {
         $dayAfterEpisodeStartDateTime = clone $episodeStartDateTime;
-        $dayAfterEpisodeStartDateTime->add(new DateInterval('P1D'));
+        $dayAfterEpisodeStartDateTime->modify('+1 day');
         $dateToUse = $dayAfterEpisodeStartDateTime->format("Y-m-d");
     }
     
