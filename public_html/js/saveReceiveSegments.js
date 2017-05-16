@@ -49,6 +49,7 @@ function sendRequestToSaveSegment(dataToSend) {
     $.ajax({
         type: "POST",
         url: baseUrl + "/save-segment.php",
+        dataType: "json",
         data: dataToSend,
         success: receiveSegmentsSuccess,
         error: receiveSegmentsError
