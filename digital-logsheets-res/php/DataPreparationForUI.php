@@ -19,6 +19,7 @@
  */
 
 include_once("database/manageProgramEntries.php");
+include_once("objects/logsheetClasses.php");
 
 function getSelect2ProgramsList($db) {
     $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
@@ -41,7 +42,6 @@ function getSelect2ProgramsList($db) {
 
 /**
  * @param Episode $episode
- * @param int $duration
  * @return array
  */
 function getFormSubmissionArray($episode) {
@@ -59,7 +59,7 @@ function getFormSubmissionArray($episode) {
 }
 
 /**
- * @param Episode episode
+ * @param Episode $episode
  * @return String
  */
 function getSegmentListWithErrors($episode) {

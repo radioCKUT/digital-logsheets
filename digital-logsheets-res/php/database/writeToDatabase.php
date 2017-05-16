@@ -43,6 +43,7 @@ class writeToDatabase {
                 $valuesToWriteString .= ")";
 
                 $query = "INSERT INTO " . $tableName . " " . $columnNamesString . " VALUES " . $valuesToWriteString;
+
                 $dbConn->exec($query);
 
                 return $dbConn->lastInsertId();

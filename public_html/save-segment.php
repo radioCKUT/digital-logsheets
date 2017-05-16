@@ -68,7 +68,6 @@ try {
             $segment->setName($name);
             $segment->setAuthor($author);
             $segment->setAlbum($album);
-            $segment->setCategory($category);
             $segment->setIsCanCon($canCon);
             $segment->setIsNewRelease($newRelease);
             $segment->setIsFrenchVocalMusic($frenchVocalMusic);
