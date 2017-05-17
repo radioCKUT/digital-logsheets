@@ -185,7 +185,7 @@ include_once("readFromDatabase.php");
          * @return int
          */
         public static function saveNewSegmentToDatabase($dbConn, $segmentObject) {
-            $query = "INSERT INTO " . self::getColumnsQuerySection() . " VALUES " . self::getValuesQuerySection();
+            $query = "INSERT INTO " . self::TABLE_NAME . " " . self::getColumnsQuerySection() . " VALUES " . self::getValuesQuerySection();
             $stmt = $dbConn->prepare($query);
 
             $stmt = self::bindParams($stmt, $segmentObject);
@@ -194,7 +194,7 @@ include_once("readFromDatabase.php");
 
             managePlaylistEntries::addSegmentToDatabasePlaylist($dbConn, $segmentObject->getPlaylistId(), $segmentId);
 
-            return $segmentId;
+            return $stmt->queryString;
         }
 
         /**
@@ -246,6 +246,7 @@ include_once("readFromDatabase.php");
          */
         private static function bindParams($stmt, $segmentObject) {
             $startTime = $segmentObject->getStartTime();
+            $startTime = formatDateTimeStringForDatabaseWrite($startTime);
             $stmt->bindParam(self::START_TIME_PARAMETER, $startTime);
 
             $duration = $segmentObject->getDuration();
