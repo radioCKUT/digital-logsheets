@@ -185,7 +185,7 @@ include_once("readFromDatabase.php");
          * @return int
          */
         public static function saveNewSegmentToDatabase($dbConn, $segmentObject) {
-            $query = "INSERT INTO " . self::TABLE_NAME . " " . self::getColumnsQuerySection() . " VALUES " . self::getValuesQuerySection();
+            $query = "INSERT INTO " . self::TABLE_NAME . " " . self::getColumnsQuerySection() . " VALUES " . self::getValuesQuerySection() . ";";
             $stmt = $dbConn->prepare($query);
 
             $stmt = self::bindParams($stmt, $segmentObject);
