@@ -194,7 +194,7 @@ include_once("readFromDatabase.php");
 
             managePlaylistEntries::addSegmentToDatabasePlaylist($dbConn, $segmentObject->getPlaylistId(), $segmentId);
 
-            return $stmt->queryString;
+            return $segmentId;
         }
 
         /**
