@@ -28,6 +28,7 @@ include_once("readFromDatabase.php");
         const TABLE_NAME = "segment";
 
         const ID_COLUMN_NAME = "id";
+        const ID_PARAMETER = ":id";
 
         const SEGMENT_NAME_COLUMN_NAME = "name";
         const SEGMENT_NAME_PARAMETER = ":name";
@@ -171,10 +172,17 @@ include_once("readFromDatabase.php");
          *
          */
         public static function editExistingSegmentDuration($dbConn, $segmentObject) {
-            $columnNames = array(self::DURATION_COLUMN_NAME);
-            $values = array($segmentObject->getDuration());
+            $duration = $segmentObject->getDuration();
 
-            writeToDatabase::editDatabaseEntry($dbConn, $segmentObject->getId(), self::TABLE_NAME, $columnNames, $values);
+            $query = "UPDATE " . self::TABLE_NAME . " SET " . self::DURATION_COLUMN_NAME . " = " .
+                $duration . " WHERE id=" . self::ID_PARAMETER . ";";
+
+            $stmt = $dbConn->prepare($query);
+
+            $segmentId = $segmentObject->getId();
+            $stmt->bindParam(self::ID_PARAMETER, $segmentId);
+
+            $stmt->execute();
         }
 
         /**
@@ -203,9 +211,27 @@ include_once("readFromDatabase.php");
          */
         public static function editSegmentInDatabase($dbConn, $segmentObject)
         {
-            list($columnNames, $values) = self::processSegmentForWrite($segmentObject);
+            $query = "UPDATE " . self::TABLE_NAME . " SET " .
+                self::START_TIME_COLUMN_NAME . "=" . self::START_TIME_PARAMETER . ", " .
+                self::DURATION_COLUMN_NAME . "=" . self::DURATION_PARAMETER . ", " .
+                self::SEGMENT_NAME_COLUMN_NAME . "=" . self::SEGMENT_NAME_PARAMETER . ", " .
+                self::AUTHOR_COLUMN_NAME . "=" . self::AUTHOR_PARAMETER . ", " .
+                self::ALBUM_COLUMN_NAME . "=" . self::ALBUM_PARAMETER . ", " .
+                self::CATEGORY_COLUMN_NAME . "=" . self::CATEGORY_PARAMETER . ", " .
+                self::AD_NUMBER_COLUMN_NAME . "=" . self::AD_NUMBER_PARAMETER . ", " .
+                self::STATION_ID_COLUMN_NAME . "=" . self::STATION_ID_PARAMETER . ", " .
+                self::CAN_CON_COLUMN_NAME . "=" . self::CAN_CON_PARAMETER . ", " .
+                self::NEW_RELEASE_COLUMN_NAME . "=" . self::NEW_RELEASE_PARAMETER . ", " .
+                self::FRENCH_VOCAL_MUSIC_COLUMN_NAME . "=" . self::FRENCH_VOCAL_MUSIC_PARAMETER .
+                " WHERE id=" . self::ID_PARAMETER . ";";
 
-            writeToDatabase::editDatabaseEntry($dbConn, $segmentObject->getId(), self::TABLE_NAME, $columnNames, $values);
+            $stmt = $dbConn->prepare($query);
+
+            $stmt = self::bindParams($stmt, $segmentObject);
+            $segmentId = $segmentObject->getId();
+            $stmt->bindParam(self::ID_PARAMETER, $segmentId);
+
+            $stmt->execute();
         }
 
         private static function getColumnsQuerySection() {
@@ -299,8 +325,6 @@ include_once("readFromDatabase.php");
                 self::CAN_CON_COLUMN_NAME,
                 self::NEW_RELEASE_COLUMN_NAME,
                 self::FRENCH_VOCAL_MUSIC_COLUMN_NAME);
-
-
 
             $startDateString = formatDatetimeStringForDatabaseWrite($segmentObject->getStartTime());
 
