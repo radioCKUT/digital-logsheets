@@ -19,7 +19,7 @@ if (!empty($_POST['loginSubmit']))
 		$uid=$userClass->userLogin($username,$password);
 		if($uid)
 		{
-			$url='index_test.php';
+			$url='index.php';
 			header("Location: $url");
 		}
 		else
