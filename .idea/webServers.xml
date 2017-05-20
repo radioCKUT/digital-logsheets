@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="8513095e-e0a4-45b0-8cc8-2d7d2ff89528" name="MAMP" url="http://localhost:8888">
+        <fileTransfer port="0" mountedRoot="/Applications/MAMP" accessType="MOUNT" />
+      </webServer>
+      <webServer id="adb838c8-efe9-4a37-a8d9-9dcf199314ab" name="CKUT" url="http://logsheets.ckut.ca/">
+        <fileTransfer host="phase.ckut.ca" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
