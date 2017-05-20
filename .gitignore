@@ -1,5 +1,12 @@
-#phpStorm-specific data
+#PhpStorm-specific data
 **/.idea/**
 
 #database credentials that depend on local machine
 digital-logsheets-res/php/database/databaseLogin.php
+
+#Compiled Smarty templates
+**/templates_c
+
+#Docker-related files for Donghee's use
+**/Dockerfile
+**/docker-compose.yml
