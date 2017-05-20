@@ -223,7 +223,7 @@ include_once("readFromDatabase.php");
                 self::CAN_CON_COLUMN_NAME . "=" . self::CAN_CON_PARAMETER . ", " .
                 self::NEW_RELEASE_COLUMN_NAME . "=" . self::NEW_RELEASE_PARAMETER . ", " .
                 self::FRENCH_VOCAL_MUSIC_COLUMN_NAME . "=" . self::FRENCH_VOCAL_MUSIC_PARAMETER .
-                " WHERE id=" . self::ID_PARAMETER . ";";
+                " WHERE " . self::ID_COLUMN_NAME . "=" . self::ID_PARAMETER . ";";
 
             $stmt = $dbConn->prepare($query);
 
