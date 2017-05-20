@@ -22,3 +22,6 @@ digital-logsheets-res/php/database/databaseLogin.php
 #Docker-related files for Donghee's use
 **/Dockerfile
 **/docker-compose.yml
+
+#In-progress modifications to schema that would add user tables
+/db/logsheets_add_user_password.sql
