@@ -185,7 +185,6 @@ include_once("readFromDatabase.php");
          * @return array
          */
         private static function processSegmentForWrite($segmentObject) {
-            $startDateString = formatDatetimeStringForDatabaseWrite($segmentObject->getStartTime());
 
             $columnNames = array(self::START_TIME_COLUMN_NAME,
                 self::DURATION_COLUMN_NAME,
@@ -199,10 +198,16 @@ include_once("readFromDatabase.php");
                 self::NEW_RELEASE_COLUMN_NAME,
                 self::FRENCH_VOCAL_MUSIC_COLUMN_NAME);
 
+
+
+            $startDateString = formatDatetimeStringForDatabaseWrite($segmentObject->getStartTime());
+
             $adNumber = $segmentObject->getAdNumber();
             if ($adNumber == '') {
                 $adNumber = null;
             }
+
+
 
             $values = array($startDateString,
                 $segmentObject->getDuration(),

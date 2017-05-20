@@ -23,17 +23,13 @@ class TimeValidator {
         const MINUTES_IN_DAY = 1440; // 24 * 60
 
         public static function isTimeInValidFormat($time) {
-            $dateTime = DateTime::createFromFormat('H:i', $time);
-            if (!$dateTime) {
+            if ($time == "") {
                 return false;
             }
 
-            $errors = DateTime::getLastErrors();
-            if (!empty($errors['warning_count'])) {
-                return false;
-            }
+            $dateTime = new DateTime($time);
 
-            return true;
+            return !$dateTime ? false : true;
         }
 
 
