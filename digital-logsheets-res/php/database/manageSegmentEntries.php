@@ -291,6 +291,9 @@ include_once("readFromDatabase.php");
             $stmt->bindParam(self::CATEGORY_PARAMETER, $category);
 
             $adNumber = $segmentObject->getAdNumber();
+            if ($adNumber == '') {
+                $adNumber = null;
+            }
             $stmt->bindParam(self::AD_NUMBER_PARAMETER, $adNumber);
 
             $stationIDGiven = $segmentObject->wasStationIdGiven();
@@ -308,47 +311,7 @@ include_once("readFromDatabase.php");
             return $stmt;
         }
 
-        /**
-         * @param Segment $segmentObject
-         * @return array
-         */
-        private static function processSegmentForWrite($segmentObject) {
 
-            $columnNames = array(self::START_TIME_COLUMN_NAME,
-                self::DURATION_COLUMN_NAME,
-                self::SEGMENT_NAME_COLUMN_NAME,
-                self::AUTHOR_COLUMN_NAME,
-                self::ALBUM_COLUMN_NAME,
-                self::CATEGORY_COLUMN_NAME,
-                self::AD_NUMBER_COLUMN_NAME,
-                self::STATION_ID_COLUMN_NAME,
-                self::CAN_CON_COLUMN_NAME,
-                self::NEW_RELEASE_COLUMN_NAME,
-                self::FRENCH_VOCAL_MUSIC_COLUMN_NAME);
-
-            $startDateString = formatDatetimeStringForDatabaseWrite($segmentObject->getStartTime());
-
-            $adNumber = $segmentObject->getAdNumber();
-            if ($adNumber == '') {
-                $adNumber = null;
-            }
-
-
-
-            $values = array($startDateString,
-                $segmentObject->getDuration(),
-                $segmentObject->getName(),
-                $segmentObject->getAuthor(),
-                $segmentObject->getAlbum(),
-                $segmentObject->getCategory(),
-                $adNumber,
-                $segmentObject->wasStationIdGiven(),
-                $segmentObject->isCanCon(),
-                $segmentObject->isNewRelease(),
-                $segmentObject->isFrenchVocalMusic());
-
-            return array($columnNames, $values);
-        }
 
         public static function deleteSegmentFromDatabase($dbConn, $segmentId) {
             writeToDatabase::deleteDatabaseEntry($dbConn, $segmentId, self::TABLE_NAME);
