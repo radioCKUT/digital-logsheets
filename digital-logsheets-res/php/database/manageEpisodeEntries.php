@@ -29,16 +29,35 @@ include_once("readFromDatabase.php");
         const TABLE_NAME = "episode";
 
         const ID_COLUMN_NAME = "id";
+        const ID_PARAMETER = ":id";
+
         const PROGRAM_COLUMN_NAME = "program";
+        const PROGRAM_PARAMETER = ":program";
+
         const PLAYLIST_COLUMN_NAME = "playlist";
+        const PLAYLIST_PARAMETER = ":playlist";
+
         const PROGRAMMER_COLUMN_NAME = "programmer";
+        const PROGRAMMER_PARAMETER = ":programmer";
+
         const START_TIME_COLUMN_NAME = "start_time";
+        const START_TIME_PARAMETER = ":start_time";
+
         const END_TIME_COLUMN_NAME = "end_time";
+        const END_TIME_PARAMETER = ":end_time";
 
         const IS_PRERECORD_COLUMN_NAME = "prerecord";
-        const PRERECORD_COLUMN_NAME = "prerecord_date";
+        const IS_PRERECORD_PARAMETER = ":prerecord";
+
+        const PRERECORD_DATE_COLUMN_NAME = "prerecord_date";
+        const PRERECORD_DATE_PARAMETER = ":prerecord_date";
+
+
         const IS_DRAFT_COLUMN_NAME = "draft";
+        const IS_DRAFT_PARAMETER = ":draft";
+
         const NOTES_COLUMN_NAME = "comment";
+        const NOTES_PARAMETER = ":comment";
 
         /**
          * @param PDO $dbConn
@@ -66,7 +85,7 @@ include_once("readFromDatabase.php");
             $endDateTime = formatDateTimeStringFromDatabase($endTimeString);
             $episodeObject->setEndTime($endDateTime);
 
-            $prerecordDate = $databaseResults[self::PRERECORD_COLUMN_NAME];
+            $prerecordDate = $databaseResults[self::PRERECORD_DATE_COLUMN_NAME];
             $prerecordDate = new DateTime($prerecordDate);
             $episodeObject->setPrerecordDate($prerecordDate);
 
@@ -96,13 +115,17 @@ include_once("readFromDatabase.php");
         /**
          * @param PDO $dbConn
          * @param Episode $episodeObject
-         * @return null
+         * @return int
          */
         public static function saveNewEpisode($dbConn, $episodeObject) {
+            $query = "INSERT INTO " . self::TABLE_NAME . " " . self::getEpisodeColumnsSection() .
+                " VALUES " . self::getEpisodeValuesSection() . ";";
 
-            list($columnNames, $values) = self::processEpisodeForWrite($episodeObject);
+            $stmt = $dbConn->prepare($query);
+            $stmt = self::bindEpisodeParams($stmt, $episodeObject);
+            $stmt->execute();
 
-            return writeToDatabase::writeEntryToDatabase($dbConn, self::TABLE_NAME, $columnNames, $values);
+            return $dbConn->lastInsertId();
         }
 
         /**
@@ -116,7 +139,6 @@ include_once("readFromDatabase.php");
 
             return writeToDatabase::editDatabaseEntry($dbConn, $episodeObject->getId(), self::TABLE_NAME, $columnNames, $values);
         }
-
 
 
 
@@ -148,7 +170,7 @@ include_once("readFromDatabase.php");
         }
 
         /**
-         * @param $episodeObject
+         * @param Episode $episodeObject
          * @return array
          */
         private static function processEpisodeForWrite($episodeObject) {
@@ -158,7 +180,7 @@ include_once("readFromDatabase.php");
                 self::START_TIME_COLUMN_NAME,
                 self::END_TIME_COLUMN_NAME,
                 self::IS_PRERECORD_COLUMN_NAME,
-                self::PRERECORD_COLUMN_NAME,
+                self::PRERECORD_DATE_COLUMN_NAME,
                 self::NOTES_COLUMN_NAME,
                 self::IS_DRAFT_COLUMN_NAME);
 
@@ -176,6 +198,74 @@ include_once("readFromDatabase.php");
                 $episodeObject->getNotes(),
                 true);
             return array($columnNames, $values);
+        }
+
+        private static function getEpisodeColumnsSection() {
+            return "(" .
+                self::PLAYLIST_COLUMN_NAME . ", " .
+                self::PROGRAM_COLUMN_NAME . ", " .
+                self::PROGRAMMER_COLUMN_NAME . ", " .
+                self::START_TIME_COLUMN_NAME . ", " .
+                self::END_TIME_COLUMN_NAME . ", " .
+                self::IS_PRERECORD_COLUMN_NAME . ", " .
+                self::PRERECORD_DATE_COLUMN_NAME . ", " .
+                self::NOTES_COLUMN_NAME . ", " .
+                self::IS_DRAFT_COLUMN_NAME . ")";
+        }
+
+        private static function getEpisodeValuesSection() {
+            return "(" .
+                self::PLAYLIST_PARAMETER . ", " .
+                self::PROGRAM_PARAMETER . ", " .
+                self::PROGRAMMER_PARAMETER . ", " .
+                self::START_TIME_PARAMETER . ", " .
+                self::END_TIME_PARAMETER . ", " .
+                self::IS_PRERECORD_PARAMETER . ", " .
+                self::PRERECORD_DATE_PARAMETER . ", " .
+                self::NOTES_PARAMETER . ", " .
+                self::IS_DRAFT_PARAMETER . ")";
+        }
+
+        /**
+         * @param PDOStatement $stmt
+         * @param Episode $episodeObject
+         * @return PDOStatement
+         */
+        private static function bindEpisodeParams($stmt, $episodeObject) {
+            $playlist = $episodeObject->getPlaylistId();
+            $stmt->bindParam(self::PLAYLIST_PARAMETER, $playlist);
+
+            $program = $episodeObject->getProgram();
+            if ($program != null) {
+                $program = $program->getId();
+            }
+            $stmt->bindParam(self::PROGRAM_PARAMETER, $program);
+
+            $programmer = $episodeObject->getProgrammer();
+            $stmt->bindParam(self::PROGRAMMER_PARAMETER, $programmer);
+
+            $startTime = $episodeObject->getStartTime();
+            $startTime = formatDatetimeStringForDatabaseWrite($startTime);
+            $stmt->bindParam(self::START_TIME_PARAMETER, $startTime);
+
+            $endTime = $episodeObject->getEndTime();
+            $endTime = formatDatetimeStringForDatabaseWrite($endTime);
+            $stmt->bindParam(self::END_TIME_PARAMETER, $endTime);
+
+            $isPrerecord = $episodeObject->isPrerecord();
+            $isPrerecord = formatDateStringForDatabaseWrite($isPrerecord);
+            $stmt->bindParam(self::IS_PRERECORD_PARAMETER, $isPrerecord);
+
+            $prerecord = $episodeObject->getPrerecordDate();
+            $stmt->bindParam(self::PRERECORD_DATE_PARAMETER, $prerecord);
+
+            $notes = $episodeObject->getNotes();
+            $stmt->bindParam(self::NOTES_PARAMETER, $notes);
+
+            $isDraft = $episodeObject->isDraft();
+            $stmt->bindParam(self::IS_DRAFT_PARAMETER, $isDraft);
+
+            return $stmt;
         }
 
     }
