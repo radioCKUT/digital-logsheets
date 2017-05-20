@@ -5,7 +5,7 @@ session_start();
 include("../digital-logsheets-res/php/database/connectToDatabase.php");
 include('../digital-logsheets-res/php/objects/User.php');
 
-$userClass = new user();
+$userClass = new User();
 $errorMsgReg='';
 $errorMsgLogin='';
 

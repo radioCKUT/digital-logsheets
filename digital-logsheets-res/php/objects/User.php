@@ -17,7 +17,7 @@ class User
      */
     public function userLogin($username, $password)
     {
-        try{
+        try {
             $db = getPDOStatementWithLogin();
             //$hash_password=hash('admin1234', $password); //Password encryption
             //$stmt = $db->prepare("SELECT username FROM user WHERE username=:username AND password=:hash_password");
@@ -28,16 +28,16 @@ class User
 
             //$stmt->bindParam("hash_password", $hash_password,PDO::PARAM_STR) ;
             $stmt->execute();
-            $count=$stmt->rowCount();
-            $data=$stmt->fetch(PDO::FETCH_OBJ);
+            $count = $stmt->rowCount();
+
             $db = null;
-            if($count)
-            {
-                $_SESSION['username']=$data->username; // Storing user session value
+
+            if ($count) {
+                $data = $stmt->fetch(PDO::FETCH_OBJ);
+                $_SESSION['username'] = $data->username; // Storing user session value
                 return true;
-            }
-            else
-            {
+
+            } else {
                 return false;
             }
         }
