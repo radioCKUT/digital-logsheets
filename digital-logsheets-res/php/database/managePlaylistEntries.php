@@ -19,7 +19,6 @@
  */
 
 include_once("readFromDatabase.php");
-    include_once("writeToDatabase.php");
     include_once(dirname(__FILE__) . "/../objects/logsheetClasses.php");
 
     class managePlaylistEntries {
