@@ -48,24 +48,14 @@
 
             $('#logsheet').on('submit', function(e) {
                 e.preventDefault();
-                var logsheetForm = $(e.delegateTarget);
-                var timeGroup = logsheetForm.find('.time_group');
-
-                //if (verifySegmentStartTime(timeGroup, episode)) {
-                    createSegment();
-                //}
+                createSegment();
             });
 
             var logsheetEdit = $('#logsheet_edit');
 
             logsheetEdit.on('submit', function(e) {
                 e.preventDefault();
-                var logsheetForm = $(e.delegateTarget);
-                var timeGroup = logsheetForm.find('.time_group');
-
-                //if (verifySegmentStartTime(timeGroup, episode)) {
-                    editEpisodeSegment();
-                //}
+                editEpisodeSegment();
             });
 
             logsheetEdit.hide();
