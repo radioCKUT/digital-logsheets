@@ -64,7 +64,8 @@
          * @param Episode $episodeObject
          */
         public static function getEpisodeAttributesFromDatabase($dbConn, $episodeId, $episodeObject) {
-            $databaseResults = readFromDatabase::readFilteredColumnFromTable($dbConn, null, self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($episodeId));
+            $databaseResults = readFromDatabase::readFilteredColumnFromTable($dbConn, null,
+                self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($episodeId));
             $databaseResults = $databaseResults[0];
 
             $programId = $databaseResults[self::PROGRAM_COLUMN_NAME];
@@ -99,7 +100,8 @@
         }
 
         public static function getAllEpisodesFromDatabase($dbConn) {
-            $episodeIds = readFromDatabase::readEntireColumnFromTable($dbConn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);
+            $episodeIds = readFromDatabase::readEntireColumnFromTable($dbConn, array(self::ID_COLUMN_NAME),
+                self::TABLE_NAME);
 
             return self::buildEpisodeObjectsFromIds($dbConn, $episodeIds);
         }
