@@ -72,7 +72,7 @@ $draftEpisodeId = $_GET['draftEpisodeId'];
         if (isset($formSubmission)) {
             $smarty->assign("formSubmission", $formSubmission);
 
-        } else if (isset($draftEpisodeId)) {
+        } else if (isset($draftEpisodeId) && $draftEpisodeId) {
             $draftEpisode = new Episode($db, $draftEpisodeId);
             $draftEpisodeArray = getFormSubmissionArray($draftEpisode);
             $smarty->assign("formSubmission", $draftEpisodeArray);
