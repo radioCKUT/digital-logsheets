@@ -66,12 +66,17 @@
          * @var boolean
          */
         private $isDraft;
+
+        /**
+         * @var boolean
+         */
+        private $doesEpisodeExist = false;
         
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
             if ($this->id != null) {
-                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $this->id, $this);
+                $doesEpisodeExist = manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $this->id, $this);
             }
         }
 
@@ -123,6 +128,10 @@
             } else {
                 $this->isDraft = true;
             }
+        }
+
+        public function setDoesEpisodeExist($doesEpisodeExist) {
+            $this->doesEpisodeExist = $doesEpisodeExist;
         }
 
         public function jsonSerialize() {
@@ -247,6 +256,10 @@
 
         public function isDraft() {
             return $this->isDraft;
+        }
+
+        public function doesEpisodeExist() {
+            return $this->doesEpisodeExist;
         }
 
         /**
