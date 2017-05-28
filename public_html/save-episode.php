@@ -80,15 +80,14 @@ try {
 
     } else if ($isExistingEpisode) {
         manageEpisodeEntries::editEpisode($db, $episodeObject);
-        header('Location: add-segments.php');
+        header('Location: add-segments.php?epId=' . $existingEpisodeId);
 
     } else {
         $playlistId = managePlaylistEntries::createNewPlaylist($db);
         $episodeObject->setPlaylist(new Playlist($db, $playlistId));
 
         $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
-        $_SESSION["episodeId"] = intval($episodeId);
-        header('Location: add-segments.php');
+        header('Location: add-segments.php?epId=' . $episodeId);
     }
 
 

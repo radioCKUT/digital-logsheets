@@ -36,7 +36,8 @@
         <input type="submit"/>
     </form>
 
-    <form class="backward_form" action="add-segments.php">
+    <form class="backward_form" action="add-segments.php" method="get">
+        <input type="hidden" name="epId" value="{$episodeId}" />
         <input type="submit" value="Back to Add Segments"/>
     </form>
 

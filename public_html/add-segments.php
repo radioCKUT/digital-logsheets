@@ -30,7 +30,8 @@
 
     session_start();
 
-$formErrors = $_GET['formErrors'];
+    $formErrors = $_GET['formErrors'];
+    $episodeId = intval($_GET['epId']);
 
     //database interactions
     try {
@@ -43,7 +44,6 @@ $formErrors = $_GET['formErrors'];
         $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
         $smarty->assign("programs", $programs);
 
-        $episodeId = $_SESSION['episodeId'];
         $episode = new Episode($db, $episodeId);
         $episodeArray = $episode->getObjectAsArray();
         $smarty->assign("episode", $episodeArray);

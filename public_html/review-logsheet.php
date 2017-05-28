@@ -36,7 +36,7 @@ try {
     //connect to database
     $db = connectToDatabase();
 
-    $episodeId = $_SESSION['episodeId'];
+    $episodeId = $_POST['epId'];
 
     $episode = new Episode($db, $episodeId);
 
@@ -90,6 +90,7 @@ try {
     //close database connection
     $db = NULL;
 
+    $smarty->assign("episodeId", $episodeId);
     $smarty->assign("episode", $episodeAsArray);
     $smarty->assign("segments", $segmentsForThisEpisode);
 

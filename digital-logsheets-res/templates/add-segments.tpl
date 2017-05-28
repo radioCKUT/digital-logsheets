@@ -133,12 +133,12 @@
         <br />
 
         <form id="finalize" class="forward_form" role="form" action="review-logsheet.php" method="post" onsubmit="">
-            <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
+            <input type="hidden" name="epId" value={$episode.id|json_encode}>
             <input type="submit" value="Final Review">
         </form>
 
         <form class="backward_form" action="new-logsheet.php" method="get">
-            <input type="hidden" name="draftEpisodeId" value="{$episode.id}"/>
+            <input type="hidden" name="epId" value="{$episode.id}"/>
             <input type="submit" value="Back to Episode Metadata"/>
         </form>
     </div>
