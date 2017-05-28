@@ -148,7 +148,7 @@
             {/if}
 
             <div id="start_datetime_group" class="form-group row{if $startDatetimeError} has-error{/if}">
-                <div class="col-md-3 col-sm-5">
+                <div class="col-md-6 col-sm-6">
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
                            name="start_datetime" id="start_datetime" step="60"
@@ -177,7 +177,7 @@
             {/if}
 
             <div id="end_datetime_group" class="form-group row{if $endDateTimeError} has-error{/if}">
-                <div class="col-md-3 col-sm-5">
+                <div class="col-md-6 col-sm-6">
                     <label for="end_datetime" class="control-label">End Date/Time:</label>
                     <input class="form-control" type="datetime-local"
                            name="end_datetime" id="end_datetime" step="60"
