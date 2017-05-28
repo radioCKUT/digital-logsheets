@@ -173,6 +173,7 @@
             return array(
                 'id' => $this->getId(),
                 'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
+                'programmer' => $this->getProgrammer(),
                 'playlist' => $this->getPlaylistId(),
                 'startDate' => $startDateString,
                 'startTime' => $startTimeString,
