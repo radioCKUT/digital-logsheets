@@ -1,21 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>New Logsheet</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-    <!-- Boostrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    {include './header.tpl'}
 
     <!-- Select2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
@@ -148,7 +136,7 @@
             {/if}
 
             <div id="start_datetime_group" class="form-group row{if $startDatetimeError} has-error{/if}">
-                <div class="col-md-3 col-sm-5">
+                <div class="col-md-6 col-sm-6">
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
                     <input class="form-control" type="datetime-local"
                            name="start_datetime" id="start_datetime" step="60"
@@ -177,7 +165,7 @@
             {/if}
 
             <div id="end_datetime_group" class="form-group row{if $endDateTimeError} has-error{/if}">
-                <div class="col-md-3 col-sm-5">
+                <div class="col-md-6 col-sm-6">
                     <label for="end_datetime" class="control-label">End Date/Time:</label>
                     <input class="form-control" type="datetime-local"
                            name="end_datetime" id="end_datetime" step="60"

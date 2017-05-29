@@ -33,7 +33,7 @@ require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
 
 $formErrors = $_GET['formErrors'];
 $formSubmission = $_GET['formSubmission'];
-$draftEpisodeId = $_GET['draftEpisodeId'];
+$existingEpisodeId = $_GET['epId'];
 
     
     //database interactions
@@ -72,11 +72,11 @@ $draftEpisodeId = $_GET['draftEpisodeId'];
         if (isset($formSubmission)) {
             $smarty->assign("formSubmission", $formSubmission);
 
-        } else if (isset($draftEpisodeId) && $draftEpisodeId) {
-            $draftEpisode = new Episode($db, $draftEpisodeId);
+        } else if (isset($existingEpisodeId) && $existingEpisodeId) {
+            $draftEpisode = new Episode($db, $existingEpisodeId);
             $draftEpisodeArray = getFormSubmissionArray($draftEpisode);
             $smarty->assign("formSubmission", $draftEpisodeArray);
-            $smarty->assign("existingEpisode", $draftEpisodeId);
+            $smarty->assign("existingEpisode", $existingEpisodeId);
         }
 
 

@@ -1,22 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>New Logsheet</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
-
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-    <!-- Boostrap JS -->
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {include './header.tpl'}
     <script type="text/javascript">
         function getEpisodeStartTime() {
             return {$episode.startTime|json_encode};
@@ -132,13 +119,13 @@
 
         <br />
 
-        <form id="finalize" class="forward_form" role="form" action="review-logsheet.php" method="post" onsubmit="">
-            <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
+        <form id="finalize" class="forward_form" role="form" action="review-logsheet.php" method="get" onsubmit="">
+            <input type="hidden" name="epId" value={$episode.id|json_encode}>
             <input type="submit" value="Final Review">
         </form>
 
         <form class="backward_form" action="new-logsheet.php" method="get">
-            <input type="hidden" name="draftEpisodeId" value="{$episode.id}"/>
+            <input type="hidden" name="epId" value="{$episode.id}"/>
             <input type="submit" value="Back to Episode Metadata"/>
         </form>
     </div>

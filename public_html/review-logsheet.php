@@ -36,15 +36,25 @@ try {
     //connect to database
     $db = connectToDatabase();
 
-    $episodeId = $_SESSION['episodeId'];
+    $episodeId = $_GET['epId'];
 
     $episode = new Episode($db, $episodeId);
+
+    if (!$episode->doesEpisodeExist()) {
+        header('HTTP/1.1 400 Bad Request', true, 400);
+        echo $smarty->fetch('../digital-logsheets-res/templates/error.tpl');
+        exit();
+    }
 
     $playlistValidator = new PlaylistValidator($episode);
     $playlistErrors = $playlistValidator->checkFinalSaveValidity();
 
     if ($playlistErrors->doErrorsExist()) {
-        $playlistErrorsAsQuery = http_build_query(array('formErrors' => $playlistErrors->getAllErrors()));
+        $playlistErrorsAsQuery = http_build_query(array(
+            'epId' => $episodeId,
+            'formErrors' => $playlistErrors->getAllErrors()
+        ));
+
         header('Location: add-segments.php?' . $playlistErrorsAsQuery);
         exit();
     }
@@ -90,6 +100,7 @@ try {
     //close database connection
     $db = NULL;
 
+    $smarty->assign("episodeId", $episodeId);
     $smarty->assign("episode", $episodeAsArray);
     $smarty->assign("segments", $segmentsForThisEpisode);
 
