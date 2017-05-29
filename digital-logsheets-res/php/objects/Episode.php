@@ -76,7 +76,7 @@
             parent::__construct($db, $componentId);
 
             if ($this->id != null) {
-                $doesEpisodeExist = manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $this->id, $this);
+                $this->doesEpisodeExist = manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $this->id, $this);
             }
         }
 

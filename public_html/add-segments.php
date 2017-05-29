@@ -38,13 +38,21 @@
         //connect to database
         $db = connectToDatabase();
 
+        $episode = new Episode($db, $episodeId);
+
+        if (!$episode->doesEpisodeExist()) {
+            header('HTTP/1.1 400 Bad Request', true, 400);
+            echo $smarty->fetch('../digital-logsheets-res/templates/error.tpl');
+            exit();
+        }
+
         $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
         $smarty->assign("categories", $categories);
 
         $programs = manageProgramEntries::getAllProgramsFromDatabase($db);
         $smarty->assign("programs", $programs);
 
-        $episode = new Episode($db, $episodeId);
+
         $episodeArray = $episode->getObjectAsArray();
         $smarty->assign("episode", $episodeArray);
 

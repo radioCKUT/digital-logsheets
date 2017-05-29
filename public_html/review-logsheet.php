@@ -40,6 +40,12 @@ try {
 
     $episode = new Episode($db, $episodeId);
 
+    if (!$episode->doesEpisodeExist()) {
+        header('HTTP/1.1 400 Bad Request', true, 400);
+        echo $smarty->fetch('../digital-logsheets-res/templates/error.tpl');
+        exit();
+    }
+
     $playlistValidator = new PlaylistValidator($episode);
     $playlistErrors = $playlistValidator->checkFinalSaveValidity();
 
