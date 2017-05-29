@@ -2,6 +2,8 @@ function init() {
     getEpisodeSegments();
     setFormOnSubmitBehaviour();
     setConfirmModalBehaviour();
+    $('#segment_time').timepicker();
+    $('#segment_time_edit').timepicker();
     $('[data-toggle="tooltip"]').tooltip();
 }
 
