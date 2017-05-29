@@ -36,7 +36,7 @@ try {
     //connect to database
     $db = connectToDatabase();
 
-    $episodeId = $_POST['epId'];
+    $episodeId = $_GET['epId'];
 
     $episode = new Episode($db, $episodeId);
 

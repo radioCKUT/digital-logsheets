@@ -119,7 +119,7 @@
 
         <br />
 
-        <form id="finalize" class="forward_form" role="form" action="review-logsheet.php" method="post" onsubmit="">
+        <form id="finalize" class="forward_form" role="form" action="review-logsheet.php" method="get" onsubmit="">
             <input type="hidden" name="epId" value={$episode.id|json_encode}>
             <input type="submit" value="Final Review">
         </form>
