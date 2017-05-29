@@ -50,7 +50,11 @@ try {
     $playlistErrors = $playlistValidator->checkFinalSaveValidity();
 
     if ($playlistErrors->doErrorsExist()) {
-        $playlistErrorsAsQuery = http_build_query(array('formErrors' => $playlistErrors->getAllErrors()));
+        $playlistErrorsAsQuery = http_build_query(array(
+            'epId' => $episodeId,
+            'formErrors' => $playlistErrors->getAllErrors()
+        ));
+
         header('Location: add-segments.php?' . $playlistErrorsAsQuery);
         exit();
     }
