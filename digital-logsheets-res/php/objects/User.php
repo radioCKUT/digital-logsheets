@@ -69,28 +69,51 @@ class User
     }
 
 
-    public function register($username,$password,$program)
+    public function register($username,$password,$encrytedpw,$program)
     {
         try
         {
+            $db = getPDOStatementWithLogin();
+
             $new_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $stmt = $this->db->prepare("INSERT INTO user (username,password,encrytedpw,program) 
+            $query = $db->prepare("INSERT INTO user (username,password,encrytedpw,program) 
                                                        VALUES(:username, :password,:encrytedpw, :program)");
 
-            $stmt->bindparam(":username", $username);
-            $stmt->bindparam(":password", $password);
-            $stmt->bindparam(":password", $new_password);
-            $stmt->bindparam(":program", $program);
+            $query->bindparam(":username", $username);
+            $query->bindparam(":password", $password);
+            $query->bindparam(":encrytedpw", $new_password);
+            $query->bindparam(":program", $program);
 
-            $stmt->execute();
+            $query->execute();
 
-            return $stmt;
+            return $query;
         }
         catch(PDOException $e)
         {
             echo $e->getMessage();
         }
+    }
+
+
+    public function getEpisodeById($conn,$program) {
+        $query = "select * from user where program =:id";
+        $prepQuery = $conn->prepare($query);
+        $prepQuery->bindValue(':id',$program,PDO::PARAM_INT);
+        $prepQuery->execute();
+        $result = $prepQuery->fetchAll();
+        $aObj = "";
+        $counter = 0;
+        if (count($result)>0){
+            foreach ($result as $rec){
+                $aObj = new User();
+                $aObj->id = $rec["id"];
+                $aObj->username = $rec["username"];
+                $aObj->amount = $rec["amount"];
+                $arrAd[$counter++]=$aObj;
+            }
+        }
+        return $arrAd;
     }
 
 }
