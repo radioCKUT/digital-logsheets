@@ -1,3 +1,34 @@
+<?php /* Smarty version 3.1.27, created on 2017-05-26 15:46:24
+         compiled from "/var/www/digital-logsheets-res/templates/add-segments.tpl" */ ?>
+<?php
+/*%%SmartyHeaderCode:182346652559284dd008b8c9_80019052%%*/
+if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    '11a9d6931fb46bb0cbd6fe5afff818a8fcd5352c' => 
+    array (
+      0 => '/var/www/digital-logsheets-res/templates/add-segments.tpl',
+      1 => 1495625371,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '182346652559284dd008b8c9_80019052',
+  'variables' => 
+  array (
+    'episode' => 0,
+    'formErrors' => 0,
+  ),
+  'has_nocache_code' => false,
+  'version' => '3.1.27',
+  'unifunc' => 'content_59284dd0246230_08878123',
+),false);
+/*/%%SmartyHeaderCode%%*/
+if ($_valid && !is_callable('content_59284dd0246230_08878123')) {
+function content_59284dd0246230_08878123 ($_smarty_tpl) {
+
+$_smarty_tpl->properties['nocache_hash'] = '182346652559284dd008b8c9_80019052';
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -13,26 +44,52 @@
     <link href="css/custom.css" rel="stylesheet">
 
     <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"><?php echo '</script'; ?>
+>
 
     <!-- Boostrap JS -->
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
+    <?php echo '<script'; ?>
+ type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript">
         function getEpisodeStartTime() {
-            return {$episode.startTime|json_encode};
+            return <?php echo json_encode($_smarty_tpl->tpl_vars['episode']->value['startTime']);?>
+;
         }
-    </script>
+    <?php echo '</script'; ?>
+>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script type="text/javascript" src="js/validation/markErrors.js"></script>
-    <script type="text/javascript" src="js/validation/segmentValidation.js"></script>
-    <script type="text/javascript" src="js/validation/playlistValidation.js"></script>
-    <script type="text/javascript" src="js/deleteSegment.js"></script>
-    <script type="text/javascript" src="js/editSegment.js"></script>
-    <script type="text/javascript" src="js/ui/segmentOptionsMenu.js"></script>
-    <script type="text/javascript" src="js/saveReceiveSegments.js"></script>
-    <script type="text/javascript" src="js/ui/categoryButton.js"></script>
-    <script type="text/javascript">
+    <?php echo '<script'; ?>
+ type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/validation/markErrors.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/validation/segmentValidation.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/validation/playlistValidation.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/deleteSegment.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/editSegment.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/ui/segmentOptionsMenu.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/saveReceiveSegments.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript" src="js/ui/categoryButton.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ type="text/javascript">
 
         function init() {
             getEpisodeSegments();
@@ -44,7 +101,8 @@
 
 
         function setFormOnSubmitBehaviour() {
-            var episode = {$episode|json_encode};
+            var episode = <?php echo json_encode($_smarty_tpl->tpl_vars['episode']->value);?>
+;
 
             $('#logsheet').on('submit', function(e) {
                 e.preventDefault();
@@ -91,7 +149,8 @@
                         var timeGroup = segmentTimeField.parent().parent();
 
                         verifySegmentStartTime(timeGroup,
-                                {$episode|json_encode});
+                                <?php echo json_encode($_smarty_tpl->tpl_vars['episode']->value);?>
+);
                     });
         }
 
@@ -113,7 +172,8 @@
                     });
                 });
         }
-    </script>
+    <?php echo '</script'; ?>
+>
 </head>
 <body onload="init()">
 <div class="container-fluid">
@@ -122,23 +182,32 @@
         <h3>Add Segments</h3>
 
         <h5>Episode Information:</h5>
-        Program:  {$episode.program} <br/>
-        Start Date/Time: {$episode.startDatetime} <br/>
-        End Date/Time: {$episode.endDatetime} <br/> <br/>
+        Program:  <?php echo $_smarty_tpl->tpl_vars['episode']->value['program'];?>
+ <br/>
+        Start Date/Time: <?php echo $_smarty_tpl->tpl_vars['episode']->value['startDatetime'];?>
+ <br/>
+        End Date/Time: <?php echo $_smarty_tpl->tpl_vars['episode']->value['endDatetime'];?>
+ <br/> <br/>
 
 
-        {include file='./segment-form.tpl' idSuffix=''}
-        {include file='./segment-form.tpl' idSuffix='_edit'}
+        <?php echo $_smarty_tpl->getSubTemplate ('./segment-form.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('idSuffix'=>''), 0);
+?>
+
+        <?php echo $_smarty_tpl->getSubTemplate ('./segment-form.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('idSuffix'=>'_edit'), 0);
+?>
+
 
         <br />
 
         <form id="finalize" class="forward_form" role="form" action="review-logsheet.php" method="post" onsubmit="">
-            <input type="hidden" name="episode_id" value={$episode.id|json_encode}>
+            <input type="hidden" name="episode_id" value=<?php echo json_encode($_smarty_tpl->tpl_vars['episode']->value['id']);?>
+>
             <input type="submit" value="Final Review">
         </form>
 
         <form class="backward_form" action="new-logsheet.php" method="get">
-            <input type="hidden" name="draftEpisodeId" value="{$episode.id}"/>
+            <input type="hidden" name="draftEpisodeId" value="<?php echo $_smarty_tpl->tpl_vars['episode']->value['id'];?>
+"/>
             <input type="submit" value="Back to Episode Metadata"/>
         </form>
     </div>
@@ -147,11 +216,11 @@
     <br />
 
     <div class="col-md-5">
-        <span id="playlist_not_aligned_help_text" class="help-block{if !isset($formErrors.noAlignmentWithEpisodeStart)} hidden{/if}">
+        <span id="playlist_not_aligned_help_text" class="help-block<?php if (!isset($_smarty_tpl->tpl_vars['formErrors']->value['noAlignmentWithEpisodeStart'])) {?> hidden<?php }?>">
             The earliest segment must align with the episode start date/time.
         </span>
 
-        <span id="segment_errors_exist_help_text" class="help-block{if !isset($formErrors.erroneousSegmentsExist)} hidden{/if}">
+        <span id="segment_errors_exist_help_text" class="help-block<?php if (!isset($_smarty_tpl->tpl_vars['formErrors']->value['erroneousSegmentsExist'])) {?> hidden<?php }?>">
             Errors exist in the highlighted segments below. Please correct them before proceeding to the final review.
         </span>
 
@@ -198,4 +267,6 @@
     </div>
 </div>
 </body>
-</html>
+</html><?php }
+}
+?>

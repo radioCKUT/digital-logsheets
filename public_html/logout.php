@@ -21,8 +21,12 @@
 /**
  * Created by PhpStorm.
  * User: baikdonghee
- * Date: 2017-05-25
- * Time: 11:05 AM
+ * Date: 2017-05-22
+ * Time: 12:52 PM
  */
-
-
+	session_start();
+	session_destroy();
+    //setcookie('username', '', time()-3600, '/');
+	header("location:login_logsheet.php");
+	exit;
+?>

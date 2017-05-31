@@ -30,6 +30,11 @@ $smarty = new Smarty;
 
 session_start();
 
+if(!isset($_SESSION['id'])){
+    $url = 'login_logsheet.php';
+    header("location: $url");
+}
+
 
 //database interactions
 try {

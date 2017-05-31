@@ -68,7 +68,6 @@ try {
             $segment->setName($name);
             $segment->setAuthor($author);
             $segment->setAlbum($album);
-            $segment->setCategory($category);
             $segment->setIsCanCon($canCon);
             $segment->setIsNewRelease($newRelease);
             $segment->setIsFrenchVocalMusic($frenchVocalMusic);
@@ -82,13 +81,7 @@ try {
             $segment->setIsCanCon(null);
             $segment->setIsNewRelease(null);
             $segment->setIsFrenchVocalMusic(null);
-
-            if ($adNumber == "") {
-                $segment->setAdNumber(null);
-            } else {
-                $segment->setAdNumber($adNumber);
-            }
-
+            $segment->setAdNumber($adNumber);
             break;
 
         case 4:
@@ -181,15 +174,12 @@ function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
     $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
 
     if (!TimeValidator::isTimeInValidFormat($segmentTime)) {
-        /*$errorsContainer = new SaveSegmentErrors();
-        $errorsContainer->markStartTimeInvalidFormat();
-        outputErrorResponse($errorsContainer->getAllErrors());*/
         return null;
     }
 
     if (strtotime($segmentTime) < strtotime($episodeStartTimeString)) {
         $dayAfterEpisodeStartDateTime = clone $episodeStartDateTime;
-        $dayAfterEpisodeStartDateTime->add(new DateInterval('P1D'));
+        $dayAfterEpisodeStartDateTime->modify('+1 day');
         $dateToUse = $dayAfterEpisodeStartDateTime->format("Y-m-d");
     }
     

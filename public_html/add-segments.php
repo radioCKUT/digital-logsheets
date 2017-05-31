@@ -29,8 +29,11 @@
     $smarty = new Smarty;
 
     session_start();
-
-$formErrors = $_GET['formErrors'];
+    if(!isset($_SESSION['id'])){
+        $url = 'login_logsheet.php';
+        header("location: $url");
+    }
+    $formErrors = $_GET['formErrors'];
 
     //database interactions
     try {

@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2016-2017  James Wang
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +19,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Created by PhpStorm.
- * User: baikdonghee
- * Date: 2017-05-25
- * Time: 11:05 AM
- */
+function getPDOStatementWithLogin() {
 
+    $serverName = "database";
+    $username = "root";
+    $password = "root";
+    $database = "logsheets";
+
+    return new PDO("mysql:host=$serverName;dbname=$database",$username,$password);
+
+}
 

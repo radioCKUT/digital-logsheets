@@ -141,6 +141,9 @@ function fillEpisodeObject($db, $episodeObject, $programId, $programmer, $episod
     $episodeObject->setPrerecordDate($prerecordDate);
 
     $episodeObject->setNotes($notes);
+
+    $episodeObject->setIsDraft(true);
+
     return $episodeObject;
 }
 

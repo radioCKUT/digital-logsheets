@@ -30,6 +30,13 @@ require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
     $smarty = new Smarty;
 
     session_start();
+    if(!isset($_SESSION['id'])){
+        $url = 'login_logsheet.php';
+        header("location: $url");
+    }
+
+   // echo "";
+
 
 $formErrors = $_GET['formErrors'];
 $formSubmission = $_GET['formSubmission'];
@@ -72,7 +79,7 @@ $draftEpisodeId = $_GET['draftEpisodeId'];
         if (isset($formSubmission)) {
             $smarty->assign("formSubmission", $formSubmission);
 
-        } else if (isset($draftEpisodeId)) {
+        } else if (isset($draftEpisodeId) && $draftEpisodeId) {
             $draftEpisode = new Episode($db, $draftEpisodeId);
             $draftEpisodeArray = getFormSubmissionArray($draftEpisode);
             $smarty->assign("formSubmission", $draftEpisodeArray);
