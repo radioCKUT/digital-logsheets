@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-05-24 14:28:32
+<?php /* Smarty version 3.1.27, created on 2017-06-02 23:06:02
          compiled from "/var/www/digital-logsheets-res/templates/new-logsheet.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:91267919259259890c3a888_39885839%%*/
+/*%%SmartyHeaderCode:4734895955931ef5acbcfe6_31351203%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '939a7091ea2fd37e67c3c05d74d0e498f8b4a221' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/new-logsheet.tpl',
-      1 => 1495323600,
+      1 => 1496444761,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '91267919259259890c3a888_39885839',
+  'nocache_hash' => '4734895955931ef5acbcfe6_31351203',
   'variables' => 
   array (
     'episodeStartEarlyLimit' => 0,
@@ -23,10 +23,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'minDuration' => 0,
     'maxDuration' => 0,
     'programs' => 0,
+    'program_id' => 0,
     'existingEpisode' => 0,
     'formErrors' => 0,
     'programmerError' => 0,
     'formSubmission' => 0,
+    'programId' => 0,
+    'programName' => 0,
     'programError' => 0,
     'startDatetimeError' => 0,
     'endDateTimeError' => 0,
@@ -34,13 +37,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_59259891021cb3_45137321',
+  'unifunc' => 'content_5931ef5b066893_87160317',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_59259891021cb3_45137321')) {
-function content_59259891021cb3_45137321 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_5931ef5b066893_87160317')) {
+function content_5931ef5b066893_87160317 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '91267919259259890c3a888_39885839';
+$_smarty_tpl->properties['nocache_hash'] = '4734895955931ef5acbcfe6_31351203';
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -147,7 +150,6 @@ $_smarty_tpl->properties['nocache_hash'] = '91267919259259890c3a888_39885839';
                 }
             });
 
-
             var data = <?php echo $_smarty_tpl->tpl_vars['programs']->value;?>
 ;
 
@@ -158,10 +160,13 @@ $_smarty_tpl->properties['nocache_hash'] = '91267919259259890c3a888_39885839';
     <?php echo '</script'; ?>
 >
 </head>
-
 <body onload="init()">
 <div class="container-fluid">
     <h3>New Logsheet</h3>
+
+    <!--Show program id: <?php echo $_smarty_tpl->tpl_vars['program_id']->value;?>
+ <br/-->
+
     <form id="logsheet" role="form" action="save-episode.php" method="post">
         <h4>Episode Metadata</h4>
 
@@ -177,7 +182,8 @@ $_smarty_tpl->properties['nocache_hash'] = '91267919259259890c3a888_39885839';
             <?php }?>
 
 
-            <div id="programmer_group" class="form-group programmer_group row<?php if ($_smarty_tpl->tpl_vars['programmerError']->value) {?> has-error<?php }?>">
+
+            <div id="programmer_group" class="form-group programmer_group row<?php if ($_smarty_tpl->tpl_vars['programmerError']->value) {?> has-error<?php }?>" >
                 <div class="col-md-6 col-sm-8">
                     <label for="programmer" class="control-label">Programmer(s):</label>
                     <input class="form-control" type="text"
@@ -190,32 +196,37 @@ $_smarty_tpl->properties['nocache_hash'] = '91267919259259890c3a888_39885839';
                 </div>
             </div>
 
-
-
-
             <?php if ($_smarty_tpl->tpl_vars['formErrors']->value['missingProgram']) {?>
                 <?php $_smarty_tpl->tpl_vars["programError"] = new Smarty_Variable(true, null, 0);?>
             <?php } else { ?>
                 <?php $_smarty_tpl->tpl_vars["programError"] = new Smarty_Variable(false, null, 0);?>
             <?php }?>
 
-            <div id="program_group" class="form-group row<?php if ($_smarty_tpl->tpl_vars['programError']->value) {?> has-error<?php }?>">
-                <div class="col-md-4 col-sm-6">
-                    <label for="program" class="control-label">Program:</label>
-                    <select class="form-control program" name="program" id="program">
-                        <?php if (isset($_smarty_tpl->tpl_vars['formSubmission']->value['programName'])) {?>
-                            <option value="<?php echo $_smarty_tpl->tpl_vars['formSubmission']->value['programId'];?>
+        Show program id: <?php echo $_smarty_tpl->tpl_vars['programId']->value;?>
+ <br/>
+        Show program name : <?php echo $_smarty_tpl->tpl_vars['programName']->value;?>
+ <br/>
+        <?php if ($_smarty_tpl->tpl_vars['programId']->value == null) {?>
+        <div id="program_group" class="form-group row<?php if ($_smarty_tpl->tpl_vars['programError']->value) {?> has-error<?php }?>">
+            <div class="col-md-4 col-sm-6">
+                <label for="program" class="control-label">Program:</label>
+
+                <select class="form-control program" name="program" id="program">
+                    <?php if (isset($_smarty_tpl->tpl_vars['formSubmission']->value['programName'])) {?>
+                        <option value="<?php echo $_smarty_tpl->tpl_vars['formSubmission']->value['programId'];?>
 " selected="selected"><?php echo $_smarty_tpl->tpl_vars['formSubmission']->value['programName'];?>
 </option>
-                        <?php }?>
-                    </select>
-                    <span id="program_help_block" class="help-block<?php if (!$_smarty_tpl->tpl_vars['programError']->value) {?> hidden<?php }?>">
+                    <?php }?>
+                </select>
+                <span id="program_help_block" class="help-block<?php if (!$_smarty_tpl->tpl_vars['programError']->value) {?> hidden<?php }?>">
                         Please enter a program.
-                    </span>
-                </div>
+                </span>
             </div>
-
-
+        </div>
+        <?php } else { ?>
+        <input type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['programId']->value;?>
+" name="program">
+        <?php }?>
 
 
             <?php if ($_smarty_tpl->tpl_vars['formErrors']->value['missingStartTime'] || $_smarty_tpl->tpl_vars['formErrors']->value['airDateTooFarInPast'] || $_smarty_tpl->tpl_vars['formErrors']->value['airDateTooFarInFuture']) {?>

@@ -76,7 +76,6 @@
                 }
             });
 
-
             var data = {$programs};
 
             $(".program").select2({
@@ -85,10 +84,12 @@
         }
     </script>
 </head>
-
 <body onload="init()">
 <div class="container-fluid">
     <h3>New Logsheet</h3>
+
+    <!--Show program id: {$program_id} <br/-->
+
     <form id="logsheet" role="form" action="save-episode.php" method="post">
         <h4>Episode Metadata</h4>
 
@@ -103,7 +104,8 @@
             {/if}
 
 
-            <div id="programmer_group" class="form-group programmer_group row{if $programmerError} has-error{/if}">
+
+            <div id="programmer_group" class="form-group programmer_group row{if $programmerError} has-error{/if}" >
                 <div class="col-md-6 col-sm-8">
                     <label for="programmer" class="control-label">Programmer(s):</label>
                     <input class="form-control" type="text"
@@ -115,30 +117,32 @@
                 </div>
             </div>
 
-
-
-
             {if $formErrors.missingProgram}
                 {assign var="programError" value=true}
             {else}
                 {assign var="programError" value=false}
             {/if}
 
-            <div id="program_group" class="form-group row{if $programError} has-error{/if}">
-                <div class="col-md-4 col-sm-6">
-                    <label for="program" class="control-label">Program:</label>
-                    <select class="form-control program" name="program" id="program">
-                        {if isset($formSubmission.programName)}
-                            <option value="{$formSubmission.programId}" selected="selected">{$formSubmission.programName}</option>
-                        {/if}
-                    </select>
-                    <span id="program_help_block" class="help-block{if !$programError} hidden{/if}">
+        Show program id: {$programId} <br/>
+        Show program name : {$programName} <br/>
+        {if $programId == null}
+        <div id="program_group" class="form-group row{if $programError} has-error{/if}">
+            <div class="col-md-4 col-sm-6">
+                <label for="program" class="control-label">Program:</label>
+
+                <select class="form-control program" name="program" id="program">
+                    {if isset($formSubmission.programName)}
+                        <option value="{$formSubmission.programId}" selected="selected">{$formSubmission.programName}</option>
+                    {/if}
+                </select>
+                <span id="program_help_block" class="help-block{if !$programError} hidden{/if}">
                         Please enter a program.
-                    </span>
-                </div>
+                </span>
             </div>
-
-
+        </div>
+        {else}
+        <input type="hidden" value="{$programId}" name="program">
+        {/if}
 
 
             {if $formErrors.missingStartTime || $formErrors.airDateTooFarInPast || $formErrors.airDateTooFarInFuture}

@@ -185,6 +185,35 @@
             );
         }
 
+        public function getObjectAsArrayByUser() {
+            $startDate = $this->getStartTime();
+            $startDateString = $this->prepareDateForSerialize($startDate);
+            $startTimeString = $this->prepareTimeForSerialize($startDate);
+            $startDatetimeString = $this->prepareDateTimeForSerialize($startDate);
+
+            $endDate = $this->getEndTime();
+            $endTimeString = $this->prepareTimeForSerialize($endDate);
+            $endDatetimeString = $this->prepareDateTimeForSerialize($endDate);
+
+            $prerecordDate = $this->getPrerecordDate();
+            $prerecordDateString = $this->prepareDateForSerialize($prerecordDate);
+
+            return array(
+                'id' => $this->getId(),
+                'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
+                'playlist' => $this->getPlaylistId(),
+                'startDate' => $startDateString,
+                'startTime' => $startTimeString,
+                'endTime' => $endTimeString,
+                'startDatetime' => $startDatetimeString,
+                'endDatetime' => $endDatetimeString,
+                'prerecorded' => $this->isPrerecord() ? "Yes" : "No",
+                'prerecordDate' => $prerecordDateString,
+                'segments' => $this->getSegments()
+            );
+        }
+
+
         /**
          * @return String
          */

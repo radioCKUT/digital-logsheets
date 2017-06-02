@@ -23,7 +23,9 @@ class User
             //$hash = password_hash($password, PASSWORD_DEFAULT);
 
             $hash_password= hash('sha1', $password); //Password encryption
-            $stmt = $db->prepare("SELECT id,username FROM user WHERE username=:username AND encrypedpw=:hash_password");
+            //$stmt = $db->prepare("SELECT user.id,user.username,user.program,program.name FROM user INNER JOIN program ON user.program=program.id WHERE username=:username AND encrypedpw=:hash_password");
+
+            $stmt = $db->prepare("SELECT id,username,program FROM user WHERE username=:username AND encrypedpw=:hash_password");
             $stmt->bindParam("username", $username,PDO::PARAM_STR) ;
             $stmt->bindParam("hash_password", $hash_password,PDO::PARAM_STR) ;
             $stmt->execute();
@@ -33,8 +35,9 @@ class User
 
             if ($count){
                 $data = $stmt->fetch(PDO::FETCH_OBJ);
-                $_SESSION['username'] = $data->username; // Storing user session value
                 $_SESSION['id'] = $data->id; // Storing user session value
+                $_SESSION['username'] = $data->username; // Storing user session value
+                $_SESSION['program']=$data->program;
                 header('location:index_login.php');
                 exit;
                 //return true;
@@ -109,8 +112,7 @@ class User
                 $aObj = new User();
                 $aObj->id = $rec["id"];
                 $aObj->username = $rec["username"];
-                $aObj->amount = $rec["amount"];
-                $arrAd[$counter++]=$aObj;
+                 $arrAd[$counter++]=$aObj;
             }
         }
         return $arrAd;

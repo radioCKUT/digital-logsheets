@@ -30,13 +30,18 @@ include('../digital-logsheets-res/smarty/libs/Smarty.class.php');
 include("../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
+include('../digital-logsheets-res/php/objects/User.php');
+
 
 session_start();
 if(!isset($_SESSION['id'])){
     $url = 'login_logsheet.php';
     header("location: $url");
 }
+
 $session_uid=$_SESSION['id'];
+$session_program=$_SESSION['program'];
+$session_programName=$_SESSION['username'];
 
 /*/cookie
 if(!isset($_COOKIE['username'])) {
@@ -44,28 +49,23 @@ if(!isset($_COOKIE['username'])) {
     exit;
 }
 $username = $_COOKIE['username'];
-
 echo 'Welcome '.$_COOKIE['username'].'</br>';
 */
-echo 'Welcome '.$_SESSION['username'].'</br>';
 
-echo 'user id : '.$session_uid;
-
-echo "<h3>user information</h3> <br>";
-include('../digital-logsheets-res/php/objects/User.php');
+//echo 'user id : '.$session_uid.'<br/>';
+//echo 'program id : '.$session_program.'<br/>';
 
 $userClass = new User();
 $userDetails=$userClass->userDetails($session_uid); // get user details
 
+if ($session_program ==null){
+    echo "Admin <br/>";
+}else{
 // user information
-
-echo "Show  name : ". $userDetails-> name;
-echo "<p>Show sheets <br/>";
-
-
+echo "Show  name : ". $userDetails-> name.'<br/>';
+}
 //logout
 echo "<h4><a href='logout.php'>Logout</a></h4>";
-
 
 
 // create object
@@ -93,20 +93,28 @@ try {
         }
 
         //create an array to store each episode's data
-        $episodes[$episode->getId()] = $episode->getObjectAsArray();
+        if ($session_program==NULL){
+            $episodes[$episode->getId()] = $episode->getObjectAsArray();
+        }
+        elseif ($episode->getProgram()->getId()==$session_program){
+            $episodes[$episode->getId()] = $episode->getObjectAsArray();
+        }
+
     }
 
-    $programs = getSelect2ProgramsList($db);
+    $programs = getSelect2ProgramsList($db); //program list
 
     //close database connection
     $db = NULL;
 
     $smarty->assign("episodes", $episodes);
     $smarty->assign("programs", $programs);
+    //add program_id
+    $smarty->assign("program_id", $session_program);
 
     // display it
     echo $smarty->fetch('../digital-logsheets-res/templates/index_login.tpl');
-} catch(PDOException $e) {
+}   catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }
 

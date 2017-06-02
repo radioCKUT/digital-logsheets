@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-05-27 16:28:52
+<?php /* Smarty version 3.1.27, created on 2017-06-02 22:59:38
          compiled from "/var/www/digital-logsheets-res/templates/index_login.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:318903115929a9449d6e08_70596494%%*/
+/*%%SmartyHeaderCode:10865602905931edda579812_32838146%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,26 +9,27 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '154e1b1f9b9f4315798ba17abe9ec64e8b19604e' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/index_login.tpl',
-      1 => 1495978224,
+      1 => 1496440928,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '318903115929a9449d6e08_70596494',
+  'nocache_hash' => '10865602905931edda579812_32838146',
   'variables' => 
   array (
+    'program_id' => 0,
     'programs' => 0,
     'episodes' => 0,
     'episode' => 0,
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_5929a944ad57b9_40556533',
+  'unifunc' => 'content_5931edda6792f0_96823118',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5929a944ad57b9_40556533')) {
-function content_5929a944ad57b9_40556533 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_5931edda6792f0_96823118')) {
+function content_5931edda6792f0_96823118 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '318903115929a9449d6e08_70596494';
+$_smarty_tpl->properties['nocache_hash'] = '10865602905931edda579812_32838146';
 ?>
 <!DOCTYPE html>
 <html>
@@ -75,7 +76,10 @@ $_smarty_tpl->properties['nocache_hash'] = '318903115929a9449d6e08_70596494';
     <?php echo '<script'; ?>
  type="text/javascript">
 
+        //for select list
         function init() {
+            //var program_id = <?php echo $_smarty_tpl->tpl_vars['program_id']->value;?>
+; //error select box login by admin
             var data = <?php echo $_smarty_tpl->tpl_vars['programs']->value;?>
 ;
             var $programSelect = $(".program");
@@ -83,10 +87,10 @@ $_smarty_tpl->properties['nocache_hash'] = '318903115929a9449d6e08_70596494';
             $programSelect.select2({
                 data: data
             });
-
             $programSelect.on("change", function (e) {
                 updateFilteredLogsheetList();
-            } );
+            });
+
         }
 
         function updateFilteredLogsheetList() {
@@ -109,29 +113,37 @@ $_smarty_tpl->properties['nocache_hash'] = '318903115929a9449d6e08_70596494';
 <body onload="init()">
 
 <div class="container-fluid">
-    <a href="new-logsheet.php">New Logsheet</a>
+    <?php if ($_smarty_tpl->tpl_vars['program_id']->value != null) {?>
+        <a href="new-logsheet.php?program_id=<?php echo $_smarty_tpl->tpl_vars['program_id']->value;?>
+">New Logsheet</a>
+        <?php } else { ?>
+        <a href="new-logsheet.php">New Logsheet</a>
+    <?php }?>
 
     <br/>
     <br/>
-
     <div class="row">
-        <div class="col-sm-4">
-            <label for="program" class="control-label">Program:</label>
-            <select class="form-control program" name="program" id="program" multiple="multiple"></select>
-        </div>
+        <?php if ($_smarty_tpl->tpl_vars['program_id']->value != null) {?>
+            <div class="col-sm-4" style="display: none">
+                <label for="program" class="control-label">Program:</label>
+                <select class="form-control program" name="program" id="program" multiple="multiple"></select>
+            </div>
+        <?php }?>
+        <?php if ($_smarty_tpl->tpl_vars['program_id']->value == null) {?>
+            <div class="col-sm-4" >
+                <label for="program" class="control-label">Program:</label>
+                <select class="form-control program" name="program" id="program" multiple="multiple"></select>
+            </div>
+        <?php }?>
 
         <div class="col-sm-4">
             <label for="startDateFilter" class="control-label">Start:</label>
             <input type="date" id="startDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
-
         <div class="col-sm-4">
             <label for="endDateFilter" class="control-label">End:</label>
             <input type="date" id="endDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
-
-
-
     </div>
 
     <div class="logsheets">

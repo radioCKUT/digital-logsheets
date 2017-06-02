@@ -26,3 +26,12 @@
  */
 
 
+include("../digital-logsheets-res/php/database/connectToDatabase.php");
+session_start();
+
+$login_session=$row['username'];
+if(!isset($login_session))
+{
+    echo "You usernmae is Failed !!";
+    header('Location: login_logsheet.php');
+}

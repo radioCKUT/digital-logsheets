@@ -30,17 +30,19 @@
 
     <script type="text/javascript">
 
+        //for select list
         function init() {
+            //var program_id = {$program_id}; //error select box login by admin
             var data = {$programs};
             var $programSelect = $(".program");
 
             $programSelect.select2({
                 data: data
             });
-
             $programSelect.on("change", function (e) {
                 updateFilteredLogsheetList();
-            } );
+            });
+
         }
 
         function updateFilteredLogsheetList() {
@@ -61,29 +63,36 @@
 <body onload="init()">
 
 <div class="container-fluid">
-    <a href="new-logsheet.php">New Logsheet</a>
+    {if $program_id != null}
+        <a href="new-logsheet.php?program_id={$program_id}">New Logsheet</a>
+        {else}
+        <a href="new-logsheet.php">New Logsheet</a>
+    {/if}
 
     <br/>
     <br/>
-
     <div class="row">
-        <div class="col-sm-4">
-            <label for="program" class="control-label">Program:</label>
-            <select class="form-control program" name="program" id="program" multiple="multiple"></select>
-        </div>
+        {if $program_id != null}
+            <div class="col-sm-4" style="display: none">
+                <label for="program" class="control-label">Program:</label>
+                <select class="form-control program" name="program" id="program" multiple="multiple"></select>
+            </div>
+        {/if}
+        {if $program_id == null}
+            <div class="col-sm-4" >
+                <label for="program" class="control-label">Program:</label>
+                <select class="form-control program" name="program" id="program" multiple="multiple"></select>
+            </div>
+        {/if}
 
         <div class="col-sm-4">
             <label for="startDateFilter" class="control-label">Start:</label>
             <input type="date" id="startDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
-
         <div class="col-sm-4">
             <label for="endDateFilter" class="control-label">End:</label>
             <input type="date" id="endDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
-
-
-
     </div>
 
     <div class="logsheets">

@@ -33,6 +33,7 @@
         $url = 'login_logsheet.php';
         header("location: $url");
     }
+
     $formErrors = $_GET['formErrors'];
 
     //database interactions

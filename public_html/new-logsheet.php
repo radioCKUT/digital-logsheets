@@ -24,7 +24,7 @@
     require_once("../digital-logsheets-res/php/database/manageCategoryEntries.php");
     require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
     require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
-require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
+    require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
     
     // create object
     $smarty = new Smarty;
@@ -35,64 +35,67 @@ require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
         header("location: $url");
     }
 
-   // echo "";
-
-
 $formErrors = $_GET['formErrors'];
 $formSubmission = $_GET['formSubmission'];
 $draftEpisodeId = $_GET['draftEpisodeId'];
+//add
+$programId = $_GET["program_id"];
+//$programName = $_GET["programName"];
 
-    
-    //database interactions
-    try {
-        //connect to database
-        $db = connectToDatabase();
+    //if ($programId != null) {
+        //database interactions
+        try {
+            //connect to database
+            $db = connectToDatabase();
 
-        $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
-        $smarty->assign("categories", $categories);
+            $program = new Program($db, $programId);
+            $smarty->assign("programId", $programId);
 
-        $programs = getSelect2ProgramsList($db);
-        $smarty->assign("programs", $programs);
+            $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
+            $smarty->assign("categories", $categories);
 
-        $episodeStartEarlyLimitDatetime = EpisodeValidator::getEpisodeEarlyLimit();
-        $episodeStartEarlyLimit = $episodeStartEarlyLimitDatetime->format("Y-m-d H:i:s");
-        $smarty->assign("episodeStartEarlyLimit", $episodeStartEarlyLimit);
+            $programs = getSelect2ProgramsList($db);
+            $smarty->assign("programs", $programs);
 
-        $episodeStartLateLimitDatetime = EpisodeValidator::getEpisodeLateLimit();
-        $episodeStartLateLimit = $episodeStartLateLimitDatetime->format("Y-m-d H:i:s");
-        $smarty->assign("episodeStartLateLimit", $episodeStartLateLimit);
+            $episodeStartEarlyLimitDatetime = EpisodeValidator::getEpisodeEarlyLimit();
+            $episodeStartEarlyLimit = $episodeStartEarlyLimitDatetime->format("Y-m-d H:i:s");
+            $smarty->assign("episodeStartEarlyLimit", $episodeStartEarlyLimit);
 
-        $prerecordDateEarlyDaysLimit = EpisodeValidator::getPrerecordDateEarlyDaysLimit();
-        $smarty->assign("prerecordDateEarlyDaysLimit", $prerecordDateEarlyDaysLimit);
-        $prerecordDateLateDaysLimit = EpisodeValidator::getPrerecordDateLateDaysLimit();
-        $smarty->assign("prerecordDateLateDaysLimit", $prerecordDateLateDaysLimit);
+            $episodeStartLateLimitDatetime = EpisodeValidator::getEpisodeLateLimit();
+            $episodeStartLateLimit = $episodeStartLateLimitDatetime->format("Y-m-d H:i:s");
+            $smarty->assign("episodeStartLateLimit", $episodeStartLateLimit);
 
-        $minimumEpisodeLength = EpisodeValidator::getMinEpisodeLengthInHours();
-        $smarty->assign("minDuration", $minimumEpisodeLength);
-        $maximumEpisodeLength = EpisodeValidator::getMaxEpisodeLengthInHours();
-        $smarty->assign("maxDuration", $maximumEpisodeLength);
+            $prerecordDateEarlyDaysLimit = EpisodeValidator::getPrerecordDateEarlyDaysLimit();
+            $smarty->assign("prerecordDateEarlyDaysLimit", $prerecordDateEarlyDaysLimit);
+            $prerecordDateLateDaysLimit = EpisodeValidator::getPrerecordDateLateDaysLimit();
+            $smarty->assign("prerecordDateLateDaysLimit", $prerecordDateLateDaysLimit);
 
-        if (isset($formErrors)) {
-            $smarty->assign("formErrors", $formErrors);
-        }
+            $minimumEpisodeLength = EpisodeValidator::getMinEpisodeLengthInHours();
+            $smarty->assign("minDuration", $minimumEpisodeLength);
+            $maximumEpisodeLength = EpisodeValidator::getMaxEpisodeLengthInHours();
+            $smarty->assign("maxDuration", $maximumEpisodeLength);
 
-        if (isset($formSubmission)) {
-            $smarty->assign("formSubmission", $formSubmission);
+            if (isset($formErrors)) {
+                $smarty->assign("formErrors", $formErrors);
+            }
 
-        } else if (isset($draftEpisodeId) && $draftEpisodeId) {
-            $draftEpisode = new Episode($db, $draftEpisodeId);
-            $draftEpisodeArray = getFormSubmissionArray($draftEpisode);
-            $smarty->assign("formSubmission", $draftEpisodeArray);
-            $smarty->assign("existingEpisode", $draftEpisodeId);
-        }
+            if (isset($formSubmission)) {
+                $smarty->assign("formSubmission", $formSubmission);
 
+            } else if (isset($draftEpisodeId) && $draftEpisodeId) {
+                $draftEpisode = new Episode($db, $draftEpisodeId);
+                $draftEpisodeArray = getFormSubmissionArray($draftEpisode);
+                $smarty->assign("formSubmission", $draftEpisodeArray);
+                $smarty->assign("existingEpisode", $draftEpisodeId);
+            }
 
-        //close database connection
-        $db = NULL;
+            //close database connection
+            $db = NULL;
 
-        echo $smarty->fetch('../digital-logsheets-res/templates/new-logsheet.tpl');
+            echo $smarty->fetch('../digital-logsheets-res/templates/new-logsheet.tpl');
 
-    } catch(PDOException $e) {
-        echo 'ERROR: ' . $e->getMessage();
+        } catch (PDOException $e) {
+            echo 'ERROR: ' . $e->getMessage();
+        //}
     }
 ?>

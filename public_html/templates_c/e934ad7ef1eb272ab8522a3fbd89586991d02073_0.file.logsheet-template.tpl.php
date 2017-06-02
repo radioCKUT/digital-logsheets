@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-05-24 14:40:14
+<?php /* Smarty version 3.1.27, created on 2017-06-02 16:35:25
          compiled from "/var/www/digital-logsheets-res/templates/logsheet-template.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:130869840659259b4eb45591_78188752%%*/
+/*%%SmartyHeaderCode:871642942593193cdd620c7_79122670%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'e934ad7ef1eb272ab8522a3fbd89586991d02073' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/logsheet-template.tpl',
-      1 => 1495323600,
+      1 => 1496414669,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '130869840659259b4eb45591_78188752',
+  'nocache_hash' => '871642942593193cdd620c7_79122670',
   'variables' => 
   array (
     'episode' => 0,
@@ -22,13 +22,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_59259b4ebfe3a0_44155922',
+  'unifunc' => 'content_593193cde8f615_03761380',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_59259b4ebfe3a0_44155922')) {
-function content_59259b4ebfe3a0_44155922 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_593193cde8f615_03761380')) {
+function content_593193cde8f615_03761380 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '130869840659259b4eb45591_78188752';
+$_smarty_tpl->properties['nocache_hash'] = '871642942593193cdd620c7_79122670';
 ?>
 Show Name: <?php echo $_smarty_tpl->tpl_vars['episode']->value['program'];?>
  <br/>
@@ -41,6 +41,7 @@ Time Started: <?php echo $_smarty_tpl->tpl_vars['episode']->value['startTime'];?
 Pre-recorded? <?php echo $_smarty_tpl->tpl_vars['episode']->value['prerecorded'];?>
   Date? <?php echo $_smarty_tpl->tpl_vars['episode']->value['prerecordDate'];?>
  <br/> <br/>
+
 
 <table class="table">
     <tr>
