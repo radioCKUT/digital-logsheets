@@ -89,7 +89,7 @@ try {
         $_SESSION["episodeId"] = intval($episodeId);
         header('Location: add-segments.php');
     }
-    
+
 
 } catch(PDOException $e) {
     error_log('Error while saving an episode: ' . $e->getMessage());

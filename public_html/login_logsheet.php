@@ -43,26 +43,51 @@ if(isset($_POST['loginSubmit']))
 
 <!DOCTYPE HTML>
 <html> 
-<head> 
-<title>logsheet login</title> 
-<body> 
+<head>
+
+<title>logsheet login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<body onload="">
 	<div id="login">
-		<h3>Login</h3>
-        <?php
-        if(isset($errMsg)){
-            echo '<div>'.$errMsg.'</div>';
-        }
-        ?>
-		<form method="post" action="" name="login">
-			<label>Username</label>
-			<input type="text" name="username" autocomplete="off" />
-			<label>Password</label>
-			<input type="password" name="password" autocomplete="off"/>
-			<div class="errorMsg"><? echo $errorMsgLogin; ?></div>
-			<input type="submit" class="button" name="loginSubmit" value="Login">
+		<form method="post" action="" name="login" class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-2">
+                    <h3>Logsheets Login</h3>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="username">Username</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="username" autocomplete="off" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="password">Password</label>
+                <div class="col-sm-2">
+                    <input type="password" class="form-control" name="password" autocomplete="off" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-2">
+                    <? echo '<div class="text-danger">'.$errorMsgLogin.'</div>'; ?>
+                    <?php
+                    if(isset($errMsg)){
+                        echo '<p class="text-danger">'.$errMsg.'</p>';
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 col-sm-offset-2">
+                    <input type="submit" class="btn btn-default" name="loginSubmit" value="Login">
+                </div>
+            </div>
 		</form>
 	</div>
-
 </body> 
 </html> 
 	
