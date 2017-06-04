@@ -75,6 +75,9 @@
 
             $('#start_datetime').datetimepicker();
             $('#end_datetime').datetimepicker();
+            $('#prerecord_date').datetimepicker({
+                format: "L"
+            });
         }
     </script>
 </head>
@@ -206,7 +209,7 @@
                         <input type="checkbox" id="prerecord" title="Was episode prerecorded?" name="prerecord"
                                aria-label="Was episode prerecorded?"{if $formSubmission.prerecord} checked{/if}>
                     </span>
-                        <input class="form-control" type="date"
+                        <input class="form-control" type="text"
                                name="prerecord_date" id="prerecord_date"
                                aria-label="Prerecord date"
                                value="{$formSubmission.prerecordDate}" disabled>

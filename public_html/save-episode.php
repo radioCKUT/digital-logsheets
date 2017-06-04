@@ -99,7 +99,9 @@ function getDateTimeFromDateString($dateString) {
     $d = new DateTime($dateString);
     //$d = DateTime::createFromFormat('Y-m-d', $dateString);
 
-    if ($d && $d->format('Y-m-d') === $dateString) {
+    if ($d &&
+        ($d->format('Y-m-d') === $dateString ||
+            $d->format('m/d/Y') === $dateString)) {
 
         return new DateTime($dateString);
 
@@ -149,8 +151,8 @@ function getDateTimeFromDateTimeString($dateString) {
     //$d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
 
     if ($d &&
-        ($d->format('Y-m-d\TH:i') === $dateString) ||
-        ($d->format('m/d/Y g:i A') === $dateString)){
+        ($d->format('Y-m-d\TH:i') === $dateString ||
+         $d->format('m/d/Y g:i A') === $dateString)){
 
         return new DateTime($dateString, new DateTimeZone('America/Montreal'));
 
