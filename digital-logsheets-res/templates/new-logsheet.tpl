@@ -4,15 +4,11 @@
     <title>New Logsheet</title>
 
     {include './header.tpl'}
-
-    <!-- Select2 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.js"></script>
+    {include './datetime-picker.tpl'}
+    {include './select2.tpl'}
 
 
     <link href="css/custom.css" rel="stylesheet"/>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
 
     <script src="js/validation/markErrors.js"></script>
     <script src="js/validation/episodeValidation.js"></script>
