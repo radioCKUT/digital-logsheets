@@ -2,8 +2,13 @@ function init() {
     getEpisodeSegments();
     setFormOnSubmitBehaviour();
     setConfirmModalBehaviour();
-    $('#segment_time').timepicker();
-    $('#segment_time_edit').timepicker();
+
+    var options = {
+        format: "LT"
+    };
+
+    $('#segment_time').datetimepicker(options);
+    $('#segment_time_edit').datetimepicker(options);
     $('[data-toggle="tooltip"]').tooltip();
 }
 
