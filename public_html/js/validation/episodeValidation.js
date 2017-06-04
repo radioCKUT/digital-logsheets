@@ -275,9 +275,10 @@ function verifyPrerecordDate() {
 }
 
 function _isDateTimeValid(startDatetimeInput) {
-    // check for two kinds of date format, based on browser used
+    // check for multiple kinds of date format, depending on browser used
     return moment(startDatetimeInput, "YYYY-MM-DDTHH:mm", true).isValid() ||
-        moment(startDatetimeInput, "YYYY-MM-DDTHH:mm:ss", true).isValid();
+        moment(startDatetimeInput, "YYYY-MM-DDTHH:mm:ss", true).isValid() ||
+        moment(startDatetimeInput, "MM/DD/YYYY h:mm A", true).isValid();
 }
 
 function _getDateFromField(field) {
