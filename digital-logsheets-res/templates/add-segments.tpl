@@ -27,7 +27,7 @@
 </head>
 
 
-<body onload="init()">
+<body onload="init('{$episode.startDatetime}')">
     <div class="container-fluid">
         <div class="col-md-7">
 
