@@ -48,11 +48,11 @@ $existingEpisodeId = $_GET['epId'];
         $smarty->assign("programs", $programs);
 
         $episodeStartEarlyLimitDatetime = EpisodeValidator::getEpisodeEarlyLimit();
-        $episodeStartEarlyLimit = $episodeStartEarlyLimitDatetime->format("Y-m-d H:i:s");
+        $episodeStartEarlyLimit = $episodeStartEarlyLimitDatetime->format("Y-m-d\TH:i:s");
         $smarty->assign("episodeStartEarlyLimit", $episodeStartEarlyLimit);
 
         $episodeStartLateLimitDatetime = EpisodeValidator::getEpisodeLateLimit();
-        $episodeStartLateLimit = $episodeStartLateLimitDatetime->format("Y-m-d H:i:s");
+        $episodeStartLateLimit = $episodeStartLateLimitDatetime->format("Y-m-d\TH:i:s");
         $smarty->assign("episodeStartLateLimit", $episodeStartLateLimit);
 
         $prerecordDateEarlyDaysLimit = EpisodeValidator::getPrerecordDateEarlyDaysLimit();

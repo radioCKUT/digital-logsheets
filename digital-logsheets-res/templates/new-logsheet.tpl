@@ -13,12 +13,19 @@
 
     <link href="css/custom.css" rel="stylesheet"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+
     <script src="js/validation/markErrors.js"></script>
     <script src="js/validation/episodeValidation.js"></script>
     <script src="js/ui/prerecord.js"></script>
     <script src="js/ui/categoryButton.js"></script>
     <script type="text/javascript">
         function init() {
+            var data = {$programs};
+
+            $(".program").select2({
+                data: data
+            });
+
             setupEpisodeValidation({
                 episodeStartEarlyLimit: {$episodeStartEarlyLimit|json_encode},
                 episodeStartLateLimit: {$episodeStartLateLimit|json_encode},
@@ -64,11 +71,10 @@
                 }
             });
 
-
-            var data = {$programs};
-
-            $(".program").select2({
-                data: data
+            $('#start_datetime').datetimepicker();
+            $('#end_datetime').datetimepicker();
+            $('#prerecord_date').datetimepicker({
+                format: "L"
             });
         }
     </script>
@@ -138,7 +144,7 @@
             <div id="start_datetime_group" class="form-group row{if $startDatetimeError} has-error{/if}">
                 <div class="col-md-6 col-sm-6">
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
-                    <input class="form-control" type="datetime-local"
+                    <input class="form-control" type="text"
                            name="start_datetime" id="start_datetime" step="60"
                            value="{$formSubmission.startDatetime}" required>
                     <span id="start_datetime_help_block" class="help-block{if !$startDatetimeError} hidden{/if}">
@@ -146,10 +152,10 @@
                             Please enter a valid start date/time.
                         </span>
                         <span id="air_date_too_far_in_past_message" class="{if !$formErrors.airDateTooFarInPast}hidden{/if}">
-                            Start date/time must be after {$episodeStartEarlyLimit}.
+                            Start date/time must be after {$episodeStartEarlyLimit|date_format:"%m/%d/%Y %l:%M"}.
                         </span>
                         <span id="air_date_too_far_in_future_message" class="{if !$formErrors.airDateTooFarInFuture}hidden{/if}">
-                            Start date/time must be before {$episodeStartLateLimit}.
+                            Start date/time must be before {$episodeStartLateLimit|date_format:"%m/%d/%Y %l:%M"}.
                         </span>
                     </span>
                 </div>
@@ -167,7 +173,7 @@
             <div id="end_datetime_group" class="form-group row{if $endDateTimeError} has-error{/if}">
                 <div class="col-md-6 col-sm-6">
                     <label for="end_datetime" class="control-label">End Date/Time:</label>
-                    <input class="form-control" type="datetime-local"
+                    <input class="form-control" type="text"
                            name="end_datetime" id="end_datetime" step="60"
                            value="{$formSubmission.endDatetime}" required>
                     <span id="end_datetime_help_block" class="help-block{if !$endDateTimeError} hidden{/if}">
@@ -201,7 +207,7 @@
                         <input type="checkbox" id="prerecord" title="Was episode prerecorded?" name="prerecord"
                                aria-label="Was episode prerecorded?"{if $formSubmission.prerecord} checked{/if}>
                     </span>
-                        <input class="form-control" type="date"
+                        <input class="form-control" type="text"
                                name="prerecord_date" id="prerecord_date"
                                aria-label="Prerecord date"
                                value="{$formSubmission.prerecordDate}" disabled>
