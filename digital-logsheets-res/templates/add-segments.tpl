@@ -4,6 +4,7 @@
     <title>New Logsheet</title>
 
     {include './header.tpl'}
+    {include './datetime-picker.tpl'}
 
     <script type="text/javascript">
         function getEpisodeStartTime() {
@@ -11,10 +12,7 @@
         }
     </script>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
-          rel="stylesheet"/>
+
     <script type="text/javascript" src="js/validation/markErrors.js"></script>
     <script type="text/javascript" src="js/validation/segmentValidation.js"></script>
     <script type="text/javascript" src="js/validation/playlistValidation.js"></script>
