@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-05-26 15:46:24
+<?php /* Smarty version 3.1.27, created on 2017-06-05 16:38:50
          compiled from "/var/www/digital-logsheets-res/templates/segment-form.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:138421007459284dd02937e1_25353266%%*/
+/*%%SmartyHeaderCode:13275716535935891a2bb161_50666582%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '78750a42e17257c600dd317d6650fe6a1821512f' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/segment-form.tpl',
-      1 => 1495323600,
+      1 => 1496673762,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '138421007459284dd02937e1_25353266',
+  'nocache_hash' => '13275716535935891a2bb161_50666582',
   'variables' => 
   array (
     'idSuffix' => 0,
@@ -21,13 +21,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_59284dd03509f7_02183540',
+  'unifunc' => 'content_5935891a36e920_34272168',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_59284dd03509f7_02183540')) {
-function content_59284dd03509f7_02183540 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_5935891a36e920_34272168')) {
+function content_5935891a36e920_34272168 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '138421007459284dd02937e1_25353266';
+$_smarty_tpl->properties['nocache_hash'] = '13275716535935891a2bb161_50666582';
 ?>
 <form id="logsheet<?php echo $_smarty_tpl->tpl_vars['idSuffix']->value;?>
 " role="form" method="post" data-toggle="validator" novalidate>
