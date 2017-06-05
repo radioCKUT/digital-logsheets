@@ -147,6 +147,10 @@ function receiveSegmentsSuccess(data) {
                 segmentRow.append($('<td class="vert-align" colspan="3">' + name + '</td>'));
             }
 
+            if (segment.category == null) {
+                segment.category = "";
+            }
+
             segmentRow.append($('<td class="vert-align">' + segment.category + '</td>'))
                 .append($('<td class="vert-align">')
                     .append($('<div class="dropdown">')
