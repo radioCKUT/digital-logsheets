@@ -25,13 +25,27 @@
  * Time: 11:05 AM
  */
 
-
-include("../digital-logsheets-res/php/database/connectToDatabase.php");
 session_start();
 
-$login_session=$row['username'];
-if(!isset($login_session))
-{
-    echo "You usernmae is Failed !!";
-    header('Location: login_logsheet.php');
+if(!isset($_SESSION['id'])){
+    $url = 'login_logsheet.php';
+    header("location: $url");
+}else {
+    $now = time(); // Checking the time now when home page starts.
+    //echo $now.'<br/>';
+    //echo $_SESSION['expire'];
+
+    if ($now > $_SESSION['expire']) {
+
+        echo '<script language="javascript">';
+        echo 'alert("Your session has expired!")';
+        echo '</script>';
+
+        session_destroy();
+
+        echo '<script language="javascript">';
+        echo "window.location.href=\"login_logsheet.php\";\n";
+        echo '</script>';
+
+    }
 }

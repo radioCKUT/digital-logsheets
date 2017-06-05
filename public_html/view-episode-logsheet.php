@@ -23,13 +23,7 @@ require_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../digital-logsheets-res/php/objects/Episode.php");
 require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
-
-session_start();
-
-if(!isset($_SESSION['id'])){
-    $url = 'login_logsheet.php';
-    header("location: $url");
-}
+include('session.php');
 
    $episodeId = $_GET["episode_id"];
 

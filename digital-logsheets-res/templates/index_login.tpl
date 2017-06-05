@@ -4,6 +4,7 @@
     <title>
         Logsheets Retrieval
     </title>
+
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
@@ -62,24 +63,41 @@
 </head>
 <body onload="init()">
 
-<div class="container-fluid">
+<div class='container-fluid'>
     {if $program_id != null}
-        <a href="new-logsheet.php?program_id={$program_id}">New Logsheet</a>
+
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="new-logsheet.php?program_id={$program_id}">New Logsheet</a>
+            </div>
+        </div>
+
         {else}
-        <a href="new-logsheet.php">New Logsheet</a>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="new-logsheet.php">New Logsheet</a>
+            </div>
+        </div>
+
     {/if}
+
+    <div class="form-group">
+        <div class="col-sm-2 col-sm-offset-2">
+         </div>
+    </div>
 
     <br/>
     <br/>
     <div class="row">
+        <div class="form-group">
         {if $program_id != null}
-            <div class="col-sm-4" style="display: none">
+            <div class="col-sm-4 " style="display: none">
                 <label for="program" class="control-label">Program:</label>
                 <select class="form-control program" name="program" id="program" multiple="multiple"></select>
             </div>
         {/if}
         {if $program_id == null}
-            <div class="col-sm-4" >
+            <div class="col-sm-4">
                 <label for="program" class="control-label">Program:</label>
                 <select class="form-control program" name="program" id="program" multiple="multiple"></select>
             </div>
@@ -93,9 +111,11 @@
             <label for="endDateFilter" class="control-label">End:</label>
             <input type="date" id="endDateFilter" onchange="updateFilteredLogsheetList()">
         </div>
+        </div>
     </div>
 
     <div class="logsheets">
+        <br/>
         {foreach $episodes as $episode}
             <a href="view-episode-logsheet.php?episode_id={$episode.id}">{$episode.program} - {$episode.startDate}</a> <br />
         {/foreach}

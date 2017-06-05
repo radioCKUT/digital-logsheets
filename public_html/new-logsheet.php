@@ -25,22 +25,18 @@
     require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
     require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
     require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
-    
-    // create object
+    include('session.php');
+
+// create object
     $smarty = new Smarty;
 
-    session_start();
-    if(!isset($_SESSION['id'])){
-        $url = 'login_logsheet.php';
-        header("location: $url");
-    }
 
-$formErrors = $_GET['formErrors'];
-$formSubmission = $_GET['formSubmission'];
-$draftEpisodeId = $_GET['draftEpisodeId'];
-//add
-$programId = $_GET["program_id"];
-//$programName = $_GET["programName"];
+    $formErrors = $_GET['formErrors'];
+    $formSubmission = $_GET['formSubmission'];
+    $draftEpisodeId = $_GET['draftEpisodeId'];
+    //add
+    $programId = $_GET["program_id"];
+    //$programName = $_GET["programName"];
 
     //if ($programId != null) {
         //database interactions

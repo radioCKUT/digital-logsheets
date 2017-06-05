@@ -144,7 +144,6 @@
         <input type="hidden" value="{$programId}" name="program">
         {/if}
 
-
             {if $formErrors.missingStartTime || $formErrors.airDateTooFarInPast || $formErrors.airDateTooFarInFuture}
                 {assign var="startDatetimeError" value=true}
             {else}

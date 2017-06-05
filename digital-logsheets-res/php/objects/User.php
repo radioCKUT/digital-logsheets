@@ -38,6 +38,11 @@ class User
                 $_SESSION['id'] = $data->id; // Storing user session value
                 $_SESSION['username'] = $data->username; // Storing user session value
                 $_SESSION['program']=$data->program;
+                $_SESSION['start'] = time(); // Taking now logged in time.
+                // Ending a session in 30 minutes from the starting time.
+                //$_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
+                $_SESSION['expire'] = $_SESSION['start'] + (60 * 60);
+
                 header('location:index_login.php');
                 exit;
                 //return true;
@@ -71,7 +76,6 @@ class User
         }
     }
 
-
     public function register($username,$password,$encrytedpw,$program)
     {
         try
@@ -98,24 +102,5 @@ class User
         }
     }
 
-
-    public function getEpisodeById($conn,$program) {
-        $query = "select * from user where program =:id";
-        $prepQuery = $conn->prepare($query);
-        $prepQuery->bindValue(':id',$program,PDO::PARAM_INT);
-        $prepQuery->execute();
-        $result = $prepQuery->fetchAll();
-        $aObj = "";
-        $counter = 0;
-        if (count($result)>0){
-            foreach ($result as $rec){
-                $aObj = new User();
-                $aObj->id = $rec["id"];
-                $aObj->username = $rec["username"];
-                 $arrAd[$counter++]=$aObj;
-            }
-        }
-        return $arrAd;
-    }
 
 }

@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-06-02 23:06:02
+<?php /* Smarty version 3.1.27, created on 2017-06-03 13:33:11
          compiled from "/var/www/digital-logsheets-res/templates/new-logsheet.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:4734895955931ef5acbcfe6_31351203%%*/
+/*%%SmartyHeaderCode:9139625285932ba97afadf1_56477779%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '939a7091ea2fd37e67c3c05d74d0e498f8b4a221' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/new-logsheet.tpl',
-      1 => 1496444761,
+      1 => 1496456486,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '4734895955931ef5acbcfe6_31351203',
+  'nocache_hash' => '9139625285932ba97afadf1_56477779',
   'variables' => 
   array (
     'episodeStartEarlyLimit' => 0,
@@ -37,13 +37,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_5931ef5b066893_87160317',
+  'unifunc' => 'content_5932ba97dcc9b0_98771077',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5931ef5b066893_87160317')) {
-function content_5931ef5b066893_87160317 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_5932ba97dcc9b0_98771077')) {
+function content_5932ba97dcc9b0_98771077 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '4734895955931ef5acbcfe6_31351203';
+$_smarty_tpl->properties['nocache_hash'] = '9139625285932ba97afadf1_56477779';
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -227,7 +227,6 @@ $_smarty_tpl->properties['nocache_hash'] = '4734895955931ef5acbcfe6_31351203';
         <input type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['programId']->value;?>
 " name="program">
         <?php }?>
-
 
             <?php if ($_smarty_tpl->tpl_vars['formErrors']->value['missingStartTime'] || $_smarty_tpl->tpl_vars['formErrors']->value['airDateTooFarInPast'] || $_smarty_tpl->tpl_vars['formErrors']->value['airDateTooFarInFuture']) {?>
                 <?php $_smarty_tpl->tpl_vars["startDatetimeError"] = new Smarty_Variable(true, null, 0);?>

@@ -26,7 +26,9 @@ if(isset($_POST['loginSubmit']))
     if(strlen(trim($username))>1 && strlen(trim($password))>1 )
 	{
 		$uid=$userClass->userLogin($username,$password);
-		if($uid)
+
+
+        if($uid)
 		{
 			$url='index_login.php';
 			header("Location: $url");
@@ -36,7 +38,6 @@ if(isset($_POST['loginSubmit']))
 			$errorMsgLogin="Please check login details.";
 		}
 	}
-    //setcookie('username',$username,time()+(100*30),'/');
 }
 
 ?>
@@ -51,6 +52,16 @@ if(isset($_POST['loginSubmit']))
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    body {
+    background-color: black;
+    background: url(images/bg.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    }
+    </style>
 <body onload="">
 	<div id="login">
 		<form method="post" action="" name="login" class="form-horizontal">
