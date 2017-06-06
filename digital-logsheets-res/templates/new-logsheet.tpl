@@ -123,8 +123,6 @@
                 {assign var="programError" value=false}
             {/if}
 
-        Show program id: {$programId} <br/>
-        Show program name : {$programName} <br/>
         {if $programId == null}
         <div id="program_group" class="form-group row{if $programError} has-error{/if}">
             <div class="col-md-4 col-sm-6">

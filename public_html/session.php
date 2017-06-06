@@ -27,6 +27,11 @@
 
 session_start();
 
+$session_uid = $_SESSION['id'];
+$session_program = $_SESSION['program'];
+$session_programName = $_SESSION['username'];
+
+
 if(!isset($_SESSION['id'])){
     $url = 'login_logsheet.php';
     header("location: $url");

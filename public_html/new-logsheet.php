@@ -25,9 +25,11 @@
     require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
     require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
     require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
+    include('../digital-logsheets-res/php/objects/User.php');
+
     include('session.php');
 
-// create object
+   // create object
     $smarty = new Smarty;
 
 
@@ -71,6 +73,15 @@
             $maximumEpisodeLength = EpisodeValidator::getMaxEpisodeLengthInHours();
             $smarty->assign("maxDuration", $maximumEpisodeLength);
 
+
+            echo "<div class='row'>
+                        <div class='container-fluid'>";
+            echo "<h4 class='col-sm-7'>Show  name :" . $program->getName() . "</h4> ";
+            echo "</div></div>";
+
+            //echo 'Show program id:'.$programId.'<br/>';
+
+
             if (isset($formErrors)) {
                 $smarty->assign("formErrors", $formErrors);
             }
@@ -89,6 +100,9 @@
             $db = NULL;
 
             echo $smarty->fetch('../digital-logsheets-res/templates/new-logsheet.tpl');
+
+
+
 
         } catch (PDOException $e) {
             echo 'ERROR: ' . $e->getMessage();

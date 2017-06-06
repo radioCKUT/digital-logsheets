@@ -41,24 +41,25 @@ include('session.php');
         echo 'Welcome '.$_COOKIE['username'].'</br>';
         */
 
-    $session_uid = $_SESSION['id'];
-    $session_program = $_SESSION['program'];
-    $session_programName = $_SESSION['username'];
 
     //echo 'user id : '.$session_uid.'<br/>';
     //echo 'program id : '.$session_program.'<br/>';
+    //echo 'program username : '.$session_programName.'<br/>';
 
-    $userClass = new User();
+
+$userClass = new User();
     $userDetails = $userClass->userDetails($session_uid); // get user details
 
     if ($session_program == null) {
-        echo "<div class='row'><div class='container-fluid'> <div class='col-sm-2'><h3>Admin</h3></div></div></div>";
+        echo "<div class='row'>
+                <div class='container-fluid'> 
+                <div class='col-sm-2'><h3>Admin</h3></div></div></div>";
     } else {
          // user information
-        echo "<div class='row'><div class='container-fluid'>";
+        echo "<div class='row'>
+                <div class='container-fluid'>";
         echo "<h4 class='col-sm-7'>Show  name :" . $userDetails->name . "</h4> ";
         echo "</div></div>";
-        //Show  name : ". $userDetails-> name.'<br/>';
     }
         //logout
         echo "<div class='row'><div class='container-fluid'><h4 class='col-sm-7'><a href='logout.php'>Logout</a></h4></div></div>";

@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-06-05 16:11:07
+<?php /* Smarty version 3.1.27, created on 2017-06-06 20:50:24
          compiled from "/var/www/digital-logsheets-res/templates/new-logsheet.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:11650376775935829b8ae5a5_13974431%%*/
+/*%%SmartyHeaderCode:65242910759371590aa2ca0_00082392%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '939a7091ea2fd37e67c3c05d74d0e498f8b4a221' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/new-logsheet.tpl',
-      1 => 1496673762,
+      1 => 1496792831,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '11650376775935829b8ae5a5_13974431',
+  'nocache_hash' => '65242910759371590aa2ca0_00082392',
   'variables' => 
   array (
     'episodeStartEarlyLimit' => 0,
@@ -29,7 +29,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'programmerError' => 0,
     'formSubmission' => 0,
     'programId' => 0,
-    'programName' => 0,
     'programError' => 0,
     'startDatetimeError' => 0,
     'endDateTimeError' => 0,
@@ -37,13 +36,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_5935829bb80b85_49826986',
+  'unifunc' => 'content_59371590d6fc95_07033186',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5935829bb80b85_49826986')) {
-function content_5935829bb80b85_49826986 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_59371590d6fc95_07033186')) {
+function content_59371590d6fc95_07033186 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '11650376775935829b8ae5a5_13974431';
+$_smarty_tpl->properties['nocache_hash'] = '65242910759371590aa2ca0_00082392';
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -202,10 +201,6 @@ $_smarty_tpl->properties['nocache_hash'] = '11650376775935829b8ae5a5_13974431';
                 <?php $_smarty_tpl->tpl_vars["programError"] = new Smarty_Variable(false, null, 0);?>
             <?php }?>
 
-        Show program id: <?php echo $_smarty_tpl->tpl_vars['programId']->value;?>
- <br/>
-        Show program name : <?php echo $_smarty_tpl->tpl_vars['programName']->value;?>
- <br/>
         <?php if ($_smarty_tpl->tpl_vars['programId']->value == null) {?>
         <div id="program_group" class="form-group row<?php if ($_smarty_tpl->tpl_vars['programError']->value) {?> has-error<?php }?>">
             <div class="col-md-4 col-sm-6">
