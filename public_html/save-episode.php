@@ -43,7 +43,6 @@ $existingEpisodeId = $_POST['existingEpisode'];
 session_start();
 
 
-
 try {
     $db = connectToDatabase();
 
@@ -87,7 +86,6 @@ try {
         $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
         header('Location: add-segments.php?epId=' . $episodeId);
     }
-
 
 
 } catch(PDOException $e) {
