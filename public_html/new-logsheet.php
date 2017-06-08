@@ -24,22 +24,29 @@
     require_once("../digital-logsheets-res/php/database/manageCategoryEntries.php");
     require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
     require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
-require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
-    
+    require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
+    include('../digital-logsheets-res/php/objects/User.php');
+
+    include('session.php');
+
     // create object
     $smarty = new Smarty;
 
     session_start();
 
-$formErrors = $_GET['formErrors'];
-$formSubmission = $_GET['formSubmission'];
-$existingEpisodeId = $_GET['epId'];
+    $formErrors = $_GET['formErrors'];
+    $formSubmission = $_GET['formSubmission'];
+    $existingEpisodeId = $_GET['epId'];
+    $programId = $_GET["program_id"];
 
-    
+
     //database interactions
     try {
         //connect to database
         $db = connectToDatabase();
+
+        $program = new Program($db, $programId);
+        $smarty->assign("programId", $programId);
 
         $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
         $smarty->assign("categories", $categories);
@@ -78,7 +85,6 @@ $existingEpisodeId = $_GET['epId'];
             $smarty->assign("formSubmission", $draftEpisodeArray);
             $smarty->assign("existingEpisode", $existingEpisodeId);
         }
-
 
         //close database connection
         $db = NULL;

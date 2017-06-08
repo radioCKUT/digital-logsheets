@@ -36,6 +36,7 @@
             Start Date/Time: {$episode.startDatetime} <br/>
             End Date/Time: {$episode.endDatetime} <br/> <br/>
 
+        Program ID: {$programId} <br/> <br/>
 
             {include file='./segment-form.tpl' idSuffix=''}
             {include file='./segment-form.tpl' idSuffix='_edit'}
