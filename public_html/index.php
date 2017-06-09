@@ -40,7 +40,12 @@
         echo "<h4 class='col-sm-7'>Show  name :" . $userDetails->name . "</h4> ";
         echo "</div></div>";
     }
-
+    //statistic
+    echo "<div class='row'>
+            <div class='container-fluid'>
+                <h4 class='col-sm-7'><a href='View_Statistics.php'>Statistic</a></h4>
+            </div>
+           </div>";
     //logout
     echo "<div class='row'>
             <div class='container-fluid'>

@@ -62,7 +62,7 @@ if(isset($_POST['loginSubmit']))
     background-size: cover;
     }
     </style>
-<body onload="">
+<body>
 	<div id="login">
 		<form method="post" action="" name="login" class="form-horizontal">
             <div class="row">
@@ -90,6 +90,8 @@ if(isset($_POST['loginSubmit']))
                         echo '<p class="text-danger">'.$errMsg.'</p>';
                     }
                     ?>
+
+
                 </div>
             </div>
             <div class="form-group">

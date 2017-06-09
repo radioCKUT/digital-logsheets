@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-06-06 17:41:43
+<?php /* Smarty version 3.1.27, created on 2017-06-08 17:02:18
          compiled from "/var/www/digital-logsheets-res/templates/add-segments.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:2359312655936e958021941_71497595%%*/
+/*%%SmartyHeaderCode:18488527995939831a09dd67_27704093%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '11a9d6931fb46bb0cbd6fe5afff818a8fcd5352c' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/add-segments.tpl',
-      1 => 1496681233,
+      1 => 1496942793,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2359312655936e958021941_71497595',
+  'nocache_hash' => '18488527995939831a09dd67_27704093',
   'variables' => 
   array (
     'episode' => 0,
@@ -22,13 +22,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_5936e958167840_16219474',
+  'unifunc' => 'content_5939831a1d9607_90113433',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5936e958167840_16219474')) {
-function content_5936e958167840_16219474 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_5939831a1d9607_90113433')) {
+function content_5939831a1d9607_90113433 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '2359312655936e958021941_71497595';
+$_smarty_tpl->properties['nocache_hash'] = '18488527995939831a09dd67_27704093';
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -190,8 +190,8 @@ $_smarty_tpl->properties['nocache_hash'] = '2359312655936e958021941_71497595';
         End Date/Time: <?php echo $_smarty_tpl->tpl_vars['episode']->value['endDatetime'];?>
  <br/> <br/>
 
-        Program ID: <?php echo $_smarty_tpl->tpl_vars['programId']->value;?>
- <br/> <br/>
+        <!--Program ID: <?php echo $_smarty_tpl->tpl_vars['programId']->value;?>
+ <br/> <br/-->
 
         <?php echo $_smarty_tpl->getSubTemplate ('./segment-form.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('idSuffix'=>''), 0);
 ?>

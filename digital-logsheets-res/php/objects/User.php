@@ -42,7 +42,7 @@ class User
                 // Ending a session in 30 minutes from the starting time.
                 $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
 
-                header('location:index_login.php');
+                header('location:index.php');
                 exit;
                 //return true;
 
