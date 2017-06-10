@@ -244,7 +244,7 @@ function verifyPrerecordDate() {
     var prerecordDateField = prerecordGroup.find('#prerecord_date');
     var prerecordDate = prerecordDateField.val();
 
-    var isInputADate = moment(prerecordDate, "YYYY-MM-DD", true).isValid();
+    var isInputADate = _isDateValid(prerecordDate);
 
     if (isInputADate) {
         var earlyLimit = prerecordDateField.attr("min");
@@ -253,13 +253,16 @@ function verifyPrerecordDate() {
         var lateLimit = prerecordDateField.attr("max");
         var lateLimitMillisecs = new Date(lateLimit).getTime();
 
-        var startDatetimeMillisecs = new Date(prerecordDate).getTime();
+        var prerecordMoment = moment(prerecordDate);
+        var prerecordUTCOffset = prerecordMoment.utcOffset();
+        prerecordMoment.add(prerecordUTCOffset, 'minutes');
+        var prerecordDatetimeMillisecs = prerecordMoment.valueOf();
 
-        if (startDatetimeMillisecs < earlyLimitMillisecs) {
+        if (prerecordDatetimeMillisecs < earlyLimitMillisecs) {
             markPrerecordDateTooFarInPast(prerecordGroup, helpBlock);
             return false;
 
-        } else if (startDatetimeMillisecs > lateLimitMillisecs) {
+        } else if (prerecordDatetimeMillisecs > lateLimitMillisecs) {
             markPrerecordDateTooFarInFuture(prerecordGroup, helpBlock);
             return false;
 
@@ -274,10 +277,16 @@ function verifyPrerecordDate() {
     }
 }
 
-function _isDateTimeValid(startDatetimeInput) {
-    // check for two kinds of date format, based on browser used
-    return moment(startDatetimeInput, "YYYY-MM-DDTHH:mm", true).isValid() ||
-        moment(startDatetimeInput, "YYYY-MM-DDTHH:mm:ss", true).isValid();
+function _isDateValid(dateInput) {
+    return (moment(dateInput, "YYYY-MM-DD", true).isValid() ||
+        moment(dateInput, "MM/DD/YYYY", true).isValid());
+}
+
+function _isDateTimeValid(datetimeInput) {
+    // check for multiple kinds of date format, depending on browser used
+    return moment(datetimeInput, "YYYY-MM-DDTHH:mm", true).isValid() ||
+        moment(datetimeInput, "YYYY-MM-DDTHH:mm:ss", true).isValid() ||
+        moment(datetimeInput, "MM/DD/YYYY h:mm A", true).isValid();
 }
 
 function _getDateFromField(field) {

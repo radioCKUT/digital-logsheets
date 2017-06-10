@@ -5,7 +5,7 @@
             <div class="col-md-3">
                 <label for="segment_time{$idSuffix}" class="control-label">Time:</label>
                 <input name="segment_time" class="form-control segment_time"
-                       type="time" id="segment_time{$idSuffix}">
+                       type="text" id="segment_time{$idSuffix}">
                 <span id="segment_time_out_of_bounds_help_text{$idSuffix}" class="segment_time_help_text help-block hidden">
                     Segment must fall within episode.
                 </span>

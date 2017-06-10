@@ -1,5 +1,5 @@
 Show Name: {$episode.program} <br/>
-Programmer(s): <br/>
+Programmer(s): {$episode.programmer} <br/>
 Day and Date: {$episode.startDate} <br/>
 Time Started: {$episode.startTime}  Time Ended: {$episode.endTime} <br/>
 Pre-recorded? {$episode.prerecorded}  Date? {$episode.prerecordDate} <br/> <br/>
@@ -25,7 +25,7 @@ Pre-recorded? {$episode.prerecorded}  Date? {$episode.prerecordDate} <br/> <br/>
             {if $segment.category == 2 || $segment.category == 3}
                 <td>{$segment.name}</td>
                 <td>{$segment.album}</td>
-                <td>{$segment.artist}</td>
+                <td>{$segment.author}</td>
             {elseif $segment.category == 5}
                 <td colspan="3">{$segment.adNumber}</td>
             {else}
@@ -33,9 +33,9 @@ Pre-recorded? {$episode.prerecorded}  Date? {$episode.prerecordDate} <br/> <br/>
             {/if}
 
             <td>{$segment.category}</td>
-            <td>{$segment.canCon}</td>
-            <td>{$segment.newRelease}</td>
-            <td>{$segment.frenchVocalMusic}</td>
+            <td>{if $segment.canCon == 1}&#x2713{/if}</td>
+            <td>{if $segment.newRelease == 1}&#x2713{/if}</td>
+            <td>{if $segment.frenchVocalMusic == 1}&#x2713{/if}</td>
         </tr>
     {/foreach}
 </table>
