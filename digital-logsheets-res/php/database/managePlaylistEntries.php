@@ -23,14 +23,14 @@ include_once("readFromDatabase.php");
 
     class managePlaylistEntries {
 
-        const PLAYLIST_SEGMENTS_TABLE_NAME = "playlist_segments";
-        const PLAYLIST_TABLE_NAME = "playlist";
+        define("PLAYLIST_SEGMENTS_TABLE_NAME", "playlist_segments");
+        define("PLAYLIST_TABLE_NAME", "playlist");
 
-        const SEGMENT_COLUMN_NAME = "segment";
-        const SEGMENT_PARAMETER = ":segment";
+        define("SEGMENT_COLUMN_NAME", "segment");
+        define("SEGMENT_PARAMETER", ":segment");
 
-        const PLAYLIST_COLUMN_NAME = "playlist";
-        const PLAYLIST_PARAMETER = ":playlist";
+        define("PLAYLIST_COLUMN_NAME", "playlist");
+        define("PLAYLIST_PARAMETER", ":playlist");
 
         public static function getPlaylistSegmentsFromDatabase($dbConn, $playlistId) {
             $segmentIds = readFromDatabase::readFilteredColumnFromTable($dbConn, array(self::SEGMENT_COLUMN_NAME),
