@@ -25,38 +25,38 @@
 
     class manageEpisodeEntries {
 
-        define("TABLE_NAME", "episode");
+        const TABLE_NAME = "episode";
 
-        define("ID_COLUMN_NAME", "id");
-        define("ID_PARAMETER", ":id");
+        const ID_COLUMN_NAME = "id";
+        const ID_PARAMETER = ":id";
 
-        define("PROGRAM_COLUMN_NAME", "program");
-        define("PROGRAM_PARAMETER", ":program");
+        const PROGRAM_COLUMN_NAME = "program";
+        const PROGRAM_PARAMETER = ":program";
 
-        define("PLAYLIST_COLUMN_NAME", "playlist");
-        define("PLAYLIST_PARAMETER", ":playlist");
+        const PLAYLIST_COLUMN_NAME = "playlist";
+        const PLAYLIST_PARAMETER = ":playlist";
 
-        define("PROGRAMMER_COLUMN_NAME", "programmer");
-        define("PROGRAMMER_PARAMETER", ":programmer");
+        const PROGRAMMER_COLUMN_NAME = "programmer";
+        const PROGRAMMER_PARAMETER = ":programmer";
 
-        define("START_TIME_COLUMN_NAME", "start_time");
-        define("START_TIME_PARAMETER", ":start_time");
+        const START_TIME_COLUMN_NAME = "start_time";
+        const START_TIME_PARAMETER = ":start_time";
 
-        define("END_TIME_COLUMN_NAME", "end_time");
-        define("END_TIME_PARAMETER", ":end_time");
+        const END_TIME_COLUMN_NAME = "end_time";
+        const END_TIME_PARAMETER = ":end_time";
 
-        define("IS_PRERECORD_COLUMN_NAME", "prerecord");
-        define("IS_PRERECORD_PARAMETER", ":prerecord");
+        const IS_PRERECORD_COLUMN_NAME = "prerecord";
+        const IS_PRERECORD_PARAMETER = ":prerecord";
 
-        define("PRERECORD_DATE_COLUMN_NAME", "prerecord_date");
-        define("PRERECORD_DATE_PARAMETER", ":prerecord_date");
+        const PRERECORD_DATE_COLUMN_NAME = "prerecord_date";
+        const PRERECORD_DATE_PARAMETER = ":prerecord_date";
 
 
-        define("IS_DRAFT_COLUMN_NAME", "draft");
-        define("IS_DRAFT_PARAMETER", ":draft");
+        const IS_DRAFT_COLUMN_NAME = "draft";
+        const IS_DRAFT_PARAMETER = ":draft";
 
-        define("NOTES_COLUMN_NAME", "comment");
-        define("NOTES_PARAMETER", ":comment");
+        const NOTES_COLUMN_NAME = "comment";
+        const NOTES_PARAMETER = ":comment";
 
         /**
          * @param PDO $dbConn

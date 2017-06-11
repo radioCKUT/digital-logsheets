@@ -21,10 +21,10 @@
 include_once("readFromDatabase.php");
     class manageCategoryEntries {
 
-        define("TABLE_NAME", "category");
+        const TABLE_NAME = "category";
 
-        define("ID_COLUMN_NAME", "id");
-        define("CATEGORY_NAME_COLUMN_NAME", "name");
+        const ID_COLUMN_NAME = "id";
+        const CATEGORY_NAME_COLUMN_NAME = "name";
 
 
         public static function getCategoryNameFromDatabase($dbConn, $categoryId) {

@@ -21,10 +21,10 @@
 include_once("readFromDatabase.php");
     class manageProgramEntries {
 
-        define("TABLE_NAME", "program");
+        const TABLE_NAME = "program";
 
-        define("ID_COLUMN_NAME", "id");
-        define("PROGRAM_NAME_COLUMN_NAME", "name");
+        const ID_COLUMN_NAME = "id";
+        const PROGRAM_NAME_COLUMN_NAME = "name";
 
         public static function getProgramNameFromDatabase($dbConn, $programId) {
             return readFromDatabase::readFirstMatchingEntryFromTable($dbConn, array(self::PROGRAM_NAME_COLUMN_NAME),

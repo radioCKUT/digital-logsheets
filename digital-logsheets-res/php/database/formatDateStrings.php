@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('NULL_DATETIME', "0000-00-00 00:00:00");
+const NULL_DATETIME = "0000-00-00 00:00:00";
 
 /**
  * @param DateTime $dateTimeObject

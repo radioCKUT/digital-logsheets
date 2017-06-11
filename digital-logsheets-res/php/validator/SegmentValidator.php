@@ -35,8 +35,8 @@ class SegmentValidator {
      */
     private $episode;
 
-    define("MAX_AD_NUMBER", 150);
-    define("MIN_AD_NUMBER", 0);
+    const MAX_AD_NUMBER = 150;
+    const MIN_AD_NUMBER = 0;
 
     public function __construct($segment, $episode) {
         $this->segment = $segment;

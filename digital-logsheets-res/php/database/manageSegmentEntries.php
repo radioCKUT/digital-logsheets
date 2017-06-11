@@ -24,44 +24,44 @@
 
     class manageSegmentEntries {
 
-        define("TABLE_NAME", "segment");
+        const TABLE_NAME = "segment";
 
-        define("ID_COLUMN_NAME", "id");
-        define("ID_PARAMETER", ":id");
+        const ID_COLUMN_NAME = "id";
+        const ID_PARAMETER = ":id";
 
-        define("SEGMENT_NAME_COLUMN_NAME", "name");
-        define("SEGMENT_NAME_PARAMETER", ":name");
+        const SEGMENT_NAME_COLUMN_NAME = "name";
+        const SEGMENT_NAME_PARAMETER = ":name";
 
-        define("ALBUM_COLUMN_NAME", "album");
-        define("ALBUM_PARAMETER", ":album");
+        const ALBUM_COLUMN_NAME = "album";
+        const ALBUM_PARAMETER = ":album";
 
-        define("AUTHOR_COLUMN_NAME", "author");
-        define("AUTHOR_PARAMETER", ":author");
+        const AUTHOR_COLUMN_NAME = "author";
+        const AUTHOR_PARAMETER = ":author";
 
-        define("START_TIME_COLUMN_NAME", "start_time");
-        define("START_TIME_PARAMETER", ":startTime");
+        const START_TIME_COLUMN_NAME = "start_time";
+        const START_TIME_PARAMETER = ":startTime";
 
-        define("DURATION_COLUMN_NAME", "approx_duration_mins");
-        define("DURATION_PARAMETER", ":duration");
+        const DURATION_COLUMN_NAME = "approx_duration_mins";
+        const DURATION_PARAMETER = ":duration";
 
-        define("CATEGORY_COLUMN_NAME", "category");
-        define("CATEGORY_PARAMETER", ":category");
+        const CATEGORY_COLUMN_NAME = "category";
+        const CATEGORY_PARAMETER = ":category";
 
-        define("STATION_ID_COLUMN_NAME", "station_id");
-        define("STATION_ID_PARAMETER", ":stationId");
+        const STATION_ID_COLUMN_NAME = "station_id";
+        const STATION_ID_PARAMETER = ":stationId";
 
 
-        define("AD_NUMBER_COLUMN_NAME", "ad_number");
-        define("AD_NUMBER_PARAMETER", ":adNumber");
+        const AD_NUMBER_COLUMN_NAME = "ad_number";
+        const AD_NUMBER_PARAMETER = ":adNumber";
 
-        define("CAN_CON_COLUMN_NAME", "can_con");
-        define("CAN_CON_PARAMETER", ":canCon");
+        const CAN_CON_COLUMN_NAME = "can_con";
+        const CAN_CON_PARAMETER = ":canCon";
 
-        define("NEW_RELEASE_COLUMN_NAME", "new_release");
-        define("NEW_RELEASE_PARAMETER", ":newRelease");
+        const NEW_RELEASE_COLUMN_NAME = "new_release";
+        const NEW_RELEASE_PARAMETER = ":newRelease";
 
-        define("FRENCH_VOCAL_MUSIC_COLUMN_NAME", "french_vocal_music");
-        define("FRENCH_VOCAL_MUSIC_PARAMETER", ":frenchVocalMusic");
+        const FRENCH_VOCAL_MUSIC_COLUMN_NAME = "french_vocal_music";
+        const FRENCH_VOCAL_MUSIC_PARAMETER = ":frenchVocalMusic";
 
 
 
