@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-06-06 20:42:38
+<?php /* Smarty version 3.1.27, created on 2017-06-14 11:33:09
          compiled from "/var/www/digital-logsheets-res/templates/index.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:1000624683593713be7eca09_97605991%%*/
+/*%%SmartyHeaderCode:88708156359411ef5adfac3_81072447%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'c81a9909e4ba9365bc565a8e839597004079dd2e' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/index.tpl',
-      1 => 1496792361,
+      1 => 1497404295,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1000624683593713be7eca09_97605991',
+  'nocache_hash' => '88708156359411ef5adfac3_81072447',
   'variables' => 
   array (
     'programs' => 0,
@@ -23,13 +23,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_593713be8f4be1_08526625',
+  'unifunc' => 'content_59411ef5cb5504_28536472',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_593713be8f4be1_08526625')) {
-function content_593713be8f4be1_08526625 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_59411ef5cb5504_28536472')) {
+function content_59411ef5cb5504_28536472 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '1000624683593713be7eca09_97605991';
+$_smarty_tpl->properties['nocache_hash'] = '88708156359411ef5adfac3_81072447';
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,42 +37,20 @@ $_smarty_tpl->properties['nocache_hash'] = '1000624683593713be7eca09_97605991';
     <title>
         Logsheets Retrieval
     </title>
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <?php echo $_smarty_tpl->getSubTemplate ('./header.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0);
+?>
 
-    <!-- Select2 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css" rel="stylesheet"/>
+    <?php echo $_smarty_tpl->getSubTemplate ('./datetime-picker.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0);
+?>
 
-    <!-- jQuery -->
-    <?php echo '<script'; ?>
- src="https://code.jquery.com/jquery-1.11.3.min.js"><?php echo '</script'; ?>
->
+    <?php echo $_smarty_tpl->getSubTemplate ('./select2.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0);
+?>
 
-    <!-- Boostrap JS -->
-    <?php echo '<script'; ?>
- src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"><?php echo '</script'; ?>
->
 
-    <!-- Select2 -->
-    <?php echo '<script'; ?>
- src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"><?php echo '</script'; ?>
->
 
     <?php echo '<script'; ?>
  src="js/filterLogsheetList.js"><?php echo '</script'; ?>
 >
-
-    <?php echo '<script'; ?>
- src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"><?php echo '</script'; ?>
->
-    <?php echo '<script'; ?>
- src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"><?php echo '</script'; ?>
->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
-
     <?php echo '<script'; ?>
  type="text/javascript">
 

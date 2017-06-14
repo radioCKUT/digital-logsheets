@@ -179,7 +179,7 @@ if(isset($_GET['searchSubmit'])) {
                             <tr>
                                 <th>Canadien contents album for general music</th>
                                 <th>Duration</th>
-                                <th>Number of time</th>
+                                <th>%</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -197,7 +197,7 @@ if(isset($_GET['searchSubmit'])) {
                                     }
 
                                     foreach ($listOfCan_con as $oneCad_con) {
-                                        $percentage = round(100*$oneCad_con->getApprox_duration_mins()/$totalDuration)/100;
+                                        $percentage = round(10000*$oneCad_con->getApprox_duration_mins()/$totalDuration)/100;
                                         echo "<tr>";
                                         echo "<tr><td>" . $oneCad_con->getAlbum() . "</td><td>" . $oneCad_con->getApprox_duration_mins() . "</td><td>" . $percentage . " %</td>";
 
@@ -218,7 +218,7 @@ if(isset($_GET['searchSubmit'])) {
                             <tr>
                                 <th>Canadien contents album for Jazz,Classical and traditional music</th>
                                 <th>Duration</th>
-                                <th>Number of time</th>
+                                <th>%</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -234,7 +234,7 @@ if(isset($_GET['searchSubmit'])) {
                                     }
 
                                     foreach ($listOfCan_con as $oneCad_con) {
-                                        $percentage = round(100*$oneCad_con->getApprox_duration_mins()/$totalDuration)/100;
+                                        $percentage = round(10000*$oneCad_con->getApprox_duration_mins()/$totalDuration)/100;
                                         echo "<tr>";
                                         echo "<tr><td>" . $oneCad_con->getAlbum() . "</td><td>" . $oneCad_con->getApprox_duration_mins() . "</td><td>" . $percentage . " %</td>";
                                         // echo count($data['id']) . '<br>';
