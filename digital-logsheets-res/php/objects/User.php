@@ -23,9 +23,8 @@ class User
             //$hash = password_hash($password, PASSWORD_DEFAULT);
 
             $hash_password= hash('sha1', $password); //Password encryption
-            //$stmt = $db->prepare("SELECT user.id,user.username,user.program,program.name FROM user INNER JOIN program ON user.program=program.id WHERE username=:username AND encrypedpw=:hash_password");
 
-            $stmt = $db->prepare("SELECT id,username,program FROM user WHERE username=:username AND encrypedpw=:hash_password");
+            $stmt = $db->prepare("SELECT id, username, program FROM user WHERE username=:username AND encryptedpw=:hash_password");
             $stmt->bindParam("username", $username,PDO::PARAM_STR) ;
             $stmt->bindParam("hash_password", $hash_password,PDO::PARAM_STR) ;
             $stmt->execute();
