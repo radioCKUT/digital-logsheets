@@ -56,16 +56,16 @@ function sendRequestToSaveSegment(dataToSend) {
         error: receiveSegmentsError
     });
 
-    $(".spinner").removeClass("hidden");
+    $(".spinner").show();
 }
 
 function receiveSegmentsError(jqhxr, textStatus, errorThrown) {
-    $(".spinner").addClass("hidden");
-    $(".fa-check").addClass("hidden");
+    $(".spinner").hide();
+    $(".fa-check").hide();
 
     var errorMessage = _getErrorMessageFromErrorThrown(errorThrown);
 
-    $(".fa-times").removeClass("hidden")
+    $(".fa-times").show()
         .attr("title", errorMessage)
         .tooltip('fixTitle');
 }
@@ -81,8 +81,8 @@ function getAbbreviatedString(str) {
 
 
 function receiveSegmentsSuccess(data) {
-    $(".spinner").addClass("hidden");
-    $(".fa-times").addClass("hidden");
+    $(".spinner").hide();
+    $(".fa-times").hide();
     _showAndHide($(".fa-check"));
 
     hideEditForm();
@@ -170,13 +170,13 @@ function resetCategoryButtons() {
 }
 
 function _showAndHide(jQuerySelector) {
-    jQuerySelector.removeClass("hidden");
+    jQuerySelector.show();
     setTimeout(_hide(jQuerySelector), 1500);
 }
 
 function _hide(jQuerySelector) {
     return function() {
-        jQuerySelector.addClass("hidden");
+        jQuerySelector.hide();
     };
 }
 
