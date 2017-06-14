@@ -30,7 +30,7 @@ if(isset($_POST['loginSubmit']))
 
         if($uid)
 		{
-			$url='index_login.php';
+			$url='index.php';
 			header("Location: $url");
 		}
 		else
@@ -90,8 +90,6 @@ if(isset($_POST['loginSubmit']))
                         echo '<p class="text-danger">'.$errMsg.'</p>';
                     }
                     ?>
-
-
                 </div>
             </div>
             <div class="form-group">

@@ -20,7 +20,9 @@
 
     <!-- Boostrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
@@ -76,42 +78,20 @@
 </head>
 <body onload="init()">
     <div class='container-fluid'>
-
-        <div class="row " >
+         <div class="row " >
             <div class='container-fluid'>
                 <div class="form-group">
                     <h3>Log Sheet Statistics</h3>
-                        <form>
-                            <div class="radio">
-                                <label><input type="radio" name="optradio" value="radio1" checked>Canadian content per category </label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name="optradio" value="radio2">The 30 most-played-from albums</label>
-                            </div>
-                            <div class="radio ">
-                                <label><input type="radio" name="optradio" value="radio3">Frequency of a given advertisement</label>
-                            </div>
-                            <div class="radio ">
-                                <label><input type="radio" name="optradio" value="radio4">The number of station IDs </label>
-                            </div>
-                        </form>
                 </div>
             </div>
         </div>
+<br>
         <div class="row">
             <div class="form-group">
-                {if $program_id != null}
-                    <div class="col-sm-4 " style="display: none">
+                     <div class="col-sm-4" style="display: none;">
                         <label for="program" class="control-label">Program:</label>
                         <select class="form-control program" name="program" id="program" multiple="multiple"></select>
                     </div>
-                {/if}
-                {if $program_id == null}
-                    <div class="col-sm-4">
-                        <label for="program" class="control-label">Program:</label>
-                        <select class="form-control program" name="program" id="program" multiple="multiple"></select>
-                    </div>
-                {/if}
 
                 <div class="col-sm-2">
                     <label for="startDateFilter" class="control-label">Start:</label>
@@ -121,188 +101,156 @@
                     <label for="endDateFilter" class="control-label">End:</label>
                     <input type="date" id="endDateFilter" onchange="updateFilteredLogsheetList()">
                 </div>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-sm-2 ">
+                <!--div class="col-sm-2 ">
                     <input type="submit" class="btn btn-default" name="loginSubmit" value="Search">
-                </div>
+                </div-->
             </div>
         </div>
         <br>
-        <!-- Canadian content per category -->
-        <div id="divs"" >
-            <div id="div1" >
-                <div id="category_group{$idSuffix}" class="form-group category_group">
-                <label for="category" class="control-label">Category:</label>
-                <div class="btn-group" class="category" id="category" data-toggle="buttons"> {*Need double class attribute for Bootstrap tooltip to work correctly*}
-                    <label class="btn btn-primary"
-                           onclick="setupCat1Fields({if $idSuffix == '_edit'} true {else} false {/if})"
-                           data-toggle="tooltip" data-placement="bottom"
-                           title="All Spoken Word">
-                        <input type="radio" name="category" class="category1" autocomplete="off" required value="1">1
-                    </label>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home">Canadian content</a></li>
+            <li><a data-toggle="tab" href="#menu1">The 30 most-played-from albums</a></li>
+            <li><a data-toggle="tab" href="#menu2">Frequency of a given advertisement</a></li>
+            <li><a data-toggle="tab" href="#menu3">The number of station IDs</a></li>
+        </ul>
+<br>
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <div class="logsheets">
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Program name </th>
+                                    <th>Time</th>
+                                    <th>%</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {foreach $segments as $segment}
+                                    <tr>
+                                        {if $segment.category == 2 || $segment.category == 3}
+                                            <td>{$segment.name}</td>
+                                            <td>{$segment.album}</td>
+                                            <td>{$segment.artist}</td>
 
-                    <label class="btn btn-primary"
-                           onclick="setupCat2Fields({if $idSuffix == '_edit'} true {else} false {/if})"
-                           data-toggle="tooltip" data-placement="bottom"
-                           title="General Music">
-                        <input type="radio" name="category" class="category2" autocomplete="off" value="2">2
-                    </label>
+                                            <td colspan="3">{$segment.name}</td>
+                                        {/if}
 
-                    <label class="btn btn-primary"
-                           onclick="setupCat3Fields({if $idSuffix == '_edit'} true {else} false {/if})"
-                           data-toggle="tooltip" data-placement="bottom"
-                           title="Jazz, Classical, and Traditional Music">
-                        <input type="radio" name="category" class="category3" autocomplete="off" value="3">3
-                    </label>
+                                         <td>{$segment.canCon}</td>
 
-                    <label class="btn btn-primary"
-                           onclick="setupCat4Fields({if $idSuffix == '_edit'} true {else} false {/if})"
-                           data-toggle="tooltip" data-placement="bottom"
-                           title="Musical Productions (ID's, etc.)">
-                        <input type="radio" name="category" class="category4" autocomplete="off" value="4">4
-                    </label>
+                                    </tr>
+                                {/foreach}
 
-                    <label class="btn btn-primary"
-                           onclick="setupCat5Fields({if $idSuffix == '_edit'} true {else} false {/if})"
-                           data-toggle="tooltip"  data-placement="bottom"
-                           title="Ads, Promos">
-                        <input type="radio" name="category" class="category5" autocomplete="off" value="5">5
-                    </label>
 
-                    <span id="category_help_block{$idSuffix}" class="help-block hidden">
-                            Please select a category.
-                        </span>
+                                {foreach $episodes as $episode}
+                                    <tr>
+                                        <td>
+                                             {$episode.program}
+                                        <td>
+                                        <td> {$episode.startDate}</td><td>%</td>
+                                    </tr>
+                                {/foreach}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+             </div>
+
+
+            <div id="menu1" class="tab-pane fade">
                 <div class="row">
                     <div class="col-sm-8">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Time</th>
-                            <th>%</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td> Description</td>
-                            <td> 46</td>
-                            <td> 46%</td>
-                        </tr>
-                        <tr>
-                            <td> Description</td>
-                            <td> 1</td>
-                            <td> 1% </td>
-                        </tr>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
 
-                        </tbody>
-                    </table>
+                                <th> Album name</th>
+                                <th> Artist</th>
+                                <th> Number of time</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+
+                                <td> Top album </td>
+                                <td> David angel </td>
+                                <td>08</td>
+                            </tr>
+                            <tr>
+
+                                <td> Summer </td>
+                                <td> Cool </td>
+                                <td> 20</td>
+                            </tr>
+                            <tr>
+
+                                <td> Three one two  </td>
+                                <td> Teny  </td>
+                                <td> 12</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+             </div>
+            <div id="menu2" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                 <th>Advertisement number</th>
+                                <th>Frequency </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                 <td> 2017-06-05</td>
+                                <td> 4 </td>
+                            </tr>
+                            <tr>
+                                 <td> 2017-05-25 </td>
+                                <td> 5</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+             </div>
+            <div id="menu3" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>The number of station IDs</th>
+                                <th>Frequency</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+
+                                <td> 0_d0s0_1</td>
+                                <td> 4 </td>
+                            </tr>
+                            <tr>
+
+                                <td> 1_d0s_12 </td>
+                                <td> 5</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+             </div>
         </div>
 
-            <!-- The 30 most-played-from albums -->
-            <div id="div2" style="display: none;">
-            <div class="row">
-                <div class="col-sm-8">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>30 most played albums</th>
-                            <th> artist</th>
-                            <th>Number of time</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td> 1</td>
-                            <td> Top album </td>
-                            <td> David angel </td>
-                            <td>08</td>
-                        </tr>
-                        <tr>
-                            <td> 2</td>
-                            <td> Summer </td>
-                            <td> Cool </td>
-                            <td> 20</td>
-                        </tr>
-                        <tr>
-                            <td> 3</td>
-                            <td> Three one two  </td>
-                            <td> Teny  </td>
-                            <td> 12</td>
-                        </tr>
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    <!--Frequency of a given advertisement-->
-            <div id="div3" style="display: none;">
-        <br/>
-            <div class="row">
-                <div class="col-sm-8">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Episode</th>
-                            <th>Advertisement number</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td> 1</td>
-                            <td> 2017-06-05</td>
-                            <td> 4 </td>
-                        </tr>
-                        <tr>
-                            <td> 2</td>
-                            <td> 2017-05-25 </td>
-                            <td> 5</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!--The number of station IDs-->
-
-            <div id="div4" style="display: none;">
-            <div class="row">
-                <div class="col-sm-8">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Episode</th>
-                            <th>The number of station IDs</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td> 1</td>
-                            <td> 2017-06-05</td>
-                            <td> 4 </td>
-                        </tr>
-                        <tr>
-                            <td> 2</td>
-                            <td> 2017-05-25 </td>
-                            <td> 5</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        </div>
     </div>
 
 </body>

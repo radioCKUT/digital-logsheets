@@ -75,9 +75,9 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
         public function setCategory($category) {
             $this->category = $category;
         }
-        
-        
-        
+
+
+
         public function setStationIdGiven($stationIdGiven) {
             $this->stationIdGiven = $this->getBooleanToSet($stationIdGiven);
         }
@@ -112,7 +112,7 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
 
         public function getObjectAsArray() {
             $startDateTime = $this->getStartTime();
-            
+
             $startTimeString = "";
             if (!is_null($startDateTime)) {
                 $startTimeString = $startDateTime->format('H:i');
@@ -135,15 +135,30 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
             );
         }
 
-        
+        /**
+         * @return mixed
+         */
+        function getAllCan_con($db){
+            $counter = 0;
+            $query = "SELECT count(id), album from segment group by album";
+            foreach ($db->query($query) as $rec) {
+
+                $aObj = new Segment();
+                $aObj->Id = count($rec["id"]);
+                $aObj->album = $rec["album"];
+                $arrAd[$counter++]=$aObj;
+            }
+            return $arrAd;
+        }
+
         public function getName() {
             return $this->name;
         }
-        
+
         public function getAlbum() {
             return $this->album;
         }
-        
+
         public function getAuthor() {
             return $this->author;
         }
@@ -190,5 +205,5 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
         public function getPlaylistId() {
             return $this->playlistId;
         }
-        
+
     }
