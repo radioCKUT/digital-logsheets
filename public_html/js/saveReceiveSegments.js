@@ -72,99 +72,78 @@ function getAbbreviatedString(str) {
 
 
 function receiveSegmentsSuccess(data) {
-    if (data.hasOwnProperty("error")) {
 
-        var errors = data.error;
-        var idSuffix = data.wasEditing ? "_edit" : "";
+    hideEditForm();
+    $('#logsheet').trigger("reset");
 
-        if (errors.missingName) {
-            markFieldError($('#name_group' + idSuffix), $('#name_help_block' + idSuffix));
+    resetCategoryButtons();
+
+    var addedSegments = $('#added_segments');
+    addedSegments.find("tbody").empty();
+    data = JSON.parse(data);
+
+    $.each(data, function(i, e) {
+        var segmentAndErrors = data[i];
+
+        var segment = segmentAndErrors.segment;
+        var segment_id = segment.id;
+        var start_time = segment.startTime;
+
+
+        var name = segment.name;
+        var album = segment.album;
+        var author = segment.author;
+
+        if (segment.category == 2 || segment.category == 3) {
+            name = getAbbreviatedString(name);
+            album = getAbbreviatedString(segment.album);
+            author = getAbbreviatedString(segment.author);
         }
 
-        if (errors.missingAuthor) {
-            markFieldError($('#author_group' + idSuffix), $('#author_help_block' + idSuffix));
+
+
+        var errors = segmentAndErrors.errors;
+        var tableRowElem = isSegmentErroneous(errors) ? "<tr class='erroneous_segment'>" : "<tr>";
+
+        var options_button = generateOptionsButton();
+        var delete_button = generateDeleteButton(segment_id);
+        var edit_button = generateEditButton(segment_id);
+
+
+        var segmentRow = $(tableRowElem)
+            .data("segment", segment)
+            .data("errors", errors)
+            .append($('<td class="vert-align">' + start_time + '</td>'));
+
+        if (segment.category == 2 || segment.category == 3) {
+            segmentRow.append($('<td class="vert-align">' + name + '</td>'))
+                .append($('<td class="vert-align">' + album + '</td>'))
+                .append($('<td class="vert-align">' + author + '</td>'));
+
+        } else if (segment.category == 5) {
+            segmentRow.append($('<td class="vert-align" colspan="3">' + 'Ad #' + segment.adNumber + '</td>'));
+
+        } else {
+            segmentRow.append($('<td class="vert-align" colspan="3">' + name + '</td>'));
         }
 
-        if (errors.missingAlbum) {
-            markFieldError($('#album_group' + idSuffix), $('#album_help_block' + idSuffix));
+        if (segment.category == null) {
+            segment.category = "";
         }
 
-        if (errors.missingAdNumber) {
-            markFieldError($('#ad_number_group' + idSuffix), $('#ad_number_help_block' + idSuffix));
-        }
-    } else {
-        hideEditForm();
-        $('#logsheet').trigger("reset");
+        segmentRow.append($('<td class="vert-align">' + segment.category + '</td>'))
+            .append($('<td class="vert-align">')
+                .append($('<div class="dropdown">')
+                .append(options_button)
+                .append($('<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">')
+                    .append(edit_button).append(delete_button))));
 
-        resetCategoryButtons();
-
-        var addedSegments = $('#added_segments');
-        addedSegments.find("tbody").empty();
-        data = JSON.parse(data);
-
-        $.each(data, function(i, e) {
-            var segmentAndErrors = data[i];
-
-            var segment = segmentAndErrors.segment;
-            var segment_id = segment.id;
-            var start_time = segment.startTime;
+        addedSegments.append(segmentRow);
+    });
 
 
-            var name = segment.name;
-            var album = segment.album;
-            var author = segment.author;
-
-            if (segment.category == 2 || segment.category == 3) {
-                name = getAbbreviatedString(name);
-                album = getAbbreviatedString(segment.album);
-                author = getAbbreviatedString(segment.author);
-            }
-
-
-
-            var errors = segmentAndErrors.errors;
-            var tableRowElem = isSegmentErroneous(errors) ? "<tr class='erroneous_segment'>" : "<tr>";
-
-            var options_button = generateOptionsButton();
-            var delete_button = generateDeleteButton(segment_id);
-            var edit_button = generateEditButton(segment_id);
-
-
-            var segmentRow = $(tableRowElem)
-                .data("segment", segment)
-                .data("errors", errors)
-                .append($('<td class="vert-align">' + start_time + '</td>'));
-
-            if (segment.category == 2 || segment.category == 3) {
-                segmentRow.append($('<td class="vert-align">' + name + '</td>'))
-                    .append($('<td class="vert-align">' + album + '</td>'))
-                    .append($('<td class="vert-align">' + author + '</td>'));
-
-            } else if (segment.category == 5) {
-                segmentRow.append($('<td class="vert-align" colspan="3">' + 'Ad #' + segment.adNumber + '</td>'));
-
-            } else {
-                segmentRow.append($('<td class="vert-align" colspan="3">' + name + '</td>'));
-            }
-
-            if (segment.category == null) {
-                segment.category = "";
-            }
-
-            segmentRow.append($('<td class="vert-align">' + segment.category + '</td>'))
-                .append($('<td class="vert-align">')
-                    .append($('<div class="dropdown">')
-                    .append(options_button)
-                    .append($('<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">')
-                        .append(edit_button).append(delete_button))));
-
-            addedSegments.append(segmentRow);
-        });
-
-
-        if (!$('#playlist_not_aligned_help_text').hasClass("hidden")) {
-            verifyPlaylistEpisodeAlignment();
-        }
+    if (!$('#playlist_not_aligned_help_text').hasClass("hidden")) {
+        verifyPlaylistEpisodeAlignment();
     }
 }
 
