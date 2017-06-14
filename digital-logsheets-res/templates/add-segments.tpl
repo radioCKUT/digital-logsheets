@@ -12,7 +12,7 @@
         }
     </script>
 
-
+    <script src="https://use.fontawesome.com/9a4ebfc628.js"></script>
     <script type="text/javascript" src="js/validation/markErrors.js"></script>
     <script type="text/javascript" src="js/validation/segmentValidation.js"></script>
     <script type="text/javascript" src="js/validation/playlistValidation.js"></script>
@@ -35,8 +35,6 @@
             Program:  {$episode.program} <br/>
             Start Date/Time: {$episode.startDatetime} <br/>
             End Date/Time: {$episode.endDatetime} <br/> <br/>
-
-        Program ID: {$programId} <br/> <br/>
 
             {include file='./segment-form.tpl' idSuffix=''}
             {include file='./segment-form.tpl' idSuffix='_edit'}

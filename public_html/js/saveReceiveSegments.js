@@ -54,11 +54,19 @@ function sendRequestToSaveSegment(dataToSend) {
         success: receiveSegmentsSuccess,
         error: receiveSegmentsError
     });
+
+    $(".spinner").removeClass("hidden");
 }
 
 function receiveSegmentsError(jqhxr, textStatus, errorThrown) {
-    alert("add segment fail! status: " + textStatus + " error thrown: " + errorThrown);
-    // TODO: proper error notification
+    $(".spinner").addClass("hidden");
+    $(".fa-check").addClass("hidden");
+
+    var errorMessage = _getErrorMessageFromErrorThrown(errorThrown);
+
+    $(".fa-times").removeClass("hidden")
+        .attr("title", errorMessage)
+        .tooltip('fixTitle');
 }
 
 function getAbbreviatedString(str) {
@@ -72,6 +80,9 @@ function getAbbreviatedString(str) {
 
 
 function receiveSegmentsSuccess(data) {
+    $(".spinner").addClass("hidden");
+    $(".fa-times").addClass("hidden");
+    _showAndHide($(".fa-check"));
 
     hideEditForm();
     $('#logsheet').trigger("reset");
@@ -157,3 +168,20 @@ function resetCategoryButtons() {
     resetAllFields();
 }
 
+function _showAndHide(jQuerySelector) {
+    jQuerySelector.removeClass("hidden");
+    setTimeout(_hide(jQuerySelector), 1500);
+}
+
+function _hide(jQuerySelector) {
+    return function() {
+        jQuerySelector.addClass("hidden");
+    };
+}
+
+function _getErrorMessageFromErrorThrown(errorThrown) {
+    switch (errorThrown) {
+        default:
+            return "Error - please try again";
+    }
+}
