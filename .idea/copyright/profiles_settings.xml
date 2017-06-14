@@ -1,5 +1,5 @@
 <component name="CopyrightManager">
-  <settings>
+  <settings default="GNU GPL v3.0">
     <module2copyright>
       <element module="Source Code" copyright="GNU GPL v3.0" />
     </module2copyright>
