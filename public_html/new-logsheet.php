@@ -29,83 +29,69 @@
 
     include('session.php');
 
-   // create object
+    // create object
     $smarty = new Smarty;
 
+    session_start();
 
     $formErrors = $_GET['formErrors'];
     $formSubmission = $_GET['formSubmission'];
-    $draftEpisodeId = $_GET['draftEpisodeId'];
-    //add
+    $existingEpisodeId = $_GET['epId'];
     $programId = $_GET["program_id"];
-    //$programName = $_GET["programName"];
-
-    //if ($programId != null) {
-        //database interactions
-        try {
-            //connect to database
-            $db = connectToDatabase();
-
-            $program = new Program($db, $programId);
-            $smarty->assign("programId", $programId);
-
-            $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
-            $smarty->assign("categories", $categories);
-
-            $programs = getSelect2ProgramsList($db);
-            $smarty->assign("programs", $programs);
-
-            $episodeStartEarlyLimitDatetime = EpisodeValidator::getEpisodeEarlyLimit();
-            $episodeStartEarlyLimit = $episodeStartEarlyLimitDatetime->format("Y-m-d H:i:s");
-            $smarty->assign("episodeStartEarlyLimit", $episodeStartEarlyLimit);
-
-            $episodeStartLateLimitDatetime = EpisodeValidator::getEpisodeLateLimit();
-            $episodeStartLateLimit = $episodeStartLateLimitDatetime->format("Y-m-d H:i:s");
-            $smarty->assign("episodeStartLateLimit", $episodeStartLateLimit);
-
-            $prerecordDateEarlyDaysLimit = EpisodeValidator::getPrerecordDateEarlyDaysLimit();
-            $smarty->assign("prerecordDateEarlyDaysLimit", $prerecordDateEarlyDaysLimit);
-            $prerecordDateLateDaysLimit = EpisodeValidator::getPrerecordDateLateDaysLimit();
-            $smarty->assign("prerecordDateLateDaysLimit", $prerecordDateLateDaysLimit);
-
-            $minimumEpisodeLength = EpisodeValidator::getMinEpisodeLengthInHours();
-            $smarty->assign("minDuration", $minimumEpisodeLength);
-            $maximumEpisodeLength = EpisodeValidator::getMaxEpisodeLengthInHours();
-            $smarty->assign("maxDuration", $maximumEpisodeLength);
 
 
-            echo "<div class='row'>
-                        <div class='container-fluid'>";
-            echo "<h4 class='col-sm-7'>Show  name :" . $program->getName() . "</h4> ";
-            echo "</div></div>";
+    //database interactions
+    try {
+        //connect to database
+        $db = connectToDatabase();
 
-            //echo 'Show program id:'.$programId.'<br/>';
+        $program = new Program($db, $programId);
+        $smarty->assign("programId", $programId);
 
+        $categories = manageCategoryEntries::getAllCategoriesFromDatabase($db);
+        $smarty->assign("categories", $categories);
 
-            if (isset($formErrors)) {
-                $smarty->assign("formErrors", $formErrors);
-            }
+        $programs = getSelect2ProgramsList($db);
+        $smarty->assign("programs", $programs);
 
-            if (isset($formSubmission)) {
-                $smarty->assign("formSubmission", $formSubmission);
+        $episodeStartEarlyLimitDatetime = EpisodeValidator::getEpisodeEarlyLimit();
+        $episodeStartEarlyLimit = $episodeStartEarlyLimitDatetime->format("Y-m-d\TH:i:s");
+        $smarty->assign("episodeStartEarlyLimit", $episodeStartEarlyLimit);
 
-            } else if (isset($draftEpisodeId) && $draftEpisodeId) {
-                $draftEpisode = new Episode($db, $draftEpisodeId);
-                $draftEpisodeArray = getFormSubmissionArray($draftEpisode);
-                $smarty->assign("formSubmission", $draftEpisodeArray);
-                $smarty->assign("existingEpisode", $draftEpisodeId);
-            }
+        $episodeStartLateLimitDatetime = EpisodeValidator::getEpisodeLateLimit();
+        $episodeStartLateLimit = $episodeStartLateLimitDatetime->format("Y-m-d\TH:i:s");
+        $smarty->assign("episodeStartLateLimit", $episodeStartLateLimit);
 
-            //close database connection
-            $db = NULL;
+        $prerecordDateEarlyDaysLimit = EpisodeValidator::getPrerecordDateEarlyDaysLimit();
+        $smarty->assign("prerecordDateEarlyDaysLimit", $prerecordDateEarlyDaysLimit);
+        $prerecordDateLateDaysLimit = EpisodeValidator::getPrerecordDateLateDaysLimit();
+        $smarty->assign("prerecordDateLateDaysLimit", $prerecordDateLateDaysLimit);
 
-            echo $smarty->fetch('../digital-logsheets-res/templates/new-logsheet.tpl');
+        $minimumEpisodeLength = EpisodeValidator::getMinEpisodeLengthInHours();
+        $smarty->assign("minDuration", $minimumEpisodeLength);
+        $maximumEpisodeLength = EpisodeValidator::getMaxEpisodeLengthInHours();
+        $smarty->assign("maxDuration", $maximumEpisodeLength);
 
+        if (isset($formErrors)) {
+            $smarty->assign("formErrors", $formErrors);
+        }
 
+        if (isset($formSubmission)) {
+            $smarty->assign("formSubmission", $formSubmission);
 
+        } else if (isset($existingEpisodeId) && $existingEpisodeId) {
+            $draftEpisode = new Episode($db, $existingEpisodeId);
+            $draftEpisodeArray = getFormSubmissionArray($draftEpisode);
+            $smarty->assign("formSubmission", $draftEpisodeArray);
+            $smarty->assign("existingEpisode", $existingEpisodeId);
+        }
 
-        } catch (PDOException $e) {
-            echo 'ERROR: ' . $e->getMessage();
-        //}
+        //close database connection
+        $db = NULL;
+
+        echo $smarty->fetch('../digital-logsheets-res/templates/new-logsheet.tpl');
+
+    } catch(PDOException $e) {
+        echo 'ERROR: ' . $e->getMessage();
     }
 ?>

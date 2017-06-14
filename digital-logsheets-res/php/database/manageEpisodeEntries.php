@@ -62,10 +62,16 @@
          * @param PDO $dbConn
          * @param int $episodeId
          * @param Episode $episodeObject
+         * @return boolean
          */
         public static function getEpisodeAttributesFromDatabase($dbConn, $episodeId, $episodeObject) {
             $databaseResults = readFromDatabase::readFilteredColumnFromTable($dbConn, null,
                 self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($episodeId));
+
+            if ($databaseResults == array()) {
+                return false;
+            }
+
             $databaseResults = $databaseResults[0];
 
             $programId = $databaseResults[self::PROGRAM_COLUMN_NAME];
@@ -97,6 +103,8 @@
 
             $isDraft = $databaseResults[self::IS_DRAFT_COLUMN_NAME];
             $episodeObject->setIsDraft($isDraft);
+
+            return true;
         }
 
         public static function getAllEpisodesFromDatabase($dbConn) {
@@ -126,6 +134,8 @@
             $stmt = self::bindEpisodeParams($stmt, $episodeObject);
             $stmt->execute();
 
+            $episodeObject->setDoesEpisodeExist(true);
+
             return $dbConn->lastInsertId();
         }
 
@@ -154,6 +164,8 @@
             $stmt->bindParam(self::ID_PARAMETER, $id);
 
             $stmt->execute();
+
+            $episodeObject->setDoesEpisodeExist(true);
 
             return $dbConn->lastInsertId();
         }

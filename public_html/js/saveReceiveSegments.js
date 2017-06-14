@@ -109,9 +109,16 @@ function receiveSegmentsSuccess(data) {
             var segment_id = segment.id;
             var start_time = segment.startTime;
 
-            var name = getAbbreviatedString(segment.name);
-            var album = getAbbreviatedString(segment.album);
-            var author = getAbbreviatedString(segment.author);
+
+            var name = segment.name;
+            var album = segment.album;
+            var author = segment.author;
+
+            if (segment.category == 2 || segment.category == 3) {
+                name = getAbbreviatedString(name);
+                album = getAbbreviatedString(segment.album);
+                author = getAbbreviatedString(segment.author);
+            }
 
 
 

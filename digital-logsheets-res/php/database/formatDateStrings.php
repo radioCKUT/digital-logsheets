@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+const NULL_DATETIME = "0000-00-00 00:00:00";
 
 /**
  * @param DateTime $dateTimeObject
@@ -49,15 +50,15 @@ function formatDatetimeStringForDatabaseWrite($dateTimeObject) {
 }
 
 /**
- * @param string $dateString
+ * @param string $dateTimeString
  * @return DateTime
  */
-function formatDateTimeStringFromDatabase($dateString) {
-    if (is_null($dateString)) {
+function formatDateTimeStringFromDatabase($dateTimeString) {
+    if (is_null($dateTimeString) || $dateTimeString == NULL_DATETIME) {
         return null;
 
     } else {
-        $startDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
+        $startDateTime = new DateTime($dateTimeString, new DateTimeZone('UTC'));
         $startDateTime->setTimezone(new DateTimeZone('America/Montreal'));
 
         return $startDateTime;
