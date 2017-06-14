@@ -28,11 +28,24 @@
 
     $userClass = new User();
     $userDetails = $userClass->userDetails($session_uid); // get user details
+    //logout
+    echo "<div class='row'>
+                <div class='container-fluid'>
+                    <h5 class='col-sm-7'><a href='logout.php'>Logout</a></h5>
+                </div>
+               </div>";
 
     if ($session_program == null) {
         echo "<div class='row'>
                     <div class='container-fluid'> 
                     <div class='col-sm-2'><h3>Admin</h3></div></div></div>";
+
+        //statistic
+        echo "<div class='row'>
+            <div class='container-fluid'>
+                <h4 class='col-sm-7'><a href='View_Statistics.php'>View Logsheets Statistic</a></h4>
+            </div>
+           </div>";
     } else {
         // user information
         echo "<div class='row'>
@@ -41,12 +54,6 @@
         echo "</div></div>";
     }
 
-    //logout
-    echo "<div class='row'>
-            <div class='container-fluid'>
-                <h4 class='col-sm-7'><a href='logout.php'>Logout</a></h4>
-            </div>
-           </div>";
 
 
 // create object
@@ -56,7 +63,6 @@
     try {
         //open database connection
         $db = connectToDatabase();
-
 
         $archive = new Archive($db);
         $episodesArchive = $archive->getArchive();

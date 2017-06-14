@@ -30,7 +30,7 @@ if(isset($_POST['loginSubmit']))
 
         if($uid)
 		{
-			$url='index_login.php';
+			$url='index.php';
 			header("Location: $url");
 		}
 		else
@@ -62,7 +62,7 @@ if(isset($_POST['loginSubmit']))
     background-size: cover;
     }
     </style>
-<body onload="">
+<body>
 	<div id="login">
 		<form method="post" action="" name="login" class="form-horizontal">
             <div class="row">

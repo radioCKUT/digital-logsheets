@@ -1,5 +1,5 @@
 <?php /* Smarty version 3.1.27, created on 2017-06-05 16:56:19
-         compiled from "/var/www/digital-logsheets-res/templates/index_login.tpl" */ ?>
+         compiled from "/var/www/digital-logsheets-res/templates/index.tpl" */ ?>
 <?php
 /*%%SmartyHeaderCode:102464098259358d33471e04_96460446%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
@@ -8,7 +8,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   array (
     '154e1b1f9b9f4315798ba17abe9ec64e8b19604e' => 
     array (
-      0 => '/var/www/digital-logsheets-res/templates/index_login.tpl',
+      0 => '/var/www/digital-logsheets-res/templates/index.tpl',
       1 => 1496681233,
       2 => 'file',
     ),
