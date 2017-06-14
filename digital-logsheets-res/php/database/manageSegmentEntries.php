@@ -311,9 +311,18 @@
         }
 
 
-
+        /**
+         * @param PDO $dbConn
+         * @param int $segmentId
+         */
         public static function deleteSegmentFromDatabase($dbConn, $segmentId) {
-            writeToDatabase::deleteDatabaseEntry($dbConn, $segmentId, self::TABLE_NAME);
+
+            $query = "DELETE FROM " . self::TABLE_NAME . " WHERE " .
+                self::ID_COLUMN_NAME . "=" . self::ID_PARAMETER . ";";
+
+            $stmt = $dbConn->prepare($query);
+            $stmt->bindParam(self::ID_PARAMETER, $segmentId);
+            $stmt->execute();
         }
 
         /**

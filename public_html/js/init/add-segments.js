@@ -3,16 +3,16 @@ function init(episodeStartDatetimeString) {
     setFormOnSubmitBehaviour();
     setConfirmModalBehaviour();
 
-    var options = {
+    var segmentTimeField = $('#segment_time');
+    segmentTimeField.datetimepicker({
         format: "LT",
         defaultDate: moment(episodeStartDatetimeString)
-    };
-
-    var segmentTimeField = $('#segment_time');
-    segmentTimeField.datetimepicker(options);
+    });
 
     var segmentTimeEditField = $('#segment_time_edit');
-    segmentTimeEditField.datetimepicker(options);
+    segmentTimeEditField.datetimepicker({
+        format: "LT"
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
 }

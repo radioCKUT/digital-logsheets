@@ -29,8 +29,6 @@
     // create object
     $smarty = new Smarty;
 
-    session_start();
-
     $formErrors = $_GET['formErrors'];
     $episodeId = intval($_GET['epId']);
 

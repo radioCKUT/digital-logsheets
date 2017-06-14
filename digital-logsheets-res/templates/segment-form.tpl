@@ -121,9 +121,16 @@
         <input type="hidden" name="segment_id" id="segment_id{$idSuffix}">
         <input type="hidden" name="is_segment{$idSuffix}" id="is_segment{$idSuffix}">
         <input type="button" name="cancel" value="Cancel" onclick="cancelEdit()">
-        <input type="submit" name="save" value="Save">
+        <input class="save_segment_edit" type="submit" name="save" value="Save">
     {else}
         <input type="submit" value="Add">
     {/if}
+
+    <div class="spinner hidden"></div>
+
+    <i class="fa fa-check hidden" aria-hidden="true"></i>
+    <i class="fa fa-times hidden"
+       data-toggle="tooltip" data-placement="bottom"
+       title="Error" aria-hidden="true"></i>
 
 </form>
