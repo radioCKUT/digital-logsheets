@@ -170,7 +170,7 @@ if(isset($_GET['searchSubmit'])) {
     </div>
     <br>
     <ul class="nav nav-tabs">
-        <li <? if($_GET['tab_id'] == 'tab1' || !isset($_GET['tab_id']) || $_GET['tab_id'] == '') echo "class='active'" ?>><a data-toggle="tab" href="#home" id="tab1">Canadian content  </a></li>
+        <li <? if($_GET['tab_id'] == 'tab1' || !isset($_GET['tab_id']) || $_GET['tab_id'] == '') echo "class='active'" ?>><a data-toggle="tab" href="#home" id="tab1">Canadian content % </a></li>
         <li <? if($_GET['tab_id'] == 'tab2') echo "class='active'" ?>><a data-toggle="tab" href="#menu1" id="tab2">The 30 most-played-from albums</a></li>
         <li <? if($_GET['tab_id'] == 'tab3') echo "class='active'" ?>><a data-toggle="tab" href="#menu2" id="tab3">Frequency of a given advertisement</a></li>
         <li <? if($_GET['tab_id'] == 'tab4') echo "class='active'" ?>><a data-toggle="tab" href="#menu3" id="tab4">The number of station IDs</a></li>
@@ -186,27 +186,30 @@ if(isset($_GET['searchSubmit'])) {
                             <thead>
                             <tr>
                                 <th>Canadien contents album for general music</th>
-                                <th> <?
-
-                                        if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
-                                        $total_duration_of_contents = 0 ;
-                                        $total_duration_of_Canadien_contents= 0;
-                                        $category='2';
-                                        $statistic = new Statistic();
-                                        $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
-
-                                        //echo $statisticDetails->total_Can_duration."<br>";
-                                        //echo $statisticDetails->total_duration."<br>";
-
-                                        $percentage = round(10000*$statisticDetails->total_Can_duration/$statisticDetails->total_duration)/100;
-
-                                        echo $percentage ;
-
-
-                                    }?>%</th>
+                                <th>Canadien contents</th>
+                                <th>Total contents</th>
+                                <th>%</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <td></td>
+                            <?
+
+                            if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
+                                $total_duration_of_contents = 0 ;
+                                $total_duration_of_Canadien_contents= 0;
+                                $category='2';
+                                $statistic = new Statistic();
+                                $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
+                                echo "<td>".$statisticDetails->total_duration."</td>";
+                                echo "<td>".$statisticDetails->total_Can_duration."</td>";
+
+                                $percentage = round(10000*$statisticDetails->total_Can_duration/$statisticDetails->total_duration)/100;
+
+                                echo "<td>".$percentage." % </td>" ;
+
+
+                            }?>
                             </tbody>
                         </table>
                     </div>
@@ -215,53 +218,30 @@ if(isset($_GET['searchSubmit'])) {
                             <thead>
                             <tr>
                                 <th>Canadien contents album for Jazz,Classical and traditional music</th>
-                                <th><?
-
-                                    if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
-                                        $total_duration_of_contents = 0 ;
-                                        $total_duration_of_Canadien_contents= 0;
-                                        $category='3';
-                                        $statistic = new Statistic();
-                                        $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
-
-                                        //echo $statisticDetails->total_Can_duration."<br>";
-                                        //echo $statisticDetails->total_duration."<br>";
-
-                                        $percentage = round(10000*$statisticDetails->total_Can_duration/$statisticDetails->total_duration)/100;
-
-                                        echo $percentage ;
-
-
-                                    }?>%</th>
-
+                                <th>Canadien contents</th>
+                                <th>Total contents</th>
+                                <th>%</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
-                            /*if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
-                                $totalDuration = 0;
-                                $category='3';
-                                $arObj = new Statistic();
-                                $listOfCan_con = $arObj->getAllCan_Con($db, $startdate, $enddate,$category);
-                                if (isset($listOfCan_con)) {
-                                    foreach ($listOfCan_con as $oneCad_con) {
-                                        $totalDuration += $oneCad_con->getApprox_duration_mins();
-                                    }
+                            <td></td>
+                            <?
 
-                                    foreach ($listOfCan_con as $oneCad_con) {
-                                        $percentage = round(10000*$oneCad_con->getApprox_duration_mins()/$totalDuration)/100;
-                                        echo "<tr>";
-                                        echo "<tr><td>" . $oneCad_con->getAlbum() . "</td><td>" . $oneCad_con->getApprox_duration_mins() . "</td><td>" . $percentage . " %</td>";
-                                        // echo count($data['id']) . '<br>';
+                            if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
+                                $total_duration_of_contents = 0 ;
+                                $total_duration_of_Canadien_contents= 0;
+                                $category='2';
+                                $statistic = new Statistic();
+                                $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
+                                echo "<td>".$statisticDetails->total_duration."</td>";
+                                echo "<td>".$statisticDetails->total_Can_duration."</td>";
 
-                                        echo "</tr>";
-                                    }
-                                }else{
-                                    echo '<tr><td colspan="3">no data</td></tr>';
-                                }
-                            }
+                                $percentage = round(10000*$statisticDetails->total_Can_duration/$statisticDetails->total_duration)/100;
 
-                            */?>
+                                echo "<td>".$percentage." % </td>" ;
+
+
+                            }?>
                             </tbody>
                         </table>
                     </div>
