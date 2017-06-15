@@ -186,15 +186,12 @@ if(isset($_GET['searchSubmit'])) {
                             <thead>
                             <tr>
                                 <th>Canadien contents album for general music</th>
-                                <th>Canadien contents</th>
                                 <th>Total contents</th>
                                 <th>%</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <td></td>
                             <?
-
                             if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
                                 $total_duration_of_contents = 0 ;
                                 $total_duration_of_Canadien_contents= 0;
@@ -218,19 +215,17 @@ if(isset($_GET['searchSubmit'])) {
                             <thead>
                             <tr>
                                 <th>Canadien contents album for Jazz,Classical and traditional music</th>
-                                <th>Canadien contents</th>
-                                <th>Total contents</th>
+                                 <th>Total contents</th>
                                 <th>%</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <td></td>
                             <?
 
                             if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
-                                $total_duration_of_contents = 0 ;
-                                $total_duration_of_Canadien_contents= 0;
-                                $category='2';
+                               // $total_duration_of_contents = 0 ;
+                               // $total_duration_of_Canadien_contents= 0;
+                                $category='3';
                                 $statistic = new Statistic();
                                 $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
                                 echo "<td>".$statisticDetails->total_duration."</td>";
@@ -301,7 +296,6 @@ if(isset($_GET['searchSubmit'])) {
                             $arObj = new Statistic();
                             $listOfAd=$arObj->getAdFrequency($db,$startdate, $enddate);
                             if (isset($listOfAd)) {
-
                                 foreach ($listOfAd as $oneAd) {
                                     if ($oneAd->getAd_number()!=null){
                                     echo"<tr>";
@@ -333,12 +327,11 @@ if(isset($_GET['searchSubmit'])) {
                         if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
                             $arObj = new Statistic();
                             $listOfStation_id = $arObj->getAllStationId($db,$startdate, $enddate);
-                            if (isset($listOfAd)) {
-
+                            if (isset($listOfStation_id)) {
                                 foreach ($listOfStation_id as $oneStation_id) {
-                                    if ($oneAd->getAd_number()!=null) {
+                                    if ($oneStation_id->getStation_id()!=null) {
                                         echo "<tr>";
-                                        echo "<tr><td>" . $oneStation_id->getAd_number() . "</td><td>" . $oneStation_id->getId() . "</td><td>";
+                                        echo "<tr><td>" . $oneStation_id->getStation_id() . "</td><td>" . $oneStation_id->getId() . "</td><td>";
                                     }}
                             } else {
                                 echo '<tr><td colspan="2">no data</td></tr>';

@@ -170,7 +170,7 @@ where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' group by st
         foreach ($db->query($query) as $rec) {
             $aObj = new Statistic();
             $aObj->id = $rec["id_count"];
-            $aObj->ad_number = $rec["station_id"];
+            $aObj->station_id = $rec["station_id"];
 
             $arrAd[$counter++] = $aObj;
         }
