@@ -30,9 +30,7 @@
     include('session.php');
 
     // create object
-    $smarty = new Smarty;
-
-    session_start();
+    $smarty = new Smarty; 
 
     $formErrors = $_GET['formErrors'];
     $formSubmission = $_GET['formSubmission'];

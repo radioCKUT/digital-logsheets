@@ -28,6 +28,7 @@
 
     $userClass = new User();
     $userDetails = $userClass->userDetails($session_uid); // get user details
+
     //logout
     echo "<div class='row'>
                 <div class='container-fluid'>
@@ -35,15 +36,19 @@
                 </div>
                </div>";
 
-    if ($session_program == null) {
+    if ($session_program == null ) {
         echo "<div class='row'>
-                    <div class='container-fluid'> 
-                    <div class='col-sm-2'><h3>Admin</h3></div></div></div>";
+                    <div class='container-fluid'>";
+        if ( $session_programName =='admin')   {
+            echo "<div class='col-sm-2'><h3>Admin</h3></div></div></div>";
+        }elseif ( $session_programName =='music')   {
+            echo "<div class='col-sm-2'><h3>Music</h3></div></div></div>";
+        }
 
         //statistic
         echo "<div class='row'>
             <div class='container-fluid'>
-                <h4 class='col-sm-7'><a href='View_Statistics.php'>View Logsheets Statistic</a></h4>
+                <h4 class='col-sm-7'><a href='view-statistics.php'>View Logsheets Statistic</a></h4>
             </div>
            </div>";
     } else {

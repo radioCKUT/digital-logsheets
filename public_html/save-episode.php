@@ -25,7 +25,7 @@ include_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
 require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
-
+include('session.php');
 
 $programId = intval($_POST['program']);
 

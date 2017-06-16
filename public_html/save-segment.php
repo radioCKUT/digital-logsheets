@@ -23,6 +23,7 @@ require_once("../digital-logsheets-res/php/objects/Episode.php");
 require_once("../digital-logsheets-res/php/validator/SegmentValidator.php");
 require_once("../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
 require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
+include('session.php');
 
 $episodeId = $_POST['episode_id'];
 

@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-06-06 20:50:24
+<?php /* Smarty version 3.1.27, created on 2017-06-15 16:21:25
          compiled from "/var/www/digital-logsheets-res/templates/new-logsheet.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:65242910759371590aa2ca0_00082392%%*/
+/*%%SmartyHeaderCode:6691903705942b4057aca70_66276397%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,20 +9,20 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '939a7091ea2fd37e67c3c05d74d0e498f8b4a221' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/new-logsheet.tpl',
-      1 => 1496792831,
+      1 => 1497404295,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '65242910759371590aa2ca0_00082392',
+  'nocache_hash' => '6691903705942b4057aca70_66276397',
   'variables' => 
   array (
+    'programs' => 0,
     'episodeStartEarlyLimit' => 0,
     'episodeStartLateLimit' => 0,
     'prerecordDateEarlyDaysLimit' => 0,
     'prerecordDateLateDaysLimit' => 0,
     'minDuration' => 0,
     'maxDuration' => 0,
-    'programs' => 0,
     'program_id' => 0,
     'existingEpisode' => 0,
     'formErrors' => 0,
@@ -36,49 +36,33 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_59371590d6fc95_07033186',
+  'unifunc' => 'content_5942b405ad6e09_42743105',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_59371590d6fc95_07033186')) {
-function content_59371590d6fc95_07033186 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_5942b405ad6e09_42743105')) {
+function content_5942b405ad6e09_42743105 ($_smarty_tpl) {
+if (!is_callable('smarty_modifier_date_format')) require_once '/var/www/digital-logsheets-res/smarty/libs/plugins/modifier.date_format.php';
 
-$_smarty_tpl->properties['nocache_hash'] = '65242910759371590aa2ca0_00082392';
+$_smarty_tpl->properties['nocache_hash'] = '6691903705942b4057aca70_66276397';
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>New Logsheet</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <?php echo $_smarty_tpl->getSubTemplate ('./header.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0);
+?>
 
-    <!-- jQuery -->
-    <?php echo '<script'; ?>
- src="https://code.jquery.com/jquery-1.11.3.min.js"><?php echo '</script'; ?>
->
+    <?php echo $_smarty_tpl->getSubTemplate ('./datetime-picker.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0);
+?>
 
-    <!-- Boostrap JS -->
-    <?php echo '<script'; ?>
- src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"><?php echo '</script'; ?>
->
+    <?php echo $_smarty_tpl->getSubTemplate ('./select2.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0);
+?>
 
-    <!-- Select2 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css" rel="stylesheet"/>
-    <?php echo '<script'; ?>
- src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.js"><?php echo '</script'; ?>
->
 
 
     <link href="css/custom.css" rel="stylesheet"/>
-    <?php echo '<script'; ?>
- type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"><?php echo '</script'; ?>
->
+
     <?php echo '<script'; ?>
  src="js/validation/markErrors.js"><?php echo '</script'; ?>
 >
@@ -94,6 +78,13 @@ $_smarty_tpl->properties['nocache_hash'] = '65242910759371590aa2ca0_00082392';
     <?php echo '<script'; ?>
  type="text/javascript">
         function init() {
+            var data = <?php echo $_smarty_tpl->tpl_vars['programs']->value;?>
+;
+
+            $(".program").select2({
+                data: data
+            });
+
             setupEpisodeValidation({
                 episodeStartEarlyLimit: <?php echo json_encode($_smarty_tpl->tpl_vars['episodeStartEarlyLimit']->value);?>
 ,
@@ -149,11 +140,10 @@ $_smarty_tpl->properties['nocache_hash'] = '65242910759371590aa2ca0_00082392';
                 }
             });
 
-            var data = <?php echo $_smarty_tpl->tpl_vars['programs']->value;?>
-;
-
-            $(".program").select2({
-                data: data
+            $('#start_datetime').datetimepicker();
+            $('#end_datetime').datetimepicker();
+            $('#prerecord_date').datetimepicker({
+                format: "L"
             });
         }
     <?php echo '</script'; ?>
@@ -195,6 +185,9 @@ $_smarty_tpl->properties['nocache_hash'] = '65242910759371590aa2ca0_00082392';
                 </div>
             </div>
 
+
+
+
             <?php if ($_smarty_tpl->tpl_vars['formErrors']->value['missingProgram']) {?>
                 <?php $_smarty_tpl->tpl_vars["programError"] = new Smarty_Variable(true, null, 0);?>
             <?php } else { ?>
@@ -230,9 +223,9 @@ $_smarty_tpl->properties['nocache_hash'] = '65242910759371590aa2ca0_00082392';
             <?php }?>
 
             <div id="start_datetime_group" class="form-group row<?php if ($_smarty_tpl->tpl_vars['startDatetimeError']->value) {?> has-error<?php }?>">
-                <div class="col-md-3 col-sm-5">
+                <div class="col-md-6 col-sm-6">
                     <label for="start_datetime" class="control-label">Start Date/Time:</label>
-                    <input class="form-control" type="datetime-local"
+                    <input class="form-control" type="text"
                            name="start_datetime" id="start_datetime" step="60"
                            value="<?php echo $_smarty_tpl->tpl_vars['formSubmission']->value['startDatetime'];?>
 " required>
@@ -241,11 +234,11 @@ $_smarty_tpl->properties['nocache_hash'] = '65242910759371590aa2ca0_00082392';
                             Please enter a valid start date/time.
                         </span>
                         <span id="air_date_too_far_in_past_message" class="<?php if (!$_smarty_tpl->tpl_vars['formErrors']->value['airDateTooFarInPast']) {?>hidden<?php }?>">
-                            Start date/time must be after <?php echo $_smarty_tpl->tpl_vars['episodeStartEarlyLimit']->value;?>
+                            Start date/time must be after <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['episodeStartEarlyLimit']->value,"%m/%d/%Y %l:%M");?>
 .
                         </span>
                         <span id="air_date_too_far_in_future_message" class="<?php if (!$_smarty_tpl->tpl_vars['formErrors']->value['airDateTooFarInFuture']) {?>hidden<?php }?>">
-                            Start date/time must be before <?php echo $_smarty_tpl->tpl_vars['episodeStartLateLimit']->value;?>
+                            Start date/time must be before <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['episodeStartLateLimit']->value,"%m/%d/%Y %l:%M");?>
 .
                         </span>
                     </span>
@@ -262,9 +255,9 @@ $_smarty_tpl->properties['nocache_hash'] = '65242910759371590aa2ca0_00082392';
             <?php }?>
 
             <div id="end_datetime_group" class="form-group row<?php if ($_smarty_tpl->tpl_vars['endDateTimeError']->value) {?> has-error<?php }?>">
-                <div class="col-md-3 col-sm-5">
+                <div class="col-md-6 col-sm-6">
                     <label for="end_datetime" class="control-label">End Date/Time:</label>
-                    <input class="form-control" type="datetime-local"
+                    <input class="form-control" type="text"
                            name="end_datetime" id="end_datetime" step="60"
                            value="<?php echo $_smarty_tpl->tpl_vars['formSubmission']->value['endDatetime'];?>
 " required>
@@ -301,7 +294,7 @@ $_smarty_tpl->properties['nocache_hash'] = '65242910759371590aa2ca0_00082392';
                         <input type="checkbox" id="prerecord" title="Was episode prerecorded?" name="prerecord"
                                aria-label="Was episode prerecorded?"<?php if ($_smarty_tpl->tpl_vars['formSubmission']->value['prerecord']) {?> checked<?php }?>>
                     </span>
-                        <input class="form-control" type="date"
+                        <input class="form-control" type="text"
                                name="prerecord_date" id="prerecord_date"
                                aria-label="Prerecord date"
                                value="<?php echo $_smarty_tpl->tpl_vars['formSubmission']->value['prerecordDate'];?>

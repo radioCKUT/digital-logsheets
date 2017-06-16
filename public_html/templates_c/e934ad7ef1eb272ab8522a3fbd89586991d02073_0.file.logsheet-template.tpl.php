@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-06-06 17:40:53
+<?php /* Smarty version 3.1.27, created on 2017-06-15 16:21:31
          compiled from "/var/www/digital-logsheets-res/templates/logsheet-template.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:52996325936e925e017d3_45131476%%*/
+/*%%SmartyHeaderCode:20739697525942b40b6fc1e3_89693267%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'e934ad7ef1eb272ab8522a3fbd89586991d02073' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/logsheet-template.tpl',
-      1 => 1496681233,
+      1 => 1497404295,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '52996325936e925e017d3_45131476',
+  'nocache_hash' => '20739697525942b40b6fc1e3_89693267',
   'variables' => 
   array (
     'episode' => 0,
@@ -22,17 +22,18 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_5936e92609b995_27348983',
+  'unifunc' => 'content_5942b40b7dd860_50287785',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5936e92609b995_27348983')) {
-function content_5936e92609b995_27348983 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_5942b40b7dd860_50287785')) {
+function content_5942b40b7dd860_50287785 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '52996325936e925e017d3_45131476';
+$_smarty_tpl->properties['nocache_hash'] = '20739697525942b40b6fc1e3_89693267';
 ?>
 Show Name: <?php echo $_smarty_tpl->tpl_vars['episode']->value['program'];?>
  <br/>
-Programmer(s): <br/>
+Programmer(s): <?php echo $_smarty_tpl->tpl_vars['episode']->value['programmer'];?>
+ <br/>
 Day and Date: <?php echo $_smarty_tpl->tpl_vars['episode']->value['startDate'];?>
  <br/>
 Time Started: <?php echo $_smarty_tpl->tpl_vars['episode']->value['startTime'];?>
@@ -77,7 +78,7 @@ $foreach_segment_Sav = $_smarty_tpl->tpl_vars['segment'];
 </td>
                 <td><?php echo $_smarty_tpl->tpl_vars['segment']->value['album'];?>
 </td>
-                <td><?php echo $_smarty_tpl->tpl_vars['segment']->value['artist'];?>
+                <td><?php echo $_smarty_tpl->tpl_vars['segment']->value['author'];?>
 </td>
             <?php } elseif ($_smarty_tpl->tpl_vars['segment']->value['category'] == 5) {?>
                 <td colspan="3"><?php echo $_smarty_tpl->tpl_vars['segment']->value['adNumber'];?>
@@ -89,12 +90,9 @@ $foreach_segment_Sav = $_smarty_tpl->tpl_vars['segment'];
 
             <td><?php echo $_smarty_tpl->tpl_vars['segment']->value['category'];?>
 </td>
-            <td><?php echo $_smarty_tpl->tpl_vars['segment']->value['canCon'];?>
-</td>
-            <td><?php echo $_smarty_tpl->tpl_vars['segment']->value['newRelease'];?>
-</td>
-            <td><?php echo $_smarty_tpl->tpl_vars['segment']->value['frenchVocalMusic'];?>
-</td>
+            <td><?php if ($_smarty_tpl->tpl_vars['segment']->value['canCon'] == 1) {?>&#x2713<?php }?></td>
+            <td><?php if ($_smarty_tpl->tpl_vars['segment']->value['newRelease'] == 1) {?>&#x2713<?php }?></td>
+            <td><?php if ($_smarty_tpl->tpl_vars['segment']->value['frenchVocalMusic'] == 1) {?>&#x2713<?php }?></td>
         </tr>
     <?php
 $_smarty_tpl->tpl_vars['segment'] = $foreach_segment_Sav;

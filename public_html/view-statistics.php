@@ -64,10 +64,10 @@ if(isset($_GET['searchSubmit'])) {
     $category = '';
 
     if ($startdate == 0||$enddate == 0)
-    $errMsg .= 'Select the date<br>';
+        $errMsg .= 'Select the date<br>';
 
     if ($startdate != 0 && $enddate != 0 && $startdate >= $enddate)
-            $errMsg .= 'Select the start date eariler than end date <br>';
+        $errMsg .= 'Select the start date eariler than end date <br>';
 
 }
 ?>
@@ -215,7 +215,7 @@ if(isset($_GET['searchSubmit'])) {
                             <thead>
                             <tr>
                                 <th>Canadien contents album for Jazz,Classical and traditional music</th>
-                                 <th>Total contents</th>
+                                <th>Total contents</th>
                                 <th>%</th>
                             </tr>
                             </thead>
@@ -223,8 +223,8 @@ if(isset($_GET['searchSubmit'])) {
                             <?
 
                             if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
-                               // $total_duration_of_contents = 0 ;
-                               // $total_duration_of_Canadien_contents= 0;
+                                // $total_duration_of_contents = 0 ;
+                                // $total_duration_of_Canadien_contents= 0;
                                 $category='3';
                                 $statistic = new Statistic();
                                 $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
@@ -298,8 +298,8 @@ if(isset($_GET['searchSubmit'])) {
                             if (isset($listOfAd)) {
                                 foreach ($listOfAd as $oneAd) {
                                     if ($oneAd->getAd_number()!=null){
-                                    echo"<tr>";
-                                    echo "<tr><td>".$oneAd->getAd_number() . "</td><td>".$oneAd->getId()."</td><td>";
+                                        echo"<tr>";
+                                        echo "<tr><td>".$oneAd->getAd_number() . "</td><td>".$oneAd->getId()."</td><td>";
                                     }
                                 }
                             }else{

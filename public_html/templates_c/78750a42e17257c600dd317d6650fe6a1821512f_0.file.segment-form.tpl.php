@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2017-06-05 16:38:50
+<?php /* Smarty version 3.1.27, created on 2017-06-16 13:53:01
          compiled from "/var/www/digital-logsheets-res/templates/segment-form.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:13275716535935891a2bb161_50666582%%*/
+/*%%SmartyHeaderCode:13989126575943e2bd2af7b2_24281183%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '78750a42e17257c600dd317d6650fe6a1821512f' => 
     array (
       0 => '/var/www/digital-logsheets-res/templates/segment-form.tpl',
-      1 => 1496673762,
+      1 => 1497404295,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13275716535935891a2bb161_50666582',
+  'nocache_hash' => '13989126575943e2bd2af7b2_24281183',
   'variables' => 
   array (
     'idSuffix' => 0,
@@ -21,13 +21,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_5935891a36e920_34272168',
+  'unifunc' => 'content_5943e2bd397c37_14941112',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5935891a36e920_34272168')) {
-function content_5935891a36e920_34272168 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_5943e2bd397c37_14941112')) {
+function content_5943e2bd397c37_14941112 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '13275716535935891a2bb161_50666582';
+$_smarty_tpl->properties['nocache_hash'] = '13989126575943e2bd2af7b2_24281183';
 ?>
 <form id="logsheet<?php echo $_smarty_tpl->tpl_vars['idSuffix']->value;?>
 " role="form" method="post" data-toggle="validator" novalidate>
@@ -39,7 +39,7 @@ $_smarty_tpl->properties['nocache_hash'] = '13275716535935891a2bb161_50666582';
                 <label for="segment_time<?php echo $_smarty_tpl->tpl_vars['idSuffix']->value;?>
 " class="control-label">Time:</label>
                 <input name="segment_time" class="form-control segment_time"
-                       type="time" id="segment_time<?php echo $_smarty_tpl->tpl_vars['idSuffix']->value;?>
+                       type="text" id="segment_time<?php echo $_smarty_tpl->tpl_vars['idSuffix']->value;?>
 ">
                 <span id="segment_time_out_of_bounds_help_text<?php echo $_smarty_tpl->tpl_vars['idSuffix']->value;?>
 " class="segment_time_help_text help-block hidden">
