@@ -338,7 +338,6 @@ if(isset($_GET['searchSubmit'])) {
                             }
                         }
                         ?>
-
                         </tbody>
                     </table>
                 </div>

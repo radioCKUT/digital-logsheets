@@ -83,11 +83,6 @@ class Statistic
 
             $db = getPDOStatementWithLogin();
 
-            //$counter = 0;
-            /*$query = "SELECT count(id) as id_count, album , sum(approx_duration_mins) as total_mins
-                      from segment where can_con = 0 and category = '" . $category . "' and start_time BETWEEN '" . $startdate . "' AND '" . $enddate .
-                "' group by album ORDER BY COUNT(approx_duration_mins) DESC";*/
-
             $query = $db->prepare("SELECT sum(approx_duration_mins) as total_Can_duration,
     (select sum(approx_duration_mins) from segment) as total_duration 
     FROM `segment`  where can_con = 1 and category = '" . $category . "' and start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "'");
@@ -101,22 +96,6 @@ class Statistic
                 return $query->fetch(PDO::FETCH_OBJ);
             }
 
-        //$result = $prepQuery->fetchAll();
-
-        //$aObj = "";
-        //$counter = 0;
-        //if (count($result) > 0) {
-           // foreach ($db->query($query) as $rec) {
-                //$aObj = new Statistic();
-                //$aObj->approx_duration_mins = $_GET["total_Can_duration"];
-               // $aObj->approx_duration_mins = $_GET["total_duration"];
-                //$arrAd[$counter++] = $aObj;
-            //}
-           // return $arrAd;
-        //}else{
-
-            //echo " no data output ";
-        //}
         } catch (PDOException $e) {
             exit($e->getMessage());
         }
@@ -127,7 +106,6 @@ class Statistic
 
         $db = getPDOStatementWithLogin();
         $counter = 0;
-        //$query = "SELECT album, author, count(id) as id_count FROM segment GROUP BY album, author ORDER BY `id_count` DESC limit 30";
         $query = "SELECT album, author, count(id) as id_count FROM segment 
 where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' GROUP BY album, author ORDER BY `id_count` DESC limit 30";
 
@@ -145,8 +123,6 @@ where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' GROUP BY al
 
         $db = getPDOStatementWithLogin();
         $counter = 0;
-        //$query = "SELECT count(id) as id_count, ad_number from segment   group by ad_number ORDER BY COUNT(id) DESC ";
-
         $query = "SELECT count(id) as id_count, ad_number from segment
 where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' group by ad_number ORDER BY COUNT(id) DESC ";
 
@@ -163,7 +139,6 @@ where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' group by ad
 
         $db = getPDOStatementWithLogin();
         $counter = 0;
-       // $query = "SELECT count(id) as id_count, station_id from segment group by station_id ORDER BY COUNT(id) DESC ";
         $query = "SELECT count(id) as id_count, station_id from segment 
 where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' group by station_id ORDER BY COUNT(id) DESC ";
 
