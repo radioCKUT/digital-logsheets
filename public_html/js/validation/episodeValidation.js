@@ -1,5 +1,5 @@
 /*
- * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
+ * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.    
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
  * Copyright (C) 2017 Donghee Baik
