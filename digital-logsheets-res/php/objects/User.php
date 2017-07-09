@@ -19,12 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Created by PhpStorm.
- * User: baikdonghee
- * Date: 2017-05-20
- * Time: 7:55 AM
- */
 include_once(dirname(__FILE__) . "/../database/connectToDatabase.php");
 
 class User
@@ -81,8 +75,8 @@ class User
         try {
             $db = getPDOStatementWithLogin();
 
-            $query = $db->prepare("SELECT name FROM program INNER JOIN user ON program.id =
-                                            (SELECT program FROM user WHERE id=:user_id)");
+            $query = $db->prepare("SELECT name FROM program INNER JOIN user ON program.id = " .
+                                            "(SELECT program FROM user WHERE id=:user_id)");
             $query->bindParam("user_id", $user_id, PDO::PARAM_STR);
             $query->execute();
             if ($query->rowCount() > 0) {
@@ -92,32 +86,4 @@ class User
             exit($e->getMessage());
         }
     }
-
-    public function register($username,$password,$encrytedpw,$program)
-    {
-        try
-        {
-            $db = getPDOStatementWithLogin();
-
-            $new_password = password_hash($password, PASSWORD_DEFAULT);
-
-            $query = $db->prepare("INSERT INTO user (username,password,encrytedpw,program) 
-                                                       VALUES(:username, :password,:encrytedpw, :program)");
-
-            $query->bindparam(":username", $username);
-            $query->bindparam(":password", $password);
-            $query->bindparam(":encrytedpw", $new_password);
-            $query->bindparam(":program", $program);
-
-            $query->execute();
-
-            return $query;
-        }
-        catch(PDOException $e)
-        {
-            echo $e->getMessage();
-        }
-    }
-
-
 }

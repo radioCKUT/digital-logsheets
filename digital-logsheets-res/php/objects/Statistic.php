@@ -80,42 +80,33 @@ class Statistic
 
     function getAllCan_Con($db, $startdate, $enddate,$category)
     {
+        try{
 
-        $db = getPDOStatementWithLogin();
-        $counter = 0;
-        $query = "SELECT count(id) as id_count, album , sum(approx_duration_mins) as total_mins 
-                  from segment where can_con = 0 and category = '" . $category . "' and start_time BETWEEN '" . $startdate . "' AND '" . $enddate .
-            "' group by album ORDER BY COUNT(approx_duration_mins) DESC";
+            $db = getPDOStatementWithLogin();
 
-        $prepQuery = $db->prepare($query);
-        $prepQuery->bindValue(':category', $category, PDO::PARAM_STR);
-        $prepQuery->bindValue(':startdate', $startdate, PDO::PARAM_STR);
-        $prepQuery->bindValue(':enddate', $enddate, PDO::PARAM_STR);
-        $prepQuery->execute();
-        $result = $prepQuery->fetchAll();
-        $aObj = "";
-        $counter = 0;
-        if (count($result) > 0) {
-            foreach ($db->query($query) as $rec) {
-                $aObj = new Statistic();
-                $aObj->id = $rec["id_count"];
-                $aObj->album = $rec["album"];
-                $aObj->approx_duration_mins = $rec["total_mins"];
+            $query = $db->prepare("SELECT sum(approx_duration_mins) as total_Can_duration,
+    (select sum(approx_duration_mins) from segment) as total_duration 
+    FROM `segment`  where can_con = 1 and category = '" . $category . "' and start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "'");
 
-                $arrAd[$counter++] = $aObj;
+            $query->bindValue(':category', $category, PDO::PARAM_STR);
+            $query->bindValue(':startdate', $startdate, PDO::PARAM_STR);
+            $query->bindValue(':enddate', $enddate, PDO::PARAM_STR);
+
+            $query->execute();
+            if ($query->rowCount() > 0) {
+                return $query->fetch(PDO::FETCH_OBJ);
             }
-            return $arrAd;
-        }else{
 
-            //echo " no data output ";
+        } catch (PDOException $e) {
+            exit($e->getMessage());
         }
     }
+
 
     function getMostPlayedAlbum($db, $startdate, $enddate) {
 
         $db = getPDOStatementWithLogin();
         $counter = 0;
-        //$query = "SELECT album, author, count(id) as id_count FROM segment GROUP BY album, author ORDER BY `id_count` DESC limit 30";
         $query = "SELECT album, author, count(id) as id_count FROM segment 
 where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' GROUP BY album, author ORDER BY `id_count` DESC limit 30";
 
@@ -133,8 +124,6 @@ where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' GROUP BY al
 
         $db = getPDOStatementWithLogin();
         $counter = 0;
-        //$query = "SELECT count(id) as id_count, ad_number from segment   group by ad_number ORDER BY COUNT(id) DESC ";
-
         $query = "SELECT count(id) as id_count, ad_number from segment
 where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' group by ad_number ORDER BY COUNT(id) DESC ";
 
@@ -151,14 +140,13 @@ where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' group by ad
 
         $db = getPDOStatementWithLogin();
         $counter = 0;
-       // $query = "SELECT count(id) as id_count, station_id from segment group by station_id ORDER BY COUNT(id) DESC ";
         $query = "SELECT count(id) as id_count, station_id from segment 
 where start_time BETWEEN '" . $startdate . "' AND '" . $enddate . "' group by station_id ORDER BY COUNT(id) DESC ";
 
         foreach ($db->query($query) as $rec) {
             $aObj = new Statistic();
             $aObj->id = $rec["id_count"];
-            $aObj->ad_number = $rec["station_id"];
+            $aObj->station_id = $rec["station_id"];
 
             $arrAd[$counter++] = $aObj;
         }

@@ -65,10 +65,10 @@ if(isset($_GET['searchSubmit'])) {
     $category = '';
 
     if ($startdate == 0||$enddate == 0)
-    $errMsg .= 'Select the date<br>';
+        $errMsg .= 'Select the date<br>';
 
     if ($startdate != 0 && $enddate != 0 && $startdate >= $enddate)
-            $errMsg .= 'Select the start date eariler than end date <br>';
+        $errMsg .= 'Select the start date eariler than end date <br>';
 
 }
 ?>
@@ -120,6 +120,13 @@ if(isset($_GET['searchSubmit'])) {
             });
         });
 
+        $(document).ready(function(){
+            $('.nav-tabs a').on('shown.bs.tab', function(event){
+                var tab_id = $(event.target).attr('id');         // active tab
+                $("#tab_id").val(tab_id);
+            });
+        });
+
     </script>
 </head>
 <body>
@@ -146,6 +153,7 @@ if(isset($_GET['searchSubmit'])) {
                 <div class="col-sm-2 ">
                     <input type="submit" class="btn btn-default" name="searchSubmit" value="Search">
                 </div>
+                <input type="hidden" name="tab_id" id="tab_id" value="<? echo $_GET['tab_id']; ?>">
             </form>
         </div>
     </div>
@@ -163,14 +171,14 @@ if(isset($_GET['searchSubmit'])) {
     </div>
     <br>
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Canadian content  </a></li>
-        <li><a data-toggle="tab" href="#menu1">The 30 most-played-from albums</a></li>
-        <li><a data-toggle="tab" href="#menu2">Frequency of a given advertisement</a></li>
-        <li><a data-toggle="tab" href="#menu3">The number of station IDs</a></li>
+        <li <? if($_GET['tab_id'] == 'tab1' || !isset($_GET['tab_id']) || $_GET['tab_id'] == '') echo "class='active'" ?>><a data-toggle="tab" href="#home" id="tab1">Canadian content % </a></li>
+        <li <? if($_GET['tab_id'] == 'tab2') echo "class='active'" ?>><a data-toggle="tab" href="#menu1" id="tab2">The 30 most-played-from albums</a></li>
+        <li <? if($_GET['tab_id'] == 'tab3') echo "class='active'" ?>><a data-toggle="tab" href="#menu2" id="tab3">Frequency of a given advertisement</a></li>
+        <li <? if($_GET['tab_id'] == 'tab4') echo "class='active'" ?>><a data-toggle="tab" href="#menu3" id="tab4">The number of station IDs</a></li>
     </ul>
     <br>
     <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
+        <div id="home" class="tab-pane fade <? if($_GET['tab_id'] == 'tab1' || !isset($_GET['tab_id']) || $_GET['tab_id'] == '') echo "in active" ?>">
             <div class="logsheets">
                 <br/>
                 <div class="row">
@@ -179,37 +187,27 @@ if(isset($_GET['searchSubmit'])) {
                             <thead>
                             <tr>
                                 <th>Canadien contents album for general music</th>
-                                <th>Duration</th>
+                                <th>Total contents</th>
                                 <th>%</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
-
+                            <?
                             if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
-                                $totalDuration = 0;
+                                $total_duration_of_contents = 0 ;
+                                $total_duration_of_Canadien_contents= 0;
                                 $category='2';
-                                $arObj = new Statistic();
-                                $listOfCan_con = $arObj->getAllCan_Con($db, $startdate, $enddate, $category);
+                                $statistic = new Statistic();
+                                $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
+                                echo "<td>".$statisticDetails->total_duration."</td>";
+                                echo "<td>".$statisticDetails->total_Can_duration."</td>";
 
-                                if (isset($listOfCan_con)) {
-                                    foreach ($listOfCan_con as $oneCad_con) {
-                                        $totalDuration += $oneCad_con->getApprox_duration_mins();
-                                    }
+                                $percentage = round(10000*$statisticDetails->total_Can_duration/$statisticDetails->total_duration)/100;
 
-                                    foreach ($listOfCan_con as $oneCad_con) {
-                                        $percentage = round(10000*$oneCad_con->getApprox_duration_mins()/$totalDuration)/100;
-                                        echo "<tr>";
-                                        echo "<tr><td>" . $oneCad_con->getAlbum() . "</td><td>" . $oneCad_con->getApprox_duration_mins() . "</td><td>" . $percentage . " %</td>";
+                                echo "<td>".$percentage." % </td>" ;
 
-                                        echo "</tr>";
-                                    }
-                                }else {
-                                    echo '<tr><td colspan="3"> no data </td></tr>';
-                                }
-                            }
 
-                            ?>
+                            }?>
                             </tbody>
                         </table>
                     </div>
@@ -218,36 +216,28 @@ if(isset($_GET['searchSubmit'])) {
                             <thead>
                             <tr>
                                 <th>Canadien contents album for Jazz,Classical and traditional music</th>
-                                <th>Duration</th>
+                                <th>Total contents</th>
                                 <th>%</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
+                            <?
+
                             if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
-                                $totalDuration = 0;
+                                // $total_duration_of_contents = 0 ;
+                                // $total_duration_of_Canadien_contents= 0;
                                 $category='3';
-                                $arObj = new Statistic();
-                                $listOfCan_con = $arObj->getAllCan_Con($db, $startdate, $enddate,$category);
-                                if (isset($listOfCan_con)) {
-                                    foreach ($listOfCan_con as $oneCad_con) {
-                                        $totalDuration += $oneCad_con->getApprox_duration_mins();
-                                    }
+                                $statistic = new Statistic();
+                                $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
+                                echo "<td>".$statisticDetails->total_duration."</td>";
+                                echo "<td>".$statisticDetails->total_Can_duration."</td>";
 
-                                    foreach ($listOfCan_con as $oneCad_con) {
-                                        $percentage = round(10000*$oneCad_con->getApprox_duration_mins()/$totalDuration)/100;
-                                        echo "<tr>";
-                                        echo "<tr><td>" . $oneCad_con->getAlbum() . "</td><td>" . $oneCad_con->getApprox_duration_mins() . "</td><td>" . $percentage . " %</td>";
-                                        // echo count($data['id']) . '<br>';
+                                $percentage = round(10000*$statisticDetails->total_Can_duration/$statisticDetails->total_duration)/100;
 
-                                        echo "</tr>";
-                                    }
-                                }else{
-                                    echo '<tr><td colspan="3">no data</td></tr>';
-                                }
-                            }
+                                echo "<td>".$percentage." % </td>" ;
 
-                            ?>
+
+                            }?>
                             </tbody>
                         </table>
                     </div>
@@ -256,7 +246,7 @@ if(isset($_GET['searchSubmit'])) {
         </div>
 
 
-        <div id="menu1" class="tab-pane fade">
+        <div id="menu1" class="tab-pane fade <? if($_GET['tab_id'] == 'tab2') echo "in active" ?>">
             <div class="row">
                 <div class="col-sm-8">
                     <table class="table table-striped table-hover">
@@ -274,7 +264,7 @@ if(isset($_GET['searchSubmit'])) {
 
                             $arObj = new Statistic();
                             $listOfCan_30 = $arObj->getMostPlayedAlbum($db, $startdate, $enddate);
-                            if (isset($listOfCan_con)) {
+                            if (isset($listOfCan_30)) {
                                 foreach ($listOfCan_30 as $oneCad_30) {
                                     echo "<tr>";
                                     echo "<tr><td>" . $oneCad_30->getAlbum() . "</td><td>" . $oneCad_30->getAuthor() . "</td><td>" . $oneCad_30->getId() . "</td><td></td>";
@@ -291,7 +281,7 @@ if(isset($_GET['searchSubmit'])) {
                 </div>
             </div>
         </div>
-        <div id="menu2" class="tab-pane fade">
+        <div id="menu2" class="tab-pane fade <? if($_GET['tab_id'] == 'tab3') echo "in active" ?>">
             <div class="row">
                 <div class="col-sm-8">
                     <table class="table table-striped table-hover">
@@ -306,10 +296,12 @@ if(isset($_GET['searchSubmit'])) {
                         if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
                             $arObj = new Statistic();
                             $listOfAd=$arObj->getAdFrequency($db,$startdate, $enddate);
-                            if (isset($listOfCan_con)) {
+                            if (isset($listOfAd)) {
                                 foreach ($listOfAd as $oneAd) {
-                                    echo"<tr>";
-                                    echo "<tr><td>".$oneAd->getAd_number() . "</td><td>".$oneAd->getId()."</td><td>";
+                                    if ($oneAd->getAd_number()!=null){
+                                        echo"<tr>";
+                                        echo "<tr><td>".$oneAd->getAd_number() . "</td><td>".$oneAd->getId()."</td><td>";
+                                    }
                                 }
                             }else{
                                 echo '<tr><td colspan="2">no data</td></tr>';
@@ -321,7 +313,7 @@ if(isset($_GET['searchSubmit'])) {
                 </div>
             </div>
         </div>
-        <div id="menu3" class="tab-pane fade">
+        <div id="menu3" class="tab-pane fade <? if($_GET['tab_id'] == 'tab4') echo "in active" ?>">
             <div class="row">
                 <div class="col-sm-8">
                     <table class="table table-striped table-hover">
@@ -335,19 +327,18 @@ if(isset($_GET['searchSubmit'])) {
                         <?php
                         if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
                             $arObj = new Statistic();
-                            $listOfAd = $arObj->getAllStationId($db,$startdate, $enddate);
-                            if (isset($listOfCan_con)) {
-
-                                foreach ($listOfAd as $oneAd) {
-                                    echo "<tr>";
-                                    echo "<tr><td>" . $oneAd->getAd_number() . "</td><td>" . $oneAd->getId() . "</td><td>";
-                                }
+                            $listOfStation_id = $arObj->getAllStationId($db,$startdate, $enddate);
+                            if (isset($listOfStation_id)) {
+                                foreach ($listOfStation_id as $oneStation_id) {
+                                    if ($oneStation_id->getStation_id()!=null) {
+                                        echo "<tr>";
+                                        echo "<tr><td>" . $oneStation_id->getStation_id() . "</td><td>" . $oneStation_id->getId() . "</td><td>";
+                                    }}
                             } else {
                                 echo '<tr><td colspan="2">no data</td></tr>';
                             }
                         }
                         ?>
-
                         </tbody>
                     </table>
                 </div>

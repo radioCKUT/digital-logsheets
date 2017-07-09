@@ -34,7 +34,7 @@ $session_programName = $_SESSION['username'];
 
 
 if(!isset($_SESSION['id'])){
-    $url = 'login_logsheet.php';
+    $url = 'login-logsheet.php';
     header("location: $url");
 }else {
     $now = time(); // Checking the time now when home page starts.
@@ -50,7 +50,7 @@ if(!isset($_SESSION['id'])){
         session_destroy();
 
         echo '<script language="javascript">';
-        echo "window.location.href=\"login_logsheet.php\";\n";
+        echo "window.location.href=\"login-logsheet.php\";\n";
         echo '</script>';
 
     }
