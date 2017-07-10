@@ -19,6 +19,8 @@
  */
 
 function prepareFormForEdit(eventObject) {
+    resetSaveFeedback();
+
     var tableRow = $(eventObject.target).closest("tr");
     var segment_object = $(tableRow).data("segment");
 
@@ -156,6 +158,7 @@ function cancelEdit() {
     $('#logsheet_edit').trigger("reset");
     hideEditForm();
     resetAllFields();
+    resetSaveFeedback();
 
     if ($('.category1').parent().hasClass("active")) {
         setupCat1Fields(true)

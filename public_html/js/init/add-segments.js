@@ -54,9 +54,15 @@ function setFormOnSubmitBehaviour() {
 
     $('#finalize')
         .on('submit', function(e) {
+            console.log("logsheet_edit:hidden: ", $("#logsheet_edit:hidden"));
+            if ($("#logsheet_edit:hidden").length === 0) {
+                e.preventDefault();
+                alert("You will lose unsaved changes to this segment if you proceed. Continue?");
+            }
+
+
             if (!verifyPlaylistEpisodeAlignment()) {
                 e.preventDefault();
-
             }
 
             $('#added_segments').find('tbody').find('tr').each(function (i, segment) {
