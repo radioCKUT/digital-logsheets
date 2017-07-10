@@ -19,8 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const NULL_DATETIME = "0000-00-00 00:00:00";
-
 /**
  * @param DateTime $dateTimeObject
  * @return String
@@ -55,7 +53,9 @@ function formatDatetimeStringForDatabaseWrite($dateTimeObject) {
  * @return DateTime
  */
 function formatDateTimeStringFromDatabase($dateTimeString) {
-    if (is_null($dateTimeString) || $dateTimeString == NULL_DATETIME) {
+    $NULL_DATETIME = getNullDatetimeString();
+
+    if (is_null($dateTimeString) || $dateTimeString == $NULL_DATETIME) {
         return null;
 
     } else {
@@ -64,4 +64,8 @@ function formatDateTimeStringFromDatabase($dateTimeString) {
 
         return $startDateTime;
     }
+}
+
+function getNullDatetimeString() {
+    return "0000-00-00 00:00:00";
 }
