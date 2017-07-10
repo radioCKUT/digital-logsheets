@@ -6,11 +6,11 @@
         <fileTransfer port="0" mountedRoot="/Applications/MAMP" accessType="MOUNT" />
       </webServer>
       <webServer id="adb838c8-efe9-4a37-a8d9-9dcf199314ab" name="CKUT" url="http://logsheets.ckut.ca/">
-        <fileTransfer host="phase.ckut.ca" port="21">
+        <fileTransfer host="phase.ckut.ca" port="22" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
-          <option name="port" value="21" />
+          <option name="port" value="22" />
         </fileTransfer>
       </webServer>
     </option>
