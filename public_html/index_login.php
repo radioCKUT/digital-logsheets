@@ -19,12 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Created by PhpStorm.
- * User: baikdonghee
- * Date: 2017-05-21
- * Time: 11:48 PM
- */
 
 //----INCLUDE FILES----
 include('../digital-logsheets-res/smarty/libs/Smarty.class.php');

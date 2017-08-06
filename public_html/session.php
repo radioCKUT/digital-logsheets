@@ -19,13 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Created by PhpStorm.
- * User: baikdonghee
- * Date: 2017-05-25
- * Time: 11:05 AM
- */
-
 session_start();
 
 $session_uid = $_SESSION['id'];

@@ -19,12 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Created by PhpStorm.
- * User: baikdonghee
- * Date: 2017-05-22
- * Time: 12:52 PM
- */
 	session_start();
 	session_destroy();
     //setcookie('username', '', time()-3600, '/');

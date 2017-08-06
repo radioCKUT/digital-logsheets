@@ -19,13 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Created by PhpStorm.
- * User: baikdonghee
- * Date: 2017-06-12
- * Time: 12:12 PM
- */
-
 include_once(dirname(__FILE__) . "/../database/connectToDatabase.php");
 
 class Statistic
