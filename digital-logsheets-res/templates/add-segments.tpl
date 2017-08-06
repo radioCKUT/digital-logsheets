@@ -13,6 +13,7 @@
     </script>
 
     <script src="https://use.fontawesome.com/9a4ebfc628.js"></script>
+    <script type="text/javascript" src="js/ui/segmentSaveFeedback.js"></script>
     <script type="text/javascript" src="js/validation/markErrors.js"></script>
     <script type="text/javascript" src="js/validation/segmentValidation.js"></script>
     <script type="text/javascript" src="js/validation/playlistValidation.js"></script>
@@ -56,11 +57,11 @@
         <br />
 
         <div class="col-md-5">
-            <span id="playlist_not_aligned_help_text" class="help-block{if !isset($formErrors.noAlignmentWithEpisodeStart)} hidden{/if}">
+            <span id="playlist_not_aligned_help_text" class="help-block"{if !isset($formErrors.noAlignmentWithEpisodeStart)} style="display: none;"{/if}>
                 The earliest segment must align with the episode start date/time.
             </span>
 
-            <span id="segment_errors_exist_help_text" class="help-block{if !isset($formErrors.erroneousSegmentsExist)} hidden{/if}">
+            <span id="segment_errors_exist_help_text" class="help-block"{if !isset($formErrors.erroneousSegmentsExist)} style="display: none;"{/if}>
                 Errors exist in the highlighted segments below. Please correct them before proceeding to the final review.
             </span>
 

@@ -6,10 +6,10 @@
                 <label for="segment_time{$idSuffix}" class="control-label">Time:</label>
                 <input name="segment_time" class="form-control segment_time"
                        type="text" id="segment_time{$idSuffix}">
-                <span id="segment_time_out_of_bounds_help_text{$idSuffix}" class="segment_time_help_text help-block hidden">
+                <span id="segment_time_out_of_bounds_help_text{$idSuffix}" class="segment_time_help_text help-block" style="display: none;">
                     Segment must fall within episode.
                 </span>
-                <span id="missing_segment_time_help_block{$idSuffix}" class="help-block hidden">
+                <span id="missing_segment_time_help_block{$idSuffix}" class="help-block" style="display: none;">
                     Please enter a segment time.
                 </span>
             </div>
@@ -53,7 +53,7 @@
                     <input type="radio" name="category" class="category5" autocomplete="off" value="5">5
                 </label>
 
-                <span id="category_help_block{$idSuffix}" class="help-block hidden">
+                <span id="category_help_block{$idSuffix}" class="help-block" style="display: none;">
                     Please select a category.
                 </span>
             </div>
@@ -64,7 +64,7 @@
                 <label for="ad_number_input{$idSuffix}" class="control-label ad_number_label">Ad Number:</label>
                 <input class="form-control" type="number" min="1" step="1" max="300" name="ad_number" id="ad_number_input{$idSuffix}">
 
-                <span id="ad_number_help_block{$idSuffix}" class="help-block hidden">
+                <span id="ad_number_help_block{$idSuffix}" class="help-block" style="display: none;">
                     Please enter a valid ad number.
                 </span>
             </div>
@@ -75,7 +75,7 @@
                 <label for="name_input{$idSuffix}" class="control-label name_label">Title:</label>
                 <input class="form-control name_input" type="text" name="name" id="name_input{$idSuffix}">
 
-                <span id="name_help_block{$idSuffix}" class="help-block hidden">
+                <span id="name_help_block{$idSuffix}" class="help-block" style="display: none;">
                     Please enter a name.
                 </span>
             </div>
@@ -89,7 +89,7 @@
                 <label for="author_input{$idSuffix}" class="control-label">Artist:</label>
                 <input class="form-control author_input" type="text" name="author" id="author_input{$idSuffix}">
 
-                <span id="author_help_block{$idSuffix}" class="help-block hidden">
+                <span id="author_help_block{$idSuffix}" class="help-block" style="display: none;">
                     Please enter an author.
                 </span>
             </div>
@@ -100,7 +100,7 @@
                 <label for="album_input{$idSuffix}" class="control-label">Album:</label>
                 <input class="form-control album_input" type="text" name="album" id="album_input{$idSuffix}">
 
-                <span id="album_help_block{$idSuffix}" class="help-block hidden">
+                <span id="album_help_block{$idSuffix}" class="help-block" style="display: none;">
                     Please enter an album.
                 </span>
             </div>
@@ -126,10 +126,10 @@
         <input type="submit" value="Add">
     {/if}
 
-    <div class="spinner hidden"></div>
+    <div class="spinner" style="display: none;"></div>
 
-    <i class="fa fa-check hidden" aria-hidden="true"></i>
-    <i class="fa fa-times hidden"
+    <i class="fa fa-check" style="display: none;"></i>
+    <i class="fa fa-times" style="display: none;"
        data-toggle="tooltip" data-placement="bottom"
        title="Error" aria-hidden="true"></i>
 
