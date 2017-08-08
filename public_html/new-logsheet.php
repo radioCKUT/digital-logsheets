@@ -28,7 +28,7 @@
     require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
     include('../digital-logsheets-res/php/objects/User.php');
 
-    include('session.php');
+    include('../digital-logsheets-res/php/loginSession.php');
 
     // create object
     $smarty = new Smarty; 

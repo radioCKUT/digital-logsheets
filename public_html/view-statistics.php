@@ -27,10 +27,10 @@ require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
 include('../digital-logsheets-res/php/objects/User.php');
 include('../digital-logsheets-res/php/objects/Statistic.php');
 
-include('session.php');
+include('../digital-logsheets-res/php/loginSession.php');
 
 $userClass = new User();
-$userDetails = $userClass->userDetails($session_uid); // get user details
+$userDetails = $userClass->userDetails($loginId); // get user details
 //logout
 echo "<div class='row'>
                 <div class='container-fluid'>
@@ -38,7 +38,7 @@ echo "<div class='row'>
                 </div>
                </div>";
 
-if ($session_program == null) {
+if ($loginProgram == null) {
     echo "<div class='row'>
                     <div class='container-fluid'> 
                     <div class='col-sm-2'><h3>Admin</h3></div></div></div>";
@@ -52,15 +52,15 @@ if ($session_program == null) {
 
 if(isset($_GET['searchSubmit'])) {
     $errMsg = '';
-    $startdate = $_GET['startDateFilter'];
-    $enddate = $_GET['endDateFilter'];
+    $startDate = $_GET['startDateFilter'];
+    $endDate = $_GET['endDateFilter'];
 
     $category = '';
 
-    if ($startdate == 0||$enddate == 0)
+    if ($startDate == 0 || $endDate == 0)
         $errMsg .= 'Select the date<br>';
 
-    if ($startdate != 0 && $enddate != 0 && $startdate >= $enddate)
+    if ($startDate != 0 && $endDate != 0 && $startDate >= $endDate)
         $errMsg .= 'Select the start date eariler than end date <br>';
 
 }
@@ -106,7 +106,7 @@ if(isset($_GET['searchSubmit'])) {
         $(function() {
             var $divs = $('#divs > div');
 
-            $divs.first().show()
+            $divs.first().show();
             $('input[type=radio]').on('change',function() {
                 $divs.hide();
                 $divs.eq( $('input[type=radio]').index( this ) ).show();
@@ -137,11 +137,11 @@ if(isset($_GET['searchSubmit'])) {
             <form action="#" method="get">
                 <div class="col-sm-2">
                     <label for="startDateFilter" class="control-label">Start:</label>
-                    <input type="date" name="startDateFilter" value="<? if(isset($_GET['searchSubmit'])) echo $startdate;?>" >
+                    <input type="date" name="startDateFilter" value="<? if(isset($_GET['searchSubmit'])) echo $startDate;?>" >
                 </div>
                 <div class="col-sm-2">
                     <label for="endDateFilter" class="control-label">End:</label>
-                    <input type="date" name="endDateFilter"  value="<? if(isset($_GET['searchSubmit'])) echo $enddate;?>" >
+                    <input type="date" name="endDateFilter"  value="<? if(isset($_GET['searchSubmit'])) echo $endDate;?>" >
                 </div>
                 <div class="col-sm-2 ">
                     <input type="submit" class="btn btn-default" name="searchSubmit" value="Search">
@@ -186,12 +186,12 @@ if(isset($_GET['searchSubmit'])) {
                             </thead>
                             <tbody>
                             <?
-                            if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
+                            if(isset($_GET['searchSubmit']) && $startDate!='' && $endDate!='') {
                                 $total_duration_of_contents = 0 ;
                                 $total_duration_of_Canadien_contents= 0;
                                 $category='2';
                                 $statistic = new Statistic();
-                                $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
+                                $statisticDetails = $statistic->getAllCan_Con($db, $startDate, $endDate, $category);
                                 echo "<td>".$statisticDetails->total_duration."</td>";
                                 echo "<td>".$statisticDetails->total_Can_duration."</td>";
 
@@ -216,12 +216,12 @@ if(isset($_GET['searchSubmit'])) {
                             <tbody>
                             <?
 
-                            if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
+                            if(isset($_GET['searchSubmit']) && $startDate!='' && $endDate!='') {
                                 // $total_duration_of_contents = 0 ;
                                 // $total_duration_of_Canadien_contents= 0;
                                 $category='3';
                                 $statistic = new Statistic();
-                                $statisticDetails = $statistic->getAllCan_Con($db, $startdate, $enddate, $category);
+                                $statisticDetails = $statistic->getAllCan_Con($db, $startDate, $endDate, $category);
                                 echo "<td>".$statisticDetails->total_duration."</td>";
                                 echo "<td>".$statisticDetails->total_Can_duration."</td>";
 
@@ -253,10 +253,10 @@ if(isset($_GET['searchSubmit'])) {
                         </thead>
                         <tbody>
                         <?php
-                        if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
+                        if(isset($_GET['searchSubmit']) && $startDate!='' && $endDate!='') {
 
                             $arObj = new Statistic();
-                            $listOfCan_30 = $arObj->getMostPlayedAlbum($db, $startdate, $enddate);
+                            $listOfCan_30 = $arObj->getMostPlayedAlbum($db, $startDate, $endDate);
                             if (isset($listOfCan_30)) {
                                 foreach ($listOfCan_30 as $oneCad_30) {
                                     echo "<tr>";
@@ -286,9 +286,9 @@ if(isset($_GET['searchSubmit'])) {
                         </thead>
                         <tbody>
                         <?php
-                        if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
+                        if(isset($_GET['searchSubmit']) && $startDate!='' && $endDate!='') {
                             $arObj = new Statistic();
-                            $listOfAd=$arObj->getAdFrequency($db,$startdate, $enddate);
+                            $listOfAd=$arObj->getAdFrequency($db,$startDate, $endDate);
                             if (isset($listOfAd)) {
                                 foreach ($listOfAd as $oneAd) {
                                     if ($oneAd->getAd_number()!=null){
@@ -318,9 +318,9 @@ if(isset($_GET['searchSubmit'])) {
                         </thead>
                         <tbody>
                         <?php
-                        if(isset($_GET['searchSubmit']) && $startdate!='' && $enddate!='') {
+                        if(isset($_GET['searchSubmit']) && $startDate!='' && $endDate!='') {
                             $arObj = new Statistic();
-                            $listOfStation_id = $arObj->getAllStationId($db,$startdate, $enddate);
+                            $listOfStation_id = $arObj->getAllStationId($db,$startDate, $endDate);
                             if (isset($listOfStation_id)) {
                                 foreach ($listOfStation_id as $oneStation_id) {
                                     if ($oneStation_id->getStation_id()!=null) {

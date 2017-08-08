@@ -25,7 +25,7 @@ require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 require_once("../digital-logsheets-res/php/validator/PlaylistValidator.php");
 require_once("../digital-logsheets-res/php/validator/errorContainers/SavePlaylistErrors.php");
-include('session.php');
+include('../digital-logsheets-res/php/loginSession.php');
 
 // create object
 $smarty = new Smarty;

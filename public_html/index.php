@@ -25,10 +25,9 @@
     require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
     require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
     include('../digital-logsheets-res/php/objects/User.php');
-    include('session.php');
+    include('../digital-logsheets-res/php/loginSession.php');
 
-    $userClass = new User();
-    $userDetails = $userClass->userDetails($session_uid); // get user details
+    error_log("login username: " . $loginUsername);
 
     //logout
     echo "<div class='row'>
@@ -37,12 +36,12 @@
                 </div>
                </div>";
 
-    if ($session_program == null ) {
+    if ($loginProgram == null ) {
         echo "<div class='row'>
                     <div class='container-fluid'>";
-        if ( $session_programName =='admin')   {
+        if ( $loginUsername =='admin')   {
             echo "<div class='col-sm-2'><h3>Admin</h3></div></div></div>";
-        }elseif ( $session_programName =='music')   {
+        } elseif ( $loginUsername =='music')   {
             echo "<div class='col-sm-2'><h3>Music</h3></div></div></div>";
         }
 
@@ -56,7 +55,7 @@
         // user information
         echo "<div class='row'>
                     <div class='container-fluid'>";
-        echo "<h4 class='col-sm-7'>Show  name :" . $userDetails->name . "</h4> ";
+        echo "<h4 class='col-sm-7'>Show  name :" . $loginUsername . "</h4> ";
         echo "</div></div>";
     }
 
@@ -87,9 +86,9 @@
             }
 
              //create an array to store each episode's data
-            if ($session_program == NULL) {
+            if ($loginProgram == NULL) {
                 $episodes[$episode->getId()] = $episode->getObjectAsArray();
-            } elseif ($episode->getProgram()->getId() == $session_program) {
+            } elseif ($episode->getProgram()->getId() == $loginProgram) {
                 $episodes[$episode->getId()] = $episode->getObjectAsArray();
             }
         }
@@ -102,7 +101,7 @@
         $smarty->assign("episodes", $episodes);
         $smarty->assign("programs", $programs);
         //add program_id
-        $smarty->assign("program_id", $session_program);
+        $smarty->assign("program_id", $loginProgram);
 
 
         // display it

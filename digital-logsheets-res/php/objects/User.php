@@ -20,14 +20,63 @@
  */
 
 include_once(dirname(__FILE__) . "/../database/connectToDatabase.php");
+require_once(dirname(__FILE__) . "/../objects/LogsheetComponent.php");
 
-class User
+
+class User extends LogsheetComponent {
+
+    private $username;
+    private $password;
+
+    /**
+     * @var Program
+     */
+    private $program;
+
+
+    public function setUsername($username) {
+        $this->username = $username;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
+    }
+
+    public function setProgram($program) {
+        $this->program = $program;
+    }
+
+
+
+    public function getUsername() {
+        return $this->username;
+    }
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function getProgram() {
+        return $this->program;
+    }
+
+
+
+
+}
+
+
+
+
+
+
+/*class User
 {
     /**
      * @param $username
      * @param $password
      * @return bool
-     */
+     *//*
 
     public function userLogin($username, $password)
     {
@@ -49,7 +98,7 @@ class User
                 $data = $stmt->fetch(PDO::FETCH_OBJ);
                 $_SESSION['id'] = $data->id; // Storing user session value
                 $_SESSION['username'] = $data->username; // Storing user session value
-                $_SESSION['program']=$data->program;
+                $_SESSION['program'] = $data->program;
                 $_SESSION['start'] = time(); // Taking now logged in time.
                 // Ending a session in 30 minutes from the starting time.
                 $_SESSION['expire'] = $_SESSION['start'] + (360 * 60);
@@ -70,7 +119,7 @@ class User
     }
 
 
-    public function UserDetails($user_id)
+    public function userDetails($user_id)
     {
         try {
             $db = getPDOStatementWithLogin();
@@ -86,4 +135,4 @@ class User
             exit($e->getMessage());
         }
     }
-}
+}*/

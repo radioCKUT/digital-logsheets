@@ -25,7 +25,7 @@ include_once("../digital-logsheets-res/php/database/connectToDatabase.php");
 include_once("../digital-logsheets-res/php/database/manageCategoryEntries.php");
 require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
-include('session.php');
+include('../digital-logsheets-res/php/loginSession.php');
 
 $smarty = new Smarty;
 

@@ -21,18 +21,17 @@
 
 session_start();
 
-$session_uid = $_SESSION['id'];
-$session_program = $_SESSION['program'];
-$session_programName = $_SESSION['username'];
+$loginId = $_SESSION['id'];
+$loginProgram = $_SESSION['program'];
+$loginUsername = $_SESSION['username'];
 
 
-if(!isset($_SESSION['id'])){
-    $url = 'login-logsheet.php';
+if (!isset($loginId)) {
+    $url = 'login.php';
     header("location: $url");
-}else {
+
+} else {
     $now = time(); // Checking the time now when home page starts.
-    //echo $now.'<br/>';
-    //echo $_SESSION['expire'];
 
     if ($now > $_SESSION['expire']) {
 
@@ -43,7 +42,7 @@ if(!isset($_SESSION['id'])){
         session_destroy();
 
         echo '<script language="javascript">';
-        echo "window.location.href=\"login-logsheet.php\";\n";
+        echo "window.location.href=\"login.php\";\n";
         echo '</script>';
 
     }
