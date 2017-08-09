@@ -52,4 +52,12 @@ class CanConStatistic extends Statistic {
     public function getTotalDuration() {
         return $this->totalDuration;
     }
+
+    public function getAsArray() {
+        return array(
+            'category' => $this->getCategory(),
+            'canConDuration' => $this->getCanConDuration(),
+            'totalDuration' => $this->getTotalDuration()
+        );
+    }
 }

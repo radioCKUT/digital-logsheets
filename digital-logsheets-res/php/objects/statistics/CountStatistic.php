@@ -44,6 +44,15 @@ class CountStatistic extends Statistic {
         return $this->adNumber;
     }
 
+    public function getAsArray() {
+        return array(
+            'count' => $this->getCount(),
+            'album' => $this->getAlbum(),
+            'author' => $this->getAuthor(),
+            'adNumber' => $this->getAdNumber()
+        );
+    }
+
 
 
 
