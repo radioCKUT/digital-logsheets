@@ -136,21 +136,6 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
             );
         }
 
-        /**
-         * @return mixed
-         */
-        function getAllCan_con($db){
-            $counter = 0;
-            $query = "SELECT count(id), album from segment group by album";
-            foreach ($db->query($query) as $rec) {
-
-                $aObj = new Segment();
-                $aObj->Id = count($rec["id"]);
-                $aObj->album = $rec["album"];
-                $arrAd[$counter++]=$aObj;
-            }
-            return $arrAd;
-        }
 
         public function getName() {
             return $this->name;

@@ -95,7 +95,6 @@ class readFromDatabase
 
     /**
      * @param PDO $dbConn
-     * @param $columnNames
      * @param $tableName
      * @param $filterColumn
      * @param $lowestValue

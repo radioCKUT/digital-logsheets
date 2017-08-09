@@ -19,9 +19,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	session_start();
-	session_destroy();
-    //setcookie('username', '', time()-3600, '/');
-	header("location:login.php");
-	exit;
-?>
+class Statistic {
+    protected $rangeStartTime;
+    protected $rangeEndTime;
+
+    public function setRangeStart($startTime) {
+        $this->rangeStartTime = $startTime;
+    }
+
+    public function setRangeEnd($endTime) {
+        $this->rangeEndTime = $endTime;
+    }
+
+
+    public function getRangeStart() {
+        return $this->rangeStartTime;
+    }
+
+    public function getRangeEnd() {
+        return $this->rangeEndTime;
+    }
+}

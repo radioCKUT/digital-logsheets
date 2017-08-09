@@ -19,39 +19,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Created by PhpStorm.
- * User: baikdonghee
- * Date: 2017-05-25
- * Time: 11:05 AM
- */
-
-session_start();
-
-$session_uid = $_SESSION['id'];
-$session_program = $_SESSION['program'];
-$session_programName = $_SESSION['username'];
+require_once('Statistic.php');
+class CanConStatistic extends Statistic {
+    private $category;
+    private $canConDuration;
+    private $totalDuration;
 
 
-if(!isset($_SESSION['id'])){
-    $url = 'login-logsheet.php';
-    header("location: $url");
-}else {
-    $now = time(); // Checking the time now when home page starts.
-    //echo $now.'<br/>';
-    //echo $_SESSION['expire'];
 
-    if ($now > $_SESSION['expire']) {
+    public function setCategory($category) {
+        $this->category = $category;
+    }
 
-        echo '<script language="javascript">';
-        echo 'alert("Your session has expired!")';
-        echo '</script>';
+    public function setCanConDuration($canCon) {
+        $this->canConDuration = $canCon;
+    }
 
-        session_destroy();
+    public function setTotalDuration($total) {
+        $this->totalDuration = $total;
+    }
 
-        echo '<script language="javascript">';
-        echo "window.location.href=\"login-logsheet.php\";\n";
-        echo '</script>';
 
+
+    public function getCategory() {
+        return $this->category;
+    }
+
+    public function getCanConDuration() {
+        return $this->canConDuration;
+    }
+
+    public function getTotalDuration() {
+        return $this->totalDuration;
+    }
+
+    public function getAsArray() {
+        return array(
+            'category' => $this->getCategory(),
+            'canConDuration' => $this->getCanConDuration(),
+            'totalDuration' => $this->getTotalDuration()
+        );
     }
 }

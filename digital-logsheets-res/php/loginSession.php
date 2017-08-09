@@ -19,9 +19,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-	session_start();
-	session_destroy();
-    //setcookie('username', '', time()-3600, '/');
-	header("location:login.php");
-	exit;
-?>
+session_start();
+
+$loginId = $_SESSION['id'];
+$loginProgram = $_SESSION['program'];
+$loginUsername = $_SESSION['username'];
+
+
+if (!isset($loginId)) {
+    $url = 'login.php';
+    header("location: $url");
+
+} else {
+    $now = time(); // Checking the time now when home page starts.
+
+    if ($now > $_SESSION['expire']) {
+
+        echo '<script language="javascript">';
+        echo 'alert("Your session has expired!")';
+        echo '</script>';
+
+        session_destroy();
+
+        echo '<script language="javascript">';
+        echo "window.location.href=\"login.php\";\n";
+        echo '</script>';
+    }
+}

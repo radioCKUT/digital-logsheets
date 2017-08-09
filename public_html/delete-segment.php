@@ -21,7 +21,7 @@
 
 require_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
-include('session.php');
+include('../digital-logsheets-res/php/loginSession.php');
 
 $segmentId = $_POST['segment_id'];
 
