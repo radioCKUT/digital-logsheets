@@ -76,7 +76,6 @@
         <li {if ($tab_id == 'tab1' || !$tab_id || $tab_id == '')} class='active' {/if}><a data-toggle="tab" href="#home" id="tab1">Canadian content % </a></li>
         <li {if ($tab_id == 'tab2')} class='active' {/if}><a data-toggle="tab" href="#menu1" id="tab2">The 30 most-played-from albums</a></li>
         <li {if ($tab_id == 'tab3')} class='active' {/if}><a data-toggle="tab" href="#menu2" id="tab3">Frequency of a given advertisement</a></li>
-        <li {if ($tab_id == 'tab4')} class='active' {/if}><a data-toggle="tab" href="#menu3" id="tab4">The number of station IDs</a></li>
     </ul>
     <br>
     <div class="tab-content">
