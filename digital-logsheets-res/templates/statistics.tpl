@@ -182,12 +182,10 @@
 
                             {if $ads}
                                 {foreach from=$ads item=ad}
-                                    {if $ad.ad}
-                                        <tr>
-                                            <td>{$ad.adNumber}</td>
-                                            <td>{$ad.count}</td>
-                                        </tr>
-                                    {/if}
+                                    <tr>
+                                        <td>{$ad.adNumber}</td>
+                                        <td>{$ad.count}</td>
+                                    </tr>
                                 {/foreach}
                             {else}
                                 <tr><td colspan="2">no data</td></tr>

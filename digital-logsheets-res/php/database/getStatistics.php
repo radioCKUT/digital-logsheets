@@ -137,13 +137,7 @@ class getStatistics {
     }
 
 
-    static function _doesAlbumCountForStats($rec) {
-        return !(self::_isFieldEmpty($rec["album"]) && self::_isFieldEmpty($rec["author"]));
-    }
 
-    static function _isFieldEmpty($field) {
-        return gettype($field) == "NULL" || empty($field);
-    }
 
 
     /**
@@ -174,6 +168,10 @@ class getStatistics {
             $arrAd = array();
 
             foreach ($results as $rec) {
+                if (!self::_doesAdCountForStats($rec)) {
+                    continue;
+                }
+
                 $aObj = new CountStatistic();
                 $aObj->setRangeStart($startDate);
                 $aObj->setRangeEnd($endDate);
@@ -188,5 +186,19 @@ class getStatistics {
         } catch (PDOException $e) {
             return null;
         }
+    }
+
+
+
+    static function _doesAlbumCountForStats($rec) {
+        return !(self::_isFieldEmpty($rec["album"]) && self::_isFieldEmpty($rec["author"]));
+    }
+
+    static function _doesAdCountForStats($rec) {
+        return !(gettype($rec["ad_number"]) == "NULL");
+    }
+
+    static function _isFieldEmpty($field) {
+        return gettype($field) == "NULL" || empty($field);
     }
 }
