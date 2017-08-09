@@ -19,30 +19,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-session_start();
+class Statistic {
+    protected $rangeStartTime;
+    protected $rangeEndTime;
 
-$loginId = $_SESSION['id'];
-$loginProgram = $_SESSION['program'];
-$loginUsername = $_SESSION['username'];
+    public function setRangeStart($startTime) {
+        $this->rangeStartTime = $startTime;
+    }
+
+    public function setRangeEnd($endTime) {
+        $this->rangeEndTime = $endTime;
+    }
 
 
-if (!isset($loginId)) {
-    $url = 'login.php';
-    header("location: $url");
+    public function getRangeStart() {
+        return $this->rangeStartTime;
+    }
 
-} else {
-    $now = time(); // Checking the time now when home page starts.
-
-    if ($now > $_SESSION['expire']) {
-
-        echo '<script language="javascript">';
-        echo 'alert("Your session has expired!")';
-        echo '</script>';
-
-        session_destroy();
-
-        echo '<script language="javascript">';
-        echo "window.location.href=\"login.php\";\n";
-        echo '</script>';
+    public function getRangeEnd() {
+        return $this->rangeEndTime;
     }
 }

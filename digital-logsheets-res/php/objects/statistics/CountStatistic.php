@@ -19,30 +19,47 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-session_start();
+require_once('Statistic.php');
+class CountStatistic extends Statistic {
+    private $count;
+    private $album;
+    private $author;
+    private $adNumber;
 
-$loginId = $_SESSION['id'];
-$loginProgram = $_SESSION['program'];
-$loginUsername = $_SESSION['username'];
 
 
-if (!isset($loginId)) {
-    $url = 'login.php';
-    header("location: $url");
+    public function getCount() {
+        return $this->count;
+    }
 
-} else {
-    $now = time(); // Checking the time now when home page starts.
+    public function getAlbum() {
+        return $this->album;
+    }
 
-    if ($now > $_SESSION['expire']) {
+    public function getAuthor() {
+        return $this->author;
+    }
 
-        echo '<script language="javascript">';
-        echo 'alert("Your session has expired!")';
-        echo '</script>';
+    public function getAdNumber() {
+        return $this->adNumber;
+    }
 
-        session_destroy();
 
-        echo '<script language="javascript">';
-        echo "window.location.href=\"login.php\";\n";
-        echo '</script>';
+
+
+    public function setCount($count) {
+        $this->count = $count;
+    }
+
+    public function setAlbum($album) {
+        $this->album = $album;
+    }
+
+    public function setAuthor($author) {
+        $this->author = $author;
+    }
+
+    public function setAdNumber($adNumber) {
+        $this->adNumber = $adNumber;
     }
 }

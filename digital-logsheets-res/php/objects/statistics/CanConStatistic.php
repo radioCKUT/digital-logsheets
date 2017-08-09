@@ -19,30 +19,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-session_start();
+require_once('Statistic.php');
+class CanConStatistic extends Statistic {
+    private $category;
+    private $canConDuration;
+    private $totalDuration;
 
-$loginId = $_SESSION['id'];
-$loginProgram = $_SESSION['program'];
-$loginUsername = $_SESSION['username'];
 
 
-if (!isset($loginId)) {
-    $url = 'login.php';
-    header("location: $url");
+    public function setCategory($category) {
+        $this->category = $category;
+    }
 
-} else {
-    $now = time(); // Checking the time now when home page starts.
+    public function setCanConDuration($canCon) {
+        $this->canConDuration = $canCon;
+    }
 
-    if ($now > $_SESSION['expire']) {
+    public function setTotalDuration($total) {
+        $this->totalDuration = $total;
+    }
 
-        echo '<script language="javascript">';
-        echo 'alert("Your session has expired!")';
-        echo '</script>';
 
-        session_destroy();
 
-        echo '<script language="javascript">';
-        echo "window.location.href=\"login.php\";\n";
-        echo '</script>';
+    public function getCategory() {
+        return $this->category;
+    }
+
+    public function getCanConDuration() {
+        return $this->canConDuration;
+    }
+
+    public function getTotalDuration() {
+        return $this->totalDuration;
     }
 }
