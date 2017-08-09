@@ -114,6 +114,10 @@ class getStatistics {
             $arrAd = array();
 
             foreach ($results as $rec) {
+                if (!self::_doesAlbumCountForStats($rec)) {
+                    continue;
+                }
+
                 $aObj = new CountStatistic();
                 $aObj->setRangeStart($startDate);
                 $aObj->setRangeEnd($endDate);
@@ -130,6 +134,15 @@ class getStatistics {
         } catch (PDOException $e) {
             return null;
         }
+    }
+
+
+    static function _doesAlbumCountForStats($rec) {
+        return !(self::_isFieldEmpty($rec["album"]) && self::_isFieldEmpty($rec["author"]));
+    }
+
+    static function _isFieldEmpty($field) {
+        return gettype($field) == "NULL" || empty($field);
     }
 
 
@@ -152,7 +165,6 @@ class getStatistics {
 
             $stmt = $db->prepare($query);
 
-            error_log("start date: " . $startDate . " end date: " . $endDate);
             $stmt->bindParam(manageSegmentEntries::START_TIME_PARAMETER, $startDate);
             $stmt->bindParam(getStatistics::END_TIME_PARAMETER, $endDate);
 

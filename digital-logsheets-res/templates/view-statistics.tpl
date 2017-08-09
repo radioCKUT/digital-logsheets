@@ -85,12 +85,13 @@
                 <br/>
                 <div class="row">
                     <div class="col-sm-8">
+                        <h4>Category 2 (General Music)</h4>
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>Canadian contents album for general music</th>
-                                <th>Total contents</th>
-                                <th>%</th>
+                                <th>CanCon Songs Played</th>
+                                <th>Total Songs Played</th>
+                                <th>CanCon %</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -105,12 +106,13 @@
                         </table>
                     </div>
                     <div class="col-sm-8">
+                        <h4>Category 3 (Jazz, Classical, and Traditional Music)</h4>
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>Canadian contents album for Jazz,Classical and traditional music</th>
-                                <th>Total contents</th>
-                                <th>%</th>
+                                <th>CanCon Songs Played</th>
+                                <th>Total Songs Played</th>
+                                <th>CanCon %</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -165,6 +167,7 @@
                 </div>
             </div>
         </div>
+
         <div id="menu2" class="tab-pane fade {if $tab_id == 'tab3'} inactive {/if}">
             <div class="row">
                 <div class="col-sm-8">
