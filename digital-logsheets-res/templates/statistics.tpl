@@ -19,7 +19,7 @@
 
             $divs.first().show();
 
-            $('input[type=radio]').on('change',function() {
+            $('input[type=radio]').on('change', function() {
                 $divs.hide();
                 $divs.eq( $('input[type=radio]').index( this ) ).show();
             });
@@ -73,9 +73,9 @@
     {/if}
     <br>
     <ul class="nav nav-tabs">
-        <li {if ($tab_id == 'tab1' || !$tab_id || $tab_id == '')} class='active' {/if}><a data-toggle="tab" href="#home" id="tab1">Canadian content % </a></li>
-        <li {if ($tab_id == 'tab2')} class='active' {/if}><a data-toggle="tab" href="#menu1" id="tab2">The 30 most-played-from albums</a></li>
-        <li {if ($tab_id == 'tab3')} class='active' {/if}><a data-toggle="tab" href="#menu2" id="tab3">Frequency of a given advertisement</a></li>
+        <li {if ($tab_id == 'tab1' || !$tab_id || $tab_id == '')} class='active' {/if}><a data-toggle="tab" href="#home" id="tab1">CanCon</a></li>
+        <li {if ($tab_id == 'tab2')} class='active' {/if}><a data-toggle="tab" href="#menu1" id="tab2">Top 30 Albums</a></li>
+        <li {if ($tab_id == 'tab3')} class='active' {/if}><a data-toggle="tab" href="#menu2" id="tab3">Advertisements</a></li>
     </ul>
     <br>
     <div class="tab-content">
