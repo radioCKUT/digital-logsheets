@@ -97,7 +97,7 @@ $smarty->assign("search_submit", $_GET['searchSubmit']);
 $smarty->assign("start_date", $startDate);
 $smarty->assign("end_date", $endDate);
 
-echo $smarty->fetch("../digital-logsheets-res/templates/view-statistics.tpl");
+echo $smarty->fetch("../digital-logsheets-res/templates/statistics.tpl");
 
 /**
  * @param $db
