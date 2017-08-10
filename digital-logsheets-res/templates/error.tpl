@@ -4,7 +4,7 @@
     <title>
         Error
     </title>
-    {include './header.tpl'}
+    {include './scripts/header.tpl'}
 
 </head>
 

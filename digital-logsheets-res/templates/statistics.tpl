@@ -4,14 +4,11 @@
     <title>
         Logsheets Retrieval
     </title>
-    {include "./header.tpl"}
-    {include "./select2.tpl"}
+    {include "./scripts/header.tpl"}
+    {include "./scripts/select2.tpl"}
+    {include './scripts/datetime-picker.tpl'}
 
     <script src="js/filterLogsheetList.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
 
     <script type="text/javascript">
         $(function() {
@@ -138,7 +135,7 @@
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
-
+                            <th>Rank</th>
                             <th>Album</th>
                             <th>Artist</th>
                             <th>Count</th>
@@ -146,10 +143,10 @@
                         </thead>
                         <tbody>
                         {if ($search_submit && $start_date != '' && $end_date != '')}
-
                             {if $albums}
-                                {foreach from=$albums item=album}
+                                {foreach from=$albums item=album name=albumloop}
                                 <tr>
+                                    <td>{$smarty.foreach.albumloop.index + 1}</td>
                                     <td>{$album.album}</td>
                                     <td>{$album.author}</td>
                                     <td>{$album.count}</td>

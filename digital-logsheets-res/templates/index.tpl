@@ -4,9 +4,9 @@
     <title>
         Logsheets Retrieval
     </title>
-    {include './header.tpl'}
-    {include './datetime-picker.tpl'}
-    {include './select2.tpl'}
+    {include './scripts/header.tpl'}
+    {include './scripts/datetime-picker.tpl'}
+    {include './scripts/select2.tpl'}
 
 
     <script src="js/filterLogsheetList.js"></script>

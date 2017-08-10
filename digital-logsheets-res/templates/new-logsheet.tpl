@@ -3,9 +3,9 @@
 <head>
     <title>New Logsheet</title>
 
-    {include './header.tpl'}
-    {include './datetime-picker.tpl'}
-    {include './select2.tpl'}
+    {include './scripts/header.tpl'}
+    {include './scripts/datetime-picker.tpl'}
+    {include './scripts/select2.tpl'}
 
 
     <link href="css/custom.css" rel="stylesheet"/>
