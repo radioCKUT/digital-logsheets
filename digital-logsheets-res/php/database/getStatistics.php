@@ -20,6 +20,8 @@
  */
 
 require_once("manageSegmentEntries.php");
+require_once("managePlaylistEntries.php");
+require_once("manageEpisodeEntries.php");
 
 class getStatistics {
 
@@ -91,20 +93,37 @@ class getStatistics {
     public static function getMostPlayedAlbum($db, $startDate, $endDate) {
 
         try {
+
+            $nonDraftOnlySubquery = "SELECT " .
+                " s." . manageSegmentEntries::ID_COLUMN_NAME . ", " .
+                " s." . manageSegmentEntries::ALBUM_COLUMN_NAME . ", " .
+                " s." . manageSegmentEntries::AUTHOR_COLUMN_NAME . ", " .
+                " s." . manageSegmentEntries::START_TIME_COLUMN_NAME .
+                " FROM " . manageSegmentEntries::TABLE_NAME . " AS s" .
+                " INNER JOIN " . managePlaylistEntries::PLAYLIST_SEGMENTS_TABLE_NAME . " AS ps" .
+                    " ON " . "s." . manageSegmentEntries::ID_COLUMN_NAME . "=" . "ps." . managePlaylistEntries::SEGMENT_COLUMN_NAME .
+                " INNER JOIN " . manageEpisodeEntries::TABLE_NAME . " AS e" .
+                    " ON " . "ps." . managePlaylistEntries::PLAYLIST_COLUMN_NAME . "=" . "e." . manageEpisodeEntries::PLAYLIST_COLUMN_NAME .
+                    " WHERE " . "e." . manageEpisodeEntries::IS_DRAFT_COLUMN_NAME . " = 0";
+
+
             $query = "SELECT " .
                 manageSegmentEntries::ALBUM_COLUMN_NAME . ", " .
                 manageSegmentEntries::AUTHOR_COLUMN_NAME . ", " .
                 " COUNT(" . manageSegmentEntries::ID_COLUMN_NAME . ") AS id_count" .
-                " FROM " . manageSegmentEntries::TABLE_NAME .
+                " FROM (" . $nonDraftOnlySubquery . ") AS do" .
                 " WHERE " . manageSegmentEntries::START_TIME_COLUMN_NAME . " BETWEEN " .
                     manageSegmentEntries::START_TIME_PARAMETER . " AND " . getStatistics::END_TIME_PARAMETER .
                 " GROUP BY " .
                     manageSegmentEntries::ALBUM_COLUMN_NAME . ", " . manageSegmentEntries::AUTHOR_COLUMN_NAME .
-                " ORDER BY id_count DESC limit 30;";
+                " ORDER BY " .
+                    "id_count DESC, " .
+                    manageSegmentEntries::ALBUM_COLUMN_NAME . ", " .
+                    manageSegmentEntries::AUTHOR_COLUMN_NAME . ";";
+
 
             $stmt = $db->prepare($query);
 
-            error_log("start date: " . $startDate . " end date: " . $endDate);
             $stmt->bindParam(manageSegmentEntries::START_TIME_PARAMETER, $startDate);
             $stmt->bindParam(getStatistics::END_TIME_PARAMETER, $endDate);
 
@@ -132,6 +151,7 @@ class getStatistics {
             return $arrAd;
 
         } catch (PDOException $e) {
+            error_log("error: " . print_r($e, true));
             return null;
         }
     }
@@ -183,6 +203,7 @@ class getStatistics {
             }
 
             return $arrAd;
+
         } catch (PDOException $e) {
             return null;
         }
