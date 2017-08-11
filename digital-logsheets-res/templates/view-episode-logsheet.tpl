@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Episode</title>
-    {include './scripts/header.tpl'}
+    {include './scripts/core.tpl'}
     
 </head>
 <body>

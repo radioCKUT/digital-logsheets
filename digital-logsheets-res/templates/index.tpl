@@ -4,7 +4,7 @@
     <title>
         Logsheets Retrieval
     </title>
-    {include './scripts/header.tpl'}
+    {include './scripts/core.tpl'}
     {include './scripts/datetime-picker.tpl'}
     {include './scripts/select2.tpl'}
 

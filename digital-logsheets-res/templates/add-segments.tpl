@@ -3,7 +3,7 @@
 <head>
     <title>New Logsheet</title>
 
-    {include './scripts/header.tpl'}
+    {include './scripts/core.tpl'}
     {include './scripts/datetime-picker.tpl'}
 
     <script type="text/javascript">

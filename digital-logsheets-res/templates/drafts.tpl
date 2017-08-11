@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
 
-    {include './scripts/header.tpl'}
+    {include './scripts/core.tpl'}
     <title>New Logsheet</title>
 
 

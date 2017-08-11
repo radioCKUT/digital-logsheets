@@ -2,9 +2,9 @@
 <html>
 <head>
     <title>
-        Logsheets Retrieval
+        Statistics
     </title>
-    {include "./scripts/header.tpl"}
+    {include "./scripts/core.tpl"}
     {include "./scripts/select2.tpl"}
     {include './scripts/datetime-picker.tpl'}
 
