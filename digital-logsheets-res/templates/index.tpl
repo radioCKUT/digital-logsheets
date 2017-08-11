@@ -44,12 +44,13 @@
 <body onload="init()">
 <div class='container-fluid'>
     {include './logout-header.tpl'}
+
     {if $login_program == null}
         <div class='row'>
-            {if $login_username == 'admin'}
-            <div class='col-sm-2'><h3>Admin</h3></div>
-            {elseif $login_username == 'music'}
-            <div class='col-sm-2'><h3>Music</h3></div>
+            {if $login_username == $admin_const}
+                <div class='col-sm-2'><h3>Admin</h3></div>
+            {elseif $login_username == $music_const}
+                <div class='col-sm-2'><h3>Music</h3></div>
             {/if}
         </div>
 

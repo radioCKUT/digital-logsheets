@@ -71,6 +71,8 @@
         $smarty->assign("login_program", $loginProgram);
         $smarty->assign("login_username", $loginUsername);
 
+        $smarty->assign("admin_const", "admin");
+        $smarty->assign("music_const", "music");
 
         $smarty->assign("confirm_save", isset($_GET["confirmSave"]));
 
