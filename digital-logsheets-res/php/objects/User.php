@@ -42,8 +42,8 @@ class User extends LogsheetComponent {
         $this->password = $password;
     }
 
-    public function setProgram($program) {
-        $this->program = $program;
+    public function setProgramFromId($programId, $db) {
+        $this->program = new Program($db, $programId);
     }
 
 
