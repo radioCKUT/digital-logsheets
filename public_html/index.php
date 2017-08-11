@@ -71,12 +71,13 @@
         $smarty->assign("login_program", $loginProgram);
         $smarty->assign("login_username", $loginUsername);
 
-        $smarty->assign("confirm_save", isset($_GET["confirmSave"]));
 
+        $smarty->assign("confirm_save", isset($_GET["confirmSave"]));
 
 
         // display it
         echo $smarty->fetch('../digital-logsheets-res/templates/index.tpl');
+
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }

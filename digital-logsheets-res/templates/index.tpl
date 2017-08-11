@@ -62,6 +62,9 @@
         </div>
     {/if}
 
+    {if $confirm_save}
+        <h2>Logsheet saved!</h2>
+    {/if}
 
 
     {if $program_id != null}
