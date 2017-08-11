@@ -37,8 +37,8 @@ try {
     manageEpisodeEntries::turnOffEpisodeDraftStatus($db, $episode);
 
     unset($_SESSION['episodeId']);
-    
-    echo "Episode saved!";
+
+    header("Location: index.php?confirmSave");
 
 } catch (PDOException $e) {
     echo $e->getMessage();

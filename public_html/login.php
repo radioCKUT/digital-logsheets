@@ -67,7 +67,8 @@ echo $smarty->fetch("../digital-logsheets-res/templates/login.tpl");
  */
 function setLoginSession($user) {
     $_SESSION['id'] = $user->getId();
-    $_SESSION['program'] = $user->getProgram();
+    $program = $user->getProgram();
+    $_SESSION['program'] = $program->getName();
     $_SESSION['username'] = $user->getUsername();
 
     $_SESSION['start'] = time();

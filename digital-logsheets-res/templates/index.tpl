@@ -4,9 +4,9 @@
     <title>
         Logsheets Retrieval
     </title>
-    {include './header.tpl'}
-    {include './datetime-picker.tpl'}
-    {include './select2.tpl'}
+    {include './scripts/core.tpl'}
+    {include './scripts/datetime-picker.tpl'}
+    {include './scripts/select2.tpl'}
 
 
     <script src="js/filterLogsheetList.js"></script>
@@ -43,6 +43,31 @@
 </head>
 <body onload="init()">
 <div class='container-fluid'>
+    {include './logout-header.tpl'}
+
+    {if $login_program == null}
+        <div class='row'>
+            {if $login_username == $admin_const}
+                <div class='col-sm-2'><h3>Admin</h3></div>
+            {elseif $login_username == $music_const}
+                <div class='col-sm-2'><h3>Music</h3></div>
+            {/if}
+        </div>
+
+        <div class='row'>
+                <h4 class='col-sm-7'><a href='statistics.php'>View Statistics</a></h4>
+        </div>
+    {else}
+        <div class='row'>
+            <h4 class='col-sm-7'>Show name: {$login_username}</h4>
+        </div>
+    {/if}
+
+    {if $confirm_save}
+        <h2>Logsheet saved!</h2>
+    {/if}
+
+
     {if $program_id != null}
 
         <div class="row">

@@ -3,8 +3,8 @@
 <head>
     <title>New Logsheet</title>
 
-    {include './header.tpl'}
-    {include './datetime-picker.tpl'}
+    {include './scripts/core.tpl'}
+    {include './scripts/datetime-picker.tpl'}
 
     <script type="text/javascript">
         function getEpisodeStartTime() {

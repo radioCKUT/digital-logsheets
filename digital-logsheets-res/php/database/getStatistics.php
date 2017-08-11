@@ -20,6 +20,8 @@
  */
 
 require_once("manageSegmentEntries.php");
+require_once("managePlaylistEntries.php");
+require_once("manageEpisodeEntries.php");
 
 class getStatistics {
 
@@ -35,13 +37,17 @@ class getStatistics {
     public static function getAllCanCon($db, $startDate, $endDate, $category) {
 
         try {
-            $query = "SELECT COUNT(" . manageSegmentEntries::DURATION_COLUMN_NAME . ") total, " . manageSegmentEntries::CAN_CON_COLUMN_NAME .
-                " FROM " . manageSegmentEntries::TABLE_NAME .
+
+            $nonDraftOnlySubQuery = self::_getNonDraftOnlySubQuery();
+
+            $query = "SELECT " .
+                    "COUNT(" . manageSegmentEntries::ID_COLUMN_NAME . ") total, " .
+                    manageSegmentEntries::CAN_CON_COLUMN_NAME .
+                " FROM " . $nonDraftOnlySubQuery .
                 " WHERE " . manageSegmentEntries::CATEGORY_COLUMN_NAME . " = " . manageSegmentEntries::CATEGORY_PARAMETER .
                     " AND (" . manageSegmentEntries::START_TIME_COLUMN_NAME . " BETWEEN " .
                     manageSegmentEntries::START_TIME_PARAMETER . " AND " . getStatistics::END_TIME_PARAMETER . ")" .
                 " GROUP BY " . manageSegmentEntries::CAN_CON_COLUMN_NAME . ";";
-
 
             $stmt = $db->prepare($query);
 
@@ -91,20 +97,25 @@ class getStatistics {
     public static function getMostPlayedAlbum($db, $startDate, $endDate) {
 
         try {
+            $nonDraftOnlySubQuery = self::_getNonDraftOnlySubQuery();
+
             $query = "SELECT " .
                 manageSegmentEntries::ALBUM_COLUMN_NAME . ", " .
                 manageSegmentEntries::AUTHOR_COLUMN_NAME . ", " .
                 " COUNT(" . manageSegmentEntries::ID_COLUMN_NAME . ") AS id_count" .
-                " FROM " . manageSegmentEntries::TABLE_NAME .
+                " FROM " . $nonDraftOnlySubQuery .
                 " WHERE " . manageSegmentEntries::START_TIME_COLUMN_NAME . " BETWEEN " .
                     manageSegmentEntries::START_TIME_PARAMETER . " AND " . getStatistics::END_TIME_PARAMETER .
                 " GROUP BY " .
                     manageSegmentEntries::ALBUM_COLUMN_NAME . ", " . manageSegmentEntries::AUTHOR_COLUMN_NAME .
-                " ORDER BY id_count DESC limit 30;";
+                " ORDER BY " .
+                    "id_count DESC, " .
+                    manageSegmentEntries::ALBUM_COLUMN_NAME . ", " .
+                    manageSegmentEntries::AUTHOR_COLUMN_NAME . ";";
+
 
             $stmt = $db->prepare($query);
 
-            error_log("start date: " . $startDate . " end date: " . $endDate);
             $stmt->bindParam(manageSegmentEntries::START_TIME_PARAMETER, $startDate);
             $stmt->bindParam(getStatistics::END_TIME_PARAMETER, $endDate);
 
@@ -132,6 +143,7 @@ class getStatistics {
             return $arrAd;
 
         } catch (PDOException $e) {
+            error_log("error: " . print_r($e, true));
             return null;
         }
     }
@@ -149,9 +161,11 @@ class getStatistics {
     public static function getAdFrequency($db, $startDate, $endDate) {
 
         try {
+            $nonDraftOnlySubQuery = self::_getNonDraftOnlySubQuery();
+
             $query = "SELECT COUNT(" . manageSegmentEntries::ID_COLUMN_NAME . ") as id_count, " .
                 manageSegmentEntries::AD_NUMBER_COLUMN_NAME .
-                " FROM " . manageSegmentEntries::TABLE_NAME .
+                " FROM " . $nonDraftOnlySubQuery .
                 " WHERE " . manageSegmentEntries::START_TIME_COLUMN_NAME . " BETWEEN " .
                     manageSegmentEntries::START_TIME_PARAMETER . " AND " . getStatistics::END_TIME_PARAMETER .
                 " GROUP BY " . manageSegmentEntries::AD_NUMBER_COLUMN_NAME .
@@ -183,6 +197,7 @@ class getStatistics {
             }
 
             return $arrAd;
+
         } catch (PDOException $e) {
             return null;
         }
@@ -200,5 +215,23 @@ class getStatistics {
 
     static function _isFieldEmpty($field) {
         return gettype($field) == "NULL" || empty($field);
+    }
+
+    static function _getNonDraftOnlySubQuery() {
+        return "(SELECT " .
+                " s." . manageSegmentEntries::ID_COLUMN_NAME . ", " .
+                " s." . manageSegmentEntries::ALBUM_COLUMN_NAME . ", " .
+                " s." . manageSegmentEntries::AUTHOR_COLUMN_NAME . ", " .
+                " s." . manageSegmentEntries::START_TIME_COLUMN_NAME . ", " .
+                " s." . manageSegmentEntries::CAN_CON_COLUMN_NAME . ", " .
+                " s." . manageSegmentEntries::CATEGORY_COLUMN_NAME . ", " .
+                " s." . manageSegmentEntries::AD_NUMBER_COLUMN_NAME .
+            " FROM " . manageSegmentEntries::TABLE_NAME . " AS s" .
+            " INNER JOIN " . managePlaylistEntries::PLAYLIST_SEGMENTS_TABLE_NAME . " AS ps" .
+                " ON " . "s." . manageSegmentEntries::ID_COLUMN_NAME . "=" . "ps." . managePlaylistEntries::SEGMENT_COLUMN_NAME .
+            " INNER JOIN " . manageEpisodeEntries::TABLE_NAME . " AS e" .
+                " ON " . "ps." . managePlaylistEntries::PLAYLIST_COLUMN_NAME . "=" . "e." . manageEpisodeEntries::PLAYLIST_COLUMN_NAME .
+                " WHERE " . "e." . manageEpisodeEntries::IS_DRAFT_COLUMN_NAME . " = 0" .
+        ") AS do";
     }
 }

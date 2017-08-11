@@ -3,7 +3,7 @@
 <head>
     <title>New Logsheet</title>
 
-    {include './header.tpl'}
+    {include './scripts/core.tpl'}
 
 </head>
 <body>
