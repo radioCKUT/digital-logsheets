@@ -36,25 +36,7 @@ require_once("../digital-logsheets-res/php/database/getStatistics.php");
 
 require_once("../digital-logsheets-res/smarty/libs/Smarty.class.php");
 
-/*
-//logout
-echo "<div class='row'>
-                <div class='container-fluid'>
-                    <h5 class='col-sm-7'><a href='logout.php'>Logout</a></h5>
-                </div>
-               </div>";
 
-if ($loginProgram == null) {
-    echo "<div class='row'>
-                    <div class='container-fluid'> 
-                    <div class='col-sm-2'><h3>Admin</h3></div></div></div>";
-} else {
-    // user information
-    echo "<div class='row'>
-                    <div class='container-fluid'>";
-    echo "<h4 class='col-sm-7'>Show  name :" . $loginId . "</h4> ";
-    echo "</div></div>";
-}*/
 
 $startDate = "";
 $endDate = "";

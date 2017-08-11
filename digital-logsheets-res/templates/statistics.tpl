@@ -33,7 +33,9 @@
 </head>
 <body>
 <div class='container-fluid'>
-    <div class="row " >
+    {include 'logout-header.tpl'}
+    
+    <div class="row">
         <div class='container-fluid'>
             <div class="form-group">
                 <h3>Log Sheet Statistics</h3>
