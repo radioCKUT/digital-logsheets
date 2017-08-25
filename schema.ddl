@@ -32,10 +32,12 @@ CREATE INDEX id ON playlist_segments (playlist);
 CREATE INDEX segment ON playlist_segments (segment);
 CREATE TABLE program
 (
-    id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    genres INT(11),
-    active TINYINT(1)
+    id int auto_increment
+    primary key,
+    name varchar(255) not null,
+    active tinyint(1) default '1' not null,
+    alternate_name_1 varchar(255) null,
+    alternate_name_2 varchar(255) null
 );
 CREATE TABLE segment
 (
