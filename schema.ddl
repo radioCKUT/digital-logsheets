@@ -1,8 +1,19 @@
+DROP DATABASE IF EXISTS logsheets;
+CREATE DATABASE logsheets;
+USE logsheets
 CREATE TABLE category
 (
     id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL
 );
+CREATE TABLE program
+(
+ id int auto_increment primary key,
+ name varchar(255) not null,
+ active tinyint(1) default '1' not null,
+ alternate_name_1 varchar(255) null,
+ alternate_name_2 varchar(255) null
+ );
 CREATE TABLE episode
 (
     id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -18,25 +29,6 @@ CREATE TABLE episode
     CONSTRAINT episode_ibfk_2 FOREIGN KEY (program) REFERENCES program (id)
 );
 CREATE INDEX program ON episode (program);
-CREATE TABLE playlist
-(
-    id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT
-);
-CREATE TABLE playlist_segments
-(
-    playlist INT(11) NOT NULL,
-    segment INT(11) NOT NULL,
-    CONSTRAINT playlist_segment_fk FOREIGN KEY (segment) REFERENCES segment (id) ON DELETE CASCADE
-);
-CREATE INDEX id ON playlist_segments (playlist);
-CREATE INDEX segment ON playlist_segments (segment);
-CREATE TABLE program
-(
-    id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    genres INT(11),
-    active TINYINT(1)
-);
 CREATE TABLE segment
 (
     id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -54,3 +46,15 @@ CREATE TABLE segment
     CONSTRAINT segment_ibfk_1 FOREIGN KEY (category) REFERENCES category (id)
 );
 CREATE INDEX category ON segment (category);
+CREATE TABLE playlist
+(
+    id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT
+);
+CREATE TABLE playlist_segments
+(
+    playlist INT(11) NOT NULL,
+    segment INT(11) NOT NULL,
+    CONSTRAINT playlist_segment_fk FOREIGN KEY (segment) REFERENCES segment (id) ON DELETE CASCADE
+);
+CREATE INDEX id ON playlist_segments (playlist);
+CREATE INDEX segment ON playlist_segments (segment);
