@@ -27,17 +27,18 @@ function getPDOStatementWithLogin() {
 
 
 ## Create the database
-
+'''
 mysql < schema.ddl
-
+'''
 ## Load initial data
 
 There are 2 tables that need data.
 The first table to used as a lookup table.
-
-mysql < category.sql
-
+'''
+mysql < logsheets category.sql
+'''
 Next, we preload the program info. This is a list of all the shows or 'programs' at the station.
 The 'program' table data  was saved as a CSV file so its data is loaded as follows:
+'''
 mysqlimport --delete --local --fields-terminated-by=, --fields-enclosed-by='"' --lines-terminated-by='\r\n' logsheets program.csv
-
+'''
