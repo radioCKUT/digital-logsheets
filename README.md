@@ -26,11 +26,11 @@ function getPDOStatementWithLogin() {
 ```
 
 
-## Create the database
+### Create the database
 ```
 mysql < schema.ddl
 ```
-## Load initial data
+### Load initial data
 
 There are 3 tables that are relatively 'stable' and need initial data.
 
@@ -49,3 +49,7 @@ that each host is responsible for (ie their playlist).
 ```
 mysql logsheets < user.sql
 ```
+
+
+
+## Developer FAQ
