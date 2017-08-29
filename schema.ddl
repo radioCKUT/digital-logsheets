@@ -58,3 +58,11 @@ CREATE TABLE playlist_segments
 );
 CREATE INDEX id ON playlist_segments (playlist);
 CREATE INDEX segment ON playlist_segments (segment);
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL auto_increment,
+  `username` text NOT NULL,
+  `encryptedpw` longtext NOT NULL,
+  `program` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+);
+
