@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,12 +67,17 @@
          * @var boolean
          */
         private $isDraft;
+
+        /**
+         * @var boolean
+         */
+        private $doesEpisodeExist = false;
         
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
             if ($this->id != null) {
-                manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $this->id, $this);
+                $this->doesEpisodeExist = manageEpisodeEntries::getEpisodeAttributesFromDatabase($db, $this->id, $this);
             }
         }
 
@@ -125,6 +131,10 @@
             }
         }
 
+        public function setDoesEpisodeExist($doesEpisodeExist) {
+            $this->doesEpisodeExist = $doesEpisodeExist;
+        }
+
         public function jsonSerialize() {
             return json_encode($this->getObjectAsArray());
         }
@@ -173,6 +183,7 @@
             return array(
                 'id' => $this->getId(),
                 'program' => $this->getProgram() != null ? $this->getProgram()->getName() : "",
+                'programmer' => $this->getProgrammer(),
                 'playlist' => $this->getPlaylistId(),
                 'startDate' => $startDateString,
                 'startTime' => $startTimeString,
@@ -184,6 +195,7 @@
                 'segments' => $this->getSegments()
             );
         }
+
 
         /**
          * @return String
@@ -246,6 +258,10 @@
 
         public function isDraft() {
             return $this->isDraft;
+        }
+
+        public function doesEpisodeExist() {
+            return $this->doesEpisodeExist;
         }
 
         /**

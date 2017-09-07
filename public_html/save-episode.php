@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +26,7 @@ include_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../digital-logsheets-res/php/validator/EpisodeValidator.php");
 require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
-
+include('../digital-logsheets-res/php/loginSession.php');
 
 $programId = intval($_POST['program']);
 
@@ -43,7 +44,6 @@ $existingEpisodeId = $_POST['existingEpisode'];
 session_start();
 
 
-
 try {
     $db = connectToDatabase();
 
@@ -55,8 +55,6 @@ try {
 
     $episodeObject = fillEpisodeObject($db, $episodeObject, $programId, $programmer,
         $episodeStartTime, $episodeEndTime, $prerecord, $prerecordDate, $notes);
-
-    error_log("episode object: " . print_r($episodeObject, true));
 
     $episodeValidator = new EpisodeValidator($episodeObject);
     $episodeErrors = $episodeValidator->checkDraftSaveValidity();
@@ -80,17 +78,15 @@ try {
 
     } else if ($isExistingEpisode) {
         manageEpisodeEntries::editEpisode($db, $episodeObject);
-        header('Location: add-segments.php');
+        header('Location: add-segments.php?epId=' . $existingEpisodeId);
 
     } else {
         $playlistId = managePlaylistEntries::createNewPlaylist($db);
         $episodeObject->setPlaylist(new Playlist($db, $playlistId));
 
         $episodeId = manageEpisodeEntries::saveNewEpisode($db, $episodeObject);
-        $_SESSION["episodeId"] = intval($episodeId);
-        header('Location: add-segments.php');
+        header('Location: add-segments.php?epId=' . $episodeId);
     }
-
 
 
 } catch(PDOException $e) {
@@ -102,7 +98,9 @@ function getDateTimeFromDateString($dateString) {
     $d = new DateTime($dateString);
     //$d = DateTime::createFromFormat('Y-m-d', $dateString);
 
-    if ($d && $d->format('Y-m-d') === $dateString) {
+    if ($d &&
+        ($d->format('Y-m-d') === $dateString ||
+            $d->format('m/d/Y') === $dateString)) {
 
         return new DateTime($dateString);
 
@@ -118,22 +116,22 @@ function getDateTimeFromDateString($dateString) {
  * @param Episode $episodeObject
  * @param $programId
  * @param $programmer
- * @param $episodeStartTime
- * @param $episodeEndTime
+ * @param $episodeStartTimeString
+ * @param $episodeEndTimeString
  * @param $prerecord
  * @param $prerecordDate
  * @param $notes
  * @return Episode
  */
-function fillEpisodeObject($db, $episodeObject, $programId, $programmer, $episodeStartTime, $episodeEndTime, $prerecord, $prerecordDate, $notes) {
+function fillEpisodeObject($db, $episodeObject, $programId, $programmer, $episodeStartTimeString, $episodeEndTimeString, $prerecord, $prerecordDate, $notes) {
 
     $episodeObject->setProgram(new Program($db, $programId));
     $episodeObject->setProgrammer($programmer);
 
-    $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTime);
+    $episodeStartTime = getDateTimeFromDateTimeString($episodeStartTimeString);
     $episodeObject->setStartTime($episodeStartTime);
 
-    $episodeEndTime = getDateTimeFromDateTimeString($episodeEndTime);
+    $episodeEndTime = getDateTimeFromDateTimeString($episodeEndTimeString);
     $episodeObject->setEndTime($episodeEndTime);
 
     $episodeObject->setIsPrerecord($prerecord);
@@ -141,6 +139,9 @@ function fillEpisodeObject($db, $episodeObject, $programId, $programmer, $episod
     $episodeObject->setPrerecordDate($prerecordDate);
 
     $episodeObject->setNotes($notes);
+
+    $episodeObject->setIsDraft(true);
+
     return $episodeObject;
 }
 
@@ -148,7 +149,10 @@ function getDateTimeFromDateTimeString($dateString) {
     $d = new DateTime($dateString);
     //$d = DateTime::createFromFormat('Y-m-d\TH:i', $dateString);
 
-    if ($d && $d->format('Y-m-d\TH:i') === $dateString) {
+    if ($d &&
+        ($d->format('Y-m-d\TH:i') === $dateString ||
+         $d->format('m/d/Y g:i A') === $dateString)){
+
         return new DateTime($dateString, new DateTimeZone('America/Montreal'));
 
     } else {

@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,27 +25,35 @@ require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
 require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
 require_once("../digital-logsheets-res/php/validator/PlaylistValidator.php");
 require_once("../digital-logsheets-res/php/validator/errorContainers/SavePlaylistErrors.php");
+include('../digital-logsheets-res/php/loginSession.php');
 
 // create object
 $smarty = new Smarty;
-
-session_start();
-
 
 //database interactions
 try {
     //connect to database
     $db = connectToDatabase();
 
-    $episodeId = $_SESSION['episodeId'];
+    $episodeId = $_GET['epId'];
 
     $episode = new Episode($db, $episodeId);
+
+    if (!$episode->doesEpisodeExist()) {
+        header('HTTP/1.1 400 Bad Request', true, 400);
+        echo $smarty->fetch('../digital-logsheets-res/templates/error.tpl');
+        exit();
+    }
 
     $playlistValidator = new PlaylistValidator($episode);
     $playlistErrors = $playlistValidator->checkFinalSaveValidity();
 
     if ($playlistErrors->doErrorsExist()) {
-        $playlistErrorsAsQuery = http_build_query(array('formErrors' => $playlistErrors->getAllErrors()));
+        $playlistErrorsAsQuery = http_build_query(array(
+            'epId' => $episodeId,
+            'formErrors' => $playlistErrors->getAllErrors()
+        ));
+
         header('Location: add-segments.php?' . $playlistErrorsAsQuery);
         exit();
     }
@@ -90,6 +99,7 @@ try {
     //close database connection
     $db = NULL;
 
+    $smarty->assign("episodeId", $episodeId);
     $smarty->assign("episode", $episodeAsArray);
     $smarty->assign("segments", $segmentsForThisEpisode);
 

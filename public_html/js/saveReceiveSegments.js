@@ -1,7 +1,8 @@
 /*
- * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.    
+ * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +20,19 @@
 
 const MAX_STRING_LENGTH = 10;
 
+function getBaseUrl() {
+    var url = window.location.href;
+    var lastSlashIndex = url.lastIndexOf("/");
+
+    return url.substr(0, lastSlashIndex);
+}
+
 function getEpisodeSegments() {
+    var baseUrl = getBaseUrl();
+
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/get-episode-data.php",
+        url: baseUrl + "/get-episode-data.php",
         data: $('#logsheet').serialize(),
         success: receiveSegmentsSuccess,
         error: receiveSegmentsError
@@ -35,19 +45,29 @@ function createSegment() {
 }
 
 function sendRequestToSaveSegment(dataToSend) {
+    var baseUrl = getBaseUrl();
+
     $.ajax({
         type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/" + "digital-logsheets/save-segment.php",
+        url: baseUrl + "/save-segment.php",
         dataType: "json",
         data: dataToSend,
         success: receiveSegmentsSuccess,
         error: receiveSegmentsError
     });
+
+    $(".spinner").show();
 }
 
 function receiveSegmentsError(jqhxr, textStatus, errorThrown) {
-    alert("add segment fail! status: " + textStatus + " error thrown: " + errorThrown);
-    // TODO: proper error notification
+    $(".spinner").hide();
+    $(".fa-check").hide();
+
+    var errorMessage = _getErrorMessageFromErrorThrown(errorThrown);
+
+    $(".fa-times").show()
+        .attr("title", errorMessage)
+        .tooltip('fixTitle');
 }
 
 function getAbbreviatedString(str) {
@@ -61,88 +81,81 @@ function getAbbreviatedString(str) {
 
 
 function receiveSegmentsSuccess(data) {
-    if (data.hasOwnProperty("error")) {
+    $(".spinner").hide();
+    $(".fa-times").hide();
+    _showAndHide($(".fa-check"));
 
-        var errors = data.error;
-        var idSuffix = data.wasEditing ? "_edit" : "";
+    hideEditForm();
+    $('#logsheet').trigger("reset");
 
-        if (errors.missingName) {
-            markFieldError($('#name_group' + idSuffix), $('#name_help_block' + idSuffix));
+    resetCategoryButtons();
+
+    var addedSegments = $('#added_segments');
+    addedSegments.find("tbody").empty();
+    data = JSON.parse(data);
+
+    $.each(data, function(i, e) {
+        var segmentAndErrors = data[i];
+
+        var segment = segmentAndErrors.segment;
+        var segment_id = segment.id;
+        var start_time = segment.startTime;
+
+
+        var name = segment.name;
+        var album = segment.album;
+        var author = segment.author;
+
+        if (segment.category == 2 || segment.category == 3) {
+            name = getAbbreviatedString(name);
+            album = getAbbreviatedString(segment.album);
+            author = getAbbreviatedString(segment.author);
         }
 
-        if (errors.missingAuthor) {
-            markFieldError($('#author_group' + idSuffix), $('#author_help_block' + idSuffix));
+
+
+        var errors = segmentAndErrors.errors;
+        var tableRowElem = isSegmentErroneous(errors) ? "<tr class='erroneous_segment'>" : "<tr>";
+
+        var options_button = generateOptionsButton();
+        var delete_button = generateDeleteButton(segment_id);
+        var edit_button = generateEditButton(segment_id);
+
+
+        var segmentRow = $(tableRowElem)
+            .data("segment", segment)
+            .data("errors", errors)
+            .append($('<td class="vert-align">' + start_time + '</td>'));
+
+        if (segment.category == 2 || segment.category == 3) {
+            segmentRow.append($('<td class="vert-align">' + name + '</td>'))
+                .append($('<td class="vert-align">' + album + '</td>'))
+                .append($('<td class="vert-align">' + author + '</td>'));
+
+        } else if (segment.category == 5) {
+            segmentRow.append($('<td class="vert-align" colspan="3">' + 'Ad #' + segment.adNumber + '</td>'));
+
+        } else {
+            segmentRow.append($('<td class="vert-align" colspan="3">' + name + '</td>'));
         }
 
-        if (errors.missingAlbum) {
-            markFieldError($('#album_group' + idSuffix), $('#album_help_block' + idSuffix));
+        if (segment.category == null) {
+            segment.category = "";
         }
 
-        if (errors.missingAdNumber) {
-            markFieldError($('#ad_number_group' + idSuffix), $('#ad_number_help_block' + idSuffix));
-        }
-    } else {
-        hideEditForm();
-        $('#logsheet').trigger("reset");
+        segmentRow.append($('<td class="vert-align">' + segment.category + '</td>'))
+            .append($('<td class="vert-align">')
+                .append($('<div class="dropdown">')
+                .append(options_button)
+                .append($('<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">')
+                    .append(edit_button).append(delete_button))));
 
-        resetCategoryButtons();
-
-        var addedSegments = $('#added_segments');
-        addedSegments.find("tbody").empty();
-        data = JSON.parse(data);
-
-        $.each(data, function(i, e) {
-            var segmentAndErrors = data[i];
-
-            var segment = segmentAndErrors.segment;
-            var segment_id = segment.id;
-            var start_time = segment.startTime;
-
-            var name = getAbbreviatedString(segment.name);
-            var album = getAbbreviatedString(segment.album);
-            var author = getAbbreviatedString(segment.author);
+        addedSegments.append(segmentRow);
+    });
 
 
-
-            var errors = segmentAndErrors.errors;
-            var tableRowElem = isSegmentErroneous(errors) ? "<tr class='erroneous_segment'>" : "<tr>";
-
-            var options_button = generateOptionsButton();
-            var delete_button = generateDeleteButton(segment_id);
-            var edit_button = generateEditButton(segment_id);
-
-
-            var segmentRow = $(tableRowElem)
-                .data("segment", segment)
-                .data("errors", errors)
-                .append($('<td class="vert-align">' + start_time + '</td>'));
-
-            if (segment.category == 2 || segment.category == 3) {
-                segmentRow.append($('<td class="vert-align">' + name + '</td>'))
-                    .append($('<td class="vert-align">' + album + '</td>'))
-                    .append($('<td class="vert-align">' + author + '</td>'));
-
-            } else if (segment.category == 5) {
-                segmentRow.append($('<td class="vert-align" colspan="3">' + 'Ad #' + segment.adNumber + '</td>'));
-
-            } else {
-                segmentRow.append($('<td class="vert-align" colspan="3">' + name + '</td>'));
-            }
-
-            segmentRow.append($('<td class="vert-align">' + segment.category + '</td>'))
-                .append($('<td class="vert-align">')
-                    .append($('<div class="dropdown">')
-                    .append(options_button)
-                    .append($('<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">')
-                        .append(edit_button).append(delete_button))));
-
-            addedSegments.append(segmentRow);
-        });
-
-
-        if (!$('#playlist_not_aligned_help_text').hasClass("hidden")) {
-            verifyPlaylistEpisodeAlignment();
-        }
+    if (!$('#playlist_not_aligned_help_text').hasClass("hidden")) {
+        verifyPlaylistEpisodeAlignment();
     }
 }
 
@@ -156,3 +169,20 @@ function resetCategoryButtons() {
     resetAllFields();
 }
 
+function _showAndHide(jQuerySelector) {
+    jQuerySelector.show();
+    setTimeout(_hide(jQuerySelector), 1500);
+}
+
+function _hide(jQuerySelector) {
+    return function() {
+        jQuerySelector.hide();
+    };
+}
+
+function _getErrorMessageFromErrorThrown(errorThrown) {
+    switch (errorThrown) {
+        default:
+            return "Error - please try again";
+    }
+}

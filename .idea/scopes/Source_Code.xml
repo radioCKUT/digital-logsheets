@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Source Code" pattern="(file[digital-logsheets]:digital-logsheets-res/php//*||file[digital-logsheets]:digital-logsheets-res/templates//*||file:public_html/digital-logsheets/css/custom.css||file[digital-logsheets]:public_html/digital-logsheets/js//*)&amp;&amp;!file[digital-logsheets]:public_html/digital-logsheets/js/lib/*||file[digital-logsheets]:public_html/digital-logsheets/*||file[digital-logsheets]:public_html/digital-logsheets/validation//*||file[digital-logsheets]:public_html/*||file[digital-logsheets]:public_html//*" />
+</component>

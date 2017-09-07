@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +20,22 @@
  */
 
 include_once("readFromDatabase.php");
-    include_once("writeToDatabase.php");
     include_once(dirname(__FILE__) . "/../objects/logsheetClasses.php");
 
     class managePlaylistEntries {
 
         const PLAYLIST_SEGMENTS_TABLE_NAME = "playlist_segments";
-        const PLAYLIST_TABLE_NAME = "playlist";
 
         const SEGMENT_COLUMN_NAME = "segment";
+        const SEGMENT_PARAMETER = ":segment";
+
         const PLAYLIST_COLUMN_NAME = "playlist";
+        const PLAYLIST_PARAMETER = ":playlist";
+
+
+        const PLAYLIST_TABLE_NAME = "playlist";
+
+
 
         public static function getPlaylistSegmentsFromDatabase($dbConn, $playlistId) {
             $segmentIds = readFromDatabase::readFilteredColumnFromTable($dbConn, array(self::SEGMENT_COLUMN_NAME),
@@ -68,14 +75,48 @@ include_once("readFromDatabase.php");
 
         }
 
+        /**
+         * @param PDO $dbConn
+         * @return null
+         */
         public static function createNewPlaylist($dbConn){
-            return writeToDatabase::writeEntryToDatabase($dbConn, self::PLAYLIST_TABLE_NAME, array(), array());
+            $query = "INSERT INTO " . self::PLAYLIST_TABLE_NAME . " () VALUES ();";
+            $stmt = $dbConn->prepare($query);
+
+            $stmt->execute();
+            return $dbConn->lastInsertId();
         }
 
+        /**
+         * @param PDO $dbConn
+         * @param int $playlistId
+         * @param int $segmentId
+         * @return int
+         */
         public static function addSegmentToDatabasePlaylist($dbConn, $playlistId, $segmentId) {
-            $columnNames = array(self::PLAYLIST_COLUMN_NAME, self::SEGMENT_COLUMN_NAME);
-            $values = array($playlistId, $segmentId);
+            $query = "INSERT INTO " . self::PLAYLIST_SEGMENTS_TABLE_NAME . " " . self::getAddSegmentColumnsString() . " VALUES " . self::getAddSegmentValuesString();
+            $stmt = $dbConn->prepare($query);
 
-            return writeToDatabase::writeEntryToDatabase($dbConn, self::PLAYLIST_SEGMENTS_TABLE_NAME, $columnNames, $values);
+            $stmt->bindParam(self::PLAYLIST_PARAMETER, $playlistId);
+            $stmt->bindParam(self::SEGMENT_PARAMETER, $segmentId);
+
+            $stmt->execute();
+
+            return $dbConn->lastInsertId();
+        }
+
+
+
+        private static function getAddSegmentColumnsString() {
+            return "(" .
+                self::PLAYLIST_COLUMN_NAME . ", " .
+                self::SEGMENT_COLUMN_NAME . ")";
+        }
+
+        private static function getAddSegmentValuesString() {
+            return "(" .
+                self::PLAYLIST_PARAMETER . ", " .
+                self::SEGMENT_PARAMETER . ")";
+
         }
     }

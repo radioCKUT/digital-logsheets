@@ -2,6 +2,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.    
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +19,8 @@
  */
 
 function prepareFormForEdit(eventObject) {
+    resetSaveFeedback();
+
     var tableRow = $(eventObject.target).closest("tr");
     var segment_object = $(tableRow).data("segment");
 
@@ -155,6 +158,7 @@ function cancelEdit() {
     $('#logsheet_edit').trigger("reset");
     hideEditForm();
     resetAllFields();
+    resetSaveFeedback();
 
     if ($('.category1').parent().hasClass("active")) {
         setupCat1Fields(true)

@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 
 require_once("../digital-logsheets-res/php/database/manageSegmentEntries.php");
 require_once("../digital-logsheets-res/php/database/connectToDatabase.php");
+include('../digital-logsheets-res/php/loginSession.php');
 
 $segmentId = $_POST['segment_id'];
 

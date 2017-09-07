@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 /**
  * @param DateTime $dateTimeObject
@@ -49,17 +49,23 @@ function formatDatetimeStringForDatabaseWrite($dateTimeObject) {
 }
 
 /**
- * @param string $dateString
+ * @param string $dateTimeString
  * @return DateTime
  */
-function formatDateTimeStringFromDatabase($dateString) {
-    if (is_null($dateString)) {
+function formatDateTimeStringFromDatabase($dateTimeString) {
+    $NULL_DATETIME = getNullDatetimeString();
+
+    if (is_null($dateTimeString) || $dateTimeString == $NULL_DATETIME) {
         return null;
 
     } else {
-        $startDateTime = new DateTime($dateString, new DateTimeZone('UTC'));
+        $startDateTime = new DateTime($dateTimeString, new DateTimeZone('UTC'));
         $startDateTime->setTimezone(new DateTimeZone('America/Montreal'));
 
         return $startDateTime;
     }
+}
+
+function getNullDatetimeString() {
+    return "0000-00-00 00:00:00";
 }

@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +24,7 @@ require_once("../digital-logsheets-res/php/objects/Episode.php");
 require_once("../digital-logsheets-res/php/validator/SegmentValidator.php");
 require_once("../digital-logsheets-res/php/validator/errorContainers/SaveSegmentErrors.php");
 require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
+include('../digital-logsheets-res/php/loginSession.php');
 
 $episodeId = $_POST['episode_id'];
 
@@ -68,7 +70,6 @@ try {
             $segment->setName($name);
             $segment->setAuthor($author);
             $segment->setAlbum($album);
-            $segment->setCategory($category);
             $segment->setIsCanCon($canCon);
             $segment->setIsNewRelease($newRelease);
             $segment->setIsFrenchVocalMusic($frenchVocalMusic);
@@ -82,13 +83,7 @@ try {
             $segment->setIsCanCon(null);
             $segment->setIsNewRelease(null);
             $segment->setIsFrenchVocalMusic(null);
-
-            if ($adNumber == "") {
-                $segment->setAdNumber(null);
-            } else {
-                $segment->setAdNumber($adNumber);
-            }
-
+            $segment->setAdNumber($adNumber);
             break;
 
         case 4:
@@ -114,6 +109,7 @@ try {
     }
 
     $segmentValidator = new SegmentValidator($segment, $episode);
+
 
     if ($editSegment) {
         $segment->setId($segmentId);
@@ -181,15 +177,12 @@ function addDateToSegmentStartTime($episodeStartDateTime, $segmentTime) {
     $episodeStartTimeString = $episodeStartDateTime->format("H:i:s");
 
     if (!TimeValidator::isTimeInValidFormat($segmentTime)) {
-        /*$errorsContainer = new SaveSegmentErrors();
-        $errorsContainer->markStartTimeInvalidFormat();
-        outputErrorResponse($errorsContainer->getAllErrors());*/
         return null;
     }
 
     if (strtotime($segmentTime) < strtotime($episodeStartTimeString)) {
         $dayAfterEpisodeStartDateTime = clone $episodeStartDateTime;
-        $dayAfterEpisodeStartDateTime->add(new DateInterval('P1D'));
+        $dayAfterEpisodeStartDateTime->modify('+1 day');
         $dateToUse = $dayAfterEpisodeStartDateTime->format("Y-m-d");
     }
     

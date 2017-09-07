@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,17 +24,13 @@ class TimeValidator {
         const MINUTES_IN_DAY = 1440; // 24 * 60
 
         public static function isTimeInValidFormat($time) {
-            $dateTime = DateTime::createFromFormat('H:i', $time);
-            if (!$dateTime) {
+            if ($time == "") {
                 return false;
             }
 
-            $errors = DateTime::getLastErrors();
-            if (!empty($errors['warning_count'])) {
-                return false;
-            }
+            $dateTime = new DateTime($time);
 
-            return true;
+            return !$dateTime ? false : true;
         }
 
 

@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +24,11 @@
     include("../digital-logsheets-res/php/database/connectToDatabase.php");
     require_once("../digital-logsheets-res/php/objects/logsheetClasses.php");
     require_once("../digital-logsheets-res/php/DataPreparationForUI.php");
-    
-    // create object
+    include('../digital-logsheets-res/php/objects/User.php');
+    include('../digital-logsheets-res/php/loginSession.php');
+
+
+// create object
     $smarty = new Smarty;
     
     //database interactions
@@ -32,25 +36,28 @@
         //open database connection
         $db = connectToDatabase();
 
-
         $archive = new Archive($db);
         $episodesArchive = $archive->getArchive();
 
         $episodes = array();
-    
+
         foreach($episodesArchive as $episode) {
             $playlist = array();
             $segments = $episode->getPlaylist()->getSegments();
-            
+
             //create the playlist for each episode
             if (is_array($segments) || is_object($segments)) {
-                foreach($segments as $segment) {
+                foreach ($segments as $segment) {
                     $playlist[$segment->getId()] = $segment->getObjectAsArray();
                 }
             }
 
-            //create an array to store each episode's data
-            $episodes[$episode->getId()] = $episode->getObjectAsArray();
+             //create an array to store each episode's data
+            if ($loginProgram == NULL) {
+                $episodes[$episode->getId()] = $episode->getObjectAsArray();
+            } elseif ($episode->getProgram()->getId() == $loginProgram) {
+                $episodes[$episode->getId()] = $episode->getObjectAsArray();
+            }
         }
 
         $programs = getSelect2ProgramsList($db);
@@ -60,9 +67,19 @@
         
         $smarty->assign("episodes", $episodes);
         $smarty->assign("programs", $programs);
+        //add program_id
+        $smarty->assign("login_program", $loginProgram);
+        $smarty->assign("login_username", $loginUsername);
+
+        $smarty->assign("admin_const", "admin");
+        $smarty->assign("music_const", "music");
+
+        $smarty->assign("confirm_save", isset($_GET["confirmSave"]));
+
 
         // display it
         echo $smarty->fetch('../digital-logsheets-res/templates/index.tpl');
+
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }

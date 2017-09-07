@@ -3,6 +3,7 @@
  * digital-logsheets: A web-based application for tracking the playback of audio segments on a community radio station.
  * Copyright (C) 2015  Mike Dean
  * Copyright (C) 2015-2017  Evan Vassallo
+ * Copyright (C) 2017 Donghee Baik
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,9 +76,9 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
         public function setCategory($category) {
             $this->category = $category;
         }
-        
-        
-        
+
+
+
         public function setStationIdGiven($stationIdGiven) {
             $this->stationIdGiven = $this->getBooleanToSet($stationIdGiven);
         }
@@ -112,7 +113,7 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
 
         public function getObjectAsArray() {
             $startDateTime = $this->getStartTime();
-            
+
             $startTimeString = "";
             if (!is_null($startDateTime)) {
                 $startTimeString = $startDateTime->format('H:i');
@@ -135,15 +136,15 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
             );
         }
 
-        
+
         public function getName() {
             return $this->name;
         }
-        
+
         public function getAlbum() {
             return $this->album;
         }
-        
+
         public function getAuthor() {
             return $this->author;
         }
@@ -190,5 +191,5 @@ include_once(dirname(__FILE__) . "/../database/manageSegmentEntries.php");
         public function getPlaylistId() {
             return $this->playlistId;
         }
-        
+
     }
