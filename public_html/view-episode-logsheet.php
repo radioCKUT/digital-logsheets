@@ -52,6 +52,8 @@ include('../digital-logsheets-res/php/loginSession.php');
             $smarty->assign("episode", $episodeAsArray);
             $smarty->assign("segments", $segmentsForThisEpisode);
 
+            $smarty->assign("canEdit", $loginProgram == NULL);
+
 
             // display it
             echo $smarty->fetch('../digital-logsheets-res/templates/view-episode-logsheet.tpl');

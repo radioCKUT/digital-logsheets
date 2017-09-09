@@ -103,9 +103,6 @@ try {
     $smarty->assign("episode", $episodeAsArray);
     $smarty->assign("segments", $segmentsForThisEpisode);
 
-    $smarty->assign("loginProgram", $loginProgram);
-
-
     // display it
     echo $smarty->fetch('../digital-logsheets-res/templates/review-logsheet.tpl');
 } catch(PDOException $e) {
