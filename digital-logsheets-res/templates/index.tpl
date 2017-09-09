@@ -59,7 +59,7 @@
         </div>
     {else}
         <div class='row'>
-            <h4 class='col-sm-7'>Show name: {$login_username}</h4>
+            <h4 class='col-sm-7'>Show name: {$login_program}</h4>
         </div>
     {/if}
 
