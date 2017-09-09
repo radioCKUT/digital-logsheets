@@ -27,13 +27,13 @@ function getSelect2ProgramsList($db) {
 
     $programsArrayForSelect2 = array();
     $programIndex = 0;
-    while ($programIndex < count($programs)) {
 
+    while ($programIndex < count($programs)) {
         while (is_null($programs[$programIndex])) {
             $programIndex++;
         }
 
-        $programsArrayForSelect2[$programIndex] = array("id" => $programIndex, "text" => $programs[$programIndex]);
+        $programsArrayForSelect2[$programIndex] = array("id" => $programIndex, "text" => $programs[$programIndex]->getName());
         $programIndex++;
     }
 
