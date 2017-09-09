@@ -53,7 +53,6 @@ class manageUserEntries {
             self::USERNAME_COLUMN_NAME . "=" . self::USERNAME_PARAMETER . " AND " .
             self::PASSWORD_COLUMN_NAME . "=" . self::PASSWORD_PARAMETER;
 
-        error_log("query: " . $query);
 
         $stmt = $dbConn->prepare($query);
         $stmt->bindParam(self::USERNAME_PARAMETER, $username,PDO::PARAM_STR);

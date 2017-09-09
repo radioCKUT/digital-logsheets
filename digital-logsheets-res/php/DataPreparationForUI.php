@@ -33,7 +33,9 @@ function getSelect2ProgramsList($db) {
             $programIndex++;
         }
 
-        $programsArrayForSelect2[$programIndex] = array("id" => $programIndex, "text" => $programs[$programIndex]->getName());
+        $program = $programs[$programIndex];
+
+        $programsArrayForSelect2[$programIndex] = array("id" => $program->getId(), "text" => $program->getName());
         $programIndex++;
     }
 

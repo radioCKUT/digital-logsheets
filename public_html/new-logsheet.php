@@ -44,6 +44,8 @@
         //connect to database
         $db = connectToDatabase();
 
+        $smarty->assign("loginProgram", $loginProgram);
+
         $program = new Program($db, $programId);
         $smarty->assign("programId", $programId);
 

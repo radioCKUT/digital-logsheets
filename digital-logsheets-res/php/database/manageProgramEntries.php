@@ -34,7 +34,7 @@ include_once("readFromDatabase.php");
 
         /**
          * @param PDO $dbConn
-         * @return array
+         * @return Program[] array
          */
         public static function getAllProgramsFromDatabase($dbConn) {
             $programIds = readFromDatabase::readEntireColumnFromTable($dbConn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);

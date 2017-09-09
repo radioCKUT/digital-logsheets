@@ -46,7 +46,7 @@ if (isset($_POST['loginSubmit']) && ($username == '' || $password == '')) {
 } else if (strlen(trim($username)) > 1 && strlen(trim($password)) > 1) {
 
     $dbConn = connectToDatabase();
-    $hash = hash('sha1', $password);;
+    $hash = hash('sha1', $password);
     $user = manageUserEntries::getUserFromUsernameAndPassword($dbConn, $username, $hash);
 
 
