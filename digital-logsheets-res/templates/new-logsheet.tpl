@@ -25,7 +25,6 @@
                 });
             } else {
                 var program = data.filter(function (program) {
-                    console.log("program filter", program);
                     return program.text === {$loginProgram|json_encode};
                 });
 
