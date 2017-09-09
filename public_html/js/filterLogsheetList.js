@@ -22,13 +22,13 @@ function isDateEntryBlank(dateEntry) {
     return dateEntry == null || dateEntry == '' || isNaN(dateEntry.getTime());
 }
 
-function checkWhetherEpisodeFallsWithinDateRange(startDateString, endDateString, episode) {
+function doesEpisodeFallInDateRange(startDateString, endDateString, episode) {
 
     var filterStartDate = new Date(startDateString);
     var filterEndDate = new Date(endDateString);
 
-    var episodeStartDatetime = new Date(episode.start_datetime);
-    var episodeEndDatetime = new Date(episode.end_datetime);
+    var episodeStartDatetime = new Date(episode.startDatetime);
+    var episodeEndDatetime = new Date(episode.endDatetime);
 
     if (isDateEntryBlank(filterStartDate) && isDateEntryBlank(filterEndDate)) {
         return true;
@@ -78,7 +78,7 @@ function filterLogsheetList(episodes, appendFunc, container, programNameFilterLi
             }
         }
 
-        var doesEpisodeFallWithinDateRange = checkWhetherEpisodeFallsWithinDateRange(startDateFilter, endDateFilter, episode);
+        var doesEpisodeFallWithinDateRange = doesEpisodeFallInDateRange(startDateFilter, endDateFilter, episode);
 
         if (doesEpisodeFallWithinDateRange) {
             appendFunc(container, episode);
