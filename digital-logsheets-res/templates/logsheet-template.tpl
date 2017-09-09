@@ -1,4 +1,4 @@
-{if !$loginProgam}
+{if $canEdit}
     <form action="new-logsheet.php" method="get">
         <input type="hidden" name="epId" value={$episodeId|json_encode}>
         <input type="submit" value="Edit">
