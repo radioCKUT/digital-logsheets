@@ -39,7 +39,8 @@
         $archive = new Archive($db);
         $episodesArchive = $archive->getArchive();
 
-        $episodes = array();
+        $episodeSubmissions = array();
+        $episodeDrafts = array();
 
         foreach($episodesArchive as $episode) {
             $playlist = array();
@@ -52,20 +53,24 @@
                 }
             }
 
+            $episodeProgramName = $episode->getProgram()->getName();
              //create an array to store each episode's data
-            if ($loginProgram == NULL) {
-                $episodes[$episode->getId()] = $episode->getObjectAsArray();
-            } elseif ($episode->getProgram()->getId() == $loginProgram) {
-                $episodes[$episode->getId()] = $episode->getObjectAsArray();
+            if ($loginProgram == NULL || $episodeProgramName == $loginProgram) {
+                $results = sortEpisodeByDraftStatus($episode, $episodeSubmissions, $episodeDrafts);
+                $episodeSubmissions = $results[0];
+                $episodeDrafts = $results[1];
             }
         }
+        error_log("episodeDrafts " . print_r($episodeDrafts, true));
 
         $programs = getSelect2ProgramsList($db);
         
         //close database connection
         $db = NULL;
-        
-        $smarty->assign("episodes", $episodes);
+
+
+        $smarty->assign("episodeSubmissions", $episodeSubmissions);
+        $smarty->assign("episodeDrafts", $episodeDrafts);
         $smarty->assign("programs", $programs);
         //add program_id
         $smarty->assign("login_program", $loginProgram);
@@ -83,3 +88,16 @@
     } catch(PDOException $e) {
         echo 'ERROR: ' . $e->getMessage();
     }
+
+/**
+ * @param Episode $episode
+ */
+function sortEpisodeByDraftStatus($episode, $episodeSubmissions, $episodeDrafts) {
+    if (!$episode->isDraft()) {
+        $episodeSubmissions[$episode->getId()] = $episode->getObjectAsArray();
+    } else {
+        $episodeDrafts[$episode->getId()] = $episode->getObjectAsArray();
+    }
+
+    return array($episodeSubmissions, $episodeDrafts);
+}

@@ -16,11 +16,23 @@
     <script src="js/ui/categoryButton.js"></script>
     <script type="text/javascript">
         function init() {
+            var programDropdown = $(".program");
             var data = {$programs};
 
-            $(".program").select2({
-                data: data
-            });
+            if (!{$loginProgram|json_encode}) {
+                programDropdown.select2({
+                    data: data
+                });
+            } else {
+                var program = data.filter(function (program) {
+                    return program.text === {$loginProgram|json_encode};
+                });
+
+                programDropdown.select2({
+                    data: program
+                });
+            }
+
 
             setupEpisodeValidation({
                 episodeStartEarlyLimit: {$episodeStartEarlyLimit|json_encode},

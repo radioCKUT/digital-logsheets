@@ -34,9 +34,21 @@
             var startDateFilter = $( "#startDateFilter" ).val();
             var endDateFilter = $( "#endDateFilter" ).val();
 
-            var episodes = {$episodes|json_encode};
+            var episodeSubmissions = {$episodeSubmissions|json_encode};
+            var episodeDrafts = {$episodeDrafts|json_encode};
 
-            filterLogsheetList(episodes, programNameFilterList, startDateFilter, endDateFilter);
+            console.log("episodeSubmissions", episodeSubmissions);
+
+            function appendSubmissionLink(container, episode) {
+                container.append("<a href=\"view-episode-logsheet.php?episode_id=" + episode.id + "\">" + episode.program + " - " + episode.startDate + "</a> <br />");
+            }
+
+            function appendDraftLink(container, episode) {
+                container.append("<a href=\"new-episode.php?epId" + episode.id + "\">" + episode.program + " - " + episode.startDate + "</a> <br />");
+            }
+
+            filterLogsheetList(episodeSubmissions, appendSubmissionLink, $("#submissions"), programNameFilterList, startDateFilter, endDateFilter);
+            filterLogsheetList(episodeDrafts, appendDraftLink, $("#drafts"), programNameFilterList, startDateFilter, endDateFilter);
         }
 
     </script>
@@ -59,7 +71,7 @@
         </div>
     {else}
         <div class='row'>
-            <h4 class='col-sm-7'>Show name: {$login_username}</h4>
+            <h4 class='col-sm-7'>Program name: {$login_program}</h4>
         </div>
     {/if}
 
@@ -118,12 +130,35 @@
         </div>
     </div>
 
-    <div class="logsheets">
-        <br/>
-        {foreach $episodes as $episode}
-            <a href="view-episode-logsheet.php?episode_id={$episode.id}">{$episode.program} - {$episode.startDate}</a> <br />
-        {/foreach}
+    <div class="col-md-6">
+        <h3>Drafts:</h3>
+
+        <div class="logsheets" id="drafts">
+            {if $episodeDrafts == null}
+                No drafts exist.
+            {else}
+                {foreach $episodeDrafts as $episode}
+                    <a href="new-logsheet.php?epId={$episode.id}">{$episode.program} - {$episode.startDate}</a> <br />
+                {/foreach}
+            {/if}
+        </div>
     </div>
+
+    <div class="col-md-6">
+        <h3>Submissions:</h3>
+
+        <div class="logsheets" id="submissions">
+            {if $episodeSubmissions == null}
+                No submissions exist.
+            {else}
+                {foreach $episodeSubmissions as $episode}
+                    <a href="view-episode-logsheet.php?episode_id={$episode.id}">{$episode.program} - {$episode.startDate}</a> <br />
+                {/foreach}
+            {/if}
+        </div>
+    </div>
+
+
 </div>
 
 </body>

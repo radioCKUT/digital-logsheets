@@ -27,16 +27,39 @@ include_once(dirname(__FILE__) . "/../database/manageProgramEntries.php");
          */
         private $name;
 
+        private $altName1;
+        private $altName2;
+
         public function __construct($db, $componentId) {
             parent::__construct($db, $componentId);
 
-            if ($this->id != null) {
+            if ($this->id != null && $db != null) {
                 $this->name = manageProgramEntries::getProgramNameFromDatabase($db, $this->id);
             }
         }
         
         public function getName() {
             return $this->name;
+        }
+
+        public function setName($name) {
+            $this->name = $name;
+        }
+
+        public function getAltName1() {
+            return $this->altName1;
+        }
+
+        public function setAltName1($altName1) {
+            $this->altName1 = $altName1;
+        }
+
+        public function getAltName2() {
+            return $this->altName2;
+        }
+
+        public function setAltName2($altName2) {
+            $this->altName2 = $altName2;
         }
     }
 ?>

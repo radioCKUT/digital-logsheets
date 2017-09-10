@@ -22,7 +22,8 @@
 session_start();
 
 $loginId = $_SESSION['id'];
-$loginProgram = $_SESSION['program'];
+$loginProgram = $_SESSION['programName'];
+$loginProgramId = $_SESSION['programId'];
 $loginUsername = $_SESSION['username'];
 
 

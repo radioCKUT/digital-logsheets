@@ -46,7 +46,7 @@ if (isset($_POST['loginSubmit']) && ($username == '' || $password == '')) {
 } else if (strlen(trim($username)) > 1 && strlen(trim($password)) > 1) {
 
     $dbConn = connectToDatabase();
-    $hash = hash('sha1', $password);;
+    $hash = hash('sha1', $password);
     $user = manageUserEntries::getUserFromUsernameAndPassword($dbConn, $username, $hash);
 
 
@@ -68,7 +68,8 @@ echo $smarty->fetch("../digital-logsheets-res/templates/login.tpl");
 function setLoginSession($user) {
     $_SESSION['id'] = $user->getId();
     $program = $user->getProgram();
-    $_SESSION['program'] = $program->getName();
+    $_SESSION['programName'] = $program->getName();
+    $_SESSION['programId'] = $program->getId();
     $_SESSION['username'] = $user->getUsername();
 
     $_SESSION['start'] = time();

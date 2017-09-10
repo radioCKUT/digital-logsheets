@@ -48,8 +48,11 @@ include('../digital-logsheets-res/php/loginSession.php');
                 $segmentsForThisEpisode[$i] = $currentSegment->getObjectAsArray();
             }
 
+            $smarty->assign("episodeId", $episodeId);
             $smarty->assign("episode", $episodeAsArray);
             $smarty->assign("segments", $segmentsForThisEpisode);
+
+            $smarty->assign("canEdit", $loginProgram == NULL);
 
 
             // display it

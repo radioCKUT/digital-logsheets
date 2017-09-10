@@ -52,12 +52,23 @@ function setFormOnSubmitBehaviour() {
 
     logsheetEdit.hide();
 
+    var loseUnsavedChangesConfirmed = false;
+
     $('#finalize')
         .on('submit', function(e) {
-            console.log("logsheet_edit:hidden: ", $("#logsheet_edit:hidden"));
             if ($("#logsheet_edit:hidden").length === 0) {
-                e.preventDefault();
-                alert("You will lose unsaved changes to this segment if you proceed. Continue?");
+                if (loseUnsavedChangesConfirmed) {
+                    loseUnsavedChangesConfirmed = false;
+                } else {
+
+                    e.preventDefault();
+                    loseUnsavedChangesConfirmed = confirm("You will lose unsaved changes to this segment if you proceed. Continue?");
+
+                    if (loseUnsavedChangesConfirmed) {
+                        $(this).trigger('submit');
+                        return;
+                    }
+                }
             }
 
 

@@ -21,6 +21,7 @@
 
 include_once(dirname(__FILE__) . "/../database/connectToDatabase.php");
 require_once(dirname(__FILE__) . "/../objects/LogsheetComponent.php");
+require_once(dirname(__FILE__) . "/../objects/Program.php");
 
 
 class User extends LogsheetComponent {
@@ -44,6 +45,10 @@ class User extends LogsheetComponent {
 
     public function setProgramFromId($programId, $db) {
         $this->program = new Program($db, $programId);
+    }
+
+    public function setProgram($program) {
+        $this->program = $program;
     }
 
 

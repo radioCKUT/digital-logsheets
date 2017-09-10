@@ -27,15 +27,39 @@ include_once("readFromDatabase.php");
         const ID_COLUMN_NAME = "id";
         const PROGRAM_NAME_COLUMN_NAME = "name";
 
+        const ALT_NAME_1_COLUMN_NAME = "alternate_name_1";
+        const ALT_NAME_2_COLUMN_NAME = "alternate_name_2";
+
         public static function getProgramNameFromDatabase($dbConn, $programId) {
             return readFromDatabase::readFirstMatchingEntryFromTable($dbConn, array(self::PROGRAM_NAME_COLUMN_NAME),
                 self::TABLE_NAME, array(self::ID_COLUMN_NAME), array($programId));
         }
 
+        /**
+         * @param PDO $dbConn
+         * @return Program[] array
+         */
         public static function getAllProgramsFromDatabase($dbConn) {
             $programIds = readFromDatabase::readEntireColumnFromTable($dbConn, array(self::ID_COLUMN_NAME), self::TABLE_NAME);
 
-            return self::buildProgramObjectsFromIds($dbConn, $programIds);
+
+            $query = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::PROGRAM_NAME_COLUMN_NAME;
+            $stmt = $dbConn->prepare($query);
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $programs = array();
+
+            foreach ($results as $result) {
+                $program = new Program(null, $result[self::ID_COLUMN_NAME]);
+                $program->setName($result[self::PROGRAM_NAME_COLUMN_NAME]);
+                $program->setAltName1($result[self::ALT_NAME_1_COLUMN_NAME]);
+                $program->setAltName2($result[self::ALT_NAME_2_COLUMN_NAME]);
+
+                array_push($programs, $program);
+            }
+
+            return $programs;
         }
 
         public static function getProgramFromDatabase($dbConn, $programId) {
