@@ -49,7 +49,6 @@ function doesEpisodeFallInDateRange(startDateString, endDateString, episode) {
 
 
 function filterLogsheetList(episodes, appendFunc, container, programNameFilterList, startDateFilter, endDateFilter) {
-    console.log(programNameFilterList + ", " + startDateFilter + ", " + endDateFilter);
     container.empty();
 
     var episodesKeyList = Object.keys(episodes);

@@ -61,7 +61,6 @@
                 $episodeDrafts = $results[1];
             }
         }
-        error_log("episodeDrafts " . print_r($episodeDrafts, true));
 
         $programs = getSelect2ProgramsList($db);
         

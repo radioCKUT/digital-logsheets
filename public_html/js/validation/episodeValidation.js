@@ -84,7 +84,6 @@ function setStartDateTimeBounds(earlyLimit, lateLimit) {
 
     const milliSecsInMinute = 1000 * 60;
 
-    console.log('earlyLimit', earlyLimit);
     var earlyLimitDate = new Date(earlyLimit);
     var roundedEarlyLimitInMillisecs = Math.round(earlyLimitDate.getTime() / milliSecsInMinute) * milliSecsInMinute;
     var roundedEarlyLimitDate = new Date(roundedEarlyLimitInMillisecs);

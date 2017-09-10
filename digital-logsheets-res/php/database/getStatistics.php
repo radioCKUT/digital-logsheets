@@ -143,7 +143,7 @@ class getStatistics {
             return $arrAd;
 
         } catch (PDOException $e) {
-            error_log("error: " . print_r($e, true));
+            error_log("Error while getting most-played album: " . print_r($e, true));
             return null;
         }
     }
