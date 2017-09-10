@@ -82,8 +82,6 @@ function addDateToSegmentStartTime($episodeStartDate, $episodeStartTime, $segmen
 
     }
 
-    error_log("dateToUse: " . $dateToUse);
-
     $segmentTimeWithDate = strtotime($dateToUse . " " . $segmentTime);
     $segmentTime = date("Y-m-d H:m:s", $segmentTimeWithDate);
 

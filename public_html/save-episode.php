@@ -91,7 +91,6 @@ try {
 
 } catch(PDOException $e) {
     error_log('Error while saving an episode: ' . $e->getMessage());
-    //TODO: error handling
 }
 
 function getDateTimeFromDateString($dateString) {

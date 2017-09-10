@@ -61,8 +61,6 @@ class manageUserEntries {
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        error_log("result: " . print_r($result, true));
-
 
         if ($result != null) {
             $user = new User($dbConn, null);

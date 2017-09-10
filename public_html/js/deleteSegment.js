@@ -29,17 +29,15 @@ function deleteEpisodeSegment(id) {
 }
 
 function deleteSuccessCallback(data) {
-    console.log("success callback");
 
     if (!data.hasOwnProperty("error")) {
         getEpisodeSegments();
+
     } else {
-        console.error("error in data " + data.error);
-        //TODO error handling
+        console.error("Error while deleting segment: " + data.error);
     }
 }
 
 function deleteErrorCallback(jqhxr, textStatus, errorThrown) {
-    alert("Add segment fail! status: " + textStatus + " error thrown: " + errorThrown);
-    //TODO: proper error handling
+    alert("Delete segment fail! status: " + textStatus + " error thrown: " + errorThrown);
 }

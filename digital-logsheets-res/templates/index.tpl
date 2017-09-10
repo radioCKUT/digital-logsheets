@@ -27,7 +27,6 @@
 
         function updateFilteredLogsheetList() {
             var programNameFilterList = $(".program").select2('data').map(function (index, element) {
-                console.log(index.text);
                 return index.text;
             });
 
@@ -37,7 +36,6 @@
             var episodeSubmissions = {$episodeSubmissions|json_encode};
             var episodeDrafts = {$episodeDrafts|json_encode};
 
-            console.log("episodeSubmissions", episodeSubmissions);
 
             function appendSubmissionLink(container, episode) {
                 container.append("<a href=\"view-episode-logsheet.php?episode_id=" + episode.id + "\">" + episode.program + " - " + episode.startDate + "</a> <br />");
