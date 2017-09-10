@@ -19,7 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-    //TODO: Error checking...
     require_once(dirname(__FILE__) . "/../database/manageEpisodeEntries.php");
     require_once("LogsheetComponent.php");
 

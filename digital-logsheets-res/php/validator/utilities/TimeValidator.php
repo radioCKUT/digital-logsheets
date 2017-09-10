@@ -92,7 +92,6 @@ class TimeValidator {
          * @return int mixed
          */
         private static function getTimeInMinutesSinceMidnight($dateTime) {
-            //TODO: error handling
             return (((int) $dateTime->format('H')) * 60) + (int) $dateTime->format('i');
         }
     }
