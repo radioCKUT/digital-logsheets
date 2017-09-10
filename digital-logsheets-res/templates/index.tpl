@@ -130,28 +130,32 @@
         </div>
     </div>
 
-    <div class="col-md-6" class="logsheets" id="drafts">
+    <div class="col-md-6">
         <h3>Drafts:</h3>
-        <br/>
-        {if $episodeDrafts == null}
-            No drafts exist.
-        {else}
-            {foreach $episodeDrafts as $episode}
-                <a href="new-logsheet.php?epId={$episode.id}">{$episode.program} - {$episode.startDate}</a> <br />
-            {/foreach}
-        {/if}
+
+        <div class="logsheets" id="drafts">
+            {if $episodeDrafts == null}
+                No drafts exist.
+            {else}
+                {foreach $episodeDrafts as $episode}
+                    <a href="new-logsheet.php?epId={$episode.id}">{$episode.program} - {$episode.startDate}</a> <br />
+                {/foreach}
+            {/if}
+        </div>
     </div>
 
-    <div class="col-md-6" class="logsheets" id="submissions">
+    <div class="col-md-6">
         <h3>Submissions:</h3>
-        <br/>
-        {if $episodeSubmissions == null}
-            No submissions exist.
-        {else}
-            {foreach $episodeSubmissions as $episode}
-                <a href="view-episode-logsheet.php?episode_id={$episode.id}">{$episode.program} - {$episode.startDate}</a> <br />
-            {/foreach}
-        {/if}
+
+        <div class="logsheets" id="submissions">
+            {if $episodeSubmissions == null}
+                No submissions exist.
+            {else}
+                {foreach $episodeSubmissions as $episode}
+                    <a href="view-episode-logsheet.php?episode_id={$episode.id}">{$episode.program} - {$episode.startDate}</a> <br />
+                {/foreach}
+            {/if}
+        </div>
     </div>
 
 
